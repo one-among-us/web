@@ -7,19 +7,21 @@
 
 <script lang="ts">
 import {Options, Vue} from 'vue-class-component';
+import {Prop} from "vue-property-decorator";
+
+const transColors = [
+    '#5BCEFA',
+    '#F5A9B8',
+    '#FFF',
+    '#F5A9B8',
+    '#5BCEFA'
+]
 
 @Options({components: {}})
 export default class Divider extends Vue
 {
-    colors: string[] = [
-        '#5BCEFA',
-        '#F5A9B8',
-        '#FFF',
-        '#F5A9B8',
-        '#5BCEFA'
-    ]
-
-    height = '2px'
+    @Prop({default: transColors}) colors!: string[]
+    @Prop({default: '2px'})       height!: string
 }
 </script>
 
