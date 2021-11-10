@@ -1,5 +1,5 @@
 <template>
-    <div id="title">
+    <div id="title" class="fbox-vcenter">
     </div>
 
     <Divider height="5px"/>
@@ -9,6 +9,7 @@
         |
         <router-link to="/about">About</router-link>
     </div>
+
     <router-view/>
 </template>
 
@@ -23,6 +24,9 @@ export default class App extends Vue
 </script>
 
 <style lang="sass">
+@import "css/animations"
+@import "css/global"
+
 #app
     font-family: Avenir, Helvetica, Arial, sans-serif
     -webkit-font-smoothing: antialiased
