@@ -2,6 +2,8 @@
     <div id="title">
     </div>
 
+    <Divider height="5px"/>
+
     <div id="nav">
         <router-link to="/">Home</router-link>
         |
@@ -9,6 +11,16 @@
     </div>
     <router-view/>
 </template>
+
+<script>
+import {Options, Vue} from 'vue-class-component';
+import Divider from "@/components/divider";
+
+@Options({components: {Divider}})
+export default class App extends Vue
+{
+}
+</script>
 
 <style lang="sass">
 #app
