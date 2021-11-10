@@ -1,7 +1,7 @@
 <template>
     <div id="divider">
         <span class="color-strip" v-for="c in colors" :key="c"
-              :style="`background-color: ${c}`"/>
+              :style="`background-color: ${c}; height: ${height}`"/>
     </div>
 </template>
 
@@ -18,6 +18,8 @@ export default class Divider extends Vue
         '#F5A9B8',
         '#5BCEFA'
     ]
+
+    height = '2px'
 }
 </script>
 
@@ -27,6 +29,4 @@ export default class Divider extends Vue
 
     .color-strip
         flex: 1
-        height: 2px
-
 </style>
