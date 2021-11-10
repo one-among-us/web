@@ -1,4 +1,8 @@
 <template>
+    <div id="title">
+        Hello
+    </div>
+
     <div id="nav">
         <router-link to="/">Home</router-link>
         |
@@ -15,9 +19,15 @@
     text-align: center
     color: #2c3e50
 
-#nav
-    padding: 30px
+    // Max width and center
+    max-width: 900px
+    margin: auto
 
+#title
+    background-color: pink
+    height: 100px
+
+#nav
     a
         font-weight: bold
         color: #2c3e50
