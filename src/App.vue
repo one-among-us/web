@@ -65,7 +65,7 @@ export default class App extends Vue
         text-decoration: none
         margin: 15px
         font-size: 15px
-
+        color: #2c3e50
 
         &.router-link-exact-active
             color: #ff8373
