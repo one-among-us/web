@@ -1,0 +1,24 @@
+/**
+ * animation fade-in-left
+ */
+.fade-in-left
+  animation: fade-in-left .5s cubic-bezier(.39,.575,.565,1.000) both
+
+@keyframes fade-in-left
+  0%
+    transform: translateX(-50px)
+    opacity: 0
+  100%
+    transform: translateX(0)
+    opacity: 1
+
+.fade-out-left
+  animation: fade-out-left .5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both
+
+@keyframes fade-out-left
+  0%
+    transform: translateX(0)
+    opacity: 1
+  100%
+    transform: translateX(-50px)
+    opacity: 0
