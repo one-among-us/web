@@ -1,6 +1,5 @@
 <template>
     <div id="title">
-        Hello
     </div>
 
     <div id="nav">
@@ -24,7 +23,7 @@
     margin: auto
 
 #title
-    background-color: pink
+    background-color: #ffeddb
     height: 100px
 
 #nav
