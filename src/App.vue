@@ -41,7 +41,7 @@ export default class App extends Vue
     margin: auto
 
 #title
-    background-color: #ffeddb
+    background-color: #fff4eb
     height: 200px
 
     #title-txt
