@@ -1,16 +1,19 @@
 <template>
-    <div id="title" class="fbox-vcenter">
-        <div id="title-txt">一个标题</div>
-        <div id="title-sub">这是一些副标题</div>
+    <div id="title">
+        <div id="title-container" class="fbox-vcenter">
+            <div id="title-txt">一个标题</div>
+            <div id="title-sub">这是一些副标题</div>
+        </div>
+
+        <div id="nav" class="fbox-vcenter">
+            <div>
+                <router-link to="/">首页</router-link>
+                <router-link to="/about">关于</router-link>
+            </div>
+        </div>
     </div>
 
     <Divider height="5px"/>
-
-    <div id="nav">
-        <router-link to="/">Home</router-link>
-        |
-        <router-link to="/about">About</router-link>
-    </div>
 
     <router-view/>
 </template>
@@ -40,7 +43,7 @@ export default class App extends Vue
     max-width: 900px
     margin: auto
 
-#title
+#title-container
     background-color: #fff4eb
     height: 200px
 
@@ -51,10 +54,14 @@ export default class App extends Vue
         color: rgba(44, 62, 80, 0.68)
 
 #nav
+    background-color: #ffeedb
+    height: 40px
     a
-        font-weight: bold
-        color: #2c3e50
+        text-decoration: none
+        margin: 15px
+        font-size: 15px
+
 
         &.router-link-exact-active
-            color: #42b983
+            color: #ff8373
 </style>
