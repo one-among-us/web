@@ -1,5 +1,7 @@
 <template>
     <div id="title" class="fbox-vcenter">
+        <div id="title-txt">一个标题</div>
+        <div id="title-sub">这是一些副标题</div>
     </div>
 
     <Divider height="5px"/>
@@ -40,7 +42,13 @@ export default class App extends Vue
 
 #title
     background-color: #ffeddb
-    height: 100px
+    height: 200px
+
+    #title-txt
+        font-size: x-large
+
+    #title-sub
+        color: rgba(44, 62, 80, 0.68)
 
 #nav
     a
