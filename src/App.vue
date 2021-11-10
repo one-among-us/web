@@ -15,7 +15,7 @@
 
     <Divider height="5px"/>
 
-    <router-view/>
+    <router-view id="router"/>
 </template>
 
 <script>
@@ -43,6 +43,11 @@ export default class App extends Vue
     max-width: 900px
     margin: auto
 
+    // Vertical flex box
+    display: flex
+    flex-flow: column
+    height: 100vh
+
 #title-container
     background-color: #fff4eb
     height: 200px
@@ -64,4 +69,7 @@ export default class App extends Vue
 
         &.router-link-exact-active
             color: #ff8373
+
+#router
+    flex: 1
 </style>
