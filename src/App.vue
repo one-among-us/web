@@ -1,4 +1,5 @@
 <template>
+    <Divider height="5px"/>
     <div id="title">
         <div id="title-container" class="fbox-vcenter">
             <div id="title-txt">一个标题</div>
@@ -13,9 +14,8 @@
         </div>
     </div>
 
-    <Divider height="5px"/>
-
     <router-view id="router"/>
+    <Divider height="5px"/>
 </template>
 
 <script>
