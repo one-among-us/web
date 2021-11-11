@@ -20,14 +20,14 @@ export default class Profile extends Vue
 
     markdown = ''
 
-    p?: Person
+    p!: Person
     created(): void
     {
         // TODO: Get data from server
         this.p = exampleData.filter(it => it.name == this.name)[0]
-
+        
         // TODO: Load markdown from server
-        fetch('/shiinamota.md').then(it => it.text()).then(it => this.markdown = it)
+        fetch(`/${this.p.id}.md`).then(it => it.text()).then(it => this.markdown = it)
     }
 
     get markdownToHtml(): string
