@@ -44,4 +44,8 @@ export default class Profile extends Vue
 
 #content
     text-align: justify
+
+    a
+        color: #ff7a91
+        text-decoration: none
 </style>
