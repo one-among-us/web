@@ -6,9 +6,11 @@
 
         <div id="profiles">
             <div class="profile" v-for="p in people" :key="p">
+                <div class="invisible"></div>
                 <div class="back"></div>
                 <img :src="p.profileUrl" alt="profile" class="front">
                 <div class="sub-text">{{p.name}}</div>
+                <div class="bookmark"></div>
             </div>
             <div class="profile">
                 <div class="back add fbox-vcenter">+</div>
@@ -25,7 +27,6 @@ export default class Home extends Vue
 {
     people = [
         {name: '小桂桂', profileUrl: 'https://pbs.twimg.com/profile_images/1445198854429810690/TzeMf5yX_400x400.jpg'},
-        {name: '椎名もた', profileUrl: 'https://pbs.twimg.com/profile_images/591631266937638913/AtOAlQpd_400x400.jpg'},
         {name: '椎名もた', profileUrl: 'https://pbs.twimg.com/profile_images/591631266937638913/AtOAlQpd_400x400.jpg'},
         {name: '不存在', profileUrl: 'https://pbs.twimg.com/profile_images/1374397593594122242/bPfn-Zzk_400x400.jpg'},
         {name: '蛍', profileUrl: 'https://pbs.twimg.com/profile_images/1378912446782394368/icyGMaK5_400x400.jpg'},
@@ -51,16 +52,24 @@ export default class Home extends Vue
     margin: 20px 20px 30px
     vertical-align: top
 
-    .front, .back
+    .front, .back, .invisible
         border: 10px solid #ffffff
         outline: 2px solid #565656
         height: 150px
         width: 150px
 
+    .invisible
+        visibility: hidden
+
+    .back
+        z-index: 2
+        position: absolute
+        top: 0
+
     .front
         transform: rotate(10deg)
         position: absolute
-        z-index: 1
+        z-index: 3
         height: 150px
         top: 0
         left: 0
@@ -69,6 +78,8 @@ export default class Home extends Vue
         margin-top: 3px
         margin-left: 10px
         text-align: left
+        position: relative
+        z-index: 2
 
     .back.add
         outline: 2px dashed #565656
@@ -76,4 +87,17 @@ export default class Home extends Vue
         color: gray
         background-color: #f1f1f1
 
+    .bookmark
+        border:       40px solid white
+        filter: drop-shadow(0 2px 0 #565656) drop-shadow(2px 0 0 #565656) drop-shadow(-2px 0 0 #565656)
+        //border-top:   10px
+        border-bottom: 20px solid transparent
+        // width:        100px
+        width: 0
+        left: 10px
+        height: 10px
+
+        position: absolute
+        bottom: -10px
+        z-index: 1
 </style>
