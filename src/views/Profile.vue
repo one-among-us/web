@@ -37,6 +37,9 @@ export default class Profile extends Vue
 }
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass">
+#profile-page
+    margin-left: 50px
+    margin-right: 50px
 
 </style>
