@@ -26,7 +26,8 @@ export const exampleData: Person[] = [
         info: {本名: '沟口辽', 别名: 'ぽわぽわP, 仁王立ち', 国籍: '日本', 出生: '1995年3月9日',
             逝世: '2015年7月23日（20岁）', 职业: 'V家P主，插画家', 活跃年代: '2009年6月—2015年7月'},
 
-        websites: {twitter: 'siinamota', personal: 'http://www.siinamota.com/index.html'}
+        websites: {twitter: 'https://twitter.com/siinamota',
+            personal: 'http://www.siinamota.com/index.html'}
     },
     {
         id: 'donotexist_A',

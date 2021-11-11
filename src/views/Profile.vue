@@ -75,6 +75,7 @@ export default class Profile extends Vue
     getIcon(platform: string): string
     {
         if (platform in icons) return icons[platform]
+        if (platform.startsWith('custom-icon:')) return platform.replace('custom-icon:', '')
         return icons.default
     }
 }
