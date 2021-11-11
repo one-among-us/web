@@ -5,11 +5,12 @@
                 <!-- Horizontal Alignment of profile pic and the rest -->
                 <div id="left" class="fbox-v">
                     <img :src="p.profileUrl" draggable="false" alt="profile" class="front">
-                    <div class="spacer f-grow1"/>
+                    <div class="spacer"/>
                     <div id="buttons">
                         <div class="button fbox-vcenter"><i class="el-icon-lollipop"></i></div>
                         <div class="button fbox-vcenter"><i class="el-icon-edit"></i></div>
                     </div>
+                    <div class="f-grow1"/>
                 </div>
                 <!-- Vertical Alignment of info section -->
                 <div id="right" class="fbox-v">
@@ -104,9 +105,10 @@ export default class Profile extends Vue
     flex-grow: 1
     text-align: left
     margin-top: 20px
-    margin-right: 50px
+    margin-right: min(5vw, 50px)
     margin-bottom: 20px
     min-height: 200px
+    overflow: hidden
 
     #name-box
         border-bottom: 2px solid $color-text-main
@@ -124,6 +126,8 @@ export default class Profile extends Vue
         flex-wrap: wrap
         margin: 10px 0
 
+        white-space: nowrap
+
         li
             margin-left: 20px
 
@@ -139,20 +143,22 @@ export default class Profile extends Vue
             margin-right: 10px
 
 #left
-    margin-left: 50px
-    margin-right: 50px
-    // height: unset
+    margin-left: min(5vw, 60px)
+    margin-right: min(5vw, 50px)
+    height: unset
 
     img
         border: 10px solid white
         outline: 2px solid $color-text-main
-        height: 150px
-        width: 150px
+        $length: max(110px, min(15vw, 150px))
+        height: $length
+        width: $length
         transition: all .25s ease
         transform: rotate(-15deg)
 
     .spacer
         min-height: 30px
+        flex-grow: 2
 
     #buttons
         margin-bottom: 10px
