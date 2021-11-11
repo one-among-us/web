@@ -17,6 +17,13 @@
                         <span id="name-text">{{p.name}}</span>
                         <span id="id">@{{p.id}}</span>
                     </div>
+                    <div id="fields">
+                        <ul>
+                            <li v-for="[key, value] of Object.entries(p.info)" :key="key">
+                                {{key}}：{{value}}
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
@@ -82,7 +89,7 @@ export default class Profile extends Vue
     margin-right: 50px
 
     #name-box
-        border-bottom: 1.5px solid $color-text-main
+        border-bottom: 2px solid $color-text-main
 
         #name-text
             font-size: 1.7em
