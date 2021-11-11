@@ -25,7 +25,7 @@ export default class Profile extends Vue
     {
         // TODO: Get data from server
         this.p = exampleData.filter(it => it.name == this.name)[0]
-        
+
         // TODO: Load markdown from server
         fetch(`/${this.p.id}.md`).then(it => it.text()).then(it => this.markdown = it)
     }
@@ -48,4 +48,19 @@ export default class Profile extends Vue
     a
         color: #ff7a91
         text-decoration: none
+
+    h2
+        border-bottom: 1px solid #ff7a91
+        font-size: 1.5em
+        margin-top: 1em
+
+    h1, h2
+        line-height: 1.3
+        margin-bottom: 0.25em
+        padding: 0
+
+    p
+        font-size: 0.875em
+        margin: 0.5em 0
+        line-height: 1.6
 </style>
