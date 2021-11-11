@@ -51,6 +51,7 @@ export default class App extends Vue
 #title
     background-color: #fff4eb
     min-height: 200px
+    flex: 1
 
     #title-txt
         font-size: x-large
@@ -61,7 +62,7 @@ export default class App extends Vue
 // Navigation bar
 #nav
     background-color: #ffeedb
-    height: 40px
+    min-height: 40px
     a
         text-decoration: none
         margin: 15px
@@ -73,7 +74,7 @@ export default class App extends Vue
 
 // Content
 #router
-    flex: 2
+    flex: 3
     padding: 20px 20px 0
     background-color: #fffcf9
 </style>
