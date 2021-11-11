@@ -6,10 +6,14 @@
 
         <div id="profiles" class="unselectable">
             <div class="profile" v-for="p in people" :key="p">
-                <div class="back"></div>
-                <img :src="p.profileUrl" draggable="false" alt="profile" class="front">
+                <div class="back"/>
+                <transition name="fade" @after-leave="() => switchPage(p)">
+                    <img :src="p.profileUrl" draggable="false" alt="profile" class="front"
+                         v-if="!clicked.has(p.name)"
+                         @click="clicked.has(p.name) ? clicked.delete(p.name) : clicked.add(p.name)">
+                </transition>
                 <div class="sub-text">{{p.name}}</div>
-                <div class="bookmark"></div>
+                <div class="bookmark"/>
             </div>
             <div class="profile">
                 <div class="back add fbox-vcenter">+</div>
@@ -21,15 +25,28 @@
 <script lang="ts">
 import {Options, Vue} from 'vue-class-component';
 
+interface Person {
+    name: string
+    profileUrl: string
+}
+
 @Options({components: {}})
 export default class Home extends Vue
 {
-    people = [
+    clicked: Set<string> = new Set()
+
+    people: Person[] = [
         // {name: '小桂桂', profileUrl: 'https://pbs.twimg.com/profile_images/1445198854429810690/TzeMf5yX_400x400.jpg'},
         {name: '椎名もた', profileUrl: 'https://pbs.twimg.com/profile_images/591631266937638913/AtOAlQpd_400x400.jpg'},
         {name: '不存在', profileUrl: 'https://pbs.twimg.com/profile_images/1374397593594122242/bPfn-Zzk_400x400.jpg'},
         {name: '萤', profileUrl: 'https://pbs.twimg.com/profile_images/1378912446782394368/icyGMaK5_400x400.jpg'},
     ]
+
+    switchPage(p: Person): void
+    {
+        console.log("Called, " + p.name)
+        this.$router.push(`/profile/${p.name}`)
+    }
 }
 </script>
 
@@ -51,11 +68,22 @@ export default class Home extends Vue
     margin: 20px 20px 30px
     vertical-align: top
 
+    .fade-enter-active, .fade-leave-active
+        transition: all .5s ease !important
+
+    .fade-enter, .fade-leave-to
+        top: -5000px !important
+        left: -5000px !important
+        height: 10000px !important
+        width: 10000px !important
+        opacity: 0
+
     .front, .back
         border: 10px solid #ffffff
         outline: 2px solid #565656
         height: 150px
         width: 150px
+        transition: all .25s ease
 
     .back
         z-index: 2
@@ -64,11 +92,10 @@ export default class Home extends Vue
     .front
         transform: rotate(10deg)
         position: absolute
-        z-index: 3
+        z-index: 4
         height: 150px
         top: 0
         left: 0
-        transition: all .25s ease
 
     // Hover animation
     .front:hover
