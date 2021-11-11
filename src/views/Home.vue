@@ -9,6 +9,9 @@
                 <div class="back"></div>
                 <img :src="p.profileUrl" alt="profile" class="front">
             </div>
+            <div class="profile">
+                <div class="back add fbox-vcenter">+</div>
+            </div>
         </div>
     </div>
 </template>
@@ -42,6 +45,7 @@ export default class Home extends Vue
     position: relative
     display: inline-block
     margin: 0 20px
+    vertical-align: top
 
     .front, .back
         border: 10px solid #ffffff
@@ -56,5 +60,11 @@ export default class Home extends Vue
         height: 150px
         top: 0
         left: 0
+
+    .back.add
+        outline: 2px dashed #565656
+        font-size: 75px
+        color: gray
+        background-color: #f1f1f1
 
 </style>
