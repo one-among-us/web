@@ -23,6 +23,9 @@ import {Options, Vue} from 'vue-class-component';
 export default class Home extends Vue
 {
     people = [
+        {name: '小桂桂', profileUrl: 'https://pbs.twimg.com/profile_images/1445198854429810690/TzeMf5yX_400x400.jpg'},
+        {name: '椎名もた', profileUrl: 'https://pbs.twimg.com/profile_images/591631266937638913/AtOAlQpd_400x400.jpg'},
+        {name: '椎名もた', profileUrl: 'https://pbs.twimg.com/profile_images/591631266937638913/AtOAlQpd_400x400.jpg'},
         {name: '不存在', profileUrl: 'https://pbs.twimg.com/profile_images/1374397593594122242/bPfn-Zzk_400x400.jpg'},
         {name: '蛍', profileUrl: 'https://pbs.twimg.com/profile_images/1378912446782394368/icyGMaK5_400x400.jpg'},
     ]
@@ -44,7 +47,7 @@ export default class Home extends Vue
 .profile
     position: relative
     display: inline-block
-    margin: 0 20px
+    margin: 20px 20px 30px
     vertical-align: top
 
     .front, .back
