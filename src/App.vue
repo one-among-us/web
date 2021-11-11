@@ -31,6 +31,7 @@ export default class App extends Vue
 <style lang="sass">
 @import "css/animations"
 @import "css/global"
+@import "css/font"
 
 #app
     font-family: Avenir, Helvetica, Arial, sans-serif
