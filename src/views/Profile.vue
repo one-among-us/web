@@ -17,13 +17,11 @@
                         <span id="name-text">{{p.name}}</span>
                         <span id="id">@{{p.id}}</span>
                     </div>
-                    <div id="fields">
-                        <ul>
-                            <li v-for="[key, value] of Object.entries(p.info)" :key="key">
-                                {{key}}：{{value}}
-                            </li>
-                        </ul>
-                    </div>
+                    <ul id="fields">
+                        <li v-for="[key, value] of Object.entries(p.info)" :key="key">
+                            {{key}}：{{value}}
+                        </li>
+                    </ul>
                 </div>
             </div>
 
@@ -95,6 +93,18 @@ export default class Profile extends Vue
             font-size: 1.7em
             font-weight: bold
             margin-right: 8px
+
+    #fields
+        font-size: 1.1em
+        padding: 0
+        display: flex
+        flex-direction: column
+        flex-wrap: wrap
+        margin: 10px 0
+
+        li
+            margin-left: 20px
+
 
 #left
     margin-left: 50px
