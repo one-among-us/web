@@ -6,7 +6,7 @@
 
         <div id="profiles">
             <div class="profile" v-for="p in people" :key="p">
-                <img :src="p.profileUrl" alt="profile" class="back">
+                <div class="back"></div>
                 <img :src="p.profileUrl" alt="profile" class="front">
             </div>
         </div>
@@ -37,20 +37,24 @@ export default class Home extends Vue
 #profiles
     margin-top: 20px
 
+// Profile picture alignment
 .profile
-    img
-        height: 150px
-        border: 10px solid #ffffff
-        outline: 2px solid #565656
-
-    .front
-        transform: rotate(10deg)
-
-    .back
-        margin-right: -170px
-
+    position: relative
     display: inline-block
     margin: 0 20px
 
+    .front, .back
+        border: 10px solid #ffffff
+        outline: 2px solid #565656
+        height: 150px
+        width: 150px
+
+    .front
+        transform: rotate(10deg)
+        position: absolute
+        z-index: 1
+        height: 150px
+        top: 0
+        left: 0
 
 </style>
