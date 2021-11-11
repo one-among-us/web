@@ -4,7 +4,9 @@
             <table id="info">
                 <tbody>
                     <tr><td colspan="2">{{p.name}}</td></tr>
-                    <tr><td colspan="2"><img :src="p.profileUrl" alt="profile"></td></tr>
+                    <tr>
+                        <td colspan="2"><img :src="p.profileUrl" alt="profile" draggable="false"></td>
+                    </tr>
                     <tr v-for="[key, value] of Object.entries(p.info)" :key="key">
                         <td>{{key}}</td>
                         <td>{{value}}</td>
@@ -57,14 +59,11 @@ export default class Profile extends Vue
     text-align: justify
 
 #info
-    font-size: 90%
-    text-align: center
+    font-size: 0.9em
     width: 280px
-    max-width: 100%
     float: right
     background-color: #FFF
     border: 1px solid #ff7a91
-
     margin-left: 15px
 
     img
