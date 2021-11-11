@@ -1,6 +1,6 @@
 <template>
     <Divider height="5px"/>
-    <div id="title" class="fbox-vcenter unselectable">
+    <div id="title" class="fbox-vcenter unselectable" v-if="$route.name !== 'Profile'">
         <div id="title-txt">一个标题</div>
         <div id="title-sub">这是一些副标题</div>
     </div>
@@ -9,6 +9,7 @@
         <div>
             <router-link to="/">首页</router-link>
             <router-link to="/about">关于</router-link>
+            <router-link to="/profile/:name">测试</router-link>
         </div>
     </div>
 
