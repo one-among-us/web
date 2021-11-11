@@ -12,7 +12,7 @@
                          v-if="!clicked.has(p.name)"
                          @click="clicked.has(p.name) ? clicked.delete(p.name) : clicked.add(p.name)">
                 </transition>
-                <div class="sub-text">{{p.name}}</div>
+                <div class="sub-text font-custom">{{p.name}}</div>
                 <div class="bookmark"/>
             </div>
             <div class="profile">
@@ -98,8 +98,6 @@ export default class Home extends Vue
         text-align: left
         position: relative
         z-index: 3
-
-        font-family: FZSJ-QIANNYDH, Avenir, Helvetica, Arial, sans-serif
 
     .back.add
         outline: 2px dashed #565656
