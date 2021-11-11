@@ -1,11 +1,11 @@
 <template>
     <Divider height="5px"/>
-    <div id="title" class="fbox-vcenter">
+    <div id="title" class="fbox-vcenter unselectable">
         <div id="title-txt">一个标题</div>
         <div id="title-sub">这是一些副标题</div>
     </div>
 
-    <div id="nav" class="fbox-vcenter">
+    <div id="nav" class="fbox-vcenter unselectable">
         <div>
             <router-link to="/">首页</router-link>
             <router-link to="/about">关于</router-link>
