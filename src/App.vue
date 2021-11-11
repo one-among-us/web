@@ -26,27 +26,8 @@ export default class App extends Vue
 }
 </script>
 
-<style lang="sass">
-@import "css/animations"
-@import "css/global"
-@import "css/font"
-
-#app
-    font-family: Avenir, Helvetica, Arial, sans-serif
-    -webkit-font-smoothing: antialiased
-    -moz-osx-font-smoothing: grayscale
-    text-align: center
-    color: #2c3e50
-
-    // Max width and center
-    max-width: 900px
-    margin: auto
-
-    // Vertical flex box
-    display: flex
-    flex-flow: column
-    height: 100vh
-
+<!-- Scoped Style -->
+<style lang="sass" scoped>
 // Title
 #title
     background-color: #fff4eb
@@ -77,4 +58,27 @@ export default class App extends Vue
     flex: 3
     padding: 20px 20px 0
     background-color: #fffcf9
+</style>
+
+<!-- Global Style -->
+<style lang="sass">
+@import "css/animations"
+@import "css/global"
+@import "css/font"
+
+#app
+    font-family: Avenir, Helvetica, Arial, sans-serif
+    -webkit-font-smoothing: antialiased
+    -moz-osx-font-smoothing: grayscale
+    text-align: center
+    color: #2c3e50
+
+    // Max width and center
+    max-width: 900px
+    margin: auto
+
+    // Vertical flex box
+    display: flex
+    flex-flow: column
+    height: 100vh
 </style>

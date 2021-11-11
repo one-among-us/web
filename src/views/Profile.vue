@@ -37,14 +37,19 @@ export default class Profile extends Vue
 }
 </script>
 
-<style lang="sass">
+<!-- Scoped Style -->
+<style lang="sass" scoped>
 #profile-page
     margin-left: 50px
     margin-right: 50px
 
 #content
     text-align: justify
+</style>
 
+<!-- Global Style -->
+<style lang="sass">
+#content
     a
         color: #ff7a91
         text-decoration: none
