@@ -6,7 +6,6 @@
 
         <div id="profiles">
             <div class="profile" v-for="p in people" :key="p">
-                <div class="invisible"></div>
                 <div class="back"></div>
                 <img :src="p.profileUrl" alt="profile" class="front">
                 <div class="sub-text">{{p.name}}</div>
@@ -52,19 +51,15 @@ export default class Home extends Vue
     margin: 20px 20px 30px
     vertical-align: top
 
-    .front, .back, .invisible
+    .front, .back
         border: 10px solid #ffffff
         outline: 2px solid #565656
         height: 150px
         width: 150px
 
-    .invisible
-        visibility: hidden
-
     .back
         z-index: 2
-        position: absolute
-        top: 0
+        position: relative
 
     .front
         transform: rotate(10deg)
