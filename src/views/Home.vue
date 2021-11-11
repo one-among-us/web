@@ -1,5 +1,5 @@
 <template>
-    <div id="home">
+    <div id="home" :class="clicked ? 'clicked' : ''">
         <div id="introduction">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu dignissim velit, condimentum commodo metus. Nullam libero massa, condimentum eget erat vel, lobortis tristique enim. Donec vestibulum orci a orci elementum pellentesque vel ut est. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse et eros magna. Suspendisse potenti. Mauris luctus risus eget magna eleifend ultrices. Quisque magna lorem, laoreet ut velit non, auctor pharetra ligula. Duis quis elit turpis. Nunc et odio dui. Nunc erat enim, placerat eu tellus non, dignissim semper arcu. Pellentesque feugiat metus ac magna dignissim placerat. Sed vitae rhoncus libero. Quisque pharetra consectetur nisi quis pulvinar. Sed quis fermentum justo. Nunc blandit vitae neque quis dictum.
         </div>
@@ -9,8 +9,8 @@
                 <div class="back"/>
                 <transition name="fade" @after-leave="() => switchPage(p)">
                     <img :src="p.profileUrl" draggable="false" alt="profile" class="front"
-                         v-if="!clicked.has(p.name)"
-                         @click="clicked.has(p.name) ? clicked.delete(p.name) : clicked.add(p.name)">
+                         v-if="clicked !== p.name"
+                         @click="() => { if (!clicked) clicked = p.name }">
                 </transition>
                 <div class="sub-text font-custom">{{p.name}}</div>
                 <div class="bookmark"/>
@@ -29,7 +29,7 @@ import {exampleData, Person} from "@/logic/data";
 @Options({components: {}})
 export default class Home extends Vue
 {
-    clicked: Set<string> = new Set()
+    clicked = ''
 
     people: Person[] = exampleData
 
@@ -65,10 +65,6 @@ export default class Home extends Vue
         transition: all .25s ease !important
 
     .fade-enter, .fade-leave-to
-        top: -5000px !important
-        left: -5000px !important
-        height: 10000px !important
-        width: 10000px !important
         opacity: 0
 
     .front, .back
