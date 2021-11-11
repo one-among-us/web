@@ -4,10 +4,10 @@
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu dignissim velit, condimentum commodo metus. Nullam libero massa, condimentum eget erat vel, lobortis tristique enim. Donec vestibulum orci a orci elementum pellentesque vel ut est. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse et eros magna. Suspendisse potenti. Mauris luctus risus eget magna eleifend ultrices. Quisque magna lorem, laoreet ut velit non, auctor pharetra ligula. Duis quis elit turpis. Nunc et odio dui. Nunc erat enim, placerat eu tellus non, dignissim semper arcu. Pellentesque feugiat metus ac magna dignissim placerat. Sed vitae rhoncus libero. Quisque pharetra consectetur nisi quis pulvinar. Sed quis fermentum justo. Nunc blandit vitae neque quis dictum.
         </div>
 
-        <div id="profiles">
+        <div id="profiles" class="unselectable">
             <div class="profile" v-for="p in people" :key="p">
                 <div class="back"></div>
-                <img :src="p.profileUrl" alt="profile" class="front">
+                <img :src="p.profileUrl" draggable="false" alt="profile" class="front">
                 <div class="sub-text">{{p.name}}</div>
                 <div class="bookmark"></div>
             </div>
