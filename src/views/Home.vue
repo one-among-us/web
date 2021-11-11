@@ -42,9 +42,11 @@ export default class Home extends Vue
 </script>
 
 <style lang="sass" scoped>
+@import "../css/colors"
+
 #introduction
     font-size: 15px
-    color: #7c7c7c
+    color: $color-text-light
     text-align: justify
     text-justify: inter-word
     margin: 10px 50px
@@ -70,8 +72,8 @@ export default class Home extends Vue
         opacity: 0
 
     .front, .back
-        border: 10px solid #ffffff
-        outline: 2px solid #565656
+        border: 10px solid white
+        outline: 2px solid $color-text-main
         height: 150px
         width: 150px
         transition: all .25s ease
@@ -100,7 +102,7 @@ export default class Home extends Vue
         z-index: 3
 
     .back.add
-        outline: 2px dashed #565656
+        outline: 2px dashed $color-text-main
         font-size: 75px
         color: gray
         background-color: #f1f1f1

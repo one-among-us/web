@@ -51,6 +51,8 @@ export default class Profile extends Vue
 
 <!-- Scoped Style -->
 <style lang="sass" scoped>
+@import "../css/colors"
+
 #profile-page
     margin-left: 50px
     margin-right: 50px
@@ -62,8 +64,8 @@ export default class Profile extends Vue
     font-size: 0.9em
     width: 280px
     float: right
-    background-color: #FFF
-    border: 1px solid #ff7a91
+    background-color: white
+    border: 1px solid $color-text-special
     margin-left: 15px
 
     img
@@ -72,13 +74,15 @@ export default class Profile extends Vue
 
 <!-- Global Style -->
 <style lang="sass">
+@import "../css/colors"
+
 #content
     a
-        color: #ff7a91
+        color: $color-text-special
         text-decoration: none
 
     h2
-        border-bottom: 1px solid #ff7a91
+        border-bottom: 1px solid $color-text-special
         font-size: 1.5em
         margin-top: 1em
 
