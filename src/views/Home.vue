@@ -24,23 +24,14 @@
 
 <script lang="ts">
 import {Options, Vue} from 'vue-class-component';
-
-interface Person {
-    name: string
-    profileUrl: string
-}
+import {exampleData, Person} from "@/logic/data";
 
 @Options({components: {}})
 export default class Home extends Vue
 {
     clicked: Set<string> = new Set()
 
-    people: Person[] = [
-        // {name: '小桂桂', profileUrl: 'https://pbs.twimg.com/profile_images/1445198854429810690/TzeMf5yX_400x400.jpg'},
-        {name: '椎名もた', profileUrl: 'https://pbs.twimg.com/profile_images/591631266937638913/AtOAlQpd_400x400.jpg'},
-        {name: '不存在', profileUrl: 'https://pbs.twimg.com/profile_images/1374397593594122242/bPfn-Zzk_400x400.jpg'},
-        {name: '萤', profileUrl: 'https://pbs.twimg.com/profile_images/1378912446782394368/icyGMaK5_400x400.jpg'},
-    ]
+    people: Person[] = exampleData
 
     switchPage(p: Person): void
     {
