@@ -1,18 +1,24 @@
 <template>
     <div>
         <div id="profile-page">
-            <table id="info">
-                <tbody>
-                    <tr><td colspan="2">{{p.name}}</td></tr>
-                    <tr>
-                        <td colspan="2"><img :src="p.profileUrl" alt="profile" draggable="false"></td>
-                    </tr>
-                    <tr v-for="[key, value] of Object.entries(p.info)" :key="key">
-                        <td>{{key}}</td>
-                        <td>{{value}}</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div id="info" class="font-custom fbox-h">
+                <!-- Horizontal Alignment of profile pic and the rest -->
+                <div id="left" class="fbox-v">
+                    <img :src="p.profileUrl" draggable="false" alt="profile" class="front">
+                    <div class="spacer f-grow1"/>
+                    <div id="buttons">
+                        <div class="button fbox-vcenter"><i class="el-icon-lollipop"></i></div>
+                        <div class="button fbox-vcenter"><i class="el-icon-edit"></i></div>
+                    </div>
+                </div>
+                <!-- Vertical Alignment of info section -->
+                <div id="right" class="fbox-v">
+                    <div id="name-box">
+                        <span id="name-text">{{p.name}}</span>
+                        <span id="id">@{{p.id}}</span>
+                    </div>
+                </div>
+            </div>
 
             <div id="content" v-html="markdownToHtml"></div>
         </div>
@@ -62,14 +68,55 @@ export default class Profile extends Vue
 
 #info
     font-size: 0.9em
-    width: 280px
-    float: right
-    background-color: white
-    border: 1px solid $color-text-special
-    margin-left: 15px
+    width: 100%
+    background-color: $color-bg-6
+    //border: 4px solid $color-text-main
+    filter: drop-shadow(0 2px 5px rgba(166, 134, 89, 0.42))
+    border-radius: 40px
+    min-height: 250px
+
+#right
+    flex-grow: 1
+    text-align: left
+    margin-top: 20px
+    margin-right: 50px
+
+    #name-box
+        border-bottom: 1.5px solid $color-text-main
+
+        #name-text
+            font-size: 1.7em
+            font-weight: bold
+            margin-right: 8px
+
+#left
+    margin-left: 50px
+    margin-right: 50px
 
     img
-        width: 280px
+        border: 10px solid white
+        outline: 2px solid $color-text-main
+        height: 150px
+        width: 150px
+        transition: all .25s ease
+        transform: rotate(-15deg)
+
+    .spacer
+        min-height: 30px
+
+    #buttons
+        margin-bottom: 10px
+
+        .button
+            display: inline-flex
+            font-size: 20px
+            width: 40px
+            height: 40px
+            border: 2px solid $color-text-main
+            border-radius: 15px
+
+        .button:first-child
+            margin-right: 20px
 </style>
 
 <!-- Global Style -->
