@@ -25,10 +25,10 @@ import {Options, Vue} from 'vue-class-component';
 export default class Home extends Vue
 {
     people = [
-        {name: '小桂桂', profileUrl: 'https://pbs.twimg.com/profile_images/1445198854429810690/TzeMf5yX_400x400.jpg'},
+        // {name: '小桂桂', profileUrl: 'https://pbs.twimg.com/profile_images/1445198854429810690/TzeMf5yX_400x400.jpg'},
         {name: '椎名もた', profileUrl: 'https://pbs.twimg.com/profile_images/591631266937638913/AtOAlQpd_400x400.jpg'},
         {name: '不存在', profileUrl: 'https://pbs.twimg.com/profile_images/1374397593594122242/bPfn-Zzk_400x400.jpg'},
-        {name: '蛍', profileUrl: 'https://pbs.twimg.com/profile_images/1378912446782394368/icyGMaK5_400x400.jpg'},
+        {name: '萤', profileUrl: 'https://pbs.twimg.com/profile_images/1378912446782394368/icyGMaK5_400x400.jpg'},
     ]
 }
 </script>
@@ -75,6 +75,8 @@ export default class Home extends Vue
         text-align: left
         position: relative
         z-index: 3
+
+        font-family: FZSJ-QIANNYDH, Avenir, Helvetica, Arial, sans-serif
 
     .back.add
         outline: 2px dashed #565656
