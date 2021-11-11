@@ -7,8 +7,8 @@
                     <img :src="p.profileUrl" draggable="false" alt="profile" class="front">
                     <div class="spacer"/>
                     <div id="buttons">
-                        <div class="button fbox-vcenter"><i class="el-icon-lollipop"></i></div>
-                        <div class="button fbox-vcenter"><i class="el-icon-edit"></i></div>
+                        <div class="button fbox-vcenter" @click="flower"><i class="el-icon-lollipop"></i></div>
+                        <div class="button fbox-vcenter" @click="edit"><i class="el-icon-edit"></i></div>
                     </div>
                     <div class="f-grow1"/>
                 </div>
@@ -45,6 +45,8 @@ import {Options, Vue} from 'vue-class-component';
 import {Prop} from "vue-property-decorator";
 import {exampleData, Person} from "@/logic/data";
 import { marked } from 'marked';
+import { ElMessage } from 'element-plus';
+import {download} from "@/logic/html-helper"
 
 const icons: {[id: string]: string} = {
     twitter: 'fab fa-twitter',
@@ -78,6 +80,16 @@ export default class Profile extends Vue
         if (platform in icons) return icons[platform]
         if (platform.startsWith('custom-icon:')) return platform.replace('custom-icon:', '')
         return icons.default
+    }
+
+    flower(): void
+    {
+        ElMessage.error('TODO: 实现它')
+    }
+
+    edit(): void
+    {
+        download('page.md', this.markdown)
     }
 }
 </script>
