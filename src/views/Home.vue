@@ -8,6 +8,7 @@
             <div class="profile" v-for="p in people" :key="p">
                 <div class="back"></div>
                 <img :src="p.profileUrl" alt="profile" class="front">
+                <div class="sub-text">{{p.name}}</div>
             </div>
             <div class="profile">
                 <div class="back add fbox-vcenter">+</div>
@@ -63,6 +64,11 @@ export default class Home extends Vue
         height: 150px
         top: 0
         left: 0
+
+    .sub-text
+        margin-top: 3px
+        margin-left: 10px
+        text-align: left
 
     .back.add
         outline: 2px dashed #565656
