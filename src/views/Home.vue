@@ -71,10 +71,10 @@ export default class Home extends Vue
 
     .sub-text
         margin-top: 3px
-        margin-left: 10px
+        margin-left: 15px
         text-align: left
         position: relative
-        z-index: 2
+        z-index: 3
 
     .back.add
         outline: 2px dashed #565656
@@ -83,16 +83,16 @@ export default class Home extends Vue
         background-color: #f1f1f1
 
     .bookmark
-        border:       40px solid white
-        filter: drop-shadow(0 2px 0 #565656) drop-shadow(2px 0 0 #565656) drop-shadow(-2px 0 0 #565656)
-        //border-top:   10px
-        border-bottom: 20px solid transparent
+        border: 40px solid rgba(255, 189, 202, 0.49)
+        //$border: pink
+        //filter: drop-shadow(0 2px 0 $border) drop-shadow(2px 0 0 $border) drop-shadow(-2px 0 0 $border)
+        border-bottom: 10px solid transparent
         // width:        100px
         width: 0
         left: 10px
         height: 10px
 
         position: absolute
-        bottom: -10px
-        z-index: 1
+        bottom: -15px
+        z-index: 2
 </style>
