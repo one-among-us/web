@@ -11,7 +11,7 @@
                     </tr>
                 </tbody>
             </table>
-            
+
             <div id="content" v-html="markdownToHtml"></div>
         </div>
     </div>
@@ -55,6 +55,20 @@ export default class Profile extends Vue
 
 #content
     text-align: justify
+
+#info
+    font-size: 90%
+    text-align: center
+    width: 280px
+    max-width: 100%
+    float: right
+    background-color: #FFF
+    border: 1px solid #ff7a91
+
+    margin-left: 15px
+
+    img
+        width: 280px
 </style>
 
 <!-- Global Style -->
