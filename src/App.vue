@@ -26,52 +26,19 @@ export default class App extends Vue
 }
 </script>
 
-<!-- Scoped Style -->
-<style lang="sass" scoped>
-// Title
-#title
-    background-color: #fff4eb
-    min-height: 200px
-    flex: 1
-
-    #title-txt
-        font-size: x-large
-
-    #title-sub
-        color: rgba(44, 62, 80, 0.68)
-
-// Navigation bar
-#nav
-    background-color: #ffeedb
-    min-height: 40px
-    a
-        text-decoration: none
-        margin: 15px
-        font-size: 15px
-        color: #2c3e50
-
-        &.router-link-exact-active
-            color: #ff8373
-
-// Content
-#router
-    flex: 3
-    padding: 20px 20px 0
-    background-color: #fffcf9
-</style>
-
 <!-- Global Style -->
 <style lang="sass">
 @import "css/animations"
 @import "css/global"
 @import "css/font"
+@import "css/colors"
 
 #app
     font-family: Avenir, Helvetica, Arial, sans-serif
     -webkit-font-smoothing: antialiased
     -moz-osx-font-smoothing: grayscale
     text-align: center
-    color: #2c3e50
+    color: $color-text-main
 
     // Max width and center
     max-width: 900px
@@ -81,4 +48,40 @@ export default class App extends Vue
     display: flex
     flex-flow: column
     height: 100vh
+</style>
+
+<!-- Scoped Style -->
+<style lang="sass" scoped>
+@import "css/colors"
+
+// Title
+#title
+    background-color: $color-bg-5
+    min-height: 200px
+    flex: 1
+
+    #title-txt
+        font-size: x-large
+
+    #title-sub
+        color: $color-text-light
+
+// Navigation bar
+#nav
+    background-color: $color-bg-6
+    min-height: 40px
+    a
+        text-decoration: none
+        margin: 15px
+        font-size: 15px
+        color: $color-text-main
+
+        &.router-link-exact-active
+            color: $color-text-special
+
+// Content
+#router
+    flex: 3
+    padding: 20px 20px 0
+    background-color: $color-bg-4
 </style>
