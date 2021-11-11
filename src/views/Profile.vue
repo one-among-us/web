@@ -1,7 +1,17 @@
 <template>
     <div>
         <div id="profile-page">
-            {{p.name}}
+            <table id="info">
+                <tbody>
+                    <tr><td colspan="2">{{p.name}}</td></tr>
+                    <tr><td colspan="2"><img :src="p.profileUrl" alt="profile"></td></tr>
+                    <tr v-for="[key, value] of Object.entries(p.info)" :key="key">
+                        <td>{{key}}</td>
+                        <td>{{value}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            
             <div id="content" v-html="markdownToHtml"></div>
         </div>
     </div>
