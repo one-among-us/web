@@ -62,7 +62,7 @@ export default class Home extends Vue
     vertical-align: top
 
     .fade-enter-active, .fade-leave-active
-        transition: all .5s ease !important
+        transition: all .25s ease !important
 
     .fade-enter, .fade-leave-to
         top: -5000px !important

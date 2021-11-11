@@ -92,6 +92,8 @@ export default class Profile extends Vue
 
 #content
     text-align: justify
+    animation: fade-in-top 1s .5s ease forwards
+    opacity: 0
 
 #info
     font-size: 0.9em
@@ -100,6 +102,7 @@ export default class Profile extends Vue
     //border: 4px solid $color-text-main
     filter: drop-shadow(0 2px 5px rgba(166, 134, 89, 0.42))
     border-radius: 40px
+    animation: fade-in-top 1s 0s ease forwards
 
 #right
     flex-grow: 1

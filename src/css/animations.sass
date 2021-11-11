@@ -12,6 +12,17 @@
     transform: translateX(0)
     opacity: 1
 
+.fade-in-top
+  animation: fade-in-top .5s cubic-bezier(.39, .575, .565, 1.000) both
+
+@keyframes fade-in-top
+  0%
+    transform: translateY(-50px)
+    opacity: 0
+  100%
+    transform: translateY(0)
+    opacity: 1
+
 .fade-out-left
   animation: fade-out-left .5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both
 
@@ -22,3 +33,9 @@
   100%
     transform: translateX(-50px)
     opacity: 0
+
+@keyframes slideInFromLeft
+  0%
+    transform: translateX(-100%)
+  100%
+    transform: translateX(0)
