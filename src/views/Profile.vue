@@ -23,6 +23,14 @@
                             <span class="value">{{value}}</span>
                         </li>
                     </ul>
+                    <div id="websites" v-if="p.websites !== undefined &&
+                                             Object.keys(p.websites).length !== 0">
+                        <span id="websites-text">网站：</span>
+                        <a v-for="[key, value] of Object.entries(p.websites)" :key="key"
+                           :href="value">
+                            <i :class="getIcon(key)"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -36,6 +44,11 @@ import {Options, Vue} from 'vue-class-component';
 import {Prop} from "vue-property-decorator";
 import {exampleData, Person} from "@/logic/data";
 import { marked } from 'marked';
+
+const icons: {[id: string]: string} = {
+    twitter: 'fab fa-twitter',
+    default: 'fas fa-link'
+}
 
 @Options({components: {}})
 export default class Profile extends Vue
@@ -57,6 +70,12 @@ export default class Profile extends Vue
     get markdownToHtml(): string
     {
         return marked(this.markdown)
+    }
+
+    getIcon(platform: string): string
+    {
+        if (platform in icons) return icons[platform]
+        return icons.default
     }
 }
 </script>
@@ -109,6 +128,14 @@ export default class Profile extends Vue
 
             .key
                 font-weight: bold
+
+    #websites
+        #websites-text
+            font-weight: bold
+        a
+            color: $color-text-main
+            text-decoration: none
+            margin-right: 10px
 
 #left
     margin-left: 50px
