@@ -62,12 +62,16 @@ export default class Home extends Vue
         position: relative
 
     .front
+        transition: all .25s ease
         transform: rotate(10deg)
         position: absolute
         z-index: 3
         height: 150px
         top: 0
         left: 0
+
+    .front:hover
+        transform: rotate(2deg)
 
     .sub-text
         margin-top: 3px
