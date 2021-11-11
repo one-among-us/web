@@ -1,6 +1,9 @@
 <template>
-    <div id="Profile">
-        {{p.name}}
+    <div>
+        <div id="profile-page">
+            {{p.name}}
+            <div id="content" v-html="markdownToHtml"></div>
+        </div>
     </div>
 </template>
 
@@ -8,17 +11,28 @@
 import {Options, Vue} from 'vue-class-component';
 import {Prop} from "vue-property-decorator";
 import {exampleData, Person} from "@/logic/data";
+import { marked } from 'marked';
 
 @Options({components: {}})
 export default class Profile extends Vue
 {
     @Prop() name!: string
 
+    markdown = ''
+
     p?: Person
-    created()
+    created(): void
     {
         // TODO: Get data from server
         this.p = exampleData.filter(it => it.name == this.name)[0]
+
+        // TODO: Load markdown from server
+        fetch('/shiinamota.md').then(it => it.text()).then(it => this.markdown = it)
+    }
+
+    get markdownToHtml(): string
+    {
+        return marked(this.markdown)
     }
 }
 </script>
