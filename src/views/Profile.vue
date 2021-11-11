@@ -42,4 +42,6 @@ export default class Profile extends Vue
     margin-left: 50px
     margin-right: 50px
 
+#content
+    text-align: justify
 </style>
