@@ -17,9 +17,10 @@
                         <span id="name-text">{{p.name}}</span>
                         <span id="id">@{{p.id}}</span>
                     </div>
-                    <ul id="fields">
+                    <ul id="fields" class="f-grow1">
                         <li v-for="[key, value] of Object.entries(p.info)" :key="key">
-                            {{key}}：{{value}}
+                            <span class="key">{{key}}：</span>
+                            <span class="value">{{value}}</span>
                         </li>
                     </ul>
                 </div>
@@ -85,6 +86,8 @@ export default class Profile extends Vue
     text-align: left
     margin-top: 20px
     margin-right: 50px
+    margin-bottom: 20px
+    min-height: 200px
 
     #name-box
         border-bottom: 2px solid $color-text-main
@@ -109,6 +112,7 @@ export default class Profile extends Vue
 #left
     margin-left: 50px
     margin-right: 50px
+    // height: unset
 
     img
         border: 10px solid white
