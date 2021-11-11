@@ -79,7 +79,6 @@ export default class Profile extends Vue
     //border: 4px solid $color-text-main
     filter: drop-shadow(0 2px 5px rgba(166, 134, 89, 0.42))
     border-radius: 40px
-    min-height: 250px
 
 #right
     flex-grow: 1
@@ -108,6 +107,8 @@ export default class Profile extends Vue
         li
             margin-left: 20px
 
+            .key
+                font-weight: bold
 
 #left
     margin-left: 50px
