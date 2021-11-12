@@ -15,14 +15,14 @@
                                 <i class="el-icon-lollipop" v-else-if="!loading.has('flower')"></i>
                                 <i class="el-icon-loading" v-else></i>
                             </div>
-                            <div>{{flowerText}}</div>
+                            <div class="text-under-button">{{flowerText}}</div>
                         </div>
                         <div class="button-container">
                             <div class="button anim fbox-vcenter" @click="edit"><i class="el-icon-edit"></i></div>
-                            <div>Edit</div>
+                            <div class="text-under-button">Edit</div>
                         </div>
                     </div>
-                    <div class="f-grow1"/>
+                    <div class="spacer-bottom f-grow1"/>
                 </div>
                 <!-- Vertical Alignment of info section -->
                 <div id="right" class="fbox-v">
@@ -263,6 +263,45 @@ export default class Profile extends Vue
         .button.disabled:hover
             transform: none
             box-shadow: none
+
+
+// Phone layout: left becomes top and right becomes bottom
+@media screen and (max-width: 570px)
+    #info
+        flex-direction: column
+
+    #left
+        flex-direction: row
+        margin-bottom: -40px
+
+        #buttons
+            display: flex
+            margin-top: 20px
+            margin-right: 10px
+            order: 1
+
+            //.button-container:first-child
+            //    margin-right: 0
+
+        img
+            order: 3
+            transform: rotate(15deg)
+            margin-right: -20px
+
+        .spacer-bottom
+            flex-grow: 0
+
+        .spacer
+            order: 2
+
+    #right
+        margin-left: 30px
+        margin-right: 30px
+        margin-top: 0
+
+    #profile-page
+        margin: 0 10px
+
 </style>
 
 <!-- Global Style -->
