@@ -36,7 +36,10 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Git init
         run: |
+          ls -la
           cd dist
+          ls -la
+          touch CNAME
           sudo echo 'nightly.one-among.us' > CNAME
           git init
           git add -A
