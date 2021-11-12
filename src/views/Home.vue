@@ -5,7 +5,7 @@
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu dignissim velit, condimentum commodo metus. Nullam libero massa, condimentum eget erat vel, lobortis tristique enim. Donec vestibulum orci a orci elementum pellentesque vel ut est. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse et eros magna. Suspendisse potenti. Mauris luctus risus eget magna eleifend ultrices. Quisque magna lorem, laoreet ut velit non, auctor pharetra ligula. Duis quis elit turpis. Nunc et odio dui. Nunc erat enim, placerat eu tellus non, dignissim semper arcu. Pellentesque feugiat metus ac magna dignissim placerat. Sed vitae rhoncus libero. Quisque pharetra consectetur nisi quis pulvinar. Sed quis fermentum justo. Nunc blandit vitae neque quis dictum.
         </div>
 
-        <div id="profiles" class="unselectable">
+        <div id="profiles" class="unselectable" v-if="people">
             <div class="profile" v-for="p in people" :key="p">
                 <div class="back"/>
                 <transition name="fade" @after-leave="() => switchPage(p)">
@@ -26,19 +26,32 @@
 
 <script lang="ts">
 import {Options, Vue} from 'vue-class-component';
-import {exampleData, Person} from "@/logic/data";
+import {PersonMeta} from "@/logic/data";
+import {dataHost} from "@/logic/config.";
+import json5 from 'json5';
 
 @Options({components: {}})
 export default class Home extends Vue
 {
     clicked = ''
 
-    people: Person[] = exampleData
+    people: PersonMeta[] = null as never as PersonMeta[]
 
-    switchPage(p: Person): void
+    created(): void
     {
-        console.log("Called, " + p.name)
-        this.$router.push(`/profile/${p.name}`)
+        fetch(dataHost + '/generated/people-list.json5')
+            .then(it => it.text())
+            .then(it => {
+                this.people = json5.parse(it)
+                console.log(it)
+                console.log(this.people)
+            })
+    }
+
+    switchPage(p: PersonMeta): void
+    {
+        console.log("Called, " + p.id)
+        this.$router.push(`/profile/${p.id}`)
     }
 }
 </script>
