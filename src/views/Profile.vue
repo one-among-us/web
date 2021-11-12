@@ -17,7 +17,7 @@
                             </div>
                             <div class="text-under-button">{{flowerText}}</div>
                         </div>
-                        <div class="button-container">
+                        <div class="button-container edit">
                             <div class="button anim fbox-vcenter" @click="edit"><i class="el-icon-edit"></i></div>
                             <div class="text-under-button">Edit</div>
                         </div>
@@ -162,6 +162,7 @@ export default class Profile extends Vue
 @import "../css/colors"
 
 #profile-page
+    padding: 0 20px
     margin-left: min(4vw, 40px)
     margin-right: min(4vw, 40px)
 
@@ -295,12 +296,56 @@ export default class Profile extends Vue
             order: 2
 
     #right
-        margin-left: 30px
-        margin-right: 30px
+        margin-left: 5vw
+        margin-right: 5vw
         margin-top: 0
 
     #profile-page
         margin: 0 10px
+
+// Even smaller screen
+@media screen and (max-width: 400px)
+    #profile-page
+        margin: 0
+        padding: 0
+
+        // overflow hack
+        // https://stackoverflow.com/questions/6421966/css-overflow-x-visible-and-overflow-y-hidden-causing-scrollbar-issue
+        overflow-x: hidden
+        margin-top: -50px
+        padding-top: 50px
+
+        #content
+            margin: 10px
+
+    #info
+        margin-right: 0
+        margin-left: 0
+        border-radius: 0
+
+    #left
+        img
+            height: 90px
+            width: 90px
+            border: 5px solid white
+            outline: 2px solid $color-text-main
+
+        .button-container.edit
+            display: none !important
+
+        #buttons
+            .button-container
+                flex-direction: row
+
+            .text-under-button
+                margin-left: 5px
+                margin-top: 8px
+
+
+            .button
+                font-size: 15px
+                width: 30px
+                height: 30px
 
 </style>
 

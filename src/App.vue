@@ -82,6 +82,6 @@ export default class App extends Vue
 // Content
 #router
     flex: 3
-    padding: 20px 20px 0
+    padding-top: 20px
     background-color: $color-bg-4
 </style>
