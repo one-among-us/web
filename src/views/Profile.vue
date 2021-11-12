@@ -9,9 +9,11 @@
                     <div class="spacer"/>
                     <div id="buttons">
                         <div class="button-container">
-                            <div class="button anim fbox-vcenter" @click="flower">
-                                <i class="el-icon-lollipop" v-if="!loading.has('flower')"></i>
-                                <i class="el-icon-loading" v-else></i>
+                            <div class="button anim fbox-vcenter" @click="flower"
+                                 :class="flowersGiven ? 'disabled' : ''">
+                                <i class="el-icon-check" v-if="flowersGiven"></i>
+                                <i class="el-icon-lollipop" v-if="!flowersGiven && !loading.has('flower')"></i>
+                                <i class="el-icon-loading" v-if="!flowersGiven"></i>
                             </div>
                             <div>{{flowerText}}</div>
                         </div>
@@ -56,7 +58,7 @@ import {Prop} from "vue-property-decorator";
 import {Person} from "@/logic/data";
 import { marked } from 'marked';
 import { ElMessage } from 'element-plus';
-import {abbreviateNumber, download} from "@/logic/helper"
+import {abbreviateNumber, download, getTodayDate} from "@/logic/helper"
 import {backendHost, dataHost} from "@/logic/config.";
 import json5 from "json5";
 
@@ -73,11 +75,14 @@ export default class Profile extends Vue
     p: Person = null as never as Person
     markdown = ''
     flowers = 0
+    flowersGiven = false
 
     loading = new Set<string>()
 
     created(): void
     {
+        this.flowersGiven = localStorage.getItem('last_flower_given') === getTodayDate()
+
         // TODO: Handle errors
         // Get data from server
         fetch(dataHost + `/people/${this.userid.toLowerCase()}/info.json5`)
@@ -122,6 +127,8 @@ export default class Profile extends Vue
 
     flower(): void
     {
+        if (this.flowersGiven) return
+
         // TODO: Handle errors
         // TODO: Better user interaction (probably like +1 animation or something)
         this.loading.add('flower')
@@ -130,6 +137,10 @@ export default class Profile extends Vue
             {
                 ElMessage.success('Yay!')
                 this.flowers += 1
+
+                // Set flowers given
+                this.flowersGiven = true
+                localStorage.setItem('last_flower_given', getTodayDate())
             })
             .finally(() => this.loading.delete('flower'))
     }
@@ -245,6 +256,13 @@ export default class Profile extends Vue
             border: 2px solid $color-text-main
             border-radius: 15px
             background: $color-bg-5
+
+        .button.disabled
+            cursor: not-allowed
+
+        .button.disabled:hover
+            transform: none
+            box-shadow: none
 </style>
 
 <!-- Global Style -->

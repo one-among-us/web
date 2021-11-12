@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 /**
  * Download a string
  * @param filename File name
@@ -54,4 +56,12 @@ export function abbreviateNumber(
 
     // format number and add suffix
     return (!sign ? "-" : "") + rounded + suffix;
+}
+
+/**
+ * Get date in YYYY-MM-DD
+ */
+export function getTodayDate(): string
+{
+    return moment().format('YYYY-MM-DD')
 }
