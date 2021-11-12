@@ -67,12 +67,12 @@ export default class Profile extends Vue
     created(): void
     {
         // Get data from server
-        fetch(`${dataHost}/people/${this.userid}/info.json5`)
+        fetch(`${dataHost}/people/${this.userid.toLowerCase()}/info.json5`)
             .then(it => it.text())
             .then(it => this.p = json5.parse(it))
 
         // Load markdown from server
-        fetch(dataHost + `/people/${this.userid}/page.md`)
+        fetch(dataHost + `/people/${this.userid.toLowerCase()}/page.md`)
             .then(it => it.text())
             .then(it => this.markdown = it)
     }
