@@ -8,8 +8,14 @@
                          @click="image">
                     <div class="spacer"/>
                     <div id="buttons">
-                        <div class="button anim fbox-vcenter" @click="flower"><i class="el-icon-lollipop"></i></div>
-                        <div class="button anim fbox-vcenter" @click="edit"><i class="el-icon-edit"></i></div>
+                        <div class="button-container">
+                            <div class="button anim fbox-vcenter" @click="flower"><i class="el-icon-lollipop"></i></div>
+                            <div>123</div>
+                        </div>
+                        <div class="button-container">
+                            <div class="button anim fbox-vcenter" @click="edit"><i class="el-icon-edit"></i></div>
+                            <div>Edit</div>
+                        </div>
                     </div>
                     <div class="f-grow1"/>
                 </div>
@@ -194,6 +200,13 @@ export default class Profile extends Vue
     #buttons
         margin-bottom: 10px
 
+        .button-container
+            display: inline-flex
+            flex-direction: column
+
+        .button-container:first-child
+            margin-right: 20px
+
         .button
             display: inline-flex
             font-size: 20px
@@ -202,9 +215,6 @@ export default class Profile extends Vue
             border: 2px solid $color-text-main
             border-radius: 15px
             background: $color-bg-5
-
-        .button:first-child
-            margin-right: 20px
 </style>
 
 <!-- Global Style -->
