@@ -21,10 +21,15 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Install yarn
-      - uses: borales/actions-yarn@v2.3.0
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
       
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+      
+      - name: Install yarn
+        run: npm install yarn
       
       - name: Yarn Install
         run: yarn install
