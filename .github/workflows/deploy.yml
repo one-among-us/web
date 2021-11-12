@@ -45,9 +45,7 @@ jobs:
           ls -la
           touch CNAME
           sudo echo 'nightly.one-among.us' > CNAME
-      
-      - name: Git push
-        run: |
+          ls -la
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'action@github.com'
           git init
