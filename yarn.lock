@@ -993,6 +993,13 @@
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.10.2.tgz#0798c03351f0dea1a5a4cabddf26a55a7cbee590"
   integrity sha512-IXf3XA7+XyN7CP9gGh/XB0UxVMlvARGEgGXLubFICsUMGz6Q+DU+i4gGlpOxTjKvXjkJDJC8YdqdKkDj9qZHEQ==
 
+"@primer/octicons@^16.1.1":
+  version "16.1.1"
+  resolved "https://registry.yarnpkg.com/@primer/octicons/-/octicons-16.1.1.tgz#2f4c261952221ae62640fe35bc9ccee65dc70947"
+  integrity sha512-qlMErXg4I7oOofP4d5GceLbNpjTRSkyLoe5Ng1mfebtTvjeBj8x+kdqgwFWLRp7QO1ye5AaxcCvn1AJMAeURzw==
+  dependencies:
+    object-assign "^4.1.1"
+
 "@soda/friendly-errors-webpack-plugin@^1.7.1":
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/@soda/friendly-errors-webpack-plugin/-/friendly-errors-webpack-plugin-1.8.0.tgz#84751d82a93019d5c92c0cf0e45ac59087cd2240"
