@@ -14,7 +14,4 @@ export interface Person
 
     info?: {[id: string]: string}
     websites?: {[id: string]: string}
-
-    profilePageUrl?: string
-    profilePageFormat?: string
 }
