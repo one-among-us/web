@@ -10,7 +10,7 @@
                     <div id="buttons">
                         <div class="button-container">
                             <div class="button anim fbox-vcenter" @click="flower"><i class="el-icon-lollipop"></i></div>
-                            <div>123</div>
+                            <div>{{flowers}}</div>
                         </div>
                         <div class="button-container">
                             <div class="button anim fbox-vcenter" @click="edit"><i class="el-icon-edit"></i></div>
@@ -54,7 +54,7 @@ import {Person} from "@/logic/data";
 import { marked } from 'marked';
 import { ElMessage } from 'element-plus';
 import {download} from "@/logic/html-helper"
-import {dataHost} from "@/logic/config.";
+import {backendHost, dataHost} from "@/logic/config.";
 import json5 from "json5";
 
 const icons: {[id: string]: string} = {
@@ -69,11 +69,12 @@ export default class Profile extends Vue
 
     p: Person = null as never as Person
     markdown = ''
+    flowers = ''
 
     created(): void
     {
         // Get data from server
-        fetch(`${dataHost}/people/${this.userid.toLowerCase()}/info.json5`)
+        fetch(dataHost + `/people/${this.userid.toLowerCase()}/info.json5`)
             .then(it => it.text())
             .then(it => {
                 this.p = json5.parse(it)
@@ -85,6 +86,13 @@ export default class Profile extends Vue
         fetch(dataHost + `/people/${this.userid.toLowerCase()}/page.md`)
             .then(it => it.text())
             .then(it => this.markdown = it)
+
+        fetch(backendHost + `/flowers/get?id=${this.userid}`)
+            .then(it => it.text())
+            .then(it => {
+                console.log(it)
+                this.flowers = '' + parseInt(it)
+            })
     }
 
     get markdownToHtml(): string
