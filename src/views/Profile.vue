@@ -4,11 +4,12 @@
             <div id="info" class="font-custom fbox-h">
                 <!-- Horizontal Alignment of profile pic and the rest -->
                 <div id="left" class="fbox-v">
-                    <img :src="p.profileUrl" draggable="false" alt="profile" class="front">
+                    <img :src="p.profileUrl" draggable="false" alt="profile" class="button anim front"
+                         @click="image">
                     <div class="spacer"/>
                     <div id="buttons">
-                        <div class="button fbox-vcenter" @click="flower"><i class="el-icon-lollipop"></i></div>
-                        <div class="button fbox-vcenter" @click="edit"><i class="el-icon-edit"></i></div>
+                        <div class="button anim fbox-vcenter" @click="flower"><i class="el-icon-lollipop"></i></div>
+                        <div class="button anim fbox-vcenter" @click="edit"><i class="el-icon-edit"></i></div>
                     </div>
                     <div class="f-grow1"/>
                 </div>
@@ -80,6 +81,11 @@ export default class Profile extends Vue
         if (platform in icons) return icons[platform]
         if (platform.startsWith('custom-icon:')) return platform.replace('custom-icon:', '')
         return icons.default
+    }
+
+    image(): void
+    {
+        ElMessage.error('TODO: 实现它')
     }
 
     flower(): void
@@ -185,6 +191,7 @@ export default class Profile extends Vue
             height: 40px
             border: 2px solid $color-text-main
             border-radius: 15px
+            background: $color-bg-5
 
         .button:first-child
             margin-right: 20px

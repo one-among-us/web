@@ -1,20 +1,12 @@
+@import colors
+
 // Constants
 $font: Avenir, Helvetica, Arial, sans-serif
 
 // Container width (This is normally 50vw,
 //   but when it's smaller than 900px, use 100vw - 50px, because 50px is the margin)
 $app-width: max(50vw, min(900px, 100vw - 50px))
-$c-text: #2c3e50
 $c-highlight: #ff7878
-
-
-// Global Styles
-#app
-  font-family: $font
-  -webkit-font-smoothing: antialiased
-  -moz-osx-font-smoothing: grayscale
-  text-align: center
-  color: $c-text
 
 // Highlight color
 .color-highlight
@@ -116,3 +108,12 @@ $c-highlight: #ff7878
 
 #page-desc
   margin-bottom: 20px
+
+
+.button.anim
+  transition: all .25s ease
+
+.button.anim:hover
+  transform: translateY(-5px)
+  box-shadow: 0 10px 10px -5px $color-text-light
+  cursor: pointer
