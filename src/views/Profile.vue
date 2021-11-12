@@ -1,7 +1,7 @@
 <template>
     <div>
         <div id="profile-page">
-            <div id="info" class="font-custom fbox-h">
+            <div id="info" class="font-custom fbox-h" v-if="p">
                 <!-- Horizontal Alignment of profile pic and the rest -->
                 <div id="left" class="fbox-v">
                     <img :src="p.profileUrl" draggable="false" alt="profile" class="button anim front"
@@ -44,10 +44,12 @@
 <script lang="ts">
 import {Options, Vue} from 'vue-class-component';
 import {Prop} from "vue-property-decorator";
-import {exampleData, Person} from "@/logic/data";
+import {Person} from "@/logic/data";
 import { marked } from 'marked';
 import { ElMessage } from 'element-plus';
 import {download} from "@/logic/html-helper"
+import {dataHost} from "@/logic/config.";
+import json5 from "json5";
 
 const icons: {[id: string]: string} = {
     twitter: 'fab fa-twitter',
@@ -57,18 +59,22 @@ const icons: {[id: string]: string} = {
 @Options({components: {}})
 export default class Profile extends Vue
 {
-    @Prop() name!: string
+    @Prop() userid!: string
 
+    p: Person = null as never as Person
     markdown = ''
 
-    p!: Person
     created(): void
     {
-        // TODO: Get data from server
-        this.p = exampleData.filter(it => it.name == this.name)[0]
+        // Get data from server
+        fetch(`${dataHost}/people/${this.userid}/info.json5`)
+            .then(it => it.text())
+            .then(it => this.p = json5.parse(it))
 
-        // TODO: Load markdown from server
-        fetch(`/${this.p.id}.md`).then(it => it.text()).then(it => this.markdown = it)
+        // Load markdown from server
+        fetch(dataHost + `/people/${this.userid}/page.md`)
+            .then(it => it.text())
+            .then(it => this.markdown = it)
     }
 
     get markdownToHtml(): string
