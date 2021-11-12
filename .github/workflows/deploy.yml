@@ -20,19 +20,18 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      # Install yarn
+      - uses: borales/actions-yarn@v2.3.0
+      
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       
-      # will run `yarn install` command
-      - uses: borales/actions-yarn@v2.3.0
-        with:
-          cmd: install 
+      - name: Yarn Install
+        run: yarn install
+        
+      - name: Yarn Build
+        run: yarn run build
       
-      # will run `yarn build` command
-      - uses: borales/actions-yarn@v2.3.0
-        with:
-          cmd: build 
-          
       # Runs a set of commands using the runners shell
       - name: Git init
         run: |
