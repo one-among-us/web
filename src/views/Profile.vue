@@ -162,8 +162,8 @@ export default class Profile extends Vue
 @import "../css/colors"
 
 #profile-page
-    margin-left: 50px
-    margin-right: 50px
+    margin-left: min(4vw, 40px)
+    margin-right: min(4vw, 40px)
 
 #content
     text-align: justify
