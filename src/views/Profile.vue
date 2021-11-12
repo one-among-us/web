@@ -83,7 +83,7 @@ export default class Profile extends Vue
 
     created(): void
     {
-        this.flowersGiven = localStorage.getItem('last_flower_given') === getTodayDate()
+        this.flowersGiven = localStorage.getItem(`last_flower_given@${this.userid}`) === getTodayDate()
 
         // TODO: Handle errors
         // Get data from server
@@ -142,7 +142,7 @@ export default class Profile extends Vue
 
                 // Set flowers given
                 this.flowersGiven = true
-                localStorage.setItem('last_flower_given', getTodayDate())
+                localStorage.setItem(`last_flower_given@${this.userid}`, getTodayDate())
             })
             .finally(() => this.loading.delete('flower'))
     }
