@@ -12,10 +12,8 @@
                             <div class="button anim fbox-vcenter" @click="flower"
                                  :class="flowersGiven ? 'disabled' : ''">
                                 <i class="el-icon-check" v-if="flowersGiven"></i>
-                                <span v-else>
-                                    <i class="el-icon-lollipop" v-if="!loading.has('flower')"></i>
-                                    <i class="el-icon-loading" v-else></i>
-                                </span>
+                                <i class="el-icon-lollipop" v-else-if="!loading.has('flower')"></i>
+                                <i class="el-icon-loading" v-else></i>
                             </div>
                             <div>{{flowerText}}</div>
                         </div>
