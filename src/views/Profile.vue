@@ -13,7 +13,7 @@
                                 <i class="el-icon-lollipop" v-if="!loading.has('flower')"></i>
                                 <i class="el-icon-loading" v-else></i>
                             </div>
-                            <div>{{flowers}}</div>
+                            <div>{{flowerText}}</div>
                         </div>
                         <div class="button-container">
                             <div class="button anim fbox-vcenter" @click="edit"><i class="el-icon-edit"></i></div>
@@ -56,7 +56,7 @@ import {Prop} from "vue-property-decorator";
 import {Person} from "@/logic/data";
 import { marked } from 'marked';
 import { ElMessage } from 'element-plus';
-import {download} from "@/logic/html-helper"
+import {abbreviateNumber, download} from "@/logic/helper"
 import {backendHost, dataHost} from "@/logic/config.";
 import json5 from "json5";
 
@@ -72,7 +72,7 @@ export default class Profile extends Vue
 
     p: Person = null as never as Person
     markdown = ''
-    flowers = ''
+    flowers = 0
 
     loading = new Set<string>()
 
@@ -99,7 +99,7 @@ export default class Profile extends Vue
             .then(it => it.text())
             .then(it => {
                 console.log(it)
-                this.flowers = '' + parseInt(it)
+                this.flowers = parseInt(it)
             })
     }
 
@@ -129,9 +129,14 @@ export default class Profile extends Vue
             .then(() =>
             {
                 ElMessage.success('Yay!')
-                this.flowers = '' + (parseInt(this.flowers) + 1)
+                this.flowers += 1
             })
             .finally(() => this.loading.delete('flower'))
+    }
+
+    get flowerText(): string
+    {
+        return abbreviateNumber(this.flowers)
     }
 
     edit(): void
