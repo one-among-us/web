@@ -9,7 +9,10 @@
                     <div class="spacer"/>
                     <div id="buttons">
                         <div class="button-container">
-                            <div class="button anim fbox-vcenter" @click="flower"><i class="el-icon-lollipop"></i></div>
+                            <div class="button anim fbox-vcenter" @click="flower">
+                                <i class="el-icon-lollipop" v-if="!loading.has('flower')"></i>
+                                <i class="el-icon-loading" v-else></i>
+                            </div>
                             <div>{{flowers}}</div>
                         </div>
                         <div class="button-container">
@@ -71,8 +74,11 @@ export default class Profile extends Vue
     markdown = ''
     flowers = ''
 
+    loading = new Set<string>()
+
     created(): void
     {
+        // TODO: Handle errors
         // Get data from server
         fetch(dataHost + `/people/${this.userid.toLowerCase()}/info.json5`)
             .then(it => it.text())
@@ -82,11 +88,13 @@ export default class Profile extends Vue
                 if (!this.p.websites) this.p.websites = {}
             })
 
+        // TODO: Handle errors
         // Load markdown from server
         fetch(dataHost + `/people/${this.userid.toLowerCase()}/page.md`)
             .then(it => it.text())
             .then(it => this.markdown = it)
 
+        // TODO: Handle errors
         fetch(backendHost + `/flowers/get?id=${this.userid}`)
             .then(it => it.text())
             .then(it => {
@@ -114,7 +122,16 @@ export default class Profile extends Vue
 
     flower(): void
     {
-        ElMessage.error('TODO: 实现它')
+        // TODO: Handle errors
+        // TODO: Better user interaction (probably like +1 animation or something)
+        this.loading.add('flower')
+        fetch(backendHost + `/flowers/give?id=${this.userid}`)
+            .then(() =>
+            {
+                ElMessage.success('Yay!')
+                this.flowers = '' + (parseInt(this.flowers) + 1)
+            })
+            .finally(() => this.loading.delete('flower'))
     }
 
     edit(): void
