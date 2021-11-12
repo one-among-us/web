@@ -45,12 +45,11 @@ jobs:
           ls -la
           touch CNAME
           sudo echo 'nightly.one-among.us' > CNAME
-      
-      - name: Git push
-        run: |
+          ls -la
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'action@github.com'
+          git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/$GITHUB_REPOSITORY
           git init
           git add -A
           git commit -m 'deploy'
-          git push -f https://github.com/hykilpikonna/one-among-us.git master:gh-pages
+          git push -f "https://github.com/hykilpikonna/one-among-us.git" "master:gh-pages"
