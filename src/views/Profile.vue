@@ -31,17 +31,15 @@
                         <span id="id">@{{p.id}}</span>
                     </div>
                     <ul id="fields" class="f-grow1">
-                        <li v-for="[key, value] of Object.entries(p.info)" :key="key">
-                            <span class="key">{{key}}：</span>
-                            <span class="value">{{value}}</span>
+                        <li v-for="info of p.info" :key="info.key">
+                            <span class="key">{{info.key}}：</span>
+                            <span class="value">{{info.val}}</span>
                         </li>
                     </ul>
-                    <div id="websites" v-if="p.websites !== undefined &&
-                                             Object.keys(p.websites).length !== 0">
+                    <div id="websites" v-if="p.websites">
                         <span id="websites-text">网站：</span>
-                        <a v-for="[key, value] of Object.entries(p.websites)" :key="key"
-                           :href="value">
-                            <i :class="getIcon(key)"></i>
+                        <a v-for="web of p.websites" :key="web.key" :href="web.val">
+                            <i :class="getIcon(web.key)"></i>
                         </a>
                     </div>
                 </div>
@@ -55,7 +53,7 @@
 <script lang="ts">
 import {Options, Vue} from 'vue-class-component';
 import {Prop} from "vue-property-decorator";
-import {Person} from "@/logic/data";
+import {parsePeopleJson, Person} from "@/logic/data";
 import { marked } from 'marked';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import {abbreviateNumber, download, getTodayDate} from "@/logic/helper"
@@ -88,9 +86,7 @@ export default class Profile extends Vue
         fetch(dataHost + `/people/${this.userid.toLowerCase()}/info.json5`)
             .then(it => it.text())
             .then(it => {
-                this.p = json5.parse(it)
-                if (!this.p.info) this.p.info = {}
-                if (!this.p.websites) this.p.websites = {}
+                this.p = parsePeopleJson(it)
             })
 
         // TODO: Handle errors
