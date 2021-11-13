@@ -1,6 +1,6 @@
 <template>
     <Divider height="5px"/>
-    <div id="title" class="fbox-vcenter unselectable" v-if="$route.name !== 'Profile'">
+    <div id="title" class="fbox-vcenter unselectable" v-if="['Home', 'About'].includes($route.name)">
         <div id="title-txt">一个标题</div>
         <div id="title-sub">这是一些副标题</div>
     </div>

@@ -1,6 +1,7 @@
 import {createRouter, createWebHashHistory, RouteRecordRaw} from 'vue-router'
 import Home from '../views/Home.vue'
 import Profile from "@/views/Profile.vue";
+import EditInfo from "@/views/EditInfo.vue";
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -20,6 +21,12 @@ const routes: Array<RouteRecordRaw> = [
         path: '/profile/:userid',
         name: 'Profile',
         component: Profile,
+        props: true
+    },
+    {
+        path: '/edit-info/:userid',
+        name: 'EditInfo',
+        component: EditInfo,
         props: true
     }
 ]
