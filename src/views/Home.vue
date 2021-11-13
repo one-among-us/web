@@ -64,7 +64,7 @@ export default class Home extends Vue
     color: $color-text-light
     text-align: justify
     text-justify: inter-word
-    margin: 10px 50px
+    margin: 10px min(5vw, 40px)
 
 #profiles
     margin-top: 20px
@@ -131,4 +131,12 @@ export default class Home extends Vue
         position: absolute
         bottom: -15px
         z-index: 2
+
+@media screen and (max-width: 440px)
+    .profile
+        .front, .back
+            border: 5px solid white
+            $len: 30vw
+            height: $len
+            width: $len
 </style>
