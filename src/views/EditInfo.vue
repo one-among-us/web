@@ -61,8 +61,8 @@ export default class EditInfo extends Vue
         fetch(dataHost + `/people/${this.userid.toLowerCase()}/info.json5`)
             .then(it => it.text())
             .then(it => {
-                this.initialJson = it
                 this.p = parsePeopleJson(it)
+                this.initialJson = toJson(this.p)
                 this.p.info.forEach((a) => this.editInfo.push({k: a[0], v: a[1]}))
                 this.p.websites.forEach((a) => this.editWebsites.push({k: a[0], v: a[1]}))
                 this.change()
@@ -85,6 +85,21 @@ export default class EditInfo extends Vue
 
     submit(): void
     {
+        removeEmpty(this.editInfo)
+        removeEmpty(this.editWebsites)
+        this.p.info = this.editInfo.map(it => [it.k, it.v])
+        this.p.websites = this.editWebsites.map(it => [it.k, it.v])
+        let json = toJson(this.p)
+        console.log(json)
+        this.change()
+
+        if (json == this.initialJson)
+        {
+            ElMessageBox.alert('什么都没改怎么提交啦 (╯‵□′)╯︵┻━┻', '👀',
+                {confirmButtonText: '好好好'})
+            return
+        }
+
         ElMessageBox.confirm('确定要提交嘛？',
         {
             confirmButtonText: 'OK',
@@ -92,33 +107,21 @@ export default class EditInfo extends Vue
             type: 'warning',
         })
         .then(() => {
-            ElMessage({
-                type: 'success',
-                message: '正在创建更改请求 (Pull Request)...',
-            })
+            ElMessage.success('正在创建更改请求 (Pull Request)...')
 
-            removeEmpty(this.editInfo)
-            removeEmpty(this.editWebsites)
-            this.p.info = this.editInfo.map(it => [it.k, it.v])
-            this.p.websites = this.editWebsites.map(it => [it.k, it.v])
-            let json = toJson(this.p)
-            console.log(json)
-
-            // fetch(url(backendHost + `/edit/info`, {id: this.p.id, json: json}))
-            //     .then(it => it.text())
-            //     .then(it => {
-            //         ElMessageBox.confirm('提交成功！谢谢你',
-            //         {
-            //             confirmButtonText: '查看更改请求',
-            //             cancelButtonText: '好的',
-            //             type: 'warning',
-            //         })
-            //         .then(() => {
-            //             open(it)
-            //         })
-            //     })
-
-            this.change()
+            fetch(url(backendHost + `/edit/info`, {id: this.p.id, json: json}))
+                .then(it => it.text())
+                .then(it => {
+                    ElMessageBox.confirm('提交成功！谢谢你',
+                    {
+                        confirmButtonText: '查看更改请求',
+                        cancelButtonText: '好的',
+                        type: 'warning',
+                    })
+                    .then(() => {
+                        open(it)
+                    })
+                })
         })
     }
 }
