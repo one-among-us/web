@@ -42,3 +42,8 @@ export function toJson(p: Person): string
         .replace(/',\n {12}'/g, "', '")
         .replace(/',\n {8}],/g, "'],")
 }
+
+export function url(base: string, params: {[id: string]: string}): string
+{
+    return base + '?' + new URLSearchParams(params)
+}
