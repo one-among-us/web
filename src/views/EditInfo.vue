@@ -16,6 +16,7 @@
                 <input class="value" v-model="web.val"/>
             </div>
         </div>
+        <div class="button" @click="submit">提交</div>
     </div>
     </div>
 </template>
@@ -35,6 +36,7 @@ export default class EditInfo extends Vue
     @Prop() userid!: string
     p: Person = null as never as Person
 
+    // TODO: Save in localstorage on change
     editInfo: KVPair[] = []
     editWebsites: KVPair[] = []
 
@@ -56,6 +58,10 @@ export default class EditInfo extends Vue
             })
     }
 
+    submit(): void
+    {
+        alert("这个功能还没有实现！")
+    }
 }
 </script>
 
