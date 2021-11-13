@@ -30,6 +30,21 @@ import json5 from "json5";
 
 interface KVPair {key: string, val: string}
 
+function isEmpty(p: KVPair)
+{
+    return !p.key && !p.val
+}
+
+function removeEmpty(arr: KVPair[])
+{
+    let i = 0;
+    while (i < arr.length) {
+        if (isEmpty(arr[i])) arr.splice(i, 1)
+        else ++i
+    }
+    return arr
+}
+
 @Options({components: {}})
 export default class EditInfo extends Vue
 {
@@ -55,7 +70,23 @@ export default class EditInfo extends Vue
                     this.editInfo.push({key: key, val: this.p.info[key]})
                 for (let key in this.p.websites)
                     this.editWebsites.push({key: key, val: this.p.websites[key]})
+
+                this.change()
             })
+    }
+
+    change(): void
+    {
+        for (let list of [this.editInfo, this.editWebsites])
+        {
+            // Remove redundant last entries
+            if (list.filter(it => isEmpty(it)).length > 1)
+                removeEmpty(list)
+
+            // Add empty
+            if (list.filter(it => isEmpty(it)).length == 0)
+                list.push({key: '', val: ''})
+        }
     }
 
     submit(): void
