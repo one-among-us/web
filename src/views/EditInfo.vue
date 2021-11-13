@@ -162,4 +162,30 @@ export default class EditInfo extends Vue
         filter: drop-shadow(0 2px 5px rgba(166, 134, 89, 0.42))
         cursor: pointer
         transform: translateY(-5px)
+
+@media screen and (max-width: 480px)
+    #EditInfo
+        margin: 0
+        padding: 20px 30px
+        border-radius: 0
+
+        .button.submit:hover
+            transform: none
+
+@media screen and (max-width: 430px)
+    .input-box
+        flex-direction: column
+
+    #EditInfo .input-box
+        input.key
+            border-top: 1px solid #ff7878
+            border-bottom: 1px solid $color-bg-6
+            margin: 0
+            border-bottom-left-radius: 0
+            border-bottom-right-radius: 0
+
+        input.value
+            border-bottom: 1px solid #ff7878
+            border-top-left-radius: 0
+            border-top-right-radius: 0
 </style>
