@@ -6,14 +6,14 @@
             <div class="head-text info">信息卡片</div>
             <div id="id">@{{userid}}</div>
             <div class="fields info">
-                <div class="input-box" v-for="info in p.info" :key="info.key">
+                <div class="input-box" v-for="info in p.info" :key="info[0]">
                     <input class="key" v-model="info[0]" @change="change"/>
                     <input class="value" v-model="info[1]" @change="change"/>
                 </div>
             </div>
             <div class="head-text websites">网站</div>
             <div class="fields websites">
-                <div class="input-box" v-for="web in p.websites" :key="web.key">
+                <div class="input-box" v-for="web in p.websites" :key="web[0]">
                     <input class="key" v-model="web[0]" @change="change"/>
                     <input class="value" v-model="web[1]" @change="change"/>
                 </div>
