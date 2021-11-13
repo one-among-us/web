@@ -6,16 +6,16 @@
             <div class="head-text info">信息卡片</div>
             <div id="id">@{{userid}}</div>
             <div class="fields info">
-                <div class="input-box" v-for="info in p.info" :key="info[0]">
-                    <input class="key" v-model="info[0]" @change="change"/>
-                    <input class="value" v-model="info[1]" @change="change"/>
+                <div class="input-box" v-for="info in editInfo" :key="info[0]">
+                    <input class="key" v-model="info.k" @change="change"/>
+                    <input class="value" v-model="info.v" @change="change"/>
                 </div>
             </div>
             <div class="head-text websites">网站</div>
             <div class="fields websites">
-                <div class="input-box" v-for="web in p.websites" :key="web[0]">
-                    <input class="key" v-model="web[0]" @change="change"/>
-                    <input class="value" v-model="web[1]" @change="change"/>
+                <div class="input-box" v-for="web in editWebsites" :key="web[0]">
+                    <input class="key" v-model="web.k" @change="change"/>
+                    <input class="value" v-model="web.v" @change="change"/>
                 </div>
             </div>
             <div class="button submit" @click="submit">提交</div>
@@ -28,14 +28,31 @@
 <script lang="ts">
 import {Options, Vue} from 'vue-class-component';
 import {Prop} from "vue-property-decorator";
-import {parsePeopleJson, Person, removeEmpty, toJson} from "@/logic/data";
-import {dataHost} from "@/logic/config.";
+import {parsePeopleJson, Person, toJson, url} from "@/logic/data";
+import {backendHost, dataHost} from "@/logic/config.";
+import {ElMessage, ElMessageBox} from "element-plus";
+
+interface KVPair { k: string, v: string }
+
+export function removeEmpty(arr: KVPair[]): void
+{
+    let i = 0;
+    while (i < arr.length) {
+        if (!arr[i].k && !arr[i].v) arr.splice(i, 1)
+        else ++i
+    }
+}
 
 @Options({components: {}})
 export default class EditInfo extends Vue
 {
     @Prop() userid!: string
     p: Person = null as never as Person
+
+    initialJson!: string
+
+    editInfo: KVPair[] = []
+    editWebsites: KVPair[] = []
 
     created(): void
     {
@@ -44,31 +61,65 @@ export default class EditInfo extends Vue
         fetch(dataHost + `/people/${this.userid.toLowerCase()}/info.json5`)
             .then(it => it.text())
             .then(it => {
+                this.initialJson = it
                 this.p = parsePeopleJson(it)
+                this.p.info.forEach((a) => this.editInfo.push({k: a[0], v: a[1]}))
+                this.p.websites.forEach((a) => this.editWebsites.push({k: a[0], v: a[1]}))
                 this.change()
             })
     }
 
     change(): void
     {
-        for (let list of [this.p.info, this.p.websites])
+        for (let list of [this.editInfo, this.editWebsites])
         {
             // Remove redundant last entries
-            if (list.filter(it => !it[0] && !it[1]).length > 1)
+            if (list.filter(it => !it.k && !it.v).length > 1)
                 removeEmpty(list)
 
             // Add empty
-            if (list.filter(it => !it[0] && !it[1]).length == 0)
-                list.push(['', ''])
+            if (list.filter(it => !it.k && !it.v).length == 0)
+                list.push({k: '', v: ''})
         }
     }
 
     submit(): void
     {
-        removeEmpty(this.p.info)
-        removeEmpty(this.p.websites)
-        console.log(toJson(this.p))
-        this.change()
+        ElMessageBox.confirm('确定要提交嘛？',
+        {
+            confirmButtonText: 'OK',
+            cancelButtonText: 'Cancel',
+            type: 'warning',
+        })
+        .then(() => {
+            ElMessage({
+                type: 'success',
+                message: '正在创建更改请求 (Pull Request)...',
+            })
+
+            removeEmpty(this.editInfo)
+            removeEmpty(this.editWebsites)
+            this.p.info = this.editInfo.map(it => [it.k, it.v])
+            this.p.websites = this.editWebsites.map(it => [it.k, it.v])
+            let json = toJson(this.p)
+            console.log(json)
+
+            // fetch(url(backendHost + `/edit/info`, {id: this.p.id, json: json}))
+            //     .then(it => it.text())
+            //     .then(it => {
+            //         ElMessageBox.confirm('提交成功！谢谢你',
+            //         {
+            //             confirmButtonText: '查看更改请求',
+            //             cancelButtonText: '好的',
+            //             type: 'warning',
+            //         })
+            //         .then(() => {
+            //             open(it)
+            //         })
+            //     })
+
+            this.change()
+        })
     }
 }
 </script>
