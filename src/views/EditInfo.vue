@@ -28,7 +28,7 @@
 <script lang="ts">
 import {Options, Vue} from 'vue-class-component';
 import {Prop} from "vue-property-decorator";
-import {parsePeopleJson, Person, removeEmpty} from "@/logic/data";
+import {parsePeopleJson, Person, removeEmpty, toJson} from "@/logic/data";
 import {dataHost} from "@/logic/config.";
 import json5 from "json5";
 
@@ -66,7 +66,10 @@ export default class EditInfo extends Vue
 
     submit(): void
     {
-        alert("这个功能还没有实现！")
+        removeEmpty(this.p.info)
+        removeEmpty(this.p.websites)
+        console.log(toJson(this.p))
+        this.change()
     }
 }
 </script>

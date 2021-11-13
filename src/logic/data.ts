@@ -38,7 +38,7 @@ export function parsePeopleJson(json: string): Person
 export function toJson(p: Person): string
 {
     return json5.stringify(p, {space: 4})
-        .replace(/ {4}\[\n {8}'/g, "    ['")
-        .replace(/',\n {8}'/g, "', '")
-        .replace(/',\n {4}],/g, "'],")
+        .replace(/ {8}\[\n {12}'/g, "        ['")
+        .replace(/',\n {12}'/g, "', '")
+        .replace(/',\n {8}],/g, "'],")
 }
