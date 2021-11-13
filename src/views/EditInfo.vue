@@ -66,5 +66,14 @@ export default class EditInfo extends Vue
 </script>
 
 <style lang="sass" scoped>
+@import "../css/colors"
+
+#EditInfo
+    background: $color-bg-5
+    width: 500px
+    margin: auto
+    padding: 20px
+    border-radius: 30px
+    filter: drop-shadow(0 2px 5px rgba(166, 134, 89, 0.42))
 
 </style>
