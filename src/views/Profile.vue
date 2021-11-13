@@ -57,7 +57,7 @@ import {Options, Vue} from 'vue-class-component';
 import {Prop} from "vue-property-decorator";
 import {Person} from "@/logic/data";
 import { marked } from 'marked';
-import { ElMessage } from 'element-plus';
+import { ElMessage, ElMessageBox } from 'element-plus';
 import {abbreviateNumber, download, getTodayDate} from "@/logic/helper"
 import {backendHost, dataHost} from "@/logic/config.";
 import json5 from "json5";
@@ -152,7 +152,17 @@ export default class Profile extends Vue
 
     edit(): void
     {
-        download('page.md', this.markdown)
+        ElMessageBox.confirm('要编辑什么呢？',
+            {
+                confirmButtonText: '信息卡片',
+                cancelButtonText: '简介文案',
+            })
+            .then(() => {
+                this.$router.push(`/edit-info/${this.p.id}`)
+            })
+            .catch(() => {
+                download('page.md', this.markdown)
+            })
     }
 }
 </script>
