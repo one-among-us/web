@@ -54,8 +54,8 @@
 import {Options, Vue} from 'vue-class-component';
 import {Prop} from "vue-property-decorator";
 import {parsePeopleJson, Person} from "@/logic/data";
-import { marked } from 'marked';
-import { ElMessage, ElMessageBox } from 'element-plus';
+import {marked} from 'marked';
+import {ElMessage, ElMessageBox} from 'element-plus';
 import {abbreviateNumber, download, getTodayDate} from "@/logic/helper"
 import {backendHost, dataHost} from "@/logic/config.";
 

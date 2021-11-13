@@ -30,7 +30,6 @@ import {Options, Vue} from 'vue-class-component';
 import {Prop} from "vue-property-decorator";
 import {parsePeopleJson, Person, removeEmpty, toJson} from "@/logic/data";
 import {dataHost} from "@/logic/config.";
-import json5 from "json5";
 
 @Options({components: {}})
 export default class EditInfo extends Vue
