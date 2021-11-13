@@ -34,3 +34,11 @@ export function parsePeopleJson(json: string): Person
     if (!p.websites) p.websites = {}
     return p
 }
+
+export function toJson(p: Person): string
+{
+    return json5.stringify(p, {space: 4})
+        .replace(/ {4}\[\n {8}'/g, "    ['")
+        .replace(/',\n {8}'/g, "', '")
+        .replace(/',\n {4}],/g, "'],")
+}
