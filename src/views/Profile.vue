@@ -31,15 +31,15 @@
                         <span id="id">@{{p.id}}</span>
                     </div>
                     <ul id="fields" class="f-grow1">
-                        <li v-for="info of p.info" :key="info.key">
-                            <span class="key">{{info.key}}：</span>
-                            <span class="value">{{info.val}}</span>
+                        <li v-for="info of p.info" :key="info[0]">
+                            <span class="key">{{info[0]}}：</span>
+                            <span class="value">{{info[1]}}</span>
                         </li>
                     </ul>
                     <div id="websites" v-if="p.websites">
                         <span id="websites-text">网站：</span>
-                        <a v-for="web of p.websites" :key="web.key" :href="web.val">
-                            <i :class="getIcon(web.key)"></i>
+                        <a v-for="web of p.websites" :key="web[0]" :href="web[1]">
+                            <i :class="getIcon(web[0])"></i>
                         </a>
                     </div>
                 </div>
@@ -58,7 +58,6 @@ import { marked } from 'marked';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import {abbreviateNumber, download, getTodayDate} from "@/logic/helper"
 import {backendHost, dataHost} from "@/logic/config.";
-import json5 from "json5";
 
 const icons: {[id: string]: string} = {
     twitter: 'fab fa-twitter',

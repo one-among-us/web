@@ -7,15 +7,15 @@
             <div id="id">@{{userid}}</div>
             <div class="fields info">
                 <div class="input-box" v-for="info in p.info" :key="info.key">
-                    <input class="key" v-model="info.key" @change="change"/>
-                    <input class="value" v-model="info.val" @change="change"/>
+                    <input class="key" v-model="info[0]" @change="change"/>
+                    <input class="value" v-model="info[1]" @change="change"/>
                 </div>
             </div>
             <div class="head-text websites">网站</div>
             <div class="fields websites">
                 <div class="input-box" v-for="web in p.websites" :key="web.key">
-                    <input class="key" v-model="web.key" @change="change"/>
-                    <input class="value" v-model="web.val" @change="change"/>
+                    <input class="key" v-model="web[0]" @change="change"/>
+                    <input class="value" v-model="web[1]" @change="change"/>
                 </div>
             </div>
             <div class="button submit" @click="submit">提交</div>
@@ -30,7 +30,7 @@ import {Options, Vue} from 'vue-class-component';
 import {Prop} from "vue-property-decorator";
 import {parsePeopleJson, Person, removeEmpty} from "@/logic/data";
 import {dataHost} from "@/logic/config.";
-import {isEmpty} from "element-plus/es/utils/util";
+import json5 from "json5";
 
 @Options({components: {}})
 export default class EditInfo extends Vue
@@ -46,22 +46,21 @@ export default class EditInfo extends Vue
             .then(it => it.text())
             .then(it => {
                 this.p = parsePeopleJson(it)
-
                 this.change()
             })
     }
 
     change(): void
     {
-        for (let list of [this.p.info!, this.p.websites!])
+        for (let list of [this.p.info, this.p.websites])
         {
             // Remove redundant last entries
-            if (list.filter(it => isEmpty(it)).length > 1)
+            if (list.filter(it => !it[0] && !it[1]).length > 1)
                 removeEmpty(list)
 
             // Add empty
-            if (list.filter(it => isEmpty(it)).length == 0)
-                list.push({key: '', val: ''})
+            if (list.filter(it => !it[0] && !it[1]).length == 0)
+                list.push(['', ''])
         }
     }
 
