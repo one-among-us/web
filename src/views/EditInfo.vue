@@ -1,22 +1,26 @@
 <template>
     <div>
-    <div id="EditInfo">
-        <div>@{{userid}}</div>
-        <div class="head-text info">信息卡片</div>
-        <div class="fields info">
-            <div v-for="info in editInfo" :key="info.key">
-                <input class="key" v-model="info.key"/>
-                <input class="value" v-model="info.val"/>
+    <div id="container" class="fbox-vcenter">
+        <div class="spacer"/>
+        <div id="EditInfo">
+            <div class="head-text info">信息卡片</div>
+            <div id="id">@{{userid}}</div>
+            <div class="fields info">
+                <div class="input-box" v-for="info in editInfo" :key="info.key">
+                    <input class="key" v-model="info.key" @change="change"/>
+                    <input class="value" v-model="info.val" @change="change"/>
+                </div>
             </div>
-        </div>
-        <div class="head-text websites">网站</div>
-        <div class="fields websites">
-            <div v-for="web in editWebsites" :key="web.key">
-                <input class="key" v-model="web.key"/>
-                <input class="value" v-model="web.val"/>
+            <div class="head-text websites">网站</div>
+            <div class="fields websites">
+                <div class="input-box" v-for="web in editWebsites" :key="web.key">
+                    <input class="key" v-model="web.key" @change="change"/>
+                    <input class="value" v-model="web.val" @change="change"/>
+                </div>
             </div>
+            <div class="button submit" @click="submit">提交</div>
         </div>
-        <div class="button" @click="submit">提交</div>
+        <div class="spacer"/>
     </div>
     </div>
 </template>
@@ -99,12 +103,63 @@ export default class EditInfo extends Vue
 <style lang="sass" scoped>
 @import "../css/colors"
 
+#container
+    height: 100%
+
+    .spacer
+        flex-grow: 1
+
 #EditInfo
     background: $color-bg-5
-    width: 500px
-    margin: auto
-    padding: 20px
+    margin: 0 min(5vw, 40px)
+    padding: 20px 30px
     border-radius: 30px
     filter: drop-shadow(0 2px 5px rgba(166, 134, 89, 0.42))
 
+    #id
+        margin-top: -5px
+        margin-bottom: 5px
+        color: $color-text-light
+
+    .head-text
+        font-weight: bold
+        font-size: 1.2em
+
+    .head-text.websites
+        margin-top: 20px
+        margin-bottom: 5px
+
+    .input-box
+        width: 100%
+        display: flex
+        margin-bottom: 5px
+
+        input
+            flex-grow: 1
+            border-radius: 5px
+            border: none
+            background-color: $color-bg-4
+            padding: 4px 8px
+            color: $color-text-main
+            text-align: center
+
+        input.key
+            margin-right: 10px
+            font-weight: bold
+
+        input:focus-visible
+            outline-color: $color-text-light
+
+    .button.submit
+        margin-top: 30px
+        background-color: $color-bg-6
+        border-radius: 10px
+        padding: 8px 0
+        //border: 2px solid $color-text-main
+        filter: drop-shadow(0 2px 5px rgba(166, 134, 89, 0.16))
+
+    .button.submit:hover
+        filter: drop-shadow(0 2px 5px rgba(166, 134, 89, 0.42))
+        cursor: pointer
+        transform: translateY(-5px)
 </style>
