@@ -109,7 +109,8 @@ export default class EditInfo extends Vue
         .then(() => {
             ElMessage.success('正在创建更改请求 (Pull Request)...')
 
-            fetch(url(backendHost + `/edit/info`, {id: this.p.id, json: json}))
+            fetch(backendHost + `/edit/info`, {method: 'POST',
+                    headers: {id: this.p.id, content: encodeURIComponent(json)}})
                 .then(it => it.text())
                 .then(it => {
                     ElMessageBox.confirm('提交成功！谢谢你',
