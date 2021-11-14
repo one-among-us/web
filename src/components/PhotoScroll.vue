@@ -11,21 +11,14 @@
 <script lang="ts">
 import {Options, Vue} from 'vue-class-component';
 import {rand} from "@/logic/helper";
+import {Prop} from "vue-property-decorator";
 
 @Options({components: {}})
 export default class PhotoScroll extends Vue
 {
     viewerOpen = false
 
-    photos = [
-        'http://localhost:8081/people/siinamota/photos/1.png',
-        'http://localhost:8081/people/siinamota/photos/2.jpg',
-        'http://localhost:8081/people/siinamota/photos/3.jpg',
-        'http://localhost:8081/people/siinamota/photos/4.jpg',
-        'http://localhost:8081/people/siinamota/photos/5.jpg',
-        'http://localhost:8081/people/siinamota/photos/6.jpg',
-        'http://localhost:8081/people/siinamota/photos/7.jpg',
-    ]
+    @Prop() photos!: string[]
 
     rotations: number[] = []
 
