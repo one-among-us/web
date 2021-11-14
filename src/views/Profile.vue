@@ -45,9 +45,9 @@
                 </div>
             </div>
 
-            <Dynamic id="content" :template="markdownToHtml"></Dynamic>
-
-            <PhotoScroll/>
+            <div id="content">
+                <Dynamic :template="markdownToHtml"></Dynamic>
+            </div>
         </div>
     </div>
 </template>

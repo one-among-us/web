@@ -7,9 +7,11 @@ import '@fortawesome/fontawesome-free/css/all.min.css'
 import '@primer/octicons/index.scss'
 import ElementPlus from 'element-plus'
 import Divider from "@/components/divider.vue";
+import PhotoScroll from "@/components/PhotoScroll.vue";
 
 createApp(App).use(router).use(ElementPlus)
     .component('Divider', Divider)
+    .component('PhotoScroll', PhotoScroll)
     .component('Dynamic', {
         props: ['template'],
         render() {
