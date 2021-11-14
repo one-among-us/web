@@ -95,7 +95,7 @@ export default class Profile extends Vue
         // Load markdown from server
         fetch(dataHost + `/people/${this.userid.toLowerCase()}/page.md`)
             .then(it => it.text())
-            .then(it => this.markdown = it.replace('${dataHost}', dataHost))
+            .then(it => this.markdown = it.replace(/\${dataHost}/g, dataHost))
 
         // TODO: Handle errors
         fetch(backendHost + `/flowers/get?id=${this.userid}`)
