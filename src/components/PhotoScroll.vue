@@ -1,8 +1,10 @@
 <template>
     <div id="PhotoScroll">
         <img v-for="(p, i) in photos" :key="i"
-             :src="p" alt="p" class="photo-frame-5" draggable="false"
-             :style="{transform: `translate(-50%, -50%) translateX(80px) rotate(${rotations[i]}deg)`, 'z-index': i + 1}">
+             :src="p" alt="p" class="stacked photo-frame-5" draggable="false"
+             :style="{transform: `translate(-50%, -50%) translateX(80px) rotate(${rotations[i]}deg)`,
+                      'z-index': p.length - i + 1}" @click="() => viewerOpen = true"/>
+        <el-image-viewer v-if="viewerOpen" :url-list="photos" :onClose="() => viewerOpen = false"/>
     </div>
 </template>
 
@@ -13,6 +15,8 @@ import {rand} from "@/logic/helper";
 @Options({components: {}})
 export default class PhotoScroll extends Vue
 {
+    viewerOpen = false
+
     photos = [
         'http://localhost:8081/people/siinamota/photos/1.png',
         'http://localhost:8081/people/siinamota/photos/2.jpg',
@@ -37,7 +41,7 @@ export default class PhotoScroll extends Vue
 }
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass">
 @import "../css/colors"
 
 #PhotoScroll
@@ -47,12 +51,12 @@ export default class PhotoScroll extends Vue
     margin-top: 20px
     margin-bottom: 20px
 
-img
-    position: absolute
-    max-height: 180px
-    max-width: 180px
-    left: 50%
-    top: 50%
+    img.stacked
+        position: absolute
+        max-height: 180px
+        max-width: 180px
+        left: 0
+        top: 50%
 
 
 </style>
