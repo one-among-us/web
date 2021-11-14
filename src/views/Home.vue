@@ -27,7 +27,7 @@
 <script lang="ts">
 import {Options, Vue} from 'vue-class-component';
 import {PersonMeta} from "@/logic/data";
-import {dataHost} from "@/logic/config.";
+import {dataHost} from "@/logic/config";
 import json5 from 'json5';
 
 @Options({components: {}})

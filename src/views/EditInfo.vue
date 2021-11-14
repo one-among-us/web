@@ -29,7 +29,7 @@
 import {Options, Vue} from 'vue-class-component';
 import {Prop} from "vue-property-decorator";
 import {parsePeopleJson, Person, toJson, url} from "@/logic/data";
-import {backendHost, dataHost} from "@/logic/config.";
+import {backendHost, dataHost} from "@/logic/config";
 import {ElMessage, ElMessageBox} from "element-plus";
 
 interface KVPair { k: string, v: string }

@@ -59,7 +59,7 @@ import {parsePeopleJson, Person} from "@/logic/data";
 import {marked} from 'marked';
 import {ElMessage, ElMessageBox} from 'element-plus';
 import {abbreviateNumber, download, getTodayDate} from "@/logic/helper"
-import {backendHost, dataHost} from "@/logic/config.";
+import {backendHost, dataHost} from "@/logic/config";
 import PhotoScroll from "@/components/PhotoScroll.vue";
 
 const icons: {[id: string]: string} = {
