@@ -21,8 +21,8 @@ export interface Person
 export function parsePeopleJson(json: string): Person
 {
     const p = json5.parse(json)
-    if (!p.info) p.info = {}
-    if (!p.websites) p.websites = {}
+    if (!p.info) p.info = []
+    if (!p.websites) p.websites = []
     return p
 }
 
