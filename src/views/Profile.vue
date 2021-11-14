@@ -45,7 +45,7 @@
                 </div>
             </div>
 
-            <div id="content" v-html="markdownToHtml"></div>
+            <Dynamic id="content" :template="markdownToHtml"></Dynamic>
 
             <PhotoScroll/>
         </div>
