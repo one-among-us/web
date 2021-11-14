@@ -1,10 +1,10 @@
 <template>
     <div id="PhotoScroll">
-        <img v-for="(p, i) in photos" :key="i"
+        <img v-for="(p, i) in photoList" :key="i"
              :src="p" alt="p" class="stacked photo-frame-5" draggable="false"
              :style="{transform: `translate(-50%, -50%) translateX(80px) rotate(${rotations[i]}deg)`,
                       'z-index': p.length - i + 1}" @click="() => viewerOpen = true"/>
-        <el-image-viewer v-if="viewerOpen" :url-list="photos" :onClose="() => viewerOpen = false"/>
+        <el-image-viewer v-if="viewerOpen" :url-list="photoList" :onClose="() => viewerOpen = false"/>
     </div>
 </template>
 
@@ -12,24 +12,32 @@
 import {Options, Vue} from 'vue-class-component';
 import {rand} from "@/logic/helper";
 import {Prop} from "vue-property-decorator";
+import json5 from "json5";
 
 @Options({components: {}})
 export default class PhotoScroll extends Vue
 {
     viewerOpen = false
 
-    @Prop() photos!: string[]
+    @Prop() photos!: string[] | string
+    photoList!: string[]
 
     rotations: number[] = []
 
+    beforeCreate()
+    {
+        if (typeof this.photos === 'string') this.photoList = json5.parse(this.photos)
+        else this.photoList = this.photos
+    }
+
     get displayedPhotos(): string[]
     {
-        return this.photos.slice(0, 4)
+        return this.photoList.slice(0, 4)
     }
 
     created(): void
     {
-        this.photos.forEach(() => this.rotations.push(rand(-15, 15)))
+        this.photoList.forEach(() => this.rotations.push(rand(-15, 15)))
     }
 }
 </script>
