@@ -46,6 +46,8 @@
             </div>
 
             <div id="content" v-html="markdownToHtml"></div>
+
+            <PhotoScroll/>
         </div>
     </div>
 </template>
@@ -58,13 +60,14 @@ import {marked} from 'marked';
 import {ElMessage, ElMessageBox} from 'element-plus';
 import {abbreviateNumber, download, getTodayDate} from "@/logic/helper"
 import {backendHost, dataHost} from "@/logic/config.";
+import PhotoScroll from "@/components/PhotoScroll.vue";
 
 const icons: {[id: string]: string} = {
     twitter: 'fab fa-twitter',
     default: 'fas fa-link'
 }
 
-@Options({components: {}})
+@Options({components: {PhotoScroll}})
 export default class Profile extends Vue
 {
     @Prop() userid!: string
