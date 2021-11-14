@@ -10,7 +10,7 @@ yarn run build
 cd dist
 
 # Deploying to a custom domain
-echo 'nightly.one-among.us' > CNAME
+echo 'www.one-among.us' > CNAME
 
 git init
 git add -A
