@@ -45,9 +45,7 @@
                 </div>
             </div>
 
-            <div id="content" class="markdown-content">
-                <Dynamic :template="markdownToHtml"></Dynamic>
-            </div>
+            <Markdown id="content" :markdown="markdown"/>
         </div>
     </div>
 </template>
@@ -61,13 +59,14 @@ import {ElMessage, ElMessageBox} from 'element-plus';
 import {abbreviateNumber, download, getTodayDate} from "@/logic/helper"
 import {backendHost, dataHost} from "@/logic/config";
 import PhotoScroll from "@/components/PhotoScroll.vue";
+import Markdown from "@/components/Markdown.vue";
 
 const icons: {[id: string]: string} = {
     twitter: 'fab fa-twitter',
     default: 'fas fa-link'
 }
 
-@Options({components: {PhotoScroll}})
+@Options({components: {Markdown, PhotoScroll}})
 export default class Profile extends Vue
 {
     @Prop() userid!: string
@@ -104,11 +103,6 @@ export default class Profile extends Vue
                 console.log(it)
                 this.flowers = parseInt(it)
             })
-    }
-
-    get markdownToHtml(): string
-    {
-        return marked(this.markdown)
     }
 
     getIcon(platform: string): string
