@@ -49,4 +49,7 @@ export default class SubmitPrompt extends Vue
 #prompt > *:last-child
     margin-bottom: 0
 
+#header
+    text-align: left
+    font-weight: bold
 </style>
