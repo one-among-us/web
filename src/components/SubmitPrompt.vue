@@ -71,8 +71,7 @@ export default class SubmitPrompt extends Vue
     z-index: 1000
 
 #prompt
-    max-width: 320px
-    width: 50vw
+    width: 320px
     margin: auto
     background: white
     border-radius: 10px
