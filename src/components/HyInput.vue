@@ -4,11 +4,11 @@
  -->
 
 <template>
-    <div class="hy-input-container">
+    <div class="hy-input-container" :class="modelValue ? 'has-text' : ''">
         <div class="hy-input">
             <input id="hy-input-inner" class="hy-input-inner tr" :value="modelValue"
                    @input="passInput($event.target.value)" v-bind="$attrs"/>
-            <div class="hy-input-placeholder tr" :class="modelValue ? 'has-text' : ''">
+            <div class="hy-input-placeholder tr">
                 <label for="hy-input-inner">{{ placeholder }}</label>
             </div>
         </div>
@@ -90,7 +90,7 @@ input:focus
     text-align: left
 
 // Placeholder move up when input is focused (From Vuesax)
-input:focus~.hy-input-placeholder, .has-text
+input:focus~.hy-input-placeholder, .has-text .hy-input-placeholder
     left: 21px
     opacity: .8
     visibility: visible
@@ -98,7 +98,7 @@ input:focus~.hy-input-placeholder, .has-text
     transform: translate(-10px,-70%)
     font-size: .75rem
 
-.hy-input-placeholder.has-text
+.has-text .hy-input-placeholder
     transform: translate(-10px,-80%)
 
 </style>
