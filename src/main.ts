@@ -8,10 +8,12 @@ import '@primer/octicons/index.scss'
 import ElementPlus from 'element-plus'
 import Divider from "@/components/divider.vue";
 import PhotoScroll from "@/components/PhotoScroll.vue";
+import RecaptchaV2 from "@/components/RecaptchaV2.vue"
 
 createApp(App).use(router).use(ElementPlus)
     .component('Divider', Divider)
     .component('PhotoScroll', PhotoScroll)
+    .component('RecaptchaV2', RecaptchaV2)
     .component('Dynamic', {
         props: ['template'],
         render() {
