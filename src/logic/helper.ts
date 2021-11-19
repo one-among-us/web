@@ -75,3 +75,20 @@ export function rand(min: number, max: number): number
 {
     return Math.random() * (max - min + 1) + min
 }
+
+/**
+ * Fetch but handles errors better
+ *
+ * @param input
+ * @param init
+ */
+export function neofetch(input: RequestInfo, init?: RequestInit): Promise<string>
+{
+    return new Promise((resolve, reject) => {
+        fetch(input, init).then(response => response.text().then(text =>
+            {
+                if (response.ok) resolve(text)
+                else throw new Error(text)
+            })).catch(error => reject(error))
+    })
+}
