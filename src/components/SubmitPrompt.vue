@@ -43,4 +43,10 @@ export default class SubmitPrompt extends Vue
     border-radius: 10px
     padding: 15px
 
+#prompt > *
+    margin-bottom: 10px
+
+#prompt > *:last-child
+    margin-bottom: 0
+
 </style>
