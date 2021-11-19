@@ -13,6 +13,7 @@
     </div>
 
     <router-view id="router"/>
+
     <Divider height="5px"/>
 </template>
 
@@ -34,7 +35,7 @@ export default class App extends Vue
 @import "css/colors"
 
 #app
-    font-family: Avenir, Helvetica, Arial, sans-serif
+    font-family: "Microsoft YaHei UI", Avenir, Helvetica, Arial, sans-serif
     -webkit-font-smoothing: antialiased
     -moz-osx-font-smoothing: grayscale
     text-align: center
@@ -84,4 +85,5 @@ export default class App extends Vue
     flex: 3
     padding-top: 20px
     background-color: $color-bg-4
+    margin-bottom: 50px
 </style>
