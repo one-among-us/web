@@ -4,13 +4,11 @@
  -->
 
 <template>
-    <div class="hy-input-container" :class="modelValue ? 'has-text' : ''">
-        <div class="hy-input">
-            <input id="hy-input-inner" class="hy-input-inner tr" :value="modelValue"
-                   @input="passInput($event.target.value)" v-bind="$attrs"/>
-            <div class="hy-input-placeholder tr">
-                <label for="hy-input-inner">{{ placeholder }}</label>
-            </div>
+    <div class="hy-input" :class="modelValue ? 'has-text' : ''">
+        <input id="hy-input-inner" class="hy-input-inner tr" :value="modelValue"
+               @input="passInput($event.target.value)" v-bind="$attrs"/>
+        <div class="hy-input-placeholder tr">
+            <label for="hy-input-inner">{{ placeholder }}</label>
         </div>
     </div>
 </template>
