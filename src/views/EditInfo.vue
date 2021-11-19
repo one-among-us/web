@@ -22,7 +22,8 @@
         </div>
         <div class="spacer"/>
 
-        <SubmitPrompt v-if="submitPromptParams" node="/edit/info" :params="submitPromptParams"/>
+        <SubmitPrompt v-if="submitPromptParams" node="/edit/info" :params="submitPromptParams"
+                      @close="() => submitPromptParams = null"/>
     </div>
     </div>
 </template>
