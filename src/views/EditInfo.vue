@@ -21,6 +21,8 @@
             <div class="button submit" @click="submit">提交</div>
         </div>
         <div class="spacer"/>
+
+        <SubmitPrompt v-if="submitPromptParams" node="/edit/info" :params="submitPromptParams"/>
     </div>
     </div>
 </template>
@@ -33,7 +35,8 @@ import {backendHost, dataHost} from "@/logic/config";
 import {ElMessage, ElMessageBox} from "element-plus";
 import {h} from "vue";
 import RecaptchaV2 from "@/components/RecaptchaV2.vue"
-import {closeAll} from "element-plus/lib/components/notification/src/notify";
+import HyInput from "@/components/HyInput.vue"
+import SubmitPrompt from "@/components/SubmitPrompt.vue";
 
 interface KVPair { k: string, v: string }
 
@@ -46,7 +49,7 @@ export function removeEmpty(arr: KVPair[]): void
     }
 }
 
-@Options({components: {}})
+@Options({components: {SubmitPrompt}})
 export default class EditInfo extends Vue
 {
     @Prop() userid!: string
@@ -56,6 +59,8 @@ export default class EditInfo extends Vue
 
     editInfo: KVPair[] = []
     editWebsites: KVPair[] = []
+
+    submitPromptParams: {[id: string]: string} = null as never
 
     created(): void
     {
@@ -96,6 +101,7 @@ export default class EditInfo extends Vue
         console.log(json)
         this.change()
 
+        // Didn't change anything
         if (json == this.initialJson)
         {
             ElMessageBox.alert('什么都没改怎么提交啦 (╯‵□′)╯︵┻━┻', '👀',
@@ -103,53 +109,11 @@ export default class EditInfo extends Vue
             return
         }
 
-        let name = ''
-        let email = ''
-
-        ElMessageBox({
-            title: '确定要提交嘛？',
-            showCancelButton: true,
-            showConfirmButton: false,
-            cancelButtonText: '算了算了',
-            message: h('div', {}, [
-                h('div', {class: 'msg-box-prompt'}, '可以留一下你的名字！'),
-                h(HyInput, {placeholder: '名字',
-                    modelValue: name, 'onUpdate:modelValue': (m: string) => name = m}),
-                h(HyInput, {placeholder: '邮箱',
-                    modelValue: email, 'onUpdate:modelValue': (m: string) => email = m}),
-                h('div', {}, '然后点击下面的 Captcha 就能提交啦：'),
-                h(RecaptchaV2, {siteKey: '6LcbpzQdAAAAAN-J3dWZsi1t_ZRNT-ybUbmsQmH_',
-                    onVerify: (response: string) => {
-                        // TODO: How can I close this prompt window?
-                        this.createPullRequest(json, name, email, response)
-                    }})
-            ])
-        })
-    }
-
-    createPullRequest(json: string, name: string, email: string, captcha: string): void
-    {
-        ElMessage.success('正在创建更改请求 (Pull Request)...')
-
-        const params = {
+        // Show submit prompt
+        this.submitPromptParams = {
             id: encodeURIComponent(this.p.id),
             content: encodeURIComponent(json),
-            captcha: encodeURIComponent(captcha)
         }
-
-        fetch(backendHost + `/edit/info`, {method: 'POST', headers: params})
-            .then(it => it.text())
-            .then(it => {
-                ElMessageBox.confirm('提交成功！谢谢你',
-                    {
-                        confirmButtonText: '查看更改请求',
-                        cancelButtonText: '好的',
-                        type: 'warning',
-                    })
-                    .then(() => {
-                        open(it)
-                    })
-            })
     }
 }
 </script>
