@@ -10,7 +10,7 @@
             <HyInput class="input" placeholder="邮箱" v-model="email"/>
 
             <div>点击下面的验证码就能提交啦！</div>
-            <RecaptchaV2 site-key="6LcbpzQdAAAAAN-J3dWZsi1t_ZRNT-ybUbmsQmH_"/>
+            <RecaptchaV2 site-key="6LcbpzQdAAAAAN-J3dWZsi1t_ZRNT-ybUbmsQmH_" @verify="submit"/>
         </div>
     </div>
 </template>
@@ -19,12 +19,42 @@
 import {Options, Vue} from 'vue-class-component';
 import HyInput from "@/components/HyInput.vue";
 import RecaptchaV2 from "@/components/RecaptchaV2.vue";
+import {ElMessage, ElMessageBox} from "element-plus";
+import {backendHost} from "@/logic/config";
+import {Prop} from "vue-property-decorator";
 
 @Options({components: {RecaptchaV2, HyInput}})
 export default class SubmitPrompt extends Vue
 {
     name = ''
     email = ''
+    
+    @Prop({required: true}) node!: string
+    @Prop({required: true}) params!: {[id: string]: string}
+
+    submit(captcha: string): void
+    {
+        ElMessage.success('正在创建更改请求 (Pull Request)...')
+
+        const params = {
+            ...this.params,
+            captcha: encodeURIComponent(captcha)
+        }
+
+        fetch(backendHost + this.node, {method: 'POST', headers: params})
+            .then(it => it.text())
+            .then(it => {
+                ElMessageBox.confirm('提交成功！谢谢你',
+                    {
+                        confirmButtonText: '查看更改请求',
+                        cancelButtonText: '好的',
+                        type: 'warning',
+                    })
+                    .then(() => {
+                        open(it)
+                    })
+            })
+    }
 }
 </script>
 
