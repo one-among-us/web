@@ -40,6 +40,9 @@ export default {
 .hy-input
     position: relative
 
+.hy-input.has-text, .hy-input:focus-within
+    margin-top: 20px
+
 input
     transition: all .25s ease
 
