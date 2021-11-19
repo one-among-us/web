@@ -22,6 +22,7 @@ import RecaptchaV2 from "@/components/RecaptchaV2.vue";
 import {ElMessage, ElMessageBox} from "element-plus";
 import {backendHost} from "@/logic/config";
 import {Prop} from "vue-property-decorator";
+import {neofetch} from "@/logic/helper";
 
 @Options({components: {RecaptchaV2, HyInput}})
 export default class SubmitPrompt extends Vue
@@ -34,6 +35,7 @@ export default class SubmitPrompt extends Vue
 
     submit(captcha: string): void
     {
+        this.$emit('close')
         ElMessage.success('正在创建更改请求 (Pull Request)...')
 
         const params = {
@@ -43,16 +45,19 @@ export default class SubmitPrompt extends Vue
             email: encodeURIComponent(this.email)
         }
 
-        fetch(backendHost + this.node, {method: 'POST', headers: params})
-            .then(it => it.text())
-            .then(it => {
+        neofetch(backendHost + this.node, {method: 'POST', headers: params})
+            .then(text => {
                 ElMessageBox.confirm('提交成功！谢谢你',
                     {
                         confirmButtonText: '查看更改请求',
                         cancelButtonText: '好的',
                         type: 'warning',
                     })
-                    .then(() => open(it))
+                    .then(() => open(text))
+            })
+            .catch(error => {
+                console.log(error)
+                ElMessageBox.alert('失败原因：' + error.message, '提交失败')
             })
     }
 }
