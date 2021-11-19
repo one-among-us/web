@@ -5,9 +5,9 @@
 
 <template>
     <div class="hy-input" :class="modelValue ? 'has-text' : ''">
-        <input id="hy-input-inner" class="hy-input-inner tr" :value="modelValue"
+        <input id="hy-input-inner" class="hy-input-inner" :value="modelValue"
                @input="passInput($event.target.value)" v-bind="$attrs"/>
-        <div class="hy-input-placeholder tr">
+        <div class="hy-input-placeholder">
             <label for="hy-input-inner">{{ placeholder }}</label>
         </div>
     </div>
@@ -34,7 +34,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.tr
+*
     transition: all .25s ease
 
 .hy-input
