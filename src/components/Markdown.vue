@@ -1,5 +1,5 @@
 <template>
-    <div id="Markdown" class="markdown-content">
+    <div id="Markdown" class="markdown-content" :style="margins ? {margin: '10px min(4vw, 40px)'} : {}">
         <Dynamic :template="html"></Dynamic>
     </div>
 </template>
@@ -13,6 +13,7 @@ import {marked} from "marked";
 export default class Markdown extends Vue
 {
     @Prop({required: true}) markdown!: string
+    @Prop({default: false}) margins!: boolean
 
     get html(): string
     {
@@ -28,7 +29,6 @@ export default class Markdown extends Vue
 .markdown-content
     text-align: justify
     text-justify: inter-word
-    margin: 10px min(4vw, 40px)
 
     a
         color: $color-text-special
