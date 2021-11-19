@@ -103,30 +103,38 @@ export default class EditInfo extends Vue
             return
         }
 
+        let name = ''
+        let email = ''
+
         ElMessageBox({
             title: '确定要提交嘛？',
             showCancelButton: true,
             showConfirmButton: false,
             cancelButtonText: '算了算了',
             message: h('div', {}, [
-                h('span', {}, '过了下面的 Captcha 就能提交啦：'),
+                h('div', {class: 'msg-box-prompt'}, '可以留一下你的名字！'),
+                h(HyInput, {placeholder: '名字',
+                    modelValue: name, 'onUpdate:modelValue': (m: string) => name = m}),
+                h(HyInput, {placeholder: '邮箱',
+                    modelValue: email, 'onUpdate:modelValue': (m: string) => email = m}),
+                h('div', {}, '然后点击下面的 Captcha 就能提交啦：'),
                 h(RecaptchaV2, {siteKey: '6LcbpzQdAAAAAN-J3dWZsi1t_ZRNT-ybUbmsQmH_',
                     onVerify: (response: string) => {
                         // TODO: How can I close this prompt window?
-                        this.createPullRequest(json, response)
+                        this.createPullRequest(json, name, email, response)
                     }})
             ])
         })
     }
 
-    createPullRequest(json: string, captchaResponse: string): void
+    createPullRequest(json: string, name: string, email: string, captcha: string): void
     {
         ElMessage.success('正在创建更改请求 (Pull Request)...')
 
         const params = {
             id: encodeURIComponent(this.p.id),
             content: encodeURIComponent(json),
-            captcha: encodeURIComponent(captchaResponse)
+            captcha: encodeURIComponent(captcha)
         }
 
         fetch(backendHost + `/edit/info`, {method: 'POST', headers: params})
