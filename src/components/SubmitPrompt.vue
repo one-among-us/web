@@ -38,7 +38,9 @@ export default class SubmitPrompt extends Vue
 
         const params = {
             ...this.params,
-            captcha: encodeURIComponent(captcha)
+            captcha: encodeURIComponent(captcha),
+            name: encodeURIComponent(this.name),
+            email: encodeURIComponent(this.email)
         }
 
         fetch(backendHost + this.node, {method: 'POST', headers: params})
@@ -50,9 +52,7 @@ export default class SubmitPrompt extends Vue
                         cancelButtonText: '好的',
                         type: 'warning',
                     })
-                    .then(() => {
-                        open(it)
-                    })
+                    .then(() => open(it))
             })
     }
 }
