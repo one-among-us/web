@@ -33,6 +33,7 @@ import {backendHost, dataHost} from "@/logic/config";
 import {ElMessage, ElMessageBox} from "element-plus";
 import {h} from "vue";
 import RecaptchaV2 from "@/components/RecaptchaV2.vue"
+import {closeAll} from "element-plus/lib/components/notification/src/notify";
 
 interface KVPair { k: string, v: string }
 
@@ -105,18 +106,33 @@ export default class EditInfo extends Vue
         ElMessageBox({
             title: '确定要提交嘛？',
             showCancelButton: true,
-            confirmButtonText: 'OK',
-            cancelButtonText: 'Cancel',
-            message: h(RecaptchaV2, {siteKey: '6LcbpzQdAAAAAN-J3dWZsi1t_ZRNT-ybUbmsQmH_'})
+            showConfirmButton: false,
+            cancelButtonText: '算了算了',
+            message: h('div', {}, [
+                h('span', {}, '过了下面的 Captcha 就能提交啦：'),
+                h(RecaptchaV2, {siteKey: '6LcbpzQdAAAAAN-J3dWZsi1t_ZRNT-ybUbmsQmH_',
+                    onVerify: (response: string) => {
+                        // TODO: How can I close this prompt window?
+                        this.createPullRequest(json, response)
+                    }})
+            ])
         })
-        .then(() => {
-            ElMessage.success('正在创建更改请求 (Pull Request)...')
+    }
 
-            fetch(backendHost + `/edit/info`, {method: 'POST',
-                    headers: {id: this.p.id, content: encodeURIComponent(json)}})
-                .then(it => it.text())
-                .then(it => {
-                    ElMessageBox.confirm('提交成功！谢谢你',
+    createPullRequest(json: string, captchaResponse: string): void
+    {
+        ElMessage.success('正在创建更改请求 (Pull Request)...')
+
+        const params = {
+            id: encodeURIComponent(this.p.id),
+            content: encodeURIComponent(json),
+            captcha: encodeURIComponent(captchaResponse)
+        }
+
+        fetch(backendHost + `/edit/info`, {method: 'POST', headers: params})
+            .then(it => it.text())
+            .then(it => {
+                ElMessageBox.confirm('提交成功！谢谢你',
                     {
                         confirmButtonText: '查看更改请求',
                         cancelButtonText: '好的',
@@ -125,8 +141,7 @@ export default class EditInfo extends Vue
                     .then(() => {
                         open(it)
                     })
-                })
-        })
+            })
     }
 }
 </script>
