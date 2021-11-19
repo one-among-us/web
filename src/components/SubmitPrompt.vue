@@ -1,9 +1,13 @@
 <template>
     <div id="SubmitPrompt" class="fbox-vcenter">
         <div id="prompt">
-            <div id="header">要提交编辑吗？</div>
+            <div id="header">要提交编辑吗
+                <i id="close" class="el-icon-close clickable" @click="() => $emit('close')"></i>
+            </div>
+
+            <div>谢谢你！请留下你的名字！</div>
             <HyInput class="input" placeholder="名字" v-model="name"/>
-            <HyInput class="input" placeholder="邮箱" v-model="name"/>
+            <HyInput class="input" placeholder="邮箱" v-model="email"/>
 
             <div>点击下面的验证码就能提交啦！</div>
             <RecaptchaV2 site-key="6LcbpzQdAAAAAN-J3dWZsi1t_ZRNT-ybUbmsQmH_"/>
@@ -20,6 +24,7 @@ import RecaptchaV2 from "@/components/RecaptchaV2.vue";
 export default class SubmitPrompt extends Vue
 {
     name = ''
+    email = ''
 }
 </script>
 
@@ -52,4 +57,7 @@ export default class SubmitPrompt extends Vue
 #header
     text-align: left
     font-weight: bold
+
+#close
+    float: right
 </style>
