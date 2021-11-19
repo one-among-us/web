@@ -28,9 +28,11 @@
 <script lang="ts">
 import {Options, Vue} from 'vue-class-component';
 import {Prop} from "vue-property-decorator";
-import {parsePeopleJson, Person, toJson, url} from "@/logic/data";
+import {parsePeopleJson, Person, toJson} from "@/logic/data";
 import {backendHost, dataHost} from "@/logic/config";
 import {ElMessage, ElMessageBox} from "element-plus";
+import {h} from "vue";
+import RecaptchaV2 from "@/components/RecaptchaV2.vue"
 
 interface KVPair { k: string, v: string }
 
@@ -100,11 +102,12 @@ export default class EditInfo extends Vue
             return
         }
 
-        ElMessageBox.confirm('确定要提交嘛？',
-        {
+        ElMessageBox({
+            title: '确定要提交嘛？',
+            showCancelButton: true,
             confirmButtonText: 'OK',
             cancelButtonText: 'Cancel',
-            type: 'warning',
+            message: h(RecaptchaV2, {siteKey: '6LcbpzQdAAAAAN-J3dWZsi1t_ZRNT-ybUbmsQmH_'})
         })
         .then(() => {
             ElMessage.success('正在创建更改请求 (Pull Request)...')
