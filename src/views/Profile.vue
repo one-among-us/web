@@ -45,7 +45,7 @@
                 </div>
             </div>
 
-            <div id="content">
+            <div id="content" class="markdown-content">
                 <Dynamic :template="markdownToHtml"></Dynamic>
             </div>
         </div>
@@ -355,29 +355,4 @@ export default class Profile extends Vue
                 width: 30px
                 height: 30px
 
-</style>
-
-<!-- Global Style -->
-<style lang="sass">
-@import "../css/colors"
-
-#content
-    a
-        color: $color-text-special
-        text-decoration: none
-
-    h2
-        border-bottom: 1px solid $color-text-special
-        font-size: 1.5em
-        margin-top: 1em
-
-    h1, h2
-        line-height: 1.3
-        margin-bottom: 0.25em
-        padding: 0
-
-    p
-        font-size: 0.875em
-        margin: 0.5em 0
-        line-height: 1.6
 </style>
