@@ -24,4 +24,15 @@ export default class SubmitPrompt extends Vue
 </script>
 
 <style lang="sass" scoped>
+#SubmitPrompt
+    // Cover entire page
+    position: fixed
+    top: 0
+    right: 0
+    bottom: 0
+    left: 0
+    height: 100%
+    background: rgba(0,0,0,.5)
+    z-index: 1000
+
 </style>
