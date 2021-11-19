@@ -1,7 +1,7 @@
 <!-- Credit to https://github.com/bbonch/vue3-recaptcha2 -->
 <!-- This component is modified for users in China Mainland -->
 <template>
-    <div ref="recaptcha"></div>
+    <div ref="recaptcha" id="recaptcha"></div>
 </template>
 
 <script>
@@ -82,3 +82,8 @@ export default {
     }
 }
 </script>
+
+<style lang="sass">
+#recaptcha div
+    margin: auto
+</style>
