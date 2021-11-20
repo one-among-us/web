@@ -7,7 +7,7 @@
             <div class="profile" v-for="p in people" :key="p">
                 <div class="back"/>
                 <transition name="fade" @after-leave="() => switchPage(p)">
-                    <img :src="p.profileUrl" draggable="false" alt="profile" class="front"
+                    <img :src="p.profileUrl" draggable="false" alt="profile" class="front clickable"
                          v-if="clicked !== p.name"
                          @click="() => { if (!clicked) clicked = p.name }">
                 </transition>
