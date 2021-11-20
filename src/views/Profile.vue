@@ -53,16 +53,16 @@
 import {Options, Vue} from 'vue-class-component';
 import {Prop} from "vue-property-decorator";
 import {parsePeopleJson, Person} from "@/logic/data";
-import {marked} from 'marked';
-import {ElMessage, ElMessageBox} from 'element-plus';
-import {abbreviateNumber, download, getTodayDate} from "@/logic/helper"
+import {ElMessageBox} from 'element-plus';
+import {abbreviateNumber, getTodayDate} from "@/logic/helper"
 import {backendHost, dataHost} from "@/logic/config";
 import PhotoScroll from "@/components/PhotoScroll.vue";
 import Markdown from "@/components/Markdown.vue";
 
 const icons: {[id: string]: string} = {
     twitter: 'fab fa-twitter',
-    default: 'fas fa-link'
+    telegram: 'fa fa-telegram',
+    default: 'fas fa-link',
 }
 
 @Options({components: {Markdown, PhotoScroll}})
