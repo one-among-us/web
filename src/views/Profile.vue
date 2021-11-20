@@ -140,14 +140,15 @@ export default class Profile extends Vue
     {
         ElMessageBox.confirm('要编辑什么呢？',
             {
+                distinguishCancelAndClose: true,
                 confirmButtonText: '信息卡片',
-                cancelButtonText: '简介文案',
+                cancelButtonText: '简介条目',
             })
             .then(() => {
                 this.$router.push(`/edit-info/${this.p.id}`)
             })
-            .catch(() => {
-                download('page.md', this.markdown)
+            .catch((action) => {
+                if (action === 'cancel') open(`https://github.com/hykilpikonna/our-data/tree/main/people/${this.userid.toLowerCase()}/page.md`)
             })
     }
 }
