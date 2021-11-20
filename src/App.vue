@@ -7,8 +7,8 @@
 
     <div id="nav" class="fbox-vcenter unselectable">
         <div>
-            <router-link to="/">首页</router-link>
-            <router-link to="/about">联系</router-link>
+            <router-link class="router-link" to="/">首页</router-link>
+            <router-link class="router-link" to="/about">联系</router-link>
         </div>
     </div>
 
@@ -85,4 +85,8 @@ export default class App extends Vue
     padding-top: 20px
     background-color: $color-bg-4
     margin-bottom: 50px
+
+.router-link
+    position: relative
+    z-index: 100
 </style>
