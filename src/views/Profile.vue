@@ -4,8 +4,7 @@
             <div id="info" class="font-custom fbox-h" v-if="p">
                 <!-- Horizontal Alignment of profile pic and the rest -->
                 <div id="left" class="fbox-v">
-                    <img :src="p.profileUrl" draggable="false" alt="profile" class="button anim front"
-                         @click="image">
+                    <img :src="p.profileUrl" draggable="false" alt="profile">
                     <div class="spacer"/>
                     <div id="buttons">
                         <div class="button-container">
@@ -110,11 +109,6 @@ export default class Profile extends Vue
         if (platform in icons) return icons[platform]
         if (platform.startsWith('custom-icon:')) return platform.replace('custom-icon:', '')
         return icons.default
-    }
-
-    image(): void
-    {
-        ElMessage.error('TODO: 实现它')
     }
 
     flower(): void
