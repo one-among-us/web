@@ -61,7 +61,7 @@ import Markdown from "@/components/Markdown.vue";
 
 const icons: {[id: string]: string} = {
     twitter: 'fab fa-twitter',
-    telegram: 'fa fa-telegram',
+    telegram: 'fab fa-telegram',
     default: 'fas fa-link',
 }
 
