@@ -1,14 +1,14 @@
 <template>
     <Divider height="5px"/>
     <div id="title" class="fbox-vcenter unselectable" v-if="['Home', 'About'].includes($route.name)">
-        <div id="title-txt">一个标题</div>
-        <div id="title-sub">这是一些副标题</div>
+        <div id="title-txt">那些秋叶</div>
+        <div id="title-sub">One Among Us</div>
     </div>
 
     <div id="nav" class="fbox-vcenter unselectable">
         <div>
             <router-link to="/">首页</router-link>
-            <router-link to="/about">关于</router-link>
+            <router-link to="/about">联系</router-link>
         </div>
     </div>
 
@@ -58,8 +58,7 @@ export default class App extends Vue
 // Title
 #title
     background-color: $color-bg-5
-    min-height: 200px
-    flex: 1
+    min-height: 250px
 
     #title-txt
         font-size: x-large

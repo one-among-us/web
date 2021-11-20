@@ -69,3 +69,12 @@ export const markdownBottom = `
 
 你可以通过在我们的 [Github 数据库](https://github.com/hykilpikonna/our-data) 中递交 Pull Request 来更新或创建新的纪念者条目。Pull Request 被管理员合并后，新的条目会自动显示在网站里。
 `
+
+export const aboutMarkdown = `
+# 联系我们
+
+这个网页目前是由 [Shu Lin](https://twitter.com/sauricat/) 和 [Hykilpikonna](https://github.com/hykilpikonna) 共同维护，如有需要可以通过邮件联系我们！邮箱地址如下：
+
+* Shu: linshu1729@protonmail.com
+* Hykilpikonna: me@hydev.org
+`
