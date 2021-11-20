@@ -121,7 +121,6 @@ export default class Profile extends Vue
         fetch(backendHost + `/flowers/give?id=${this.userid}`)
             .then(() =>
             {
-                ElMessage.success('Yay!')
                 this.flowers += 1
 
                 // Set flowers given
