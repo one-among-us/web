@@ -6,7 +6,8 @@
 <template>
     <div class="hy-input" :class="modelValue ? 'has-text' : ''">
         <input id="hy-input-inner" class="hy-input-inner" :value="modelValue"
-               @input="passInput($event.target.value)" v-bind="$attrs"/>
+               @input="passInput($event.target.value)" v-bind="$attrs"
+               autocomplete="off"/>
         <div class="hy-input-placeholder">
             <label for="hy-input-inner">{{ placeholder }}</label>
         </div>
