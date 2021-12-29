@@ -27,9 +27,10 @@
 <script lang="ts">
 import {Options, Vue} from 'vue-class-component';
 import {markdownBottom, markdownTop, PersonMeta} from "@/logic/data";
-import {dataHost} from "@/logic/config";
+import {dataHost, replaceUrlVars} from "@/logic/config";
 import json5 from 'json5';
 import Markdown from "@/components/Markdown.vue";
+import urljoin from "url-join";
 
 @Options({components: {Markdown}})
 export default class Home extends Vue
@@ -44,7 +45,7 @@ export default class Home extends Vue
 
     created(): void
     {
-        fetch(dataHost + '/generated/people-list.json5')
+        fetch(urljoin(dataHost, 'generated/people-list.json5'))
             .then(it => it.text())
             .then(it => {
                 this.people = json5.parse(it)

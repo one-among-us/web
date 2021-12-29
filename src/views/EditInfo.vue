@@ -32,9 +32,10 @@
 import {Options, Vue} from 'vue-class-component';
 import {Prop} from "vue-property-decorator";
 import {parsePeopleJson, Person, toJson} from "@/logic/data";
-import {dataHost} from "@/logic/config";
+import {peopleUrl} from "@/logic/config";
 import {ElMessageBox} from "element-plus";
 import SubmitPrompt from "@/components/SubmitPrompt.vue";
+import urljoin from "url-join";
 
 interface KVPair { k: string, v: string }
 
@@ -64,7 +65,7 @@ export default class EditInfo extends Vue
     {
         // TODO: Handle errors
         // Get data from server
-        fetch(dataHost + `/people/${this.userid}/info.json5`)
+        fetch(urljoin(peopleUrl(this.userid), `info.json5`))
             .then(it => it.text())
             .then(it => {
                 this.p = parsePeopleJson(it)

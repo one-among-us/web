@@ -55,9 +55,10 @@ import {Prop} from "vue-property-decorator";
 import {parsePeopleJson, Person} from "@/logic/data";
 import {ElMessageBox} from 'element-plus';
 import {abbreviateNumber, getTodayDate} from "@/logic/helper"
-import {backendHost, dataHost} from "@/logic/config";
+import {backendHost, peopleUrl, replaceUrlVars} from "@/logic/config";
 import PhotoScroll from "@/components/PhotoScroll.vue";
 import Markdown from "@/components/Markdown.vue";
+import urljoin from "url-join";
 
 const icons: {[id: string]: string} = {
     twitter: 'fab fa-twitter',
@@ -81,9 +82,11 @@ export default class Profile extends Vue
     {
         this.flowersGiven = localStorage.getItem(`last_flower_given@${this.userid}`) === getTodayDate()
 
+        const pu = peopleUrl(this.userid)
+
         // TODO: Handle errors
         // Get data from server
-        fetch(dataHost + `/people/${this.userid}/info.json5`)
+        fetch(urljoin(pu, `info.json5`))
             .then(it => it.text())
             .then(it => {
                 this.p = parsePeopleJson(it)
@@ -91,7 +94,7 @@ export default class Profile extends Vue
 
         // TODO: Handle errors
         // Load markdown from server
-        fetch(dataHost + `/people/${this.userid}/page.md`)
+        fetch(urljoin(pu, `page.md`))
             .then(it => it.text())
             .then(it => this.markdown = it.replace(/\${dataHost}/g, dataHost))
 
