@@ -24,7 +24,7 @@ export default class PhotoScroll extends Vue
 
     rotations: number[] = []
 
-    beforeCreate()
+    beforeCreate(): void
     {
         if (typeof this.photos === 'string') this.photoList = json5.parse(this.photos)
         else this.photoList = this.photos
