@@ -7,7 +7,7 @@
             <div class="profile" v-for="p in people" :key="p">
                 <div class="back"/>
                 <transition name="fade" @after-leave="() => switchPage(p)">
-                    <img :src="p.profileUrl" draggable="false" alt="profile" class="front clickable"
+                    <img :src="profileUrl(p)" draggable="false" alt="profile" class="front clickable"
                          v-if="clicked !== p.name"
                          @click="() => { if (!clicked) clicked = p.name }">
                 </transition>
@@ -58,6 +58,11 @@ export default class Home extends Vue
     {
         console.log("Called, " + p.id)
         this.$router.push(`/profile/${p.id}`)
+    }
+
+    profileUrl(p: PersonMeta): string
+    {
+        return replaceUrlVars(p.profileUrl, p.id)
     }
 }
 </script>

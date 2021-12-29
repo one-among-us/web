@@ -4,7 +4,7 @@
             <div id="info" class="font-custom fbox-h" v-if="p">
                 <!-- Horizontal Alignment of profile pic and the rest -->
                 <div id="left" class="fbox-v">
-                    <img :src="p.profileUrl" draggable="false" alt="profile">
+                    <img :src="profileUrl" draggable="false" alt="profile">
                     <div class="spacer"/>
                     <div id="buttons">
                         <div class="button-container">
@@ -96,7 +96,7 @@ export default class Profile extends Vue
         // Load markdown from server
         fetch(urljoin(pu, `page.md`))
             .then(it => it.text())
-            .then(it => this.markdown = it.replace(/\${dataHost}/g, dataHost))
+            .then(it => this.markdown = replaceUrlVars(it, this.userid))
 
         // TODO: Handle errors
         fetch(backendHost + `/flowers/get?id=${this.userid}`)
@@ -152,6 +152,11 @@ export default class Profile extends Vue
             .catch((action) => {
                 if (action === 'cancel') open(`https://github.com/hykilpikonna/our-data/tree/main/people/${this.userid}/page.md`)
             })
+    }
+
+    get profileUrl(): string
+    {
+        return replaceUrlVars(this.p.profileUrl, this.userid)
     }
 }
 </script>
