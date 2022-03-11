@@ -1,6 +1,6 @@
 <template>
     <Divider height="5px"/>
-    <div id="title" class="fbox-vcenter unselectable" v-if="['Home', 'About'].includes($route.name)">
+    <div id="title" class="fbox-vcenter unselectable" v-if="['Home', 'About'].includes(String($route.name))">
         <div id="title-txt">那些秋叶</div>
         <div id="title-sub">One Among Us</div>
     </div>
@@ -17,9 +17,9 @@
     <Divider height="5px"/>
 </template>
 
-<script>
+<script lang="ts">
 import {Options, Vue} from 'vue-class-component';
-import Divider from "@/components/divider";
+import Divider from "@/components/divider.vue";
 
 @Options({components: {Divider}})
 export default class App extends Vue
