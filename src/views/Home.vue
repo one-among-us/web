@@ -4,7 +4,7 @@
         <Markdown class="introduction" :markdown="markdownHtmlTop"/>
 
         <div id="profiles" class="unselectable" v-if="people">
-            <div class="profile" v-for="p in people" :key="p">
+            <div class="profile" v-for="p, i in people" :key="i">
                 <div class="back"/>
                 <transition name="fade" @after-leave="() => switchPage(p)">
                     <img :src="profileUrl(p)" draggable="false" alt="profile" class="front clickable"
