@@ -2,6 +2,8 @@ import path from "path";
 
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
+import vueJsx from "@vitejs/plugin-vue-jsx";
+import markdown from "./vite/markdown";
 
 import tsconfig from "./tsconfig.json";
 
@@ -26,12 +28,13 @@ const tsconfigPathAliases = Object.fromEntries(
 
 export default defineConfig({
   plugins: [
-    vue()
+    vue(),
+    vueJsx(),
+    markdown()
   ],
   resolve: {
     alias: {
-      ...tsconfigPathAliases,
-      vue: "vue/dist/vue.esm-bundler.js"
+      ...tsconfigPathAliases
     }
   }
 });

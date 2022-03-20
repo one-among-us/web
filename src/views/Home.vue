@@ -1,7 +1,7 @@
 <template>
     <div>
     <div id="home" :class="clicked ? 'clicked' : ''">
-        <Markdown class="introduction" :markdown="markdownHtmlTop"/>
+        <div class="introduction markdown-content" v-html="htmlTop" />
 
         <div id="profiles" class="unselectable" v-if="people">
             <div class="profile" v-for="p, i in people" :key="i">
@@ -19,36 +19,36 @@
             </div>
         </div>
 
-        <Markdown class="introduction" :markdown="markdownHtmlBottom"/>
+        <div class="introduction markdown-content" v-html="htmlBottom" />
     </div>
     </div>
 </template>
 
 <script lang="ts">
 import {Options, Vue} from 'vue-class-component';
-import {markdownBottom, markdownTop, PersonMeta} from "@/logic/data";
+import htmlTop from "@/assets/home-top.md";
+import htmlBottom from "@/assets/home-bottom.md";
+import {PersonMeta} from "@/logic/data";
 import {dataHost, replaceUrlVars} from "@/logic/config";
-import json5 from 'json5';
-import Markdown from "@/components/Markdown.vue";
 import urljoin from "url-join";
 
-@Options({components: {Markdown}})
+@Options({})
 export default class Home extends Vue
 {
     clicked = ''
     showAdd = false
 
-    markdownHtmlTop = markdownTop
-    markdownHtmlBottom = markdownBottom
+    htmlTop = htmlTop
+    htmlBottom = htmlBottom
 
     people: PersonMeta[] = null as never as PersonMeta[]
 
     created(): void
     {
-        fetch(urljoin(dataHost, 'generated/people-list.json5'))
+        fetch(urljoin(dataHost, 'people-list.json'))
             .then(it => it.text())
             .then(it => {
-                this.people = json5.parse(it)
+                this.people = JSON.parse(it)
                 console.log(it)
                 console.log(this.people)
             })

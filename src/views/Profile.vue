@@ -44,7 +44,7 @@
                 </div>
             </div>
 
-            <Markdown id="content" :markdown="markdown"/>
+            <MDX id="content" :code="compiledMdxCode"/>
         </div>
     </div>
 </template>
@@ -57,7 +57,7 @@ import {ElMessageBox} from 'element-plus';
 import {abbreviateNumber, getTodayDate} from "@/logic/helper"
 import {backendHost, peopleUrl, replaceUrlVars} from "@/logic/config";
 import PhotoScroll from "@/components/PhotoScroll.vue";
-import Markdown from "@/components/Markdown.vue";
+import MDX from "@/components/MDX.vue";
 import urljoin from "url-join";
 
 const icons: {[id: string]: string} = {
@@ -66,13 +66,13 @@ const icons: {[id: string]: string} = {
     default: 'fas fa-link',
 }
 
-@Options({components: {Markdown, PhotoScroll}})
+@Options({components: {MDX, PhotoScroll}})
 export default class Profile extends Vue
 {
     @Prop() userid!: string
 
     p: Person = null as never as Person
-    markdown = ''
+    compiledMdxCode = ''
     flowers = 0
     flowersGiven = false
 
@@ -86,17 +86,17 @@ export default class Profile extends Vue
 
         // TODO: Handle errors
         // Get data from server
-        fetch(urljoin(pu, `info.json5`))
+        fetch(urljoin(pu, `info.json`))
             .then(it => it.text())
             .then(it => {
                 this.p = parsePeopleJson(it)
             })
 
         // TODO: Handle errors
-        // Load markdown from server
-        fetch(urljoin(pu, `page.md`))
+        // Load compile MDX code from server
+        fetch(urljoin(pu, `page.js`))
             .then(it => it.text())
-            .then(it => this.markdown = replaceUrlVars(it, this.userid))
+            .then(it => this.compiledMdxCode = replaceUrlVars(it, this.userid))
 
         // TODO: Handle errors
         fetch(backendHost + `/flowers/get?id=${this.userid}`)

@@ -1,17 +1,16 @@
 <template>
     <div id="About">
-        <Markdown :markdown="markdown" margins="yes"/>
+        <div class="markdown-content" style="margin: 10px min(4vw, 40px)" v-html="html" />
     </div>
 </template>
 
 <script lang="ts">
 import {Options, Vue} from 'vue-class-component';
-import {aboutMarkdown} from "@/logic/data";
-import Markdown from "@/components/Markdown.vue";
+import aboutMarkdownHtml from "@/assets/about.md";
 
-@Options({components: {Markdown}})
+@Options({})
 export default class About extends Vue
 {
-    markdown = aboutMarkdown
+    html = aboutMarkdownHtml;
 }
 </script>
