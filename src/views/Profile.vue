@@ -9,7 +9,7 @@
                     <div id="buttons">
                         <div class="button-container">
                             <div class="button anim fbox-vcenter" @click="flower"
-                                 :class="flowersGiven ? 'disabled' : ''">
+                                 :class="(flowersGiven || loading.has('flower')) ? 'disabled' : ''">
                                 <i class="el-icon-check" v-if="flowersGiven"></i>
                                 <i class="el-icon-lollipop" v-else-if="!loading.has('flower')"></i>
                                 <i class="el-icon-loading" v-else></i>
