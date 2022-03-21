@@ -21,6 +21,7 @@ export default defineComponent({
             if (!props.code) return null;
 
             const module = new Function("exports", "Vue", props.code);
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const exports: any = {};
             module(exports, Vue);
             return exports.default;

@@ -36,5 +36,23 @@ export default defineConfig({
     alias: {
       ...tsconfigPathAliases
     }
+  },
+
+  // Suppress CSS @charset warning (https://github.com/vitejs/vite/discussions/5079)
+  css: {
+    postcss: {
+      plugins: [
+        {
+          postcssPlugin: 'internal:charset-removal',
+          AtRule: {
+            charset: (atRule) => {
+              if (atRule.name === 'charset') {
+                atRule.remove();
+              }
+            }
+          }
+        }
+      ]
+    }
   }
 });
