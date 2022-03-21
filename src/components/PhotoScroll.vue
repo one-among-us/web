@@ -12,7 +12,6 @@
 import {Options, Vue} from 'vue-class-component';
 import {rand} from "@/logic/helper";
 import {Prop} from "vue-property-decorator";
-import json5 from "json5";
 
 @Options({components: {}})
 export default class PhotoScroll extends Vue
@@ -26,7 +25,7 @@ export default class PhotoScroll extends Vue
 
     beforeCreate(): void
     {
-        if (typeof this.photos === 'string') this.photoList = json5.parse(this.photos)
+        if (typeof this.photos === 'string') this.photoList = JSON.parse(this.photos)
         else this.photoList = this.photos
     }
 

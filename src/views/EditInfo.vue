@@ -65,7 +65,7 @@ export default class EditInfo extends Vue
     {
         // TODO: Handle errors
         // Get data from server
-        fetch(urljoin(peopleUrl(this.userid), `info.json5`))
+        fetch(urljoin(peopleUrl(this.userid), `info.json`))
             .then(it => it.text())
             .then(it => {
                 this.p = parsePeopleJson(it)
