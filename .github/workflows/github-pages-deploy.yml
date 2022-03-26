@@ -24,10 +24,10 @@ jobs:
 
       - name: Install and build
         run: |
-          npm install
+          yarn install
           # pass --base if CNAME is not used
           # npm run build -- --base=/${{ github.event.repository.name }}/
-          npm run build
+          yarn build
           
           # Enable Vue Router history mode with 404.html hack for Github Pages
           cd dist
