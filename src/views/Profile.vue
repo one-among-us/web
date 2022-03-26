@@ -10,14 +10,14 @@
                         <div class="button-container">
                             <div class="button anim fbox-vcenter" @click="flower"
                                  :class="(flowersGiven || loading.has('flower')) ? 'disabled' : ''">
-                                <i class="el-icon-check" v-if="flowersGiven"></i>
-                                <i class="el-icon-lollipop" v-else-if="!loading.has('flower')"></i>
-                                <i class="el-icon-loading" v-else></i>
+                                <check v-if="flowersGiven" />
+                                <lollipop v-else-if="!loading.has('flower')" />
+                                <loading v-else />
                             </div>
                             <div class="text-under-button">{{flowerText}}</div>
                         </div>
                         <div class="button-container edit">
-                            <div class="button anim fbox-vcenter" @click="edit"><i class="el-icon-edit"></i></div>
+                            <div class="button anim fbox-vcenter" @click="edit"><edit/></div>
                             <div class="text-under-button">Edit</div>
                         </div>
                     </div>
@@ -59,6 +59,7 @@ import {backendHost, peopleUrl, replaceUrlVars} from "@/logic/config";
 import PhotoScroll from "@/components/PhotoScroll.vue";
 import MDX from "@/components/MDX.vue";
 import urljoin from "url-join";
+import {Lollipop, Loading, Check, Edit} from "@element-plus/icons-vue";
 
 const icons: {[id: string]: string} = {
     twitter: 'fab fa-twitter',
@@ -66,7 +67,7 @@ const icons: {[id: string]: string} = {
     default: 'fas fa-link',
 }
 
-@Options({components: {MDX, PhotoScroll}})
+@Options({components: {Lollipop, Loading, Check, Edit, MDX, PhotoScroll}})
 export default class Profile extends Vue
 {
     @Prop() userid!: string
@@ -165,6 +166,10 @@ export default class Profile extends Vue
 <style lang="sass" scoped>
 @import "../css/colors"
 
+svg
+  width: 20px
+  height: 20px
+
 #profile-page
     padding: 0 20px
     margin-left: min(4vw, 40px)
@@ -254,6 +259,7 @@ export default class Profile extends Vue
 
         .button
             display: inline-flex
+            align-items: center
             font-size: 20px
             width: 40px
             height: 40px
