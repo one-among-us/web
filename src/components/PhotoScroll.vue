@@ -1,11 +1,13 @@
 <template>
+  <div class="ps-wrapper">
     <div id="PhotoScroll">
-        <img v-for="(p, i) in photoList" :key="i"
-             :src="p" alt="p" class="stacked photo-frame-5" draggable="false"
-             :style="{transform: `translate(-50%, -50%) translateX(80px) rotate(${rotations[i]}deg)`,
+      <img v-for="(p, i) in photoList" :key="i"
+           :src="p" alt="p" class="stacked photo-frame-5" draggable="false"
+           :style="{transform: `translate(-50%, -50%) translateX(80px) rotate(${rotations[i]}deg)`,
                       'z-index': p.length - i + 1}" @click="() => viewerOpen = true"/>
-        <el-image-viewer v-if="viewerOpen" :url-list="photoList" :onClose="() => viewerOpen = false"/>
+      <el-image-viewer v-if="viewerOpen" :url-list="photoList" :onClose="() => viewerOpen = false"/>
     </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -44,9 +46,15 @@ export default class PhotoScroll extends Vue
 <style lang="sass">
 @import "../css/colors"
 
+.ps-wrapper
+    display: flex
+    flex-direction: row
+    justify-content: center
+
 #PhotoScroll
     position: relative
     height: 200px
+    width: 160px
 
     margin-top: 20px
     margin-bottom: 20px
