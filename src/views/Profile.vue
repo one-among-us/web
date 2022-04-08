@@ -46,7 +46,7 @@
 
             <MDX id="content" :code="compiledMdxCode"/>
 
-            <ProfileComments id="comments" :p="p"/>
+            <ProfileComments id="comments" :p="p" v-if="p"/>
         </div>
     </div>
 </template>
