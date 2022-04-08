@@ -6,6 +6,8 @@
 
 <script>
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+import {captchaSiteKey} from "@/logic/config";
+
 export default {
     name: "RecaptchaV2",
     data() {
@@ -16,7 +18,8 @@ export default {
     props: {
         siteKey: {
             type: String,
-            required: true
+            required: false,
+            default: captchaSiteKey
         },
         size: {
             type: String,
