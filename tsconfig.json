@@ -22,7 +22,9 @@
       "dom",
       "dom.iterable",
       "scripthost"
-    ]
+    ],
+
+    "allowJs": true
   },
   "include": [
     "src/**/*.ts",
