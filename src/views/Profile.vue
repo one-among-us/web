@@ -45,6 +45,8 @@
             </div>
 
             <MDX id="content" :code="compiledMdxCode"/>
+
+            <ProfileComments id="comments" :p="p"/>
         </div>
     </div>
 </template>
@@ -60,6 +62,7 @@ import PhotoScroll from "@/components/PhotoScroll.vue";
 import MDX from "@/components/MDX.vue";
 import urljoin from "url-join";
 import {Lollipop, Loading, Check, Edit} from "@element-plus/icons-vue";
+import ProfileComments from "@/views/ProfileComments.vue";
 
 const icons: {[id: string]: string} = {
     twitter: 'fab fa-twitter',
@@ -67,7 +70,7 @@ const icons: {[id: string]: string} = {
     default: 'fas fa-link',
 }
 
-@Options({components: {Lollipop, Loading, Check, Edit, MDX, PhotoScroll}})
+@Options({components: {ProfileComments, Lollipop, Loading, Check, Edit, MDX, PhotoScroll}})
 export default class Profile extends Vue
 {
     @Prop() userid!: string

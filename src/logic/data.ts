@@ -8,6 +8,13 @@ export interface PersonMeta
     profileUrl: string
 }
 
+export interface Comment
+{
+    id: number
+    content: string
+    submitter: string
+}
+
 export interface Person
 {
     id: string,
@@ -16,6 +23,7 @@ export interface Person
 
     info: [string, string][]
     websites: [string, string][]
+    comments: Comment[]
 }
 
 export function parsePeopleJson(json: string): Person
