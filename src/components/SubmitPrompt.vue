@@ -10,7 +10,7 @@
             <HyInput class="input" placeholder="邮箱" v-model="email"/>
 
             <div>点击下面的验证码就能提交啦！</div>
-            <RecaptchaV2 site-key="6LcbpzQdAAAAAN-J3dWZsi1t_ZRNT-ybUbmsQmH_" @verify="submit"/>
+            <RecaptchaV2 :site-key="captchaSiteKey" @verify="submit"/>
         </div>
     </div>
 </template>
@@ -20,13 +20,15 @@ import {Options, Vue} from 'vue-class-component';
 import HyInput from "@/components/HyInput.vue";
 import RecaptchaV2 from "@/components/RecaptchaV2.vue";
 import {ElMessage, ElMessageBox} from "element-plus";
-import {backendHost} from "@/logic/config";
+import {backendHost, captchaSiteKey} from "@/logic/config";
 import {Prop} from "vue-property-decorator";
 import {neofetch} from "@/logic/helper";
 
 @Options({components: {RecaptchaV2, HyInput}})
 export default class SubmitPrompt extends Vue
 {
+    captchaSiteKey = captchaSiteKey
+
     name = ''
     email = ''
     
