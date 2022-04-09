@@ -1,4 +1,5 @@
 import moment from 'moment'
+import {URLSearchParams} from "url";
 
 /**
  * Download a string
@@ -76,16 +77,24 @@ export function rand(min: number, max: number): number
     return Math.random() * (max - min + 1) + min
 }
 
+interface RequestInfo extends RequestInit
+{
+    params: {[index: string]: string}
+}
+
 /**
  * Fetch but handles errors better
  *
- * @param input
+ * @param url
  * @param init
  */
-export function neofetch(input: RequestInfo, init?: RequestInit): Promise<string>
+export function neofetch(url: string, init?: RequestInfo): Promise<string>
 {
+    const u = new URL(url)
+    u.search = new URLSearchParams(init.params ?? {}).toString()
+
     return new Promise((resolve, reject) => {
-        fetch(input, init).then(response => response.text().then(text =>
+        fetch(u.toString(), init).then(response => response.text().then(text =>
             {
                 if (response.ok) resolve(text)
                 else throw new Error(text)
