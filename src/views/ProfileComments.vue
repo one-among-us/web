@@ -3,7 +3,7 @@
         <h1>留言</h1>
 
         <div id="comments" v-if="p.comments.length > 0">
-            <p class="comment" v-for="c in p.comments" :key="c">
+            <p class="comment" v-for="c in p.comments">
                 <span class="content">{{c.content + (c.content.endsWith('。') ? '' : '。')}}</span>
                 <span class="from">——{{c.submitter}}</span>
             </p>
