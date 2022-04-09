@@ -8,7 +8,7 @@
             <div class="text">谢谢你！请留下你的昵称！
                 <div class="sub">（如果不想留名字也可以填匿名哦）</div>
             </div>
-            <HyInput class="input" placeholder="名字" v-model="name"/>
+            <HyInput class="input first" placeholder="名字" v-model="name"/>
             <HyInput class="input" placeholder="邮箱（可选）" v-model="email"/>
 
             <div>点击下面的验证码就能提交啦！</div>
@@ -62,17 +62,20 @@ export default class SubmitPrompt extends Vue
     text-align: center
 
 #prompt
-    width: 320px
+    width: 306px
     margin: auto
     background: white
     border-radius: 10px
     padding: 15px
 
-    > * + *
-        margin-top: 20px
+    > *
+        margin-bottom: 20px
 
-    .input
-        margin-top: 25px
+    > *:last-child
+        margin-bottom: 0
+
+    > .input.first
+        margin-bottom: 10px
 
 #header
     text-align: left
