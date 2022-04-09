@@ -17,12 +17,11 @@
                     <input class="value" v-model="web.v" @change="change"/>
                 </div>
             </div>
-            <div class="button submit" @click="submit">提交</div>
+            <div class="button submit" @click="submitBtn">提交</div>
         </div>
         <div class="spacer"/>
 
-        <SubmitPrompt v-if="submitPromptParams" node="/edit/info" :params="submitPromptParams"
-                      @close="() => submitPromptParams = null"/>
+        <SubmitPrompt v-if="submitParams" @submit="submitRequest" @close="() => submitParams = null"/>
     </div>
 </template>
 
@@ -30,10 +29,12 @@
 import {Options, Vue} from 'vue-class-component';
 import {Prop} from "vue-property-decorator";
 import {parsePeopleJson, Person, toJson} from "@/logic/data";
-import {peopleUrl} from "@/logic/config";
+import {backendHost, peopleUrl} from "@/logic/config";
 import {ElMessageBox} from "element-plus";
-import SubmitPrompt from "@/components/SubmitPrompt.vue";
+import SubmitPrompt, {CaptchaResponse} from "@/components/SubmitPrompt.vue";
 import urljoin from "url-join";
+import {ElMessage} from "element-plus/es";
+import {neofetch} from "@/logic/helper";
 
 interface KVPair { k: string, v: string }
 
@@ -57,7 +58,7 @@ export default class EditInfo extends Vue
     editInfo: KVPair[] = []
     editWebsites: KVPair[] = []
 
-    submitPromptParams: {[id: string]: string} = null as never
+    submitParams: {[id: string]: string} = null as never
 
     created(): void
     {
@@ -88,7 +89,7 @@ export default class EditInfo extends Vue
         }
     }
 
-    submit(): void
+    submitBtn(): void
     {
         removeEmpty(this.editInfo)
         removeEmpty(this.editWebsites)
@@ -107,7 +108,31 @@ export default class EditInfo extends Vue
         }
 
         // Show submit prompt
-        this.submitPromptParams = {id: this.p.id, content: json}
+        this.submitParams = {id: this.p.id, content: json}
+    }
+
+    submitRequest(p: CaptchaResponse): void
+    {
+        ElMessage.success('正在创建更改请求 (Pull Request)...')
+
+        const params = {...this.submitParams, ...p}
+
+        neofetch(backendHost + '/edit/info', {method: 'POST', params})
+            .then(text => {
+                ElMessageBox.confirm('提交成功！谢谢你',
+                    {
+                        confirmButtonText: '查看更改请求',
+                        cancelButtonText: '好的',
+                        type: 'warning',
+                    })
+                    .then(() => open(text))
+            })
+            .catch(error => {
+                console.log(error)
+                ElMessageBox.alert('失败原因：' + error.message, '提交失败')
+            })
+
+        this.submitParams = null
     }
 }
 </script>

@@ -21,48 +21,26 @@
 import {Options, Vue} from 'vue-class-component';
 import HyInput from "@/components/HyInput.vue";
 import RecaptchaV2 from "@/components/RecaptchaV2.vue";
-import {ElMessage, ElMessageBox} from "element-plus";
-import {backendHost} from "@/logic/config";
-import {Prop} from "vue-property-decorator";
-import {neofetch} from "@/logic/helper";
+
+
+export interface CaptchaResponse
+{
+    captcha: string
+    name: string
+    email: string
+}
+
 
 @Options({components: {RecaptchaV2, HyInput}})
 export default class SubmitPrompt extends Vue
 {
     name = ''
     email = ''
-    
-    @Prop({required: true}) node!: string
-    @Prop({required: true}) params!: {[id: string]: string}
 
     submit(captcha: string): void
     {
         this.$emit('close')
         this.$emit('submit', {captcha, name: this.name, email: this.email})
-
-        ElMessage.success('正在创建更改请求 (Pull Request)...')
-
-        const params = {
-            ...this.params,
-            captcha: captcha,
-            name: this.name,
-            email: this.email
-        }
-
-        neofetch(backendHost + this.node, {method: 'POST', params})
-            .then(text => {
-                ElMessageBox.confirm('提交成功！谢谢你',
-                    {
-                        confirmButtonText: '查看更改请求',
-                        cancelButtonText: '好的',
-                        type: 'warning',
-                    })
-                    .then(() => open(text))
-            })
-            .catch(error => {
-                console.log(error)
-                ElMessageBox.alert('失败原因：' + error.message, '提交失败')
-            })
     }
 }
 </script>
