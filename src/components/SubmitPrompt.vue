@@ -59,6 +59,8 @@ export default class SubmitPrompt extends Vue
     background: rgba(0,0,0,.5)
     z-index: 1000
 
+    text-align: center
+
 #prompt
     width: 320px
     margin: auto
@@ -66,11 +68,11 @@ export default class SubmitPrompt extends Vue
     border-radius: 10px
     padding: 15px
 
-#prompt > *
-    margin-bottom: 10px
+    > * + *
+        margin-top: 20px
 
-#prompt > *:last-child
-    margin-bottom: 0
+    .input
+        margin-top: 25px
 
 #header
     text-align: left
@@ -83,4 +85,5 @@ export default class SubmitPrompt extends Vue
     .sub
         font-size: small
         color: $color-text-light
+
 </style>
