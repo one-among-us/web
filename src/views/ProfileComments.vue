@@ -17,8 +17,7 @@
             </div>
         </div>
 
-        <SubmitPrompt v-if="submitPromptParams" node="/comment/add" :params="submitPromptParams"
-                      @close="() => submitPromptParams = null"/>
+        <SubmitPrompt v-if="showCaptchaPrompt" @submit="submitRequest" @close="showCaptchaPrompt = false"/>
     </div>
 </template>
 
@@ -26,7 +25,11 @@
 import {Options, Vue} from 'vue-class-component';
 import {Prop} from "vue-property-decorator";
 import {Person} from "@/logic/data";
-import SubmitPrompt from "@/components/SubmitPrompt.vue";
+import SubmitPrompt, {CaptchaResponse} from "@/components/SubmitPrompt.vue";
+import {ElMessage} from "element-plus/es";
+import {neofetch} from "@/logic/helper";
+import {backendHost} from "@/logic/config";
+import {ElMessageBox} from "element-plus";
 
 @Options({components: {SubmitPrompt}})
 export default class ProfileComments extends Vue
@@ -40,7 +43,7 @@ export default class ProfileComments extends Vue
     private textInputCache = ""
     private textInputKey: string
 
-    submitPromptParams: {[id: string]: string} = null as never
+    showCaptchaPrompt = false
 
     /**
      * Send button
@@ -48,7 +51,26 @@ export default class ProfileComments extends Vue
     btnSend()
     {
         // Show submit prompt
-        this.submitPromptParams = {id: this.p.id, content: this.textInput}
+        this.showCaptchaPrompt = true
+    }
+
+    submitRequest(p: CaptchaResponse)
+    {
+        this.showCaptchaPrompt = false
+        ElMessage.success('正在提交留言...')
+
+        const params = {id: this.p.id, content: this.textInput, ...p}
+        console.log(params)
+
+        neofetch(backendHost + '/comment/add', {method: 'POST', params})
+            .then(() => {
+                this.textInput = ""
+                ElMessageBox.alert('提交成功！谢谢你！\n我们审核之后会给你发邮件')
+            })
+            .catch(error => {
+                console.log(error)
+                ElMessageBox.alert('失败原因：' + error.message, '提交失败')
+            })
     }
 
     /**

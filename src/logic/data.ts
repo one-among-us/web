@@ -13,6 +13,7 @@ export interface Comment
     id: number
     content: string
     submitter: string
+    date?: string
 }
 
 export interface Person

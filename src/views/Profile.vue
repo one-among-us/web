@@ -180,6 +180,10 @@ svg
 
 #content
     text-align: justify
+    animation: fade-in-top-delayed 1.5s 0s ease
+
+#comments
+    text-align: justify
     animation: fade-in-top-delayed 2s 0s ease
 
 #info
