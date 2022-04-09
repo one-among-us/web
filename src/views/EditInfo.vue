@@ -107,10 +107,7 @@ export default class EditInfo extends Vue
         }
 
         // Show submit prompt
-        this.submitPromptParams = {
-            id: encodeURIComponent(this.p.id),
-            content: encodeURIComponent(json),
-        }
+        this.submitPromptParams = {id: this.p.id, content: json}
     }
 }
 </script>

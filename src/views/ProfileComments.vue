@@ -16,6 +16,9 @@
                 <i class="fas fa-paper-plane clickable" @click="btnSend"/>
             </div>
         </div>
+
+        <SubmitPrompt v-if="submitPromptParams" node="/comment/add" :params="submitPromptParams"
+                      @close="() => submitPromptParams = null"/>
     </div>
 </template>
 
@@ -23,8 +26,9 @@
 import {Options, Vue} from 'vue-class-component';
 import {Prop} from "vue-property-decorator";
 import {Person} from "@/logic/data";
+import SubmitPrompt from "@/components/SubmitPrompt.vue";
 
-@Options({components: {}})
+@Options({components: {SubmitPrompt}})
 export default class ProfileComments extends Vue
 {
     declare $refs: {
@@ -36,12 +40,15 @@ export default class ProfileComments extends Vue
     private textInputCache = ""
     private textInputKey: string
 
+    submitPromptParams: {[id: string]: string} = null as never
+
     /**
      * Send button
      */
     btnSend()
     {
-        console.log('hi')
+        // Show submit prompt
+        this.submitPromptParams = {id: this.p.id, content: this.textInput}
     }
 
     /**
