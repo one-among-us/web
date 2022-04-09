@@ -1,5 +1,4 @@
 import moment from 'moment'
-import {URLSearchParams} from "url";
 
 /**
  * Download a string
