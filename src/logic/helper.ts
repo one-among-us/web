@@ -79,7 +79,7 @@ export function rand(min: number, max: number): number
 
 interface RequestInfo extends RequestInit
 {
-    params: {[index: string]: string}
+    params?: {[index: string]: string}
 }
 
 /**
