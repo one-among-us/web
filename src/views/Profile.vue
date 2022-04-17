@@ -116,7 +116,7 @@ export default class Profile extends Vue
 
     flower(): void
     {
-        if (this.flowersGiven) return
+        if (this.flowersGiven || this.loading.has('flower')) return
 
         // TODO: Handle errors
         // TODO: Better user interaction (probably like +1 animation or something)
