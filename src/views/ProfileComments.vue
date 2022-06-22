@@ -3,9 +3,10 @@
         <h1>留言</h1>
 
         <div id="comments" v-if="p.comments.length > 0">
-            <p class="comment" v-for="c in p.comments">
+            <p class="comment" v-for="c in p.comments" :key="c.id">
                 <span class="content">{{c.content + (c.content.endsWith('。') ? '' : '。')}}</span>
-                <span class="from">——{{c.submitter}}</span>
+                <span class="from" v-if="c.submitter !== 'Anonymous'">——{{c.submitter}}</span>
+                <span class="from anonymous" v-else>——匿名小可爱</span>
             </p>
         </div>
 
@@ -120,6 +121,15 @@ export default class ProfileComments extends Vue
 
 <style lang="sass">
 @import src/css/global
+@import src/css/colors
+
+.comment
+    .from
+        color: $color-text-light
+        
+    .from.anonymous
+        color: lighten($color-text-light, 20%)
+
 
 #add-comment
     margin-top: 20px
