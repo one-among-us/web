@@ -3,10 +3,10 @@
         <h1>留言</h1>
 
         <div id="comments" v-if="p.comments.length > 0">
-            <p class="comment" v-for="c in p.comments" :key="c.id">
-                <span class="content">{{c.content + (c.content.endsWith('。') ? '' : '。')}}</span>
-                <span class="from" v-if="c.submitter !== 'Anonymous'">——{{c.submitter}}</span>
-                <span class="from anonymous" v-else>——匿名小可爱</span>
+            <p class="comment" v-for="c in comments" :key="c.id">
+                <span class="content">{{c.content}}</span>
+                <span class="from anonymous" v-if="c.anonymous">——匿名小可爱</span>
+                <span class="from" v-else>——{{c.submitter}}</span>
             </p>
         </div>
 
@@ -31,6 +31,7 @@ import {ElMessage} from "element-plus/es";
 import {neofetch} from "@/logic/helper";
 import {backendHost} from "@/logic/config";
 import {ElMessageBox} from "element-plus";
+import {initSpoilers} from "@/logic/ui";
 
 @Options({components: {SubmitPrompt}})
 export default class ProfileComments extends Vue
@@ -45,6 +46,14 @@ export default class ProfileComments extends Vue
     private textInputKey: string
 
     showCaptchaPrompt = false
+
+    get comments()
+    {
+        return this.p.comments.map(c => {return {...c,
+            anonymous: c.submitter === "Anonymous",
+            content: c.content + (c.content.endsWith('。') ? '' : '。')
+        }})
+    }
 
     /**
      * Send button
@@ -105,6 +114,9 @@ export default class ProfileComments extends Vue
     {
         // Set initial size
         this.resizeInput()
+
+        // Init spoilers
+        initSpoilers()
     }
 
     /**
