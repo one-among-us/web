@@ -126,7 +126,7 @@ export default class ProfileComments extends Vue
 .comment
     .from
         color: $color-text-light
-        
+
     .from.anonymous
         color: lighten($color-text-light, 20%)
 
@@ -147,6 +147,8 @@ export default class ProfileComments extends Vue
         border: none
         padding: 10px
         box-sizing: border-box
+
+        outline: 0 solid white
 
     textarea:focus-visible
         outline: 1px solid $color-text-light
