@@ -106,7 +106,7 @@ export default class Profile extends Vue
         fetch(backendHost + `/flowers/get?id=${this.userid}`)
             .then(it => it.text())
             .then(it => {
-                console.log(it)
+                console.log("Flowers:", it)
                 this.flowers = parseInt(it)
             })
     }

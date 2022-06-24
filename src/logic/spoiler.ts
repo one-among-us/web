@@ -8,7 +8,7 @@ export function initSpoilers()
 {
   const spoilers = document.querySelectorAll('.spoiler')
 
-  console.log("Init spoilers")
+  console.log("Spoilers initialized.")
 
   for (const spoiler of spoilers)
   {
@@ -17,9 +17,7 @@ export function initSpoilers()
     spoiler.classList.add("spoiler-init")
 
     // Add event listener
-    spoiler.addEventListener('click', event => {
-      console.log('clicked', event);
-
+    spoiler.addEventListener('click', () => {
       // If already shown, hide
       if (spoiler.classList.contains("spoiler-visible")) spoiler.classList.remove("spoiler-visible")
       else spoiler.classList.add("spoiler-visible")
@@ -41,12 +39,8 @@ const spoilerExtension = {
     const match = rule.exec(src);
 
     if (match) {
-      console.log(src, match) // This shows me multiple matches.
-      return {
-        type: 'spoiler',
-        raw: match[0],
-        inner: this.lexer.inlineTokens(match[1].trim())
-      };
+      // console.log(src, match)
+      return {type: 'spoiler', raw: match[0], inner: this.lexer.inlineTokens(match[1].trim())};
     }
   },
   renderer(token) {
