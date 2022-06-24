@@ -4,14 +4,14 @@
 
         <div id="comments" v-if="p.comments.length > 0">
             <p class="comment" v-for="c in comments" :key="c.id">
-                <span class="content">{{c.content}}</span>
+                <span class="content" v-html="c.content"></span>
                 <span class="from anonymous" v-if="c.anonymous">——匿名小可爱</span>
                 <span class="from" v-else>——{{c.submitter}}</span>
             </p>
         </div>
 
         <div id="add-comment">
-            <textarea v-model="textInput" placeholder="添加留言..." @input="resizeInput" ref="input"/>
+            <textarea v-model="textInput" placeholder="添加留言... （支持 Markdown 哦！" @input="resizeInput" ref="input"/>
             <div id="send-comment-btn" v-if="textInput.length > 0">
                 <span class="char-count unselectable">{{textInput.length}} 字（已存草稿）</span>
                 <i class="fas fa-paper-plane clickable" @click="btnSend"/>
@@ -32,6 +32,8 @@ import {neofetch} from "@/logic/helper";
 import {backendHost} from "@/logic/config";
 import {ElMessageBox} from "element-plus";
 import {initSpoilers} from "@/logic/ui";
+import sanitizeHtml from 'sanitize-html';
+import {marked} from "marked";
 
 @Options({components: {SubmitPrompt}})
 export default class ProfileComments extends Vue
@@ -51,7 +53,7 @@ export default class ProfileComments extends Vue
     {
         return this.p.comments.map(c => {return {...c,
             anonymous: c.submitter === "Anonymous",
-            content: c.content + (c.content.endsWith('。') ? '' : '。')
+            content: sanitizeHtml(marked.parseInline(c.content))
         }})
     }
 
@@ -64,6 +66,9 @@ export default class ProfileComments extends Vue
         this.showCaptchaPrompt = true
     }
 
+    /**
+     * Submit comment request
+     */
     submitRequest(p: CaptchaResponse)
     {
         this.showCaptchaPrompt = false
@@ -138,6 +143,7 @@ export default class ProfileComments extends Vue
 .comment
     .from
         color: $color-text-light
+        margin-left: 10px
 
     .from.anonymous
         color: lighten($color-text-light, 20%)
