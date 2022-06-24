@@ -14,16 +14,17 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2.1.5
+      - uses: actions/setup-node@v3
 
       - name: Cache node modules
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/node_modules
           key: cache-${{ hashFiles('**/package-lock.json') }}
 
       - name: Install and build
         run: |
+          export NODE_OPTIONS="--max-old-space-size=4096"
           yarn install
           # pass --base if CNAME is not used
           # npm run build -- --base=/${{ github.event.repository.name }}/
