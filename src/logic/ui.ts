@@ -7,11 +7,17 @@ export function initSpoilers()
 
   for (const spoiler of spoilers)
   {
-    console.log("added listener")
+    // Already initialized
+    if (spoiler.classList.contains("spoiler-init")) continue
+    spoiler.classList.add("spoiler-init")
+
+    // Add event listener
     spoiler.addEventListener('click', event => {
       console.log('clicked', event);
 
-      spoiler.setAttribute('style', 'background-color: yellow;');
+      // If already shown, hide
+      if (spoiler.classList.contains("spoiler-visible")) spoiler.classList.remove("spoiler-visible")
+      else spoiler.classList.add("spoiler-visible")
     })
   }
 }
