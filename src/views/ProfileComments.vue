@@ -31,9 +31,7 @@ import {ElMessage} from "element-plus/es";
 import {neofetch} from "@/logic/helper";
 import {backendHost} from "@/logic/config";
 import {ElMessageBox} from "element-plus";
-import {initSpoilers} from "@/logic/ui";
-import sanitizeHtml from 'sanitize-html';
-import {marked} from "marked";
+import {initSpoilers, mdParseInline} from "@/logic/spoiler";
 
 @Options({components: {SubmitPrompt}})
 export default class ProfileComments extends Vue
@@ -53,7 +51,7 @@ export default class ProfileComments extends Vue
     {
         return this.p.comments.map(c => {return {...c,
             anonymous: c.submitter === "Anonymous",
-            content: sanitizeHtml(marked.parseInline(c.content))
+            content: mdParseInline(c.content)
         }})
     }
 
