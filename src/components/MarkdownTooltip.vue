@@ -1,8 +1,9 @@
 <template>
     <div id="MarkdownTooltip" class="noanim" ref="el" @keydown.esc="close" @mousedown="windowDrag">
+        <span class="drag"><i class="fa-solid fa-grip-lines-vertical"></i></span>
         <el-tooltip v-for="act in actions" :key="act.name" :content="act.name">
-            <span class="icon-wrapper">
-                <i :class="act.icon" @click="() => apply(act)"/>
+            <span class="icon-wrapper" @mousedown="e => apply(e, act)">
+                <i :class="act.icon"/>
             </span>
         </el-tooltip>
     </div>
@@ -73,8 +74,9 @@ export default class MarkdownTooltip extends Vue
         this.el.classList.add('show')
     }
 
-    apply(act: TooltipAction)
+    apply(e: UIEvent, act: TooltipAction)
     {
+        e.preventDefault()
         let {start, end} = this.selectedArea
         let txt = this.textAreaEl.value
         let sel = txt.substring(start, end)
@@ -111,6 +113,15 @@ export default class MarkdownTooltip extends Vue
      */
     windowDrag(e: MouseEvent): void
     {
+        // Only drag if it's dragging the root element, or the dragged element has 'drag' class
+        function hasDrag(el: HTMLElement)
+        {
+            if (el.classList.contains('drag')) return true
+            if (!el.parentElement) return false
+            return hasDrag(el.parentElement)
+        }
+        if (!(e.target == this.el || hasDrag(e.target as HTMLElement))) return
+
         e.preventDefault()
         let lastX = e.clientX, lastY = e.clientY
         const mousemove = (e: MouseEvent) =>
@@ -136,6 +147,7 @@ export default class MarkdownTooltip extends Vue
 
 #MarkdownTooltip
     position: absolute
+
     background: #fffcf9b5
     color: $color-text-light
     backdrop-filter: blur(10px)
@@ -163,5 +175,10 @@ export default class MarkdownTooltip extends Vue
 
     .icon-wrapper:hover
         background: white
+
+    .drag
+        display: inline-block
+        padding-left: 3px
+        padding-right: 8px
 
 </style>
