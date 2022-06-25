@@ -1,7 +1,9 @@
 <template>
     <div id="MarkdownTooltip" class="noanim" ref="el" @keydown.esc="close" @mousedown="windowDrag">
         <el-tooltip v-for="act in actions" :key="act.name" :content="act.name">
-            <i :class="act.icon" @click="() => apply(act)"/>
+            <span class="icon-wrapper">
+                <i :class="act.icon" @click="() => apply(act)"/>
+            </span>
         </el-tooltip>
     </div>
 </template>
@@ -126,18 +128,31 @@ export default class MarkdownTooltip extends Vue
 
 #MarkdownTooltip
     position: absolute
-    background: transparentize($color-text-light, 0.8)
+    background: #fffcf9b5
     color: $color-text-light
     backdrop-filter: blur(10px)
     opacity: 0.9
+    filter: drop-shadow(0 2px 5px rgba(166, 134, 89, 0.42))
 
     border-radius: 10px
-    padding: 8px 12px
+    padding: 5px
 
     white-space: nowrap
 
-    i + i
-        margin-left: 10px
+    .icon-wrapper + .icon-wrapper
+        margin-left: 2px
 
+    .icon-wrapper
+        display: inline-flex
+        align-items: center
+        justify-content: center
+
+        width: 30px
+        height: 30px
+        padding: 0
+        border-radius: 8px
+
+    .icon-wrapper:hover
+        background: white
 
 </style>
