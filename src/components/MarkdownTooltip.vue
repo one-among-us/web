@@ -133,6 +133,7 @@ export default class MarkdownTooltip extends Vue
     backdrop-filter: blur(10px)
     opacity: 0.9
     filter: drop-shadow(0 2px 5px rgba(166, 134, 89, 0.42))
+    transition: opacity 0.5s ease
 
     border-radius: 10px
     padding: 5px
