@@ -15,19 +15,20 @@ import {Prop, Ref} from "vue-property-decorator";
 interface TooltipAction {
     name: string
     icon: string
-    fn: (text: string) => void
+    md: string
+    // is: (text: string, start: number, end: number) => boolean
 }
 
 @Options({components: {}})
 export default class MarkdownTooltip extends Vue
 {
     actions: TooltipAction[] = [
-        {name: '加粗',   icon: 'fa-solid fa-bold',          fn: text => `**${text}**`},
-        {name: '斜体',   icon: 'fa-solid fa-italic',        fn: text => `_${text}_`},
-        // {name: '下划线', icon: 'fa-solid fa-underline',     fn: text => `${text}`},
-        {name: '划掉',   icon: 'fa-solid fa-strikethrough', fn: text => `~~${text}~~`},
-        {name: '代码',   icon: 'fa-solid fa-code',          fn: text => `\`${text}\``},
-        {name: '黑幕',   icon: 'fa-solid fa-eye-slash',     fn: text => `||${text}||`},
+        {name: '加粗',   icon: 'fa-solid fa-bold',          md: '**'},
+        {name: '斜体',   icon: 'fa-solid fa-italic',        md: '__'},
+        // {name: '下划线', icon: 'fa-solid fa-underline',     md: '--'},
+        {name: '划掉',   icon: 'fa-solid fa-strikethrough', md: '~~'},
+        {name: '代码',   icon: 'fa-solid fa-code',          md: '`'},
+        {name: '黑幕',   icon: 'fa-solid fa-eye-slash',     md: '||'},
     ]
 
     @Ref() el!: HTMLElement
@@ -35,7 +36,7 @@ export default class MarkdownTooltip extends Vue
 
     @Prop() textAreaId!: string
     textAreaEl: HTMLTextAreaElement
-    selectedText = ""
+    selectedArea?: {start: number, end: number} = null
 
     mounted()
     {
@@ -65,30 +66,32 @@ export default class MarkdownTooltip extends Vue
         // Textarea is not focused, then it's deselected
         if (active != tel) return this.close()
 
-        // Get selection
-        const sel = tel.value.substring(tel.selectionStart, tel.selectionEnd)
-
         // Selection is empty
-        if (sel == "") return this.close()
+        if (tel.selectionStart == tel.selectionEnd) return this.close()
 
-        this.selectedText = sel
+        this.selectedArea = {start: tel.selectionStart, end: tel.selectionEnd}
         this.el.classList.add('show')
-        this.el.focus()
-
-        this.$forceUpdate()
-
-        console.log(sel)
     }
 
     apply(act: TooltipAction)
     {
-        console.log(act)
+        let {start, end} = this.selectedArea
+        let txt = this.textAreaEl.value
+        let sel = txt.substring(start, end)
+
+        // Change text
+        this.textAreaEl.value = txt.substring(0, start) + act.md + sel + act.md + txt.substring(end)
+
+        // Update selection range
+        start += act.md.length
+        end += act.md.length
+        this.selectedArea = {start, end}
+        this.textAreaEl.setSelectionRange(start, end)
     }
 
     close()
     {
-        console.log('closed')
-        this.selectedText = ""
+        this.selectedArea = null
         this.el.classList.remove('show')
     }
 
