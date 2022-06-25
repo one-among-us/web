@@ -79,8 +79,13 @@ export default class MarkdownTooltip extends Vue
         let txt = this.textAreaEl.value
         let sel = txt.substring(start, end)
 
-        // Change text
-        this.textAreaEl.value = txt.substring(0, start) + act.md + sel + act.md + txt.substring(end)
+        // Change text while preserving history (TODO: Manually implement undo/redo
+        let newTxt = txt.substring(0, start) + act.md + sel + act.md + txt.substring(end)
+        document.execCommand('selectAll', false);
+        const el = document.createElement('p');
+        el.innerText = newTxt;
+        document.execCommand('insertHTML', false, el.innerHTML);
+        // this.textAreaEl.value = newTxt
 
         // Update selection range
         start += act.md.length
