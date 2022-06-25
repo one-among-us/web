@@ -16,6 +16,8 @@
                 <span class="char-count unselectable">{{textInput.length}} 字（已存草稿）</span>
                 <i class="fas fa-paper-plane clickable" @click="btnSend"/>
             </div>
+
+            <MarkdownTooltip></MarkdownTooltip>
         </div>
 
         <SubmitPrompt v-if="showCaptchaPrompt" @submit="submitRequest" @close="showCaptchaPrompt = false"/>
@@ -32,8 +34,9 @@ import {neofetch} from "@/logic/helper";
 import {backendHost} from "@/logic/config";
 import {ElMessageBox} from "element-plus";
 import {initSpoilers, mdParseInline} from "@/logic/spoiler";
+import MarkdownTooltip from "@/components/MarkdownTooltip.vue";
 
-@Options({components: {SubmitPrompt}})
+@Options({components: {MarkdownTooltip, SubmitPrompt}})
 export default class ProfileComments extends Vue
 {
     declare $refs: {
