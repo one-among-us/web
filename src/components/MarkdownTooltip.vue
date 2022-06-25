@@ -31,6 +31,53 @@ export default class MarkdownTooltip extends Vue
     @Ref() el!: HTMLElement
     @Prop({default: null}) initialPos?: {x: number, y: number}
 
+    @Prop() textAreaId!: string
+    textAreaEl: HTMLTextAreaElement
+    selectedText = ""
+
+    mounted()
+    {
+        // Get text area element
+        this.textAreaEl = document.getElementById(this.textAreaId) as HTMLTextAreaElement
+        document.addEventListener('selectionchange', this.documentSelectionChange)
+    }
+
+    unmounted()
+    {
+        document.removeEventListener('selectionchange', this.documentSelectionChange)
+    }
+
+    /**
+     * On document selection change
+     *
+     * This is necessary because there isn't a "deselect" event. One solution is to listen to blur,
+     * focus, keydown, and mousedown events. It works most of the time, but when the user drags the
+     * text, the mousedown event is called even though the text isn't deselected. So, we have to
+     * listen to selection change event for the entire document instead.
+     */
+    documentSelectionChange(ev: UIEvent)
+    {
+        const active = document.activeElement
+        const tel = this.textAreaEl
+
+        // Textarea is not focused, then it's deselected
+        if (active != tel) return this.close()
+
+        // Get selection
+        const sel = tel.value.substring(tel.selectionStart, tel.selectionEnd)
+
+        // Selection is empty
+        if (sel == "") return this.close()
+
+        this.selectedText = sel
+        this.el.classList.add('show')
+        this.el.focus()
+
+        this.$forceUpdate()
+
+        console.log(sel)
+    }
+
     apply(act: TooltipAction)
     {
         console.log(act)
@@ -38,7 +85,9 @@ export default class MarkdownTooltip extends Vue
 
     close()
     {
-        console.log("Close clicked")
+        console.log('closed')
+        this.selectedText = ""
+        this.el.classList.remove('show')
     }
 
     setPos(x: number, y: number): void
@@ -70,6 +119,10 @@ export default class MarkdownTooltip extends Vue
 
 <style lang="sass">
 @import src/css/global
+
+#MarkdownTooltip:not(.show)
+    opacity: 0
+    pointer-events: none
 
 #MarkdownTooltip
     position: absolute

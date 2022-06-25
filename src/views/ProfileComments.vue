@@ -11,13 +11,14 @@
         </div>
 
         <div id="add-comment">
-            <textarea v-model="textInput" placeholder="添加留言... （支持 Markdown 哦！" @input="resizeInput" ref="input"/>
+            <textarea id="comment-textarea" v-model="textInput" placeholder="添加留言... （支持 Markdown 哦！"
+                      @input="resizeInput" ref="input"/>
             <div id="send-comment-btn" v-if="textInput.length > 0">
                 <span class="char-count unselectable">{{textInput.length}} 字（已存草稿）</span>
                 <i class="fas fa-paper-plane clickable" @click="btnSend"/>
             </div>
 
-            <MarkdownTooltip></MarkdownTooltip>
+            <MarkdownTooltip text-area-id="comment-textarea"></MarkdownTooltip>
         </div>
 
         <SubmitPrompt v-if="showCaptchaPrompt" @submit="submitRequest" @close="showCaptchaPrompt = false"/>
