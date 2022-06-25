@@ -17,11 +17,7 @@ export function initSpoilers()
     spoiler.classList.add("spoiler-init")
 
     // Add event listener
-    spoiler.addEventListener('click', () => {
-      // If already shown, hide
-      if (spoiler.classList.contains("spoiler-visible")) spoiler.classList.remove("spoiler-visible")
-      else spoiler.classList.add("spoiler-visible")
-    })
+    spoiler.addEventListener('click', () => spoiler.classList.toggle("spoiler-visible"))
   }
 }
 
