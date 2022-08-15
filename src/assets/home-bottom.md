@@ -12,6 +12,6 @@
 
 # 如何贡献
 
-你可以通过在我们的 [Github 数据库](https://github.com/hykilpikonna/our-data) 中递交 Pull Request 来更新或创建新的纪念者条目。Pull Request 被管理员合并后，新的条目会自动显示在网站里。
+你可以通过在我们的 [Github 数据库](https://github.com/one-among-us/data) 中递交 Pull Request 来更新或创建新的纪念者条目。Pull Request 被管理员合并后，新的条目会自动显示在网站里。
 
 如果不知道怎么做，欢迎你来 [联系我们](/about)。

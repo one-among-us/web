@@ -16,5 +16,5 @@ echo 'www.one-among.us' > CNAME
 git init
 git add -A
 git commit -m 'deploy'
-git push -f git@github.com:hykilpikonna/one-among-us.git master:gh-pages
+git push -f git@github.com:one-among-us/web.git master:gh-pages
 cd -

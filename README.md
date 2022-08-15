@@ -4,16 +4,16 @@
 
 ## GitHub Repo 结构
 
-* [our-data](https://github.com/hykilpikonna/our-data) - 条目内容存储
-* [OneAmongUs.Web](https://github.com/hykilpikonna/OneAmongUs.Web) - 网页前端源码
-* [OneAmongUs.Backend](https://github.com/hykilpikonna/OneAmongUs.Backend) - 献花和编辑后端源码（暂时私有了）
+* [data](https://github.com/one-among-us/data) - 条目内容存储
+* [web](https://github.com/one-among-us/web) - 网页前端源码
+* [backend](https://github.com/one-among-us/backend) - 献花和编辑后端源码
 
 ## 设置开发环境
 
 ```sh
 # 克隆项目
-git clone https://github.com/hykilpikonna/OneAmongUs.Web
-cd OneAmongUs.Web
+git clone https://github.com/one-among-us/web
+cd web
 
 # 安装依赖（如果没有安装 Yarn 的话请先安装 Yarn）
 yarn install

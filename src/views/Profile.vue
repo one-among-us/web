@@ -154,7 +154,7 @@ export default class Profile extends Vue
                 this.$router.push(`/edit-info/${this.p.id}`)
             })
             .catch((action) => {
-                if (action === 'cancel') open(`https://github.com/hykilpikonna/our-data/tree/main/people/${this.userid}/page.md`)
+                if (action === 'cancel') open(`https://github.com/one-among-us/data/tree/main/people/${this.userid}/page.md`)
             })
     }
 
