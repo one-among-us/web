@@ -331,7 +331,7 @@ svg
         margin-top: -50px
         padding-top: 50px
 
-        #content
+        #content, #comments
             margin: 10px
 
     #info
