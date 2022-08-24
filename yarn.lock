@@ -1818,6 +1818,11 @@ optionator@^0.9.1:
     type-check "^0.4.0"
     word-wrap "^1.2.3"
 
+pangu@^4.0.7:
+  version "4.0.7"
+  resolved "https://registry.yarnpkg.com/pangu/-/pangu-4.0.7.tgz#2a40347733b004a040d011de460cc313c10391c9"
+  integrity sha512-weZKJIwwy5gjt4STGVUH9bix3BGk7wZ2ahtIypwe3e/mllsrIZIvtfLx1dPX56GcpZFOCFKmeqI1qVuB9enRzA==
+
 parent-module@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/parent-module/-/parent-module-1.0.1.tgz#691d2709e78c79fae3a156622452d00762caaaa2"
