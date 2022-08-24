@@ -61,6 +61,7 @@ import {backendHost, peopleUrl, replaceUrlVars} from "@/logic/config";
 import PhotoScroll from "@/components/PhotoScroll.vue";
 import MDX from "@/components/MDX.vue";
 import urljoin from "url-join";
+import pangu from "pangu";
 import {Lollipop, Loading, Check, Edit} from "@element-plus/icons-vue";
 import ProfileComments from "@/views/ProfileComments.vue";
 
@@ -109,6 +110,12 @@ export default class Profile extends Vue
                 console.log("Flowers:", it)
                 this.flowers = parseInt(it)
             })
+    }
+
+    updated()
+    {
+        // Fix spacing around alphabetical words placed in between chinese sentences.
+        pangu.autoSpacingPage();
     }
 
     getIcon(platform: string): string
