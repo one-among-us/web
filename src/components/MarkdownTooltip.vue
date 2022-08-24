@@ -78,11 +78,11 @@ export default class MarkdownTooltip extends Vue
     {
         e.preventDefault()
         let {start, end} = this.selectedArea
-        let txt = this.textAreaEl.value
-        let sel = txt.substring(start, end)
+        const txt = this.textAreaEl.value
+        const sel = txt.substring(start, end)
 
         // Change text while preserving history (TODO: Manually implement undo/redo
-        let newTxt = txt.substring(0, start) + act.md + sel + act.md + txt.substring(end)
+        const newTxt = txt.substring(0, start) + act.md + sel + act.md + txt.substring(end)
         document.execCommand('selectAll', false);
         const el = document.createElement('p');
         el.innerText = newTxt;

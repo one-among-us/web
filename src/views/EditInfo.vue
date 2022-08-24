@@ -77,7 +77,7 @@ export default class EditInfo extends Vue
 
     change(): void
     {
-        for (let list of [this.editInfo, this.editWebsites])
+        for (const list of [this.editInfo, this.editWebsites])
         {
             // Remove redundant last entries
             if (list.filter(it => !it.k && !it.v).length > 1)
@@ -95,7 +95,7 @@ export default class EditInfo extends Vue
         removeEmpty(this.editWebsites)
         this.p.info = this.editInfo.map(it => [it.k, it.v])
         this.p.websites = this.editWebsites.map(it => [it.k, it.v])
-        let json = toJson(this.p)
+        const json = toJson(this.p)
         console.log(json)
         this.change()
 
