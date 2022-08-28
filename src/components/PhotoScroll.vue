@@ -65,6 +65,7 @@ export default class PhotoScroll extends Vue
         max-width: 180px
         left: 0
         top: 50%
+        cursor: zoom-in
 
 
 </style>
