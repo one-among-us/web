@@ -61,6 +61,7 @@ export default class MarkdownTooltip extends Vue
      */
     documentSelectionChange(ev: UIEvent)
     {
+        console.log("Document selection change", ev)
         const active = document.activeElement
         const tel = this.textAreaEl
 
