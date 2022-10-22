@@ -8,12 +8,14 @@
                     <div class="spacer"/>
                     <div id="buttons">
                         <div class="button-container">
-                            <div class="button anim fbox-vcenter" @click="flower"
-                                 :class="(flowersGiven || loading.has('flower')) ? 'disabled' : ''">
-                                <check v-if="flowersGiven" />
-                                <lollipop v-else-if="!loading.has('flower')" />
-                                <loading v-else />
-                            </div>
+                            <el-tooltip content="献花" show-after="1000" :disabled="flowersGiven || loading.has('flower')">
+                                <div class="button anim fbox-vcenter" @click="flower"
+                                     :class="(flowersGiven || loading.has('flower')) ? 'disabled' : ''">
+                                    <check v-if="flowersGiven" />
+                                    <lollipop v-else-if="!loading.has('flower')" />
+                                    <loading v-else />
+                                </div>u
+                            </el-tooltip>
                             <div class="text-under-button">{{flowerText}}</div>
                         </div>
                         <div class="button-container edit">
