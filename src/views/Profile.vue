@@ -11,10 +11,10 @@
                             <el-tooltip content="献花" show-after="1000" :disabled="flowersGiven || loading.has('flower')">
                                 <div class="button anim fbox-vcenter" @click="flower"
                                      :class="(flowersGiven || loading.has('flower')) ? 'disabled' : ''">
-                                    <check v-if="flowersGiven" />
-                                    <lollipop v-else-if="!loading.has('flower')" />
-                                    <loading v-else />
-                                </div>u
+                                    <Check v-if="flowersGiven" />
+                                    <Lollipop v-else-if="!loading.has('flower')" />
+                                    <Loading v-else />
+                                </div>
                             </el-tooltip>
                             <div class="text-under-button">{{flowerText}}</div>
                         </div>
