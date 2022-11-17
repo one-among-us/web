@@ -34,7 +34,7 @@ import {ElMessageBox} from "element-plus";
 import SubmitPrompt, {CaptchaResponse} from "@/components/SubmitPrompt.vue";
 import urljoin from "url-join";
 import {ElMessage} from "element-plus/es";
-import {neofetch} from "@/logic/helper";
+import {fetchText} from "@/logic/helper";
 
 interface KVPair { k: string, v: string }
 
@@ -117,7 +117,7 @@ export default class EditInfo extends Vue
 
         const params = {...this.submitParams, ...p}
 
-        neofetch(backendHost + '/edit/info', {method: 'POST', params})
+        fetchText(backendHost + '/edit/info', {method: 'POST', params})
             .then(text => {
                 ElMessageBox.confirm('提交成功！谢谢你',
                     {
