@@ -15,13 +15,16 @@
     <router-view id="router"/>
 
     <Divider height="5px"/>
+
+    <LangButton/>
 </template>
 
 <script lang="ts">
 import {Options, Vue} from 'vue-class-component';
 import Divider from "@/components/divider.vue";
+import LangButton from "@/components/LangButton.vue";
 
-@Options({components: {Divider}})
+@Options({components: {LangButton, Divider}})
 export default class App extends Vue
 {
 }
