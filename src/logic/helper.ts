@@ -1,5 +1,6 @@
 import moment from 'moment'
 import {getLang} from "@/logic/config";
+import {info} from "@/logic/utils";
 
 /**
  * Download a string
@@ -123,7 +124,7 @@ export function fetchWithLang(input: RequestInfo, init?: RequestInitWithParams):
         p[last] = lsp.join('.')
         u.pathname = p.join('/')
 
-        console.log(`Detected language: ${lang}. Changing request to ${u.pathname}`)
+        info(`Detected language: ${lang}. Changing request to ${u.pathname}`)
     }), init)
 }
 

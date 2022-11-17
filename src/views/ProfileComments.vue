@@ -36,6 +36,7 @@ import {backendHost} from "@/logic/config";
 import {ElMessageBox} from "element-plus";
 import {initSpoilers, mdParseInline} from "@/logic/spoiler";
 import MarkdownTooltip from "@/components/MarkdownTooltip.vue";
+import {error, info} from "@/logic/utils";
 
 @Options({components: {MarkdownTooltip, SubmitPrompt}})
 export default class ProfileComments extends Vue
@@ -77,16 +78,16 @@ export default class ProfileComments extends Vue
         ElMessage.success('正在提交留言...')
 
         const params = {id: this.p.id, content: this.textInput, ...p}
-        console.log(params)
+        info(params)
 
         fetchText(backendHost + '/comment/add', {method: 'POST', params})
             .then(() => {
                 this.textInput = ""
                 ElMessageBox.alert('提交成功！谢谢你！\n我们审核之后会给你发邮件')
             })
-            .catch(error => {
-                console.log(error)
-                ElMessageBox.alert('失败原因：' + error.message, '提交失败')
+            .catch(err => {
+                error(err)
+                ElMessageBox.alert('失败原因：' + err.message, '提交失败')
             })
     }
 

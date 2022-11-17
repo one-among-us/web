@@ -33,6 +33,7 @@ import htmlBottom from "@/assets/home-bottom.md";
 import {PersonMeta} from "@/logic/data";
 import {dataHost, replaceUrlVars} from "@/logic/config";
 import urljoin from "url-join";
+import { info } from '@/logic/utils';
 
 @Options({})
 export default class Home extends Vue
@@ -51,14 +52,14 @@ export default class Home extends Vue
             .then(it => it.text())
             .then(it => {
                 this.people = JSON.parse(it)
-                console.log(it)
-                console.log(this.people)
+                // console.log(it)
+                // console.log(this.people)
             })
     }
 
     switchPage(p: PersonMeta): void
     {
-        console.log("Called, " + p.id)
+        info(`switchPage(${p.id})`)
         this.$router.push(`/profile/${p.id}`)
     }
 

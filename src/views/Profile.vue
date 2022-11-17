@@ -8,7 +8,7 @@
                     <div class="spacer"/>
                     <div id="buttons">
                         <div class="button-container">
-                            <el-tooltip content="献花" show-after="1000" :disabled="flowersGiven || loading.has('flower')">
+                            <el-tooltip content="献花" :show-after="1000" :disabled="flowersGiven || loading.has('flower')">
                                 <div class="button anim fbox-vcenter" @click="flower"
                                      :class="(flowersGiven || loading.has('flower')) ? 'disabled' : ''">
                                     <Check v-if="flowersGiven" />
@@ -66,6 +66,7 @@ import urljoin from "url-join";
 import pangu from "pangu";
 import {Lollipop, Loading, Check, Edit} from "@element-plus/icons-vue";
 import ProfileComments from "@/views/ProfileComments.vue";
+import { info } from '@/logic/utils';
 
 const icons: {[id: string]: string} = {
     twitter: 'fab fa-twitter',
@@ -109,7 +110,7 @@ export default class Profile extends Vue
         fetch(backendHost + `/flowers/get?id=${this.userid}`)
             .then(it => it.text())
             .then(it => {
-                console.log("Flowers:", it)
+                info(`Flowers: ${it}`)
                 this.flowers = parseInt(it)
             })
     }

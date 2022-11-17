@@ -1,5 +1,6 @@
 import {marked} from "marked";
 import sanitizeHtml from 'sanitize-html';
+import {info} from "@/logic/utils";
 
 /**
  * Initialize clickable spoilers on the page
@@ -8,7 +9,7 @@ export function initSpoilers()
 {
   const spoilers = document.querySelectorAll('.spoiler')
 
-  console.log("Spoilers initialized.")
+  info("Spoilers initialized.")
 
   for (const spoiler of spoilers)
   {

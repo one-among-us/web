@@ -35,6 +35,7 @@ import SubmitPrompt, {CaptchaResponse} from "@/components/SubmitPrompt.vue";
 import urljoin from "url-join";
 import {ElMessage} from "element-plus/es";
 import {fetchText} from "@/logic/helper";
+import {error} from "@/logic/utils";
 
 interface KVPair { k: string, v: string }
 
@@ -127,9 +128,9 @@ export default class EditInfo extends Vue
                     })
                     .then(() => open(text))
             })
-            .catch(error => {
-                console.log(error)
-                ElMessageBox.alert('失败原因：' + error.message, '提交失败')
+            .catch(err => {
+                error(err)
+                ElMessageBox.alert('失败原因：' + err.message, '提交失败')
             })
 
         this.submitParams = null
