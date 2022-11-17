@@ -29,9 +29,11 @@
 <script lang="ts">
 import {Options, Vue} from 'vue-class-component';
 import htmlTop from "@/assets/home-top.md";
+import htmlTopHant from "@/assets/home-top.zh_hant.md";
 import htmlBottom from "@/assets/home-bottom.md";
+import htmlBottomHant from "@/assets/home-bottom.zh_hant.md";
 import {PersonMeta} from "@/logic/data";
-import {dataHost, replaceUrlVars} from "@/logic/config";
+import {dataHost, getLang, replaceUrlVars} from "@/logic/config";
 import urljoin from "url-join";
 import { info } from '@/logic/utils';
 
@@ -41,13 +43,15 @@ export default class Home extends Vue
     clicked = ''
     showAdd = false
 
-    htmlTop = htmlTop
-    htmlBottom = htmlBottom
+    lang = getLang()
+    htmlTop = this.lang === 'zh_hans' ?  htmlTop : htmlTopHant
+    htmlBottom = this.lang === 'zh_hans' ? htmlBottom : htmlBottomHant
 
     people: PersonMeta[] = null as never as PersonMeta[]
 
     created(): void
     {
+        info(`Language: ${this.lang}`)
         fetch(urljoin(dataHost, 'people-list.json'))
             .then(it => it.text())
             .then(it => {

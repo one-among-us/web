@@ -6,11 +6,13 @@
 
 <script lang="ts">
 import {Options, Vue} from 'vue-class-component';
-import aboutMarkdownHtml from "@/assets/about.md";
+import aboutHtml from "@/assets/about.md";
+import aboutHtmlHant from "@/assets/about.zh_hant.md";
+import {getLang} from "@/logic/config";
 
 @Options({})
 export default class About extends Vue
 {
-    html = aboutMarkdownHtml;
+    html = getLang() == 'zh_hans' ? aboutHtml : aboutHtmlHant;
 }
 </script>
