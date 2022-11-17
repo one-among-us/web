@@ -58,7 +58,7 @@ import {Options, Vue} from 'vue-class-component';
 import {Prop} from "vue-property-decorator";
 import {parsePeopleJson, Person} from "@/logic/data";
 import {ElMessageBox} from 'element-plus';
-import {abbreviateNumber, getTodayDate} from "@/logic/helper"
+import {abbreviateNumber, fetchWithLang, getTodayDate} from "@/logic/helper"
 import {backendHost, peopleUrl, replaceUrlVars} from "@/logic/config";
 import PhotoScroll from "@/components/PhotoScroll.vue";
 import MDX from "@/components/MDX.vue";
@@ -93,7 +93,7 @@ export default class Profile extends Vue
 
         // TODO: Handle errors
         // Get data from server
-        fetch(urljoin(pu, `info.json`))
+        fetchWithLang(urljoin(pu, `info.json`))
             .then(it => it.text())
             .then(it => {
                 this.p = parsePeopleJson(it)
@@ -101,7 +101,7 @@ export default class Profile extends Vue
 
         // TODO: Handle errors
         // Load compile MDX code from server
-        fetch(urljoin(pu, `page.js`))
+        fetchWithLang(urljoin(pu, `page.js`))
             .then(it => it.text())
             .then(it => this.compiledMdxCode = replaceUrlVars(it, this.userid))
 

@@ -31,7 +31,7 @@ import {Prop} from "vue-property-decorator";
 import {Person} from "@/logic/data";
 import SubmitPrompt, {CaptchaResponse} from "@/components/SubmitPrompt.vue";
 import {ElMessage} from "element-plus/es";
-import {neofetch} from "@/logic/helper";
+import {fetchText} from "@/logic/helper";
 import {backendHost} from "@/logic/config";
 import {ElMessageBox} from "element-plus";
 import {initSpoilers, mdParseInline} from "@/logic/spoiler";
@@ -79,7 +79,7 @@ export default class ProfileComments extends Vue
         const params = {id: this.p.id, content: this.textInput, ...p}
         console.log(params)
 
-        neofetch(backendHost + '/comment/add', {method: 'POST', params})
+        fetchText(backendHost + '/comment/add', {method: 'POST', params})
             .then(() => {
                 this.textInput = ""
                 ElMessageBox.alert('提交成功！谢谢你！\n我们审核之后会给你发邮件')
