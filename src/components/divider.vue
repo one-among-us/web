@@ -8,14 +8,7 @@
 <script lang="ts">
 import {Options, Vue} from 'vue-class-component';
 import {Prop} from "vue-property-decorator";
-
-const transColors = [
-    '#5BCEFA',
-    '#F5A9B8',
-    '#FFF',
-    '#F5A9B8',
-    '#5BCEFA'
-]
+import {transColors} from "@/logic/constants";
 
 @Options({components: {}})
 export default class Divider extends Vue

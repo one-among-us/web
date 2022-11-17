@@ -23,10 +23,24 @@
 import {Options, Vue} from 'vue-class-component';
 import Divider from "@/components/divider.vue";
 import LangButton from "@/components/LangButton.vue";
+import {info, logPrefixCss} from "@/logic/utils";
+import {transColors} from "@/logic/constants";
 
 @Options({components: {LangButton, Divider}})
 export default class App extends Vue
 {
+    mounted()
+    {
+        info(`One Among Us - Web Frontend loaded`)
+        console.log(`%c %c %c %c %c `,
+            ...transColors.map(c => `background: ${c}; padding: 40px 20px;`)
+        )
+        console.log(`%c🐱%c 请不要用调试器做奇怪的事情 qwq\n%c(^ 这里有猫猫看着你哦)`,
+            'font-size: 1.5em; background: #fdf6ec; color: #E6A23C;' + logPrefixCss,
+            'font-size: 1.5em; color: #ff8373',
+            'color: pink; line-height: 1.5em'
+        )
+    }
 }
 </script>
 
