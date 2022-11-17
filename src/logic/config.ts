@@ -39,3 +39,9 @@ export function getLang(): Lang
 
     return 'zh_hans'
 }
+
+export function setLang(name: Lang)
+{
+    if (name in zhMap) name = zhMap[name]
+    localStorage.setItem('lang', name)
+}
