@@ -32,6 +32,7 @@ export default class LangButton extends Vue
     position: fixed
     right: 20px
     bottom: 20px
+    z-index: 50
 
     background: $color-bg-6
 
