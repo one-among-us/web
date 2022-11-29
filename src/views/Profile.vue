@@ -337,7 +337,7 @@ svg
 
         // overflow hack
         // https://stackoverflow.com/questions/6421966/css-overflow-x-visible-and-overflow-y-hidden-causing-scrollbar-issue
-        overflow-x: hidden
+        overflow: hidden
         margin-top: -50px
         padding-top: 50px
 
