@@ -36,6 +36,7 @@ import {PersonMeta} from "@/logic/data";
 import {dataHost, getLang, replaceUrlVars} from "@/logic/config";
 import urljoin from "url-join";
 import { info } from '@/logic/utils';
+import {fetchWithLang} from "@/logic/helper";
 
 @Options({})
 export default class Home extends Vue
@@ -52,7 +53,7 @@ export default class Home extends Vue
     created(): void
     {
         info(`Language: ${this.lang}`)
-        fetch(urljoin(dataHost, 'people-list.json'))
+        fetchWithLang(urljoin(dataHost, 'people-list.json'))
             .then(it => it.text())
             .then(it => {
                 this.people = JSON.parse(it)
