@@ -33,16 +33,6 @@ export function parsePeopleJson(json: string): Person
     return p
 }
 
-export function toJson(p: Person): string
-{
-    const p1 = {...p}
-    delete p1.comments
-    return JSON.stringify(p1, null, 4)
-        .replace(/ {8}\[\n {12}'/g, "        ['")
-        .replace(/',\n {12}'/g, "', '")
-        .replace(/',\n {8}],/g, "'],")
-}
-
 export function url(base: string, params: {[id: string]: string}): string
 {
     return base + '?' + new URLSearchParams(params)
