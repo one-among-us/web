@@ -1,5 +1,3 @@
-import json5 from "json5";
-
 export interface PersonMeta
 {
     path: string,
@@ -37,7 +35,9 @@ export function parsePeopleJson(json: string): Person
 
 export function toJson(p: Person): string
 {
-    return json5.stringify(p, {space: 4})
+    const p1 = {...p}
+    delete p1.comments
+    return JSON.stringify(p1, null, 4)
         .replace(/ {8}\[\n {12}'/g, "        ['")
         .replace(/',\n {12}'/g, "', '")
         .replace(/',\n {8}],/g, "'],")
