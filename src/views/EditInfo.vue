@@ -28,7 +28,7 @@
 <script lang="ts">
 import {Options, Vue} from 'vue-class-component';
 import {Prop} from "vue-property-decorator";
-import {parsePeopleJson, Person, toJson} from "@/logic/data";
+import {parsePeopleJson, Person} from "@/logic/data";
 import {backendHost, peopleUrl} from "@/logic/config";
 import {ElMessageBox} from "element-plus";
 import SubmitPrompt, {CaptchaResponse} from "@/components/SubmitPrompt.vue";
@@ -61,6 +61,14 @@ export default class EditInfo extends Vue
 
     submitParams: {[id: string]: string} = null as never
 
+    json(): string
+    {
+        return JSON.stringify({
+            info: Object.fromEntries(this.p.info),
+            websites: Object.fromEntries(this.p.websites)
+        }, null, 2)
+    }
+
     created(): void
     {
         // TODO: Handle errors
@@ -69,7 +77,7 @@ export default class EditInfo extends Vue
             .then(it => it.text())
             .then(it => {
                 this.p = parsePeopleJson(it)
-                this.initialJson = toJson(this.p)
+                this.initialJson = this.json()
                 this.p.info.forEach((a) => this.editInfo.push({k: a[0], v: a[1]}))
                 this.p.websites.forEach((a) => this.editWebsites.push({k: a[0], v: a[1]}))
                 this.change()
@@ -96,7 +104,7 @@ export default class EditInfo extends Vue
         removeEmpty(this.editWebsites)
         this.p.info = this.editInfo.map(it => [it.k, it.v])
         this.p.websites = this.editWebsites.map(it => [it.k, it.v])
-        const json = toJson(this.p)
+        const json = this.json()
         console.log(json)
         this.change()
 
@@ -120,13 +128,12 @@ export default class EditInfo extends Vue
 
         fetchText(backendHost + '/edit/info', {method: 'POST', params})
             .then(text => {
-                ElMessageBox.confirm('提交成功！谢谢你',
+                console.log(text)
+                ElMessageBox.alert('提交成功！谢谢你。我们将尽快审核您的更改',
                     {
-                        confirmButtonText: '查看更改请求',
                         cancelButtonText: '好的',
                         type: 'warning',
                     })
-                    .then(() => open(text))
             })
             .catch(err => {
                 error(err)

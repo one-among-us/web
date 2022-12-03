@@ -39,8 +39,8 @@ export default class SubmitPrompt extends Vue
 
     submit(captcha: string): void
     {
-        this.$emit('close')
         this.$emit('submit', {captcha, name: this.name, email: this.email})
+        this.$emit('close')
     }
 }
 </script>
