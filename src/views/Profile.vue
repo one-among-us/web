@@ -68,7 +68,10 @@ import {Lollipop, Loading, Check, Edit} from "@element-plus/icons-vue";
 import ProfileComments from "@/views/ProfileComments.vue";
 import { info } from '@/logic/utils';
 
-const icons: {[id: string]: string} = {
+import '@fortawesome/fontawesome-free/js/fontawesome'
+import '@fortawesome/fontawesome-free/js/brands'
+
+let icons: {[id: string]: string} = {
     twitter: 'fab fa-twitter',
     telegram: 'fab fa-telegram',
     default: 'fas fa-link',
@@ -113,6 +116,10 @@ export default class Profile extends Vue
                 info(`Flowers: ${it}`)
                 this.flowers = parseInt(it)
             })
+
+        // @ts-ignore Load all branding icons from font-awesome
+        icons = {...icons, ...Object.fromEntries(Object.keys(window.___FONT_AWESOME___.styles.fab)
+            .map(it => [it, `fab fa-${it}`]))}
     }
 
     updated()
