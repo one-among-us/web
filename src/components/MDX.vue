@@ -65,10 +65,10 @@ export default defineComponent({
         padding: 0
 
     p
-        font-size: 0.875em
+        font-size: 1em
         margin: 0.5em 0
         line-height: 1.6
 
     li
-        font-size: 0.875em
+        font-size: 1em
 </style>

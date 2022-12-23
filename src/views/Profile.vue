@@ -205,7 +205,6 @@ svg
     animation: fade-in-top-delayed 2s 0s ease
 
 #info
-    font-size: 0.9em
     width: 100%
     background-color: $color-bg-6
     //border: 4px solid $color-text-main
