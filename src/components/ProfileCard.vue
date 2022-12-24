@@ -9,15 +9,15 @@
                     <el-tooltip content="献花" :show-after="1000" :disabled="flowersGiven || loading.has('flower')">
                         <div class="button anim fbox-vcenter" @click="flower"
                              :class="(flowersGiven || loading.has('flower')) ? 'disabled' : ''">
-                            <Check v-if="flowersGiven" />
-                            <Lollipop v-else-if="!loading.has('flower')" />
-                            <Loading v-else />
+                            <IEpCheck v-if="flowersGiven" />
+                            <IEpLollipop v-else-if="!loading.has('flower')" />
+                            <IEpLoading v-else />
                         </div>
                     </el-tooltip>
                     <div class="text-under-button">{{flowerText}}</div>
                 </div>
                 <div class="button-container edit">
-                    <div class="button anim fbox-vcenter" @click="edit"><edit/></div>
+                    <div class="button anim fbox-vcenter" @click="edit"><IEpEdit /></div>
                     <div class="text-under-button">Edit</div>
                 </div>
             </div>
@@ -47,7 +47,6 @@
 
 <script lang="ts">
 import {Options, Vue} from 'vue-class-component';
-import {Lollipop, Loading, Check, Edit} from "@element-plus/icons-vue";
 import {Prop} from "vue-property-decorator";
 import {backendHost, replaceUrlVars} from "@/logic/config";
 import {abbreviateNumber, getTodayDate} from "@/logic/helper";
@@ -61,7 +60,7 @@ let icons: {[id: string]: string} = {
     default: 'fas fa-link',
 }
 
-@Options({components: {Lollipop, Loading, Check, Edit}})
+@Options({components: {}})
 export default class ProfileCard extends Vue
 {
     @Prop({required: true}) userid!: string
@@ -317,7 +316,6 @@ export default class ProfileCard extends Vue
             .text-under-button
                 margin-left: 5px
                 margin-top: 8px
-
 
             .button
                 font-size: 15px
