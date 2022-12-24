@@ -1,7 +1,7 @@
 <template>
     <div>
         <TgBlog id="profile-page" :posts-url="backupUrl" v-if="backup">
-            <ChannelBackupButton class="heading" text="返回信息页面" icon="fas fa-caret-left"
+            <ChannelBackupButton class="heading" text="返回" icon="fas fa-caret-left"
                                  :url="`/profile/${userid}`" />
         </TgBlog>
     </div>
