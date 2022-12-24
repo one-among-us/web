@@ -1,5 +1,5 @@
 <template>
-    <a class="backup button anim" :href="url">
+    <a class="backup button anim" :href="computedUrl">
         <i class="icon" :class="icon ? icon : `fab fa-${platform}`"></i>
         <span class="text">{{text}}</span>
     </a>
@@ -8,14 +8,21 @@
 <script lang="ts">
 import {Options, Vue} from 'vue-class-component';
 import {Prop} from "vue-property-decorator";
+import urljoin from "url-join";
 
 @Options({components: {}})
 export default class ChannelBackupButton extends Vue
 {
     @Prop({default: "telegram"}) platform: string
     @Prop() icon: string
-    @Prop({required: true}) url: string
+    @Prop() url: string
     @Prop({default: "查看频道备份"}) text: string
+
+    get computedUrl()
+    {
+        if (this.url) return this.url
+        return urljoin(window.location.href, `backup/${this.platform}`)
+    }
 }
 </script>
 
