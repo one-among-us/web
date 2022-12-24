@@ -20,10 +20,9 @@ import MDX from "@/components/MDX.vue";
 import urljoin from "url-join";
 import pangu from "pangu";
 import ProfileComments from "@/views/ProfileComments.vue";
-import ChannelBackupButton from "@/components/ChannelBackupButton.vue";
 import ProfileCard from '@/components/ProfileCard.vue';
 
-@Options({components: {ProfileCard, ProfileComments, MDX, ChannelBackupButton}})
+@Options({components: {ProfileCard, ProfileComments, MDX}})
 export default class Profile extends Vue
 {
     @Prop({required: true}) userid!: string

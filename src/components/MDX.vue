@@ -4,6 +4,7 @@ import * as Vue from 'vue';
 import { computed, defineComponent } from 'vue';
 import PhotoScroll from './PhotoScroll.vue';
 import ChannelBackupButton from "@/components/ChannelBackupButton.vue";
+import BackupButtons from "@/components/BackupButtons.vue";
 
 export default defineComponent({
     name: "MDX",
@@ -33,7 +34,7 @@ export default defineComponent({
                 {
                     renderFunction.value?.({
                         components: {
-                            PhotoScroll, ChannelBackupButton
+                            PhotoScroll, ChannelBackupButton, BackupButtons
                         }
                     })
                 }
