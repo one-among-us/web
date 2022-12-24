@@ -50,6 +50,7 @@ export default class App extends Vue
 @import "css/global"
 @import "css/font"
 @import "css/colors"
+@import "css/markdown"
 
 #app
     font-family: "Microsoft YaHei UI", Avenir, Helvetica, Arial, sans-serif

@@ -4,7 +4,7 @@
         <div class="introduction markdown-content" v-html="htmlTop" />
 
         <div id="profiles" class="unselectable" v-if="people">
-            <div class="profile" v-for="p, i in people" :key="i">
+            <div class="profile" v-for="(p, i) in people" :key="i">
                 <div class="back"/>
                     <a :href="`/profile/${p.id}`" @click.exact.prevent.stop="() => false">
                         <transition name="fade" @after-leave="() => switchPage(p)">
