@@ -3,23 +3,6 @@ import {getLang} from "@/logic/config";
 import {info} from "@/logic/utils";
 
 /**
- * Download a string
- * @param filename File name
- * @param text Content
- */
-export function download(filename: string, text: string): void
-{
-    const element = document.createElement('a');
-    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-    element.setAttribute('download', filename);
-
-    element.style.display = 'none';
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
-}
-
-/**
  * https://github.com/moh3n9595/js-abbreviation-number
  *
  * @param num
@@ -70,7 +53,7 @@ export function getTodayDate(): string
 
 export function randint(min: number, max: number): number
 {
-    return Math.floor(Math.random() * (max - min + 1) + min)
+    return Math.floor(rand(min, max))
 }
 
 export function rand(min: number, max: number): number
