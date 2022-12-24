@@ -27,9 +27,9 @@ import ProfileCard from '@/components/ProfileCard.vue';
 @Options({components: {ProfileCard, ProfileComments, MDX, PhotoScroll, ChannelBackupButton}})
 export default class Profile extends Vue
 {
-    @Prop() userid!: string
+    @Prop({required: true}) userid!: string
 
-    p: Person = null as never as Person
+    p?: Person = null
     compiledMdxCode = ''
 
     created(): void

@@ -1,7 +1,7 @@
 <template>
     <a class="backup button anim" :href="url">
-        <i class="icon" :class="`fab fa-${type}`"></i>
-        <span class="text">查看频道备份</span>
+        <i class="icon" :class="icon ? icon : `fab fa-${platform}`"></i>
+        <span class="text">{{text}}</span>
     </a>
 </template>
 
@@ -12,8 +12,10 @@ import {Prop} from "vue-property-decorator";
 @Options({components: {}})
 export default class ChannelBackupButton extends Vue
 {
-    @Prop({required: true}) type: string
+    @Prop({default: "telegram"}) platform: string
+    @Prop() icon: string
     @Prop({required: true}) url: string
+    @Prop({default: "查看频道备份"}) text: string
 }
 </script>
 

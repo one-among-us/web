@@ -8,7 +8,7 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
         name: 'Home',
-        component: Home
+        component: () => import("../views/Home.vue")
     },
     {
         path: '/about',
@@ -21,19 +21,19 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/profile/:userid',
         name: 'Profile',
-        component: Profile,
+        component: () => import("../views/Profile.vue"),
         props: true
     },
     {
-        path: '/profile/:userid/backup/:platform',
+        path: '/profile/:userid/backup/:backup',
         name: 'Channel Backup',
-        component: ChannelBackup,
+        component: () => import("../views/ChannelBackup.vue"),
         props: true
     },
     {
         path: '/edit-info/:userid',
         name: 'EditInfo',
-        component: EditInfo,
+        component: () => import("../views/EditInfo.vue"),
         props: true
     }
 ]
