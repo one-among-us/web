@@ -1,8 +1,4 @@
 import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router'
-import Home from '../views/Home.vue'
-import Profile from "@/views/Profile.vue";
-import EditInfo from "@/views/EditInfo.vue";
-import ChannelBackup from "@/views/ChannelBackup.vue";
 
 const routes: Array<RouteRecordRaw> = [
     {

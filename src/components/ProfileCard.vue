@@ -52,13 +52,9 @@ import {backendHost, replaceUrlVars} from "@/logic/config";
 import {abbreviateNumber, getTodayDate} from "@/logic/helper";
 import {Person} from "@/logic/data";
 import { info } from '@/logic/utils';
+import {fab} from "@/logic/constants";
 
-import '@fortawesome/fontawesome-free/js/brands'
 import {ElMessageBox} from "element-plus";
-
-let icons: {[id: string]: string} = {
-    default: 'fas fa-link',
-}
 
 @Options({components: {}})
 export default class ProfileCard extends Vue
@@ -82,19 +78,14 @@ export default class ProfileCard extends Vue
                 info(`Flowers: ${it}`)
                 this.flowers = parseInt(it)
             })
-
-
-        // @ts-ignore Load all branding icons from font-awesome
-        icons = {...icons, ...Object.fromEntries(Object.keys(window.___FONT_AWESOME___.styles.fab)
-                .map(it => [it, `fab fa-${it}`]))}
     }
 
     getIcon(platform: string): string
     {
         platform = platform.toLowerCase()
-        if (platform in icons) return icons[platform]
+        if (fab.includes(platform)) return `fab fa-${platform}`
         if (platform.startsWith('custom-icon:')) return platform.replace('custom-icon:', '')
-        return icons.default
+        return 'fas fa-link'
     }
 
     flower(): void

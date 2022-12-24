@@ -1,7 +1,9 @@
 import {createApp, h} from 'vue'
 import App from './App.vue'
 import router from './router'
-import '@fortawesome/fontawesome-free/css/all.min.css'
+import '@fortawesome/fontawesome-free/css/solid.min.css'
+import '@fortawesome/fontawesome-free/css/brands.min.css'
+import '@fortawesome/fontawesome-free/css/fontawesome.min.css'
 import 'element-plus/dist/index.css'
 import Divider from "@/components/divider.vue";
 import RecaptchaV2 from "@/components/RecaptchaV2.vue"
