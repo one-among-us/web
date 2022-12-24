@@ -33,6 +33,8 @@
     "eslint-plugin-vue": "^9.4.0",
     "sass": "^1.54.5",
     "typescript": "^4.6.2",
+    "unplugin-auto-import": "^0.12.1",
+    "unplugin-vue-components": "^0.22.12",
     "vite": "^4.0.3",
     "vue-class-component": "^8.0.0-0",
     "vue-property-decorator": "^10.0.0-rc.3",
