@@ -11,7 +11,7 @@
     "@fortawesome/fontawesome-free": "^6.1.2",
     "element-plus": "^2.2.14",
     "moment": "^2.29.4",
-    "tg-blog": "^1.0.8",
+    "tg-blog": "^1.0.10",
     "url-join": "^5.0.0",
     "vue": "^3.0.0",
     "vue-router": "^4.1.4"
