@@ -114,13 +114,10 @@ export function fetchWithLang(input: RequestInfo, init?: RequestInitWithParams):
 /**
  * Fetch but handles errors better
  */
-export function fetchText(url: string, init?: RequestInitWithParams): Promise<string>
+export async function fetchText(url: string, init?: RequestInitWithParams): Promise<string>
 {
-    return new Promise((resolve, reject) => {
-        fetchWithParams(url, init).then(response => response.text().then(text =>
-            {
-                if (response.ok) resolve(text)
-                else throw new Error(text)
-            })).catch(error => reject(error))
-    })
+    const response = await fetchWithParams(url, init)
+    const text = await response.text()
+    if (!response.ok) throw new Error(text)
+    return text
 }
