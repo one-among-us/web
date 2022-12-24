@@ -10,6 +10,10 @@ export function peopleUrl(id: string): string
 {
     return urljoin(dataHost, 'people', id)
 }
+export function backupUrl(id: string, platform: string): string
+{
+    return urljoin(peopleUrl(id), 'backup', platform, 'posts.json')
+}
 
 export function replaceUrlVars(str: string, id: string): string
 {

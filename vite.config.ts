@@ -5,6 +5,7 @@ import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import markdown from "./vite/markdown";
 
+// @ts-ignore
 import tsconfig from "./tsconfig.json";
 
 const tsconfigPathAliases = Object.fromEntries(
@@ -33,6 +34,7 @@ export default defineConfig({
     markdown()
   ],
   resolve: {
+    dedupe: ['vue'],
     alias: {
       ...tsconfigPathAliases
     }
