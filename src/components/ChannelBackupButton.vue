@@ -1,7 +1,7 @@
 <template>
     <a class="backup button anim" :href="computedUrl">
         <i class="icon" :class="icon ? icon : `fab fa-${platform}`"></i>
-        <span class="text">{{text}}</span>
+        <span class="text">{{computedText}}</span>
     </a>
 </template>
 
@@ -10,18 +10,26 @@ import {Options, Vue} from 'vue-class-component';
 import {Prop} from "vue-property-decorator";
 import urljoin from "url-join";
 
+const kvs = {'telegram': '电报', 'twitter': '推特'}
+
 @Options({components: {}})
 export default class ChannelBackupButton extends Vue
 {
     @Prop({default: "telegram"}) platform: string
     @Prop() icon: string
     @Prop() url: string
-    @Prop({default: "查看频道备份"}) text: string
+    @Prop() text: string
 
     get computedUrl()
     {
         if (this.url) return this.url
         return urljoin(window.location.href, `backup/${this.platform}`)
+    }
+
+    get computedText()
+    {
+        if (this.text) return this.text
+        return '查看' + (kvs[this.platform] ?? ` ${this.platform} `) + '备份'
     }
 }
 </script>
