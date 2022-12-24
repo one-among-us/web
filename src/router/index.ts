@@ -16,12 +16,21 @@ const routes: Array<RouteRecordRaw> = [
     },
     {
         path: '/profile/:userid',
+        alias: '/p/:userid',
         name: 'Profile',
         component: () => import("../views/Profile.vue"),
         props: true
     },
     {
         path: '/profile/:userid/backup/:backup',
+        alias: '/p/:userid/b/:backup',
+        name: 'Channel Backup',
+        component: () => import("../views/ChannelBackup.vue"),
+        props: true
+    },
+    {
+        path: '/profile/:userid/backup',
+        alias: '/p/:userid/b',
         name: 'Channel Backup',
         component: () => import("../views/ChannelBackup.vue"),
         props: true

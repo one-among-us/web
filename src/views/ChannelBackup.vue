@@ -18,22 +18,26 @@ import {TgBlog} from "tg-blog";
 import "tg-blog/dist/style.css"
 import ChannelBackupButton from "@/components/ChannelBackupButton.vue";
 
+const alias = {'tg': 'telegram', 'tw': 'twitter'}
+
 @Options({components: {TgBlog, ChannelBackupButton}})
 export default class ChannelBackup extends Vue
 {
     @Prop({required: true}) userid: string
-    @Prop({required: true}) backup: string
+    @Prop({default: 'telegram'}) backup: string
 
     postsUrl: string = null
     postsData: string = null
     error: string = null
+
+    get computedBackup() { return this.backup in alias ? alias[this.backup] : this.backup }
 
     async created()
     {
         try
         {
             // Support redirecting to another url
-            let url = backupUrl(this.userid, this.backup)
+            let url = backupUrl(this.userid, this.computedBackup)
             let json = await (await fetch(url)).json()
             if (json.redirect)
             {
