@@ -15,4 +15,5 @@ createApp(App).use(router).use(ElementPlus)
         render() {
             return h({template: this.template})
         }
-    }).mount('#app')
+    })
+    .mount('#app')
