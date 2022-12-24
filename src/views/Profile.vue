@@ -18,7 +18,6 @@ import {fetchWithLang} from "@/logic/helper"
 import {peopleUrl, replaceUrlVars} from "@/logic/config";
 import MDX from "@/components/MDX.vue";
 import urljoin from "url-join";
-import pangu from "pangu";
 import ProfileComments from "@/views/ProfileComments.vue";
 import ProfileCard from '@/components/ProfileCard.vue';
 
@@ -47,12 +46,6 @@ export default class Profile extends Vue
         fetchWithLang(urljoin(pu, `page.js`))
             .then(it => it.text())
             .then(it => this.compiledMdxCode = replaceUrlVars(it, this.userid))
-    }
-
-    updated()
-    {
-        // Fix spacing around alphabetical words placed in between chinese sentences.
-        pangu.autoSpacingPage();
     }
 }
 </script>
