@@ -29,13 +29,6 @@ const routes: Array<RouteRecordRaw> = [
         props: true
     },
     {
-        path: '/profile/:userid/backup',
-        alias: '/p/:userid/b',
-        name: 'Channel Backup',
-        component: () => import("../views/ChannelBackup.vue"),
-        props: true
-    },
-    {
         path: '/edit-info/:userid',
         name: 'EditInfo',
         component: () => import("../views/EditInfo.vue"),
