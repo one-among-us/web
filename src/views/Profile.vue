@@ -60,6 +60,7 @@ export default class Profile extends Vue
     margin-right: min(4vw, 40px)
 
 #content
+    margin-top: 20px
     text-align: justify
     animation: fade-in-top-delayed 1.5s 0s ease
 
