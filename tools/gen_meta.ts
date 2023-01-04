@@ -1,4 +1,3 @@
-import url from "url";
 import path from "path";
 import fs from "fs-extra";
 
@@ -8,6 +7,7 @@ import {PersonMeta} from "../src/logic/data.js";
 
 const dist = "dist"
 const html = fs.readFileSync(path.join(dist, "index.html")).toString()
+const title = "One Among Us - 那些秋叶"
 
 
 interface Meta {
@@ -46,6 +46,7 @@ function createMeta(meta: Meta): string
 
 async function createHtml(url: string, meta: Meta)
 {
+  // TODO: Add url parameter in meta
   const h = html.replace("<!-- PLACEHOLDER_INJECT_META_INFORMATION_HERE -->", createMeta(meta))
 
   // Write to path
@@ -61,6 +62,16 @@ async function genMeta()
   // Create static pages
   const main_meta = {title: "Test", desc: "hi"}
   await createHtml("/about", main_meta)
+
+  // Create people pages
+  for (const person of people)
+  {
+    // Profile
+    await createHtml(`/profile/${person.path}`, { title, desc: `TODO`, image: person.profileUrl })
+
+    // Edit info
+    await createHtml(`/edit-info/${person.path}`, { title, desc: `编辑信息: ${person.name}` })
+  }
 }
 
 console.log("Generating meta tags...")
