@@ -45,6 +45,11 @@ export default class LangButton extends Vue
     // Drop shadow
     box-shadow: 0 2px 5px 0 rgb(166 134 89 / 32%)
 
+    // Center text
+    display: flex
+    align-items: center
+    justify-content: center
+
 #LangButton:hover
     // Move up
     transform: translateY(-5px)
