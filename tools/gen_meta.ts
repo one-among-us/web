@@ -39,3 +39,13 @@ function createMeta(meta: Meta): string
     <meta property="twitter:image" content="${image}">
   ` : '')
 }
+
+async function createHtml(url: string, meta: Meta)
+{
+  const h = html.replace("<!-- PLACEHOLDER_INJECT_META_INFORMATION_HERE -->", createMeta(meta))
+
+  // Write to path
+  const base = path.join(dist, url)
+  await fs.ensureDir(base)
+  fs.writeFileSync(path.join(base, "index.html"), h)
+}
