@@ -2,6 +2,10 @@ import url from "url";
 import path from "path";
 import fs from "fs-extra";
 
+import {dataHost} from "../src/logic/config.js";
+import {PersonMeta} from "../src/logic/data.js";
+
+
 const dist = "dist"
 const html = fs.readFileSync(path.join(dist, "index.html")).toString()
 
@@ -49,3 +53,15 @@ async function createHtml(url: string, meta: Meta)
   await fs.ensureDir(base)
   fs.writeFileSync(path.join(base, "index.html"), h)
 }
+
+async function genMeta()
+{
+  const people: PersonMeta[] = await (await fetch(dataHost + "/people-list.json")).json()
+
+  // Create static pages
+  const main_meta = {title: "Test", desc: "hi"}
+  await createHtml("/about", main_meta)
+}
+
+console.log("Generating meta tags...")
+await genMeta()
