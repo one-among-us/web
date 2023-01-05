@@ -31,6 +31,10 @@ export function screenshotPath(person: string) {
   return `dist/meta/${person}.jpeg`
 }
 
+export function screenshotUrl(person: string) {
+  return screenshotPath(person).replace("dist/", "dist/CNAME".read_file())
+}
+
 // Render HTML component using puppeteer
 export async function renderScreenshots(...people: string[])
 {
