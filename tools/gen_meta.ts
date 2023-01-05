@@ -7,7 +7,7 @@ import {PersonMeta} from "../src/logic/data.js";
 
 const dist = "dist"
 const html = fs.readFileSync(path.join(dist, "index.html")).toString()
-const title = "One Among Us - 那些秋叶"
+const title = "那些秋叶 - One Among Us"
 
 
 interface Meta {
