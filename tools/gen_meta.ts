@@ -88,6 +88,7 @@ async function genMeta()
   // Create static pages
   // await createHtmlWithContent("/", "src/assets/home-top.md".read_file())
   await createHtmlWithMarkdown("/about", "src/assets/about.md".read_file())
+  await createHtmlWithMarkdown("/__screenshot", "")
 
   // Create people pages
   for (const person of people)
