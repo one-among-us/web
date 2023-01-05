@@ -3,6 +3,7 @@ import fs from "fs-extra";
 
 import {dataHost} from "../src/logic/config.js";
 import {PersonMeta} from "../src/logic/data.js";
+import {marked} from "marked";
 
 
 const dist = "dist"
