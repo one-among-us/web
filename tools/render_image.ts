@@ -27,8 +27,12 @@ function createServer()
   return () => terminator.terminate()
 }
 
+export function screenshotPath(person: string) {
+  return `dist/meta/${person}.jpeg`
+}
+
 // Render HTML component using puppeteer
-export async function render(...people: string[])
+export async function renderScreenshots(...people: string[])
 {
   const terminate = createServer()
   const browser = await puppeteer.launch({ headless: false })
@@ -43,8 +47,8 @@ export async function render(...people: string[])
 
     // Take screenshot of an element
     const element = await page.$("#info")
-    await fs.ensureDir("dist/meta")
-    await element.screenshot({ type: "jpeg", quality: 100, omitBackground: true, path: `dist/meta/${person}.jpeg` })
+    await fs.ensureDir(screenshotPath(person).parent())
+    await element.screenshot({ type: "jpeg", quality: 100, omitBackground: true, path: screenshotPath(person) })
   }
 
   await browser.close()
