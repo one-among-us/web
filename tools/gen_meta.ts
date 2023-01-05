@@ -17,10 +17,13 @@ import autocorrect from "autocorrect-node";
 import urljoin from "url-join";
 
 
+// Backup existing index.html
 const dist = "dist"
+fs.copyFileSync(path.join(dist, "index.html"), path.join(dist, "index.original.html"))
+
+// Read html
 const html = path.join(dist, "index.html").read_file()
 const title = "那些秋叶 - One Among Us"
-// TODO: Change this to actual deployment path (since we cannot use relative paths here)
 const defaultImage = urljoin(dataHost, "meta.jpg")
 
 interface Meta {
@@ -94,6 +97,9 @@ async function genMeta()
     // Edit info
     await createHtml(`/edit-info/${person.path}`, { title, desc: `编辑信息: ${person.name}` })
   }
+
+  // Create 404 fallback page
+  fs.copyFileSync(path.join(dist, "index.html"), path.join(dist, "404.html"))
 }
 
 console.log("Generating meta tags...")
