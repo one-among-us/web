@@ -151,6 +151,7 @@ export default class ProfileCard extends Vue
     align-items: center
 
     font-size: 1.1em
+    filter: none
 
     #left img
         height: 150px
@@ -160,7 +161,7 @@ export default class ProfileCard extends Vue
     position: relative
     img.watermark
         position: absolute
-        z-index: -1
+        z-index: 1
         opacity: 0.08
         width: 250px
         right: 20px
