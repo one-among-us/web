@@ -27,14 +27,17 @@ export async function render(...people: string[])
   for (const person of people)
   {
     // Load page
-    await page.goto(`http://localhost:22745/p/${person}`)
+    await page.goto(`http://localhost:22745/__screenshot?p=${person}`)
     await sleep(1000)
 
     // Take screenshot of an element
     const element = await page.$("#info")
-
+    await fs.ensureDir("dist/meta")
+    await element.screenshot({ type: "jpeg", quality: 100, omitBackground: true, path: `dist/meta/${person}.jpeg` })
   }
+
+  await browser.close()
+  await terminator.terminate()
 }
 
 await render("donotexist_A")
-await terminator.terminate()
