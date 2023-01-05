@@ -71,9 +71,10 @@ async function createHtml(url: string, meta: Meta, transform?: (string) => strin
 
 async function createHtmlWithMarkdown(url: string, md: string, image?: string)
 {
-  md = autocorrect.formatFor(metadataParser(md).content, 'markdown')
-  await createHtml(url, { title, desc: md.replaceAll("\n", " ").substring(0, 100) + (md.length > 100 ? "..." : ""), image },
-      h => h.replace("<!-- PLACEHOLDER_INJECT_SSO_CONTENT_HERE -->", marked(md)))
+  const mdMeta = metadataParser(md)
+  md = autocorrect.formatFor(mdMeta.content, 'markdown')
+  const desc = mdMeta.metadata.metaDescription ?? md.replaceAll("\n", " ").substring(0, 100) + (md.length > 100 ? "..." : "")
+  await createHtml(url, { title, desc, image }, h => h.replace("<!-- PLACEHOLDER_INJECT_SSO_CONTENT_HERE -->", marked(md)))
 }
 
 async function genMeta()
