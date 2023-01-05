@@ -5,7 +5,7 @@ declare global {
     read_file(): string;
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    fetch_json(): any
+    json(): any
   }
 }
 
@@ -13,8 +13,8 @@ String.prototype.read_file = function () {
   return fs.readFileSync(this).toString();
 }
 
-String.prototype.fetch_json = async function () {
-  return await (await fetch(this)).json()
+String.prototype.json = function () {
+  return JSON.parse(this)
 }
 
 export {}

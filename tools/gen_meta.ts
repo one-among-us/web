@@ -1,3 +1,10 @@
+/**
+ * READ THIS BEFORE RUNNING THE SCRIPT
+ *
+ * Please clone the data repo's built files before running this script. Generating description content depends on the
+ * data repo. You can do: `git clone -b gh-pages https://github.com/one-among-us/data data-repo`
+ */
+
 import path from "path";
 import fs from "fs-extra";
 
@@ -60,16 +67,16 @@ async function createHtml(url: string, meta: Meta, transform?: (string) => strin
   fs.writeFileSync(path.join(base, "index.html"), h)
 }
 
-async function createHtmlWithMarkdown(url: string, md: string)
+async function createHtmlWithMarkdown(url: string, md: string, image?: string)
 {
   md = md.replace("\n", " ")
-  await createHtml(url, { title, desc: md.substring(0, 100) + (md.length > 100 ? "..." : "") },
+  await createHtml(url, { title, desc: md.substring(0, 100) + (md.length > 100 ? "..." : ""), image },
       h => h.replace("<!-- PLACEHOLDER_INJECT_SSO_CONTENT_HERE -->", marked(md)))
 }
 
 async function genMeta()
 {
-  const people: PersonMeta[] = await (dataHost + "/people-list.json").fetch_json()
+  const people: PersonMeta[] = `data-repo/people-list.json`.read_file().json()
 
   // Create static pages
   // await createHtmlWithContent("/", "src/assets/home-top.md".read_file())
@@ -79,7 +86,7 @@ async function genMeta()
   for (const person of people)
   {
     // Profile
-    await createHtml(`/profile/${person.path}`, { title, desc: `TODO`, image: person.profileUrl })
+    await createHtmlWithMarkdown(`/profile/${person.path}`, `data-repo/people/${person.path}/page.md`.read_file())
 
     // Edit info
     await createHtml(`/edit-info/${person.path}`, { title, desc: `编辑信息: ${person.name}` })
