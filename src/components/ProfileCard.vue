@@ -24,7 +24,7 @@
             <div class="spacer-bottom f-grow1"/>
         </div>
         <!-- Vertical Alignment of info section -->
-        <div id="right" class="fbox-v">
+        <div id="right">
             <div id="name-box">
                 <span id="name-text">{{p.name}}</span>
                 <span id="id">@{{p.id}}</span>
@@ -151,6 +151,9 @@ export default class ProfileCard extends Vue
         height: 20px
 
 #right
+    display: flex
+    flex-direction: column
+
     flex-grow: 1
     text-align: left
     margin-top: 20px
