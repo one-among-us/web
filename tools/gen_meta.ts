@@ -12,6 +12,8 @@ import './extensions.js'
 import {dataHost} from "../src/logic/config.js";
 import {PersonMeta} from "../src/logic/data.js";
 import {marked} from "marked";
+import metadataParser from 'markdown-yaml-metadata-parser';
+import autocorrect from "autocorrect-node";
 import urljoin from "url-join";
 
 
@@ -69,8 +71,8 @@ async function createHtml(url: string, meta: Meta, transform?: (string) => strin
 
 async function createHtmlWithMarkdown(url: string, md: string, image?: string)
 {
-  md = md.replace("\n", " ")
-  await createHtml(url, { title, desc: md.substring(0, 100) + (md.length > 100 ? "..." : ""), image },
+  md = autocorrect.formatFor(metadataParser(md).content, 'markdown')
+  await createHtml(url, { title, desc: md.replaceAll("\n", " ").substring(0, 100) + (md.length > 100 ? "..." : ""), image },
       h => h.replace("<!-- PLACEHOLDER_INJECT_SSO_CONTENT_HERE -->", marked(md)))
 }
 
