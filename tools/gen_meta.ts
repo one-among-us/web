@@ -93,9 +93,11 @@ async function genMeta()
   for (const person of people)
   {
     const p = data.join(`people/${person.path}`)
+    const md = p.join(`page.md`).read_file()
 
     // Profile
-    await createHtmlWithMarkdown(`/profile/${person.path}`, p.join(`page.md`).read_file())
+    await createHtmlWithMarkdown(`/profile/${person.path}`, md)
+    await createHtmlWithMarkdown(`/p/${person.path}`, md)
 
     // Edit info
     await createHtml(`/edit-info/${person.path}`, { title, desc: `编辑信息: ${person.name}` })
@@ -105,7 +107,9 @@ async function genMeta()
     {
       for (const file of fs.readdirSync(p.join(`backup`)))
       {
-        await createHtml(`/profile/${person.path}/backup/${file}`, { title, desc: `${person.name} 的 ${file} 频道备份` })
+        const meta = { title, desc: `${person.name} 的 ${file} 频道备份` }
+        await createHtml(`/profile/${person.path}/backup/${file}`, meta)
+        await createHtml(`/p/${person.path}/b/${file}`, meta)
       }
     }
   }
