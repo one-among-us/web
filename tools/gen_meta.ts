@@ -45,10 +45,11 @@ function createMeta(meta: Meta): string
   ` : '')
 }
 
-async function createHtml(url: string, meta: Meta)
+async function createHtml(url: string, meta: Meta, transform?: (string) => string)
 {
   // TODO: Add url parameter in meta
-  const h = html.replace("<!-- PLACEHOLDER_INJECT_META_INFORMATION_HERE -->", createMeta(meta))
+  let h = html.replace("<!-- PLACEHOLDER_INJECT_META_INFORMATION_HERE -->", createMeta(meta))
+  if (transform) h = transform(h)
 
   // Write to path
   const base = path.join(dist, url)
@@ -56,13 +57,20 @@ async function createHtml(url: string, meta: Meta)
   fs.writeFileSync(path.join(base, "index.html"), h)
 }
 
+async function createHtmlWithMarkdown(url: string, md: string)
+{
+  md = md.toString()
+  await createHtml(url, { title, desc: md.substring(0, 100) + (md.length > 100 ? "..." : "") },
+      h => h.replace("<!-- PLACEHOLDER_INJECT_SSO_CONTENT_HERE -->", marked(md)))
+}
+
 async function genMeta()
 {
   const people: PersonMeta[] = await (await fetch(dataHost + "/people-list.json")).json()
 
   // Create static pages
-  const main_meta = {title: "Test", desc: "hi"}
-  await createHtml("/about", main_meta)
+  // await createHtmlWithContent("/", fs.readFileSync("src/assets/home-top.md"))
+  await createHtmlWithMarkdown("/about", fs.readFileSync("src/assets/about.md"))
 
   // Create people pages
   for (const person of people)
