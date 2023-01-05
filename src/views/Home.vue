@@ -118,6 +118,9 @@ export default class Home extends Vue
         top: 0
         left: 0
 
+        background-blend-mode: screen
+        background-color: #ffffff
+
     // Hover animation
     .front:hover
         transform: rotate(2deg)
