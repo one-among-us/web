@@ -1,4 +1,5 @@
 import fs from "fs-extra";
+import path from "path";
 
 declare global {
   interface String {
@@ -6,6 +7,8 @@ declare global {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     json(): any
+
+    join(...s: string[]): string;
   }
 }
 
@@ -15,6 +18,10 @@ String.prototype.read_file = function () {
 
 String.prototype.json = function () {
   return JSON.parse(this)
+}
+
+String.prototype.join = function (...s: string[]) {
+  return path.join(this, ...s)
 }
 
 export {}

@@ -19,10 +19,11 @@ import urljoin from "url-join";
 
 // Backup existing index.html
 const dist = "dist"
-fs.copyFileSync(path.join(dist, "index.html"), path.join(dist, "index.original.html"))
+const data = "data-repo"
+fs.copyFileSync(dist.join("index.html"), dist.join("index.original.html"))
 
 // Read html
-const html = path.join(dist, "index.html").read_file()
+const html = dist.join("index.html").read_file()
 const title = "那些秋叶 - One Among Us"
 const defaultImage = urljoin(dataHost, "meta.jpg")
 
@@ -67,9 +68,9 @@ async function createHtml(url: string, meta: Meta, transform?: (string) => strin
   if (transform) h = transform(h)
 
   // Write to path
-  const base = path.join(dist, url)
+  const base = dist.join(url)
   await fs.ensureDir(base)
-  fs.writeFileSync(path.join(base, "index.html"), h)
+  fs.writeFileSync(base.join("index.html"), h)
 }
 
 async function createHtmlWithMarkdown(url: string, md: string, image?: string)
@@ -82,7 +83,7 @@ async function createHtmlWithMarkdown(url: string, md: string, image?: string)
 
 async function genMeta()
 {
-  const people: PersonMeta[] = `data-repo/people-list.json`.read_file().json()
+  const people: PersonMeta[] = data.join(`people-list.json`).read_file().json()
 
   // Create static pages
   // await createHtmlWithContent("/", "src/assets/home-top.md".read_file())
@@ -91,11 +92,22 @@ async function genMeta()
   // Create people pages
   for (const person of people)
   {
+    const p = data.join(`people/${person.path}`)
+
     // Profile
-    await createHtmlWithMarkdown(`/profile/${person.path}`, `data-repo/people/${person.path}/page.md`.read_file())
+    await createHtmlWithMarkdown(`/profile/${person.path}`, p.join(`page.md`).read_file())
 
     // Edit info
     await createHtml(`/edit-info/${person.path}`, { title, desc: `编辑信息: ${person.name}` })
+
+    // Channel backups (if exist)
+    if (fs.existsSync(p.join(`backup`)))
+    {
+      for (const file of fs.readdirSync(p.join(`backup`)))
+      {
+        await createHtml(`/profile/${person.path}/backup/${file}`, { title, desc: `${person.name} 的 ${file} 频道备份` })
+      }
+    }
   }
 
   // Create 404 fallback page
