@@ -600,13 +600,6 @@
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-1.0.0.tgz#5fb2e536c1ae9bf35366eed879e827fa59ca41c2"
   integrity sha512-WulqXMDUTYAXCjZnk6JtIHPigp55cVtDgDrO2gHRwhyJto21+1zbVCtOYB2L1F9w4qCQ0rOGWBnBe0FNTiEJIQ==
 
-"@types/finalhandler@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@types/finalhandler/-/finalhandler-1.2.0.tgz#149d36a0183cff42b74aaaf8c0b2d64c4b9dd183"
-  integrity sha512-NgEZKOhxUSXkwNnWNaMXZaopQ5aFGPAYiEpEWIkQ6Dzc4iS0M1oQsvWne2t+ex9QZUAdTz/ZT4tOXJhWtP6mCw==
-  dependencies:
-    "@types/node" "*"
-
 "@types/fs-extra@^9.0.13":
   version "9.0.13"
   resolved "https://registry.yarnpkg.com/@types/fs-extra/-/fs-extra-9.0.13.tgz#7594fbae04fe7f1918ce8b3d213f74ff44ac1f45"
