@@ -8,7 +8,6 @@
     "serve": "vite",
     "build": "vue-tsc --noEmit && yarn lint && vite build && yarn gen-meta",
     "gen-meta": "node --no-warnings --loader ts-node/esm/transpile-only tools/gen_meta.ts",
-    "screenshot": "node --no-warnings --loader ts-node/esm/transpile-only tools/render_image.ts",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src"
   },
   "dependencies": {
