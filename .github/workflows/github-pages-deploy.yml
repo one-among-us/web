@@ -1,4 +1,4 @@
-name: Vite Deploy on Release
+name: Vite Build
 
 on:
   push:
@@ -11,14 +11,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
-
-      - name: Cache node modules
-        uses: actions/cache@v3
         with:
-          path: ~/node_modules
-          key: cache-${{ hashFiles('**/package-lock.json') }}
+          node-version: 18
+          cache: 'npm'
 
       - name: Install and build
         run: |
@@ -38,8 +35,8 @@ jobs:
           branch: gh-pages
           folder: dist
 
-      - name: Publish deployed code 
-        uses: actions/upload-artifact@v2
+      - name: Publish artifact code
+        uses: actions/upload-artifact@v3
         with:
-          name: published
+          name: dist
           path: dist
