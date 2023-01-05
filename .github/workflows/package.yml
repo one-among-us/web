@@ -1,0 +1,51 @@
+name: Package and Deploy
+
+on:
+  workflow_run:
+    workflows: [ "Vite Build" ]
+    types:
+      - completed
+  workflow_dispatch:
+
+jobs:
+  package:
+    name: Package
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+      - run: yarn install
+        env:
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: "true"
+
+      - name: Download built web artifact
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          workflow: build.yml
+          name: dist
+          path: dist
+
+      - name: Checkout data repo's github pages
+        uses: actions/checkout@v3
+        with:
+          repository: "one-among-us/data"
+          ref: "gh-pages"
+          path: "data-repo"
+
+      - name: Package
+        uses: mujo-code/puppeteer-headful@18
+        with:
+          args: yarn gen-meta
+
+      - name: Publish artifact code
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist
+
+
