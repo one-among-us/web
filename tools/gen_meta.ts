@@ -17,19 +17,19 @@ import autocorrect from "autocorrect-node";
 import urljoin from "url-join";
 import {renderScreenshots, screenshotUrl} from "./render_image.js";
 
-
-// Read host
-const host = 'https://' + "dist/CNAME".read_file().trim()
-
-// Backup existing index.html
 const dist = "dist"
 const data = "data-repo"
-fs.copyFileSync(dist.join("index.html"), dist.join("index.original.html"))
+
+// Read host
+const host = 'https://' + dist.join("CNAME").read_file().trim()
 
 // Read html
-const html = dist.join("index.html").read_file()
+const html = dist.join("index.original.html").read_file() ?? dist.join("index.html").read_file()
 const title = "那些秋叶 - One Among Us"
 const defaultImage = urljoin(dataHost, "meta.jpg")
+
+// Backup existing index.html
+fs.copyFileSync(dist.join("index.html"), dist.join("index.original.html"))
 
 interface Meta {
   title: string
