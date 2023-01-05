@@ -5,12 +5,14 @@ import './extensions.js'
 import {dataHost} from "../src/logic/config.js";
 import {PersonMeta} from "../src/logic/data.js";
 import {marked} from "marked";
+import urljoin from "url-join";
 
 
 const dist = "dist"
 const html = path.join(dist, "index.html").read_file()
 const title = "那些秋叶 - One Among Us"
-
+// TODO: Change this to actual deployment path (since we cannot use relative paths here)
+const defaultImage = urljoin(dataHost, "meta.jpg")
 
 interface Meta {
   title: string
@@ -40,10 +42,10 @@ function createMeta(meta: Meta): string
   ` + (url ? `
     <meta property="og:url" content="${url}">
     <meta property="twitter:url" content="${url}">
-  ` : '') + (image? `
-    <meta property="og:image" content="${image}">
-    <meta property="twitter:image" content="${image}">
-  ` : '')
+  ` : '') + `
+    <meta property="og:image" content="${image ?? defaultImage}">
+    <meta property="twitter:image" content="${image ?? defaultImage}">
+  `
 }
 
 async function createHtml(url: string, meta: Meta, transform?: (string) => string)
@@ -60,7 +62,7 @@ async function createHtml(url: string, meta: Meta, transform?: (string) => strin
 
 async function createHtmlWithMarkdown(url: string, md: string)
 {
-  md = md.toString()
+  md = md.replace("\n", " ")
   await createHtml(url, { title, desc: md.substring(0, 100) + (md.length > 100 ? "..." : "") },
       h => h.replace("<!-- PLACEHOLDER_INJECT_SSO_CONTENT_HERE -->", marked(md)))
 }
