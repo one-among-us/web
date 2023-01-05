@@ -9,6 +9,8 @@ declare global {
     json(): any
 
     join(...s: string[]): string;
+
+    parent(): string
   }
 }
 
@@ -22,6 +24,10 @@ String.prototype.json = function () {
 
 String.prototype.join = function (...s: string[]) {
   return path.join(this, ...s)
+}
+
+String.prototype.parent = function () {
+  return path.dirname(this)
 }
 
 export {}
