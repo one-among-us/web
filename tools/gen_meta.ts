@@ -15,6 +15,7 @@ import {marked} from "marked";
 import metadataParser from 'markdown-yaml-metadata-parser';
 import autocorrect from "autocorrect-node";
 import urljoin from "url-join";
+import {renderScreenshots, screenshotPath} from "./render_image.js";
 
 
 // Backup existing index.html
@@ -95,20 +96,21 @@ async function genMeta()
   {
     const p = data.join(`people/${person.path}`)
     const md = p.join(`page.md`).read_file()
+    const image = screenshotPath(person.path)
 
     // Profile
-    await createHtmlWithMarkdown(`/profile/${person.path}`, md)
-    await createHtmlWithMarkdown(`/p/${person.path}`, md)
+    await createHtmlWithMarkdown(`/profile/${person.path}`, md, image)
+    await createHtmlWithMarkdown(`/p/${person.path}`, md, image)
 
     // Edit info
-    await createHtml(`/edit-info/${person.path}`, { title, desc: `编辑信息: ${person.name}` })
+    await createHtml(`/edit-info/${person.path}`, { title, desc: `编辑信息: ${person.name}`, image })
 
     // Channel backups (if exist)
     if (fs.existsSync(p.join(`backup`)))
     {
       for (const file of fs.readdirSync(p.join(`backup`)))
       {
-        const meta = { title, desc: `${person.name} 的 ${file} 频道备份` }
+        const meta = { title, desc: `${person.name} 的 ${file} 频道备份`, image }
         await createHtml(`/profile/${person.path}/backup/${file}`, meta)
         await createHtml(`/p/${person.path}/b/${file}`, meta)
       }
@@ -117,6 +119,10 @@ async function genMeta()
 
   // Create 404 fallback page
   fs.copyFileSync(path.join(dist, "index.html"), path.join(dist, "404.html"))
+
+  // Take screenshots
+  console.log("Generating meta images by taking screenshots...")
+  await renderScreenshots(...people.map(n => n.path))
 }
 
 console.log("Generating meta tags...")
