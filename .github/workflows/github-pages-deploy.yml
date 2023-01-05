@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: Build and deploy main
+    name: Build main
     runs-on: ubuntu-latest
 
     steps:
