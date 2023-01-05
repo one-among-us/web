@@ -1,11 +1,11 @@
 <template>
     <div>
-        <div id="profile-page">
-            <ProfileCard :userid="userid" :p="p" v-if="p" />
+        <div class="profile-page" :class="{screenshot: screenshotMode}">
+            <ProfileCard class="profile-card" :userid="userid" :p="p" v-if="p" />
 
-            <MDX id="content" :code="compiledMdxCode"/>
+            <MDX class="content" :code="compiledMdxCode"/>
 
-            <ProfileComments id="comments" :p="p" v-if="p"/>
+            <ProfileComments class="comments" :p="p" v-if="p && !screenshotMode"/>
         </div>
     </div>
 </template>
@@ -25,6 +25,7 @@ import ProfileCard from '@/components/ProfileCard.vue';
 export default class Profile extends Vue
 {
     @Prop({required: true}) userid!: string
+    @Prop({default: false}) screenshotMode!: boolean
 
     p?: Person = null
     compiledMdxCode = ''
@@ -43,7 +44,7 @@ export default class Profile extends Vue
 
         // TODO: Handle errors
         // Load compile MDX code from server
-        fetchWithLang(urljoin(pu, `page.js`))
+        if (!this.screenshotMode) fetchWithLang(urljoin(pu, `page.js`))
             .then(it => it.text())
             .then(it => this.compiledMdxCode = replaceUrlVars(it, this.userid))
     }
@@ -54,17 +55,21 @@ export default class Profile extends Vue
 <style lang="sass" scoped>
 @import "../css/colors"
 
-#profile-page
+.profile-page
     padding: 0 20px
     margin-left: min(4vw, 40px)
     margin-right: min(4vw, 40px)
 
-#content
+// Screenshot mode
+.profile-card.screenshot
+    width: 10px
+
+.content
     margin-top: 20px
     text-align: justify
     animation: fade-in-top-delayed 1.5s 0s ease
 
-#comments
+.comments
     text-align: justify
     animation: fade-in-top-delayed 2s 0s ease
 

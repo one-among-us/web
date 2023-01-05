@@ -33,7 +33,12 @@ const routes: Array<RouteRecordRaw> = [
         name: 'EditInfo',
         component: () => import("../views/EditInfo.vue"),
         props: true
-    }
+    },
+    {
+        path: '/__screenshot',
+        component: () => import("../views/Profile.vue"),
+        props: route => ({ userid: route.query.p, screenshotMode: true })
+    },
 ]
 
 const router = createRouter({
