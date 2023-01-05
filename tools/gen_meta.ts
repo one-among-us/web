@@ -1,13 +1,14 @@
 import path from "path";
 import fs from "fs-extra";
 
+import './extensions.js'
 import {dataHost} from "../src/logic/config.js";
 import {PersonMeta} from "../src/logic/data.js";
 import {marked} from "marked";
 
 
 const dist = "dist"
-const html = fs.readFileSync(path.join(dist, "index.html")).toString()
+const html = path.join(dist, "index.html").read_file()
 const title = "那些秋叶 - One Among Us"
 
 
@@ -66,11 +67,11 @@ async function createHtmlWithMarkdown(url: string, md: string)
 
 async function genMeta()
 {
-  const people: PersonMeta[] = await (await fetch(dataHost + "/people-list.json")).json()
+  const people: PersonMeta[] = await (dataHost + "/people-list.json").fetch_json()
 
   // Create static pages
-  // await createHtmlWithContent("/", fs.readFileSync("src/assets/home-top.md"))
-  await createHtmlWithMarkdown("/about", fs.readFileSync("src/assets/about.md"))
+  // await createHtmlWithContent("/", "src/assets/home-top.md".read_file())
+  await createHtmlWithMarkdown("/about", "src/assets/about.md".read_file())
 
   // Create people pages
   for (const person of people)
