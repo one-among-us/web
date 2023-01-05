@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "serve": "vite",
-    "build": "vue-tsc --noEmit && yarn lint && vite build && yarn gen-meta",
+    "build": "vue-tsc --noEmit && yarn lint && vite build",
     "gen-meta": "node --no-warnings --loader ts-node/esm/transpile-only tools/gen_meta.ts",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src"
   },
