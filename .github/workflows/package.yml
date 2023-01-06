@@ -45,7 +45,7 @@ jobs:
       - name: Publish artifact code
         uses: actions/upload-artifact@v3
         with:
-          name: dist
+          name: packaged
           path: dist
 
 
