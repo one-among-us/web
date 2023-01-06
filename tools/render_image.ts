@@ -23,6 +23,7 @@ export async function render(...people: string[])
 {
   const browser = await puppeteer.launch({ headless: false })
   const page = await browser.newPage()
+  await page.setViewport({width: 700, height: 700})
 
   for (const person of people)
   {
