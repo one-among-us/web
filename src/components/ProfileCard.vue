@@ -43,7 +43,7 @@
             </div>
         </div>
 
-        <img class="watermark" v-if="screenshotMode" src="/favicon-large.png" alt="" />
+        <img class="watermark" draggable="false" src="/favicon-large.png" alt="" />
     </div>
 </template>
 
@@ -157,16 +157,8 @@ export default class ProfileCard extends Vue
         height: 150px
         width: auto
 
-    // Watermark
-    position: relative
     img.watermark
-        position: absolute
-        z-index: 1
-        opacity: 0.08
-        width: 250px
-        right: 20px
-        bottom: 20px
-        transform: rotate(13deg)
+        height: 250px
 
 #info
     width: 100%
@@ -179,6 +171,17 @@ export default class ProfileCard extends Vue
     .button svg
         width: 20px
         height: 20px
+
+    // Watermark
+    position: relative
+    img.watermark
+        position: absolute
+        z-index: 1
+        opacity: 0.08
+        height: 90%
+        right: 20px
+        bottom: 20px
+        transform: rotate(13deg)
 
 #right
     display: flex
