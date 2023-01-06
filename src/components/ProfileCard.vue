@@ -35,7 +35,7 @@
                     <span class="value">{{info[1]}}</span>
                 </li>
             </ul>
-            <div id="websites" v-if="p.websites">
+            <div id="websites" v-if="p.websites?.length">
                 <span id="websites-text">网站：</span>
                 <a v-for="web of p.websites" :key="web[0]" :href="web[1]">
                     <i :class="getIcon(web[0])"></i>
