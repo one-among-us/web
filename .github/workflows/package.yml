@@ -38,7 +38,7 @@ jobs:
           path: "data-repo"
 
       - name: Package
-        uses: one-among-us/puppeteer-headful@18.9.0
+        uses: one-among-us/puppeteer-headful@18.9.1
         with:
           args: yarn gen-meta
 
