@@ -39,6 +39,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("../views/Profile.vue"),
         props: route => ({ userid: route.query.p, screenshotMode: true })
     },
+    {
+        path: '/:pathMatch(.*)*',
+        name: '404',
+        component: () => import("../views/FourOhFour.vue")
+    },
 ]
 
 const router = createRouter({
