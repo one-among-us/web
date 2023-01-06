@@ -60,20 +60,26 @@ function createMeta(meta: Meta): string
   ` + (url ? `
     <meta property="og:url" content="${url}">
     <meta property="twitter:url" content="${url}">
+    <link rel="canonical" href="${url}" />
   ` : '') + `
     <meta property="og:image" content="${image ?? defaultImage}">
     <meta property="twitter:image" content="${image ?? defaultImage}">
   `
 }
 
-async function createHtml(url: string, meta: Meta, transform?: (string) => string)
+interface UrlSet {
+  path: string
+  canonical: string
+}
+
+async function createHtml(url: string | UrlSet, meta: Meta, transform?: (string) => string)
 {
-  // TODO: Add url parameter in meta
+  if (!meta.url) meta.url = urljoin(host, typeof url == 'string' ? url : url.canonical)
   let h = html.replace("<!-- PLACEHOLDER_INJECT_META_INFORMATION_HERE -->", createMeta(meta))
   if (transform) h = transform(h)
 
   // Write to path
-  const base = dist.join(url)
+  const base = dist.join(typeof url == 'string' ? url : url.path)
   await fs.ensureDir(base)
   fs.writeFileSync(base.join("index.html"), h)
 }
@@ -86,7 +92,7 @@ const htmlStrip = {
   ]
 }
 
-async function createHtmlWithMarkdown(url: string, md: string, image?: string)
+async function createHtmlWithMarkdown(url: string | UrlSet, md: string, image?: string)
 {
   const mdMeta = metadataParser(md)
   md = autocorrect.formatFor(mdMeta.content, 'markdown')
@@ -112,8 +118,9 @@ async function genMeta()
     const image = screenshotUrl(person.path, host)
 
     // Profile
-    await createHtmlWithMarkdown(`/profile/${person.path}`, md, image)
-    await createHtmlWithMarkdown(`/p/${person.path}`, md, image)
+    const pUrl = `/profile/${person.path}`
+    await createHtmlWithMarkdown(pUrl, md, image)
+    await createHtmlWithMarkdown({ path: `/p/${person.path}`, canonical: pUrl }, md, image)
 
     // Edit info
     await createHtml(`/edit-info/${person.path}`, { title, desc: `编辑信息: ${person.name}`, image })
@@ -124,8 +131,9 @@ async function genMeta()
       for (const file of fs.readdirSync(p.join(`backup`)))
       {
         const meta = { title, desc: `${person.name} 的 ${file} 频道备份`, image }
-        await createHtml(`/profile/${person.path}/backup/${file}`, meta)
-        await createHtml(`/p/${person.path}/b/${file}`, meta)
+        const bUrl = urljoin(pUrl, `backup/${file}`)
+        await createHtml(bUrl, meta)
+        await createHtml({ path: urljoin(pUrl, `b/${file}`), canonical: bUrl }, meta)
       }
     }
   }
