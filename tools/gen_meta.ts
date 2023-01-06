@@ -15,6 +15,7 @@ import {marked} from "marked";
 import metadataParser from 'markdown-yaml-metadata-parser';
 import autocorrect from "autocorrect-node";
 import urljoin from "url-join";
+import {convert} from 'html-to-text';
 import {renderScreenshots, screenshotUrl} from "./render_image.js";
 
 const dist = "dist"
@@ -77,11 +78,20 @@ async function createHtml(url: string, meta: Meta, transform?: (string) => strin
   fs.writeFileSync(base.join("index.html"), h)
 }
 
+const htmlStrip = {
+  selectors: [
+    {selector: 'h1', format: 'skip'},
+    {selector: 'h2', format: 'skip'},
+    {selector: 'h3', format: 'skip'},
+  ]
+}
+
 async function createHtmlWithMarkdown(url: string, md: string, image?: string)
 {
   const mdMeta = metadataParser(md)
   md = autocorrect.formatFor(mdMeta.content, 'markdown')
-  const desc = mdMeta.metadata.metaDescription ?? md.replaceAll("\n", " ").substring(0, 100) + (md.length > 100 ? "..." : "")
+  const genDesc = convert(marked(md), htmlStrip).replaceAll("\n", " ")
+  const desc = mdMeta.metadata.metaDescription ?? genDesc.substring(0, 100) + (genDesc.length > 100 ? "..." : "")
   await createHtml(url, { title, desc, image }, h => h.replace("<!-- PLACEHOLDER_INJECT_SSO_CONTENT_HERE -->", marked(md)))
 }
 
@@ -90,7 +100,7 @@ async function genMeta()
   const people: PersonMeta[] = data.join(`people-list.json`).read_file().json()
 
   // Create static pages
-  // await createHtmlWithContent("/", "src/assets/home-top.md".read_file())
+  await createHtmlWithMarkdown("/", "src/assets/home-top.md".read_file())
   await createHtmlWithMarkdown("/about", "src/assets/about.md".read_file())
   await createHtmlWithMarkdown("/__screenshot", "")
 
