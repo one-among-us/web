@@ -29,7 +29,7 @@ const title = "那些秋叶 - One Among Us"
 const defaultImage = urljoin(dataHost, "meta.jpg")
 
 // Backup existing index.html
-fs.copyFileSync(dist.join("index.html"), dist.join("index.original.html"))
+fs.writeFileSync(dist.join("index.original.html"), html)
 
 interface Meta {
   title: string
