@@ -22,6 +22,7 @@
   "devDependencies": {
     "@iconify-json/ep": "^1.1.8",
     "@types/fs-extra": "^9.0.13",
+    "@types/gtag.js": "^0.0.12",
     "@types/marked": "^4.0.8",
     "@types/node": "^18.7.13",
     "@types/url-join": "^4.0.1",
