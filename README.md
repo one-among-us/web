@@ -22,9 +22,9 @@ yarn install
 yarn dev
 ```
 
-## 部署流程
+## Infrastructure Overview
 
-### GitHub Actions
+### Static Content & GitHub Actions
 
 #### 1. "Vite Build"
 
@@ -38,3 +38,12 @@ The "Package and Deploy" ([package.yml](.github/workflows/package.yml)) action i
 
 The "Generator" ([generator.yml](https://github.com/one-among-us/data/blob/main/.github/workflows/generator.yml)) action compiles the article contents in the data repo and generates machine-readable formats such as json and jsx for. This action will send a workflow dispatch signal to "Package and Deploy" when essential content are updated.
 
+### Independent Servers
+
+#### 4. Channel Backup CDN
+
+Since channel backup data (e.g. [TelegramBackup](https://github.com/one-among-us/TelegramBackup)) are very large and often exceeds GitHub's file size limit, we do not serve them on GitHub Pages. We stored them on my [HyDEV CDN server](https://hydev.org/tgbackup). It's a standard nginx file server.
+
+#### 5. Backend Server
+
+We also have a Kotlin backend to keep track of flowers, comments, and edit requests. This is hosted on a docker container, read more here: [backend](https://github.com/one-among-us/backend).
