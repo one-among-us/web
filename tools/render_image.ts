@@ -8,6 +8,7 @@ import fs from "fs-extra";
 
 // @ts-ignore
 import finalhandler from "finalhandler";
+import urljoin from "url-join";
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -31,8 +32,8 @@ export function screenshotPath(person: string) {
   return `dist/meta/${person}.jpeg`
 }
 
-export function screenshotUrl(person: string) {
-  return screenshotPath(person).replace("dist/", "dist/CNAME".read_file())
+export function screenshotUrl(person: string, host: string) {
+  return urljoin(host, screenshotPath(person).replace("dist", ""))
 }
 
 // Render HTML component using puppeteer

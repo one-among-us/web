@@ -18,6 +18,9 @@ import urljoin from "url-join";
 import {renderScreenshots, screenshotUrl} from "./render_image.js";
 
 
+// Read host
+const host = 'https://' + "dist/CNAME".read_file().trim()
+
 // Backup existing index.html
 const dist = "dist"
 const data = "data-repo"
@@ -96,7 +99,7 @@ async function genMeta()
   {
     const p = data.join(`people/${person.path}`)
     const md = p.join(`page.md`).read_file()
-    const image = screenshotUrl(person.path)
+    const image = screenshotUrl(person.path, host)
 
     // Profile
     await createHtmlWithMarkdown(`/profile/${person.path}`, md, image)
