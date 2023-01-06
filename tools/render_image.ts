@@ -35,7 +35,7 @@ export function screenshotPath(person: string) {
 export async function renderScreenshots(...people: string[])
 {
   const terminate = createServer()
-  const browser = await puppeteer.launch({ headless: false })
+  const browser = await puppeteer.launch({ headless: true })
   const page = await browser.newPage()
   await page.setViewport({width: 700, height: 700, deviceScaleFactor: 2})
 
@@ -55,4 +55,5 @@ export async function renderScreenshots(...people: string[])
   await terminate()
 }
 
-await render("donotexist_A")
+// Debug with: node --no-warnings --loader ts-node/esm/transpile-only tools/render_image.ts
+// await renderScreenshots("donotexist_A")
