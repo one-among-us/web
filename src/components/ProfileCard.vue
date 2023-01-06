@@ -42,6 +42,8 @@
                 </a>
             </div>
         </div>
+
+        <img class="watermark" v-if="screenshotMode" src="/favicon-large.png" alt="" />
     </div>
 </template>
 
@@ -153,6 +155,18 @@ export default class ProfileCard extends Vue
     #left img
         height: 150px
         width: auto
+
+    // Watermark
+    position: relative
+    img.watermark
+        position: absolute
+        z-index: -1
+        opacity: 0.08
+        width: 250px
+        right: 20px
+        bottom: 20px
+        transform: rotate(13deg)
+
 #info
     width: 100%
     background-color: $color-bg-6
