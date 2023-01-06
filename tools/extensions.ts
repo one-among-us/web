@@ -15,7 +15,7 @@ declare global {
 }
 
 String.prototype.read_file = function () {
-  return fs.readFileSync(this).toString();
+  if (fs.existsSync(this)) return fs.readFileSync(this).toString();
 }
 
 String.prototype.json = function () {
