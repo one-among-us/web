@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="profile-page" :class="{screenshot: screenshotMode}">
-            <ProfileCard class="profile-card" :userid="userid" :p="p" v-if="p" />
+            <ProfileCard class="profile-card" :userid="userid" :p="p" v-if="p" :screenshot-mode="screenshotMode" />
 
             <MDX class="content" :code="compiledMdxCode"/>
 
@@ -59,10 +59,6 @@ export default class Profile extends Vue
     padding: 0 20px
     margin-left: min(4vw, 40px)
     margin-right: min(4vw, 40px)
-
-// Screenshot mode
-.profile-card.screenshot
-    width: 10px
 
 .content
     margin-top: 20px
