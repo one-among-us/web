@@ -40,7 +40,10 @@ export function screenshotUrl(person: string, host: string) {
 export async function renderScreenshots(...people: string[])
 {
   const terminate = createServer()
-  const browser = await puppeteer.launch({ headless: true })
+  const browser = await puppeteer.launch({ headless: true,
+    args: ['--no-sandbox'],
+    executablePath: process.env.PUPPETEER_EXEC_PATH, // set by docker container
+  })
   const page = await browser.newPage()
   await page.setViewport({width: 700, height: 700, deviceScaleFactor: 2})
 
