@@ -38,7 +38,7 @@ jobs:
           path: "data-repo"
 
       - name: Package
-        uses: mujo-code/puppeteer-headful@v18
+        uses: mujo-code/puppeteer-headful@18.9.0
         with:
           args: yarn gen-meta
 
