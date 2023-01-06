@@ -19,5 +19,22 @@ cd web
 yarn install
 
 # 运行
-yarn serve
+yarn dev
 ```
+
+## 部署流程
+
+### GitHub Actions
+
+#### 1. "Vite Build"
+
+The "Vite Build" ([build.yml](.github/workflows/build.yml)) action in this repo builds the web frontend as an artifact, and will not deploy to GitHub pages. It was previously set to automatically run on push, but we changed it to run on manual dispatch instead. When build finishes, it will trigger the "Package" workflow.
+
+#### 2. "Package and Deploy"
+
+The "Package and Deploy" ([package.yml](.github/workflows/package.yml)) action injects meta info into the built artifact from above. It will generate different entry html for different paths, enabling search engine optimization and social media link previews. This workflow needs both the web artifact and the data repo's built content, and is triggered when either of them updates.
+
+#### 3. "Data Generator" (in data repo)
+
+The "Generator" ([generator.yml](https://github.com/one-among-us/data/blob/main/.github/workflows/generator.yml)) action compiles the article contents in the data repo and generates machine-readable formats such as json and jsx for. This action will send a workflow dispatch signal to "Package and Deploy" when essential content are updated.
+
