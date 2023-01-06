@@ -15,7 +15,7 @@ import {marked} from "marked";
 import metadataParser from 'markdown-yaml-metadata-parser';
 import autocorrect from "autocorrect-node";
 import urljoin from "url-join";
-import {renderScreenshots, screenshotPath} from "./render_image.js";
+import {renderScreenshots, screenshotUrl} from "./render_image.js";
 
 
 // Backup existing index.html
@@ -96,7 +96,7 @@ async function genMeta()
   {
     const p = data.join(`people/${person.path}`)
     const md = p.join(`page.md`).read_file()
-    const image = screenshotPath(person.path)
+    const image = screenshotUrl(person.path)
 
     // Profile
     await createHtmlWithMarkdown(`/profile/${person.path}`, md, image)
