@@ -6,21 +6,31 @@ import * as http from "http";
 import {createHttpTerminator} from "http-terminator";
 import fs from "fs-extra";
 
+// @ts-ignore
 import finalhandler from "finalhandler";
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
-// Create HTTP server
-const file = serveStatic('./dist');
-const server = http.createServer((req, res) => {
-  req.addListener('end', () => file(req, res, finalhandler(req, res))).resume()
-})
-server.listen(22745)
-const terminator = createHttpTerminator({ server })
+/**
+ * Create static http file server
+ *
+ * @return Terminator function
+ */
+function createServer()
+{
+  const file = serveStatic('./dist');
+  const server = http.createServer((req, res) => {
+    req.addListener('end', () => file(req, res, finalhandler(req, res))).resume()
+  })
+  server.listen(22745)
+  const terminator = createHttpTerminator({ server })
+  return () => terminator.terminate()
+}
 
 // Render HTML component using puppeteer
 export async function render(...people: string[])
 {
+  const terminate = createServer()
   const browser = await puppeteer.launch({ headless: false })
   const page = await browser.newPage()
   await page.setViewport({width: 700, height: 700})
@@ -38,7 +48,7 @@ export async function render(...people: string[])
   }
 
   await browser.close()
-  await terminator.terminate()
+  await terminate()
 }
 
 await render("donotexist_A")
