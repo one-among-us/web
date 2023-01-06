@@ -14,6 +14,16 @@ import {Options, Vue} from 'vue-class-component';
 @Options({components: {}})
 export default class FourOhFour extends Vue
 {
+    mounted()
+    {
+        if (window.gtag)
+        {
+            console.log("Reporting error...")
+            window.gtag('event', 'exception', {
+                'description': `404 Not Found: ${window.location.href}`
+            });
+        }
+    }
 }
 </script>
 
