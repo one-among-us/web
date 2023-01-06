@@ -4,7 +4,7 @@
         <div id="left" class="fbox-v">
             <img :src="profileUrl" draggable="false" alt="profile">
             <div class="spacer"/>
-            <div id="buttons">
+            <div id="buttons" v-if="!screenshotMode">
                 <div class="button-container">
                     <el-tooltip content="献花" :show-after="1000" :disabled="flowersGiven || loading.has('flower')">
                         <div class="button anim fbox-vcenter" @click="flower"
@@ -61,6 +61,7 @@ export default class ProfileCard extends Vue
 {
     @Prop({required: true}) userid!: string
     @Prop({required: true}) p!: Person
+    @Prop({default: false}) screenshotMode!: boolean
 
     flowers = 0
     flowersGiven = false
@@ -138,6 +139,20 @@ export default class ProfileCard extends Vue
 <style lang="sass" scoped>
 @import "../css/colors"
 
+// Screenshot mode
+.screenshot #info
+    border-radius: 0
+    width: 600px
+    height: 314px
+
+    justify-content: center
+    align-items: center
+
+    font-size: 1.1em
+
+    #left img
+        height: 150px
+        width: auto
 #info
     width: 100%
     background-color: $color-bg-6
