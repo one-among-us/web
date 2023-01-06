@@ -71,14 +71,16 @@ export default class Profile extends Vue
 
 // Phone layout: left becomes top and right becomes bottom
 @media screen and (max-width: 570px)
-    #profile-page
+    .profile-page
         margin: 0 10px
 
 // Even smaller screen
 @media screen and (max-width: 400px)
-    #profile-page
-        margin: 0
-        padding: 0
+    .profile-page
+        margin-left: 0
+        margin-right: 0
+        padding-left: 0
+        padding-right: 0
 
         // overflow hack
         // https://stackoverflow.com/questions/6421966/css-overflow-x-visible-and-overflow-y-hidden-causing-scrollbar-issue
@@ -86,6 +88,7 @@ export default class Profile extends Vue
         margin-top: -50px
         padding-top: 50px
 
-        #content, #comments
-            margin: 10px
+        .content, .comments
+            margin-left: 10px
+            margin-right: 10px
 </style>
