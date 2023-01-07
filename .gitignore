@@ -23,3 +23,5 @@ pnpm-debug.log*
 *.sw?
 
 data-repo
+git_future.py
+git_future_helper.py
