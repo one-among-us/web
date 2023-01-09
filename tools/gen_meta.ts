@@ -17,6 +17,7 @@ import autocorrect from "autocorrect-node";
 import urljoin from "url-join";
 import {convert} from 'html-to-text';
 import {renderScreenshots, screenshotUrl} from "./render_image.js";
+import {optimize_font} from "./optimize_font.js";
 
 const dist = "dist"
 const data = "data-repo"
@@ -110,12 +111,20 @@ async function genMeta()
   await createHtmlWithMarkdown("/about", "src/assets/about.md".read_file())
   await createHtmlWithMarkdown("/__screenshot", "")
 
+  // Track characters in markdown
+  const characters = new Set()
+  const mustHaveChars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ网站"
+  for (const c of mustHaveChars) characters.add(c)
+
   // Create people pages
   for (const person of people)
   {
     const p = data.join(`people/${person.path}`)
     const md = p.join(`page.md`).read_file()
     const image = screenshotUrl(person.path, host)
+
+    // Track characters
+    for (const char of md) characters.add(char)
 
     // Profile
     const pUrl = `/profile/${person.path}`
@@ -140,10 +149,17 @@ async function genMeta()
 
   // Create 404 fallback page
   fs.copyFileSync(path.join(dist, "index.html"), path.join(dist, "404.html"))
+  console.log("> Meta generated.")
+
+  // Optimize font
+  console.log("Optimizing font...")
+  await optimize_font(dist.join('fonts/851tegaki_zatsu_normal_0883.woff2'), Array.from(characters).join(''), dist)
+  console.log("> Font optimized.")
 
   // Take screenshots
   console.log("Generating meta images by taking screenshots...")
   await renderScreenshots(...people.map(n => n.path))
+  console.log("> Screenshots generated.")
 }
 
 console.log("Generating meta tags...")
