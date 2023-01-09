@@ -11,16 +11,4 @@ import 'element-plus/theme-chalk/el-message.css'
 import 'element-plus/theme-chalk/el-message-box.css'
 import 'element-plus/theme-chalk/el-overlay.css'
 
-import Divider from "@/components/divider.vue";
-import RecaptchaV2 from "@/components/RecaptchaV2.vue"
-
-createApp(App).use(router)
-    .component('Divider', Divider)
-    .component('RecaptchaV2', RecaptchaV2)
-    .component('Dynamic', {
-        props: ['template'],
-        render() {
-            return h({template: this.template})
-        }
-    })
-    .mount('#app')
+createApp(App).use(router).mount('#app')
