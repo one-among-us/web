@@ -11,6 +11,10 @@ declare global {
     join(...s: string[]): string;
 
     parent(): string
+
+    file_name(): string
+
+    with_ext(ext: string): string
   }
 }
 
@@ -28,6 +32,17 @@ String.prototype.join = function (...s: string[]) {
 
 String.prototype.parent = function () {
   return path.dirname(this)
+}
+
+String.prototype.file_name = function () {
+  const split = this.replace("\\", "/").split("/")
+  return split[split.length - 1]
+}
+
+String.prototype.with_ext = function (ext: string) {
+  if (ext.startsWith(".")) ext = ext.substring(1)
+  const lastDot = this.lastIndexOf(".")
+  return this.substring(0, lastDot + 1) + ext
 }
 
 export {}
