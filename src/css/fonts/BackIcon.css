@@ -1,0 +1,22 @@
+@font-face {
+    font-family: 'BackIcon';
+    src: url('BackIcon.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class*='icon-'] {
+	display: inline-flex;
+   font-family: 'BackIcon';
+   font-style: normal;
+   font-weight: normal;
+   line-height: 1;
+   text-rendering: auto;
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale;
+}
+[class*='icon-']:before {
+    font-size: 0.7em
+}
+
+.icon-back:before{content:'\0041';}
