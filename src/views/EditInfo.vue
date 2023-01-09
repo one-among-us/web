@@ -30,10 +30,8 @@ import {Options, Vue} from 'vue-class-component';
 import {Prop} from "vue-property-decorator";
 import {parsePeopleJson, Person} from "@/logic/data";
 import {backendHost, peopleUrl} from "@/logic/config";
-import {ElMessageBox} from "element-plus";
 import SubmitPrompt, {CaptchaResponse} from "@/components/SubmitPrompt.vue";
 import urljoin from "url-join";
-import {ElMessage} from "element-plus/es";
 import {fetchText} from "@/logic/helper";
 import {error} from "@/logic/utils";
 

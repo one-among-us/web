@@ -56,8 +56,6 @@ import {Person} from "@/logic/data";
 import { info } from '@/logic/utils';
 import {fab} from "@/logic/constants";
 
-import {ElMessageBox} from "element-plus";
-
 @Options({components: {}})
 export default class ProfileCard extends Vue
 {
