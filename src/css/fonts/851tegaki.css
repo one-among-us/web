@@ -5,7 +5,8 @@
 @font-face
 {
   font-family: '851';
-  src: url("851tegaki_zatsu_normal_0883.woff2") format('woff2')
+  src: url("/fonts/851tegaki_zatsu_normal_0883.woff2") format('woff2'),
+       url("/fonts/851tegaki_zatsu_normal_0883.woff") format('woff')
 }
 
 .font-custom
