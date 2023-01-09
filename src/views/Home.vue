@@ -6,15 +6,15 @@
         <div id="profiles" class="unselectable" v-if="people">
             <div class="profile" v-for="(p, i) in people" :key="i">
                 <div class="back"/>
-                    <a :href="`/profile/${p.id}`" @click.exact.prevent.stop="() => false">
-                        <transition name="fade" @after-leave="() => switchPage(p)">
-                            <img :src="profileUrl(p)" draggable="false" alt="profile" class="front clickable"
-                                 @click.exact="() => { if (!clicked) { clicked = p.name; } return false }"
-                                 v-if="clicked !== p.name">
-                        </transition>
-                    </a>
-                <div class="sub-text font-custom">{{p.name}}</div>
-                <div class="bookmark"/>
+                <a :href="`/profile/${p.id}`" @click.exact.prevent.stop="() => false">
+                    <transition name="fade" @after-leave="() => switchPage(p)">
+                        <img :src="profileUrl(p)" draggable="false" alt="profile" class="front clickable"
+                             @click.exact="() => { if (!clicked) { clicked = p.name; } return false }"
+                             v-if="clicked !== p.name">
+                    </transition>
+                </a>
+                <div class="name font-custom" ref="bookmarkTexts">{{p.name}}</div>
+                <div class="bookmark" ref="bookmark"/>
             </div>
             <div class="profile" v-if="showAdd">
                 <div class="back add fbox-vcenter">+</div>
@@ -37,6 +37,8 @@ import {dataHost, getLang, replaceUrlVars} from "@/logic/config";
 import urljoin from "url-join";
 import { info } from '@/logic/utils';
 import {fetchWithLang} from "@/logic/helper";
+import {Ref} from "vue-property-decorator";
+import {fitText} from "@/logic/dom_utils";
 
 @Options({})
 export default class Home extends Vue
@@ -49,6 +51,18 @@ export default class Home extends Vue
     htmlBottom = this.lang === 'zh_hans' ? htmlBottom : htmlBottomHant
 
     people: PersonMeta[] = null as never as PersonMeta[]
+
+    @Ref() bookmarkTexts: HTMLDivElement[]
+    @Ref() bookmark: HTMLDivElement[]
+
+    updated()
+    {
+        if (this.bookmark != undefined)
+        {
+            const width = this.bookmark[0].offsetWidth - 10
+            for (const b of this.bookmarkTexts) fitText(b, { width })
+        }
+    }
 
     created(): void
     {
@@ -92,6 +106,7 @@ export default class Home extends Vue
     display: inline-block
     margin: 20px 20px 30px
     vertical-align: top
+    text-align: left
 
     .fade-enter-active, .fade-leave-active
         transition: all .5s ease !important
@@ -125,12 +140,14 @@ export default class Home extends Vue
     .front:hover
         transform: rotate(2deg)
 
-    .sub-text
+    .name
         margin-top: 3px
         margin-left: 15px
         text-align: left
         position: relative
         z-index: 3
+        display: inline-flex
+        align-items: center
 
     .back.add
         outline: 2px dashed $color-text-main
