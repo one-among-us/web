@@ -35,6 +35,7 @@ import {backendHost} from "@/logic/config";
 import MarkdownTooltip from "@/components/MarkdownTooltip.vue";
 import {error, info} from "@/logic/utils";
 import {initSpoilers, mdParseInline} from "tg-blog";
+import {ElMessage, ElMessageBox} from "element-plus";
 
 @Options({components: {MarkdownTooltip, SubmitPrompt}})
 export default class ProfileComments extends Vue
