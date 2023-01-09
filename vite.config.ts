@@ -46,7 +46,10 @@ export default defineConfig({
         // Auto register icon components
         // 自动注册图标组件
         IconsResolver({
-          enabledCollections: ['ep'],
+          enabledCollections: ['ep', 'fa6-solid'],
+          alias: {
+            fas: 'fa6-solid',
+          }
         }),
 
         // Auto register Element Plus components

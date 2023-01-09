@@ -2,7 +2,7 @@
     <div id="SubmitPrompt" class="fbox-vcenter">
         <div id="prompt">
             <div id="header">要提交编辑吗？
-                <i id="close" class="fas fa-xmark" @click="() => $emit('close')"></i>
+                <IFasXmark class="clickable" @click="() => $emit('close')"></IFasXmark>
             </div>
 
             <div class="text">谢谢你！请留下你的昵称！
@@ -78,8 +78,10 @@ export default class SubmitPrompt extends Vue
         margin-bottom: 10px
 
 #header
-    text-align: left
+    display: flex
     font-weight: bold
+    svg
+        margin-left: auto
 
 #close
     float: right
