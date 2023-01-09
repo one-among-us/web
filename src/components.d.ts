@@ -17,6 +17,7 @@ declare module '@vue/runtime-core' {
     IEpLoading: typeof import('~icons/ep/loading')['default']
     IEpLollipop: typeof import('~icons/ep/lollipop')['default']
     IFasLink: typeof import('~icons/fa6-solid/link')['default']
+    IFasPaperPlane: typeof import('~icons/fa6-solid/paper-plane')['default']
     IFasXmark: typeof import('~icons/fa6-solid/xmark')['default']
     LangButton: typeof import('./components/LangButton.vue')['default']
     MarkdownTooltip: typeof import('./components/MarkdownTooltip.vue')['default']

@@ -15,7 +15,7 @@
                       @input="resizeInput" ref="input"/>
             <div id="send-comment-btn" v-if="textInput.length > 0">
                 <span class="char-count unselectable">{{textInput.length}} 字（已存草稿）</span>
-                <i class="fas fa-paper-plane clickable" @click="btnSend"/>
+                <IFasPaperPlane class="icon" @click="btnSend"/>
             </div>
 
             <MarkdownTooltip text-area-id="comment-textarea"></MarkdownTooltip>
@@ -185,8 +185,11 @@ export default class ProfileComments extends Vue
         bottom: 10px
         color: $color-text-special
 
+        display: flex
+        align-items: center
+
         .char-count
             font-size: 10px
             color: $color-text-light
-            margin-right: 6px
+            margin-right: 5px
 </style>
