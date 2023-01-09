@@ -10,7 +10,6 @@ declare module '@vue/runtime-core' {
     BackupButtons: typeof import('./components/BackupButtons.vue')['default']
     ChannelBackupButton: typeof import('./components/ChannelBackupButton.vue')['default']
     Divider: typeof import('./components/divider.vue')['default']
-    ElImageViewer: typeof import('element-plus/es')['ElImageViewer']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
     HyInput: typeof import('./components/HyInput.vue')['default']
     IEpCheck: typeof import('~icons/ep/check')['default']
