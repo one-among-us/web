@@ -36,9 +36,10 @@
                 </li>
             </ul>
             <div id="websites" v-if="p.websites?.length">
-                <span id="websites-text">网站：</span>
+                <span id="websites-text">网站</span>
                 <a v-for="web of p.websites" :key="web[0]" :href="web[1]">
-                    <i :class="getIcon(web[0])"></i>
+                    <i v-if="getIcon(web[0])" :class="getIcon(web[0])"></i>
+                    <IFasLink v-else />
                 </a>
             </div>
         </div>
@@ -79,14 +80,15 @@ export default class ProfileCard extends Vue
                 info(`Flowers: ${it}`)
                 this.flowers = parseInt(it)
             })
+
+        this.p.websites.push(['saf', "https://aza.moe"])
     }
 
-    getIcon(platform: string): string
+    getIcon(platform: string): string | undefined
     {
         platform = platform.toLowerCase()
         if (fab.includes(platform)) return `fab fa-${platform}`
         if (platform.startsWith('custom-icon:')) return platform.replace('custom-icon:', '')
-        return 'fas fa-link'
     }
 
     flower(): void
@@ -218,12 +220,16 @@ export default class ProfileCard extends Vue
                 font-weight: bold
 
     #websites
+        display: flex
+        gap: 10px
+
         #websites-text
             font-weight: bold
         a
             color: $color-text-main
             text-decoration: none
-            margin-right: 10px
+            display: inline-flex
+            align-items: center
 
 #left
     margin-left: min(5vw, 60px)
