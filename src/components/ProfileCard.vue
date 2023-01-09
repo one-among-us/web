@@ -196,6 +196,7 @@ export default class ProfileCard extends Vue
 
     #name-box
         border-bottom: 2px solid $color-text-main
+        line-height: normal
 
         #name-text
             font-size: 1.7em
