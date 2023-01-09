@@ -1,7 +1,7 @@
 <template>
     <div>
         <TgBlog id="profile-page" :posts-url="postsUrl" :posts-data="postsData" v-if="postsUrl">
-            <ChannelBackupButton class="heading" text="返回" icon="fas fa-caret-left"
+            <ChannelBackupButton class="heading" text="返回" icon="icon-back"
                                  :url="`/profile/${userid}`" />
         </TgBlog>
         <div v-if="error">
