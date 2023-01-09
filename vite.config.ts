@@ -36,6 +36,8 @@ export default defineConfig({
         }),
       ],
 
+      eslintrc: { enabled: true },
+
       dts: path.resolve(src, 'auto-imports.d.ts'),
     }),
 
