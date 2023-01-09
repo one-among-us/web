@@ -80,8 +80,6 @@ export default class ProfileCard extends Vue
                 info(`Flowers: ${it}`)
                 this.flowers = parseInt(it)
             })
-
-        this.p.websites.push(['saf', "https://aza.moe"])
     }
 
     getIcon(platform: string): string | undefined
