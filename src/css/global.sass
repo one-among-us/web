@@ -13,7 +13,7 @@ $c-highlight: #ff7878
   color: $c-highlight
 
 // Non-selectable text
-@mixin unselectable
+.unselectable
   -webkit-touch-callout: none
   -webkit-user-select: none
   -khtml-user-select: none
@@ -21,18 +21,15 @@ $c-highlight: #ff7878
   -ms-user-select: none
   user-select: none
 
-.unselectable
-  @include unselectable
-
 .undraggable
-  @include unselectable
+  @extend .unselectable
   user-drag: none
   -webkit-user-drag: none
 
 // Clickable text
 .clickable:hover
   cursor: pointer
-  @include unselectable
+  @extend .unselectable
 
 // Vertical flex
 .fbox-v
@@ -81,19 +78,15 @@ $c-highlight: #ff7878
   width: 100%
 
 // Vertical Flex Center
-@mixin flex-vcenter
+.fbox-vcenter
   display: flex
   flex-flow: column
   justify-content: center
 
 // Center both horizontally and vertically
 .fbox-center
-  @include flex-vcenter
+  @extend .fbox-vcenter
   align-items: center
-
-// Center vertically only
-.fbox-vcenter
-  @include flex-vcenter
 
 // No wrap text
 .nowrap
@@ -140,7 +133,7 @@ $c-highlight: #ff7878
   outline: 2px solid $color-text-main
 
 .spoiler
-  @include unselectable
+  @extend .unselectable
   cursor: pointer
   transition: all .4s ease
   background-color: $color-text-light
@@ -156,3 +149,29 @@ $c-highlight: #ff7878
   span
     filter: blur(0)
     opacity: 1
+
+.hy-button
+  @extend .clickable
+  @extend .unselectable
+
+  background: $color-bg-6
+
+  // Drop shadow
+  box-shadow: 0 2px 5px 0 rgb(166 134 89 / 32%)
+
+  // Center text
+  display: inline-flex
+  align-items: center
+  justify-content: center
+
+  margin: 10px
+  padding: 8px 15px
+  border-radius: 5px
+
+
+.hy-button:hover
+  // Move up
+  transform: translateY(-5px)
+
+  // Heavier shadow
+  box-shadow: 0 10px 10px -5px rgb(166 134 89 / 84%)

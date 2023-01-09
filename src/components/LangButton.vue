@@ -1,5 +1,5 @@
 <template>
-    <div id="LangButton" class="clickable" @click="click">
+    <div id="LangButton" class="clickable hy-button" @click="click">
         {{ lang === 'zh_hans' ? '繁' : '简' }}
     </div>
 </template>
@@ -34,26 +34,9 @@ export default class LangButton extends Vue
     bottom: 20px
     z-index: 50
 
-    background: $color-bg-6
-
     // Make it a circle
     padding: 10px
     width: 25px
     height: 25px
     border-radius: 56562px
-
-    // Drop shadow
-    box-shadow: 0 2px 5px 0 rgb(166 134 89 / 32%)
-
-    // Center text
-    display: flex
-    align-items: center
-    justify-content: center
-
-#LangButton:hover
-    // Move up
-    transform: translateY(-5px)
-
-    // Heavier shadow
-    box-shadow: 0 10px 10px -5px rgb(166 134 89 / 84%)
 </style>
