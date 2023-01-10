@@ -1,9 +1,13 @@
 <template>
     <div id="MarkdownTooltip" class="noanim" ref="el" @keydown.esc="close" @mousedown="windowDrag">
-        <span class="drag"><i class="fa-solid fa-grip-lines-vertical"></i></span>
+        <span class="drag"><IFasGripLinesVertical/></span>
         <el-tooltip v-for="act in actions" :key="act.name" :content="act.name">
             <span class="icon-wrapper" @mousedown="e => apply(e, act)">
-                <i :class="act.icon"/>
+                <IFasBold v-if="act.icon === 'bold'"/>
+                <IFasItalic v-if="act.icon === 'italic'"/>
+                <IFasStrikethrough v-if="act.icon === 'strikethrough'"/>
+                <IFasCode v-if="act.icon === 'code'"/>
+                <IFasEyeSlash v-if="act.icon === 'spoiler'"/>
             </span>
         </el-tooltip>
     </div>
@@ -24,12 +28,12 @@ interface TooltipAction {
 export default class MarkdownTooltip extends Vue
 {
     actions: TooltipAction[] = [
-        {name: '加粗',   icon: 'fa-solid fa-bold',          md: '**'},
-        {name: '斜体',   icon: 'fa-solid fa-italic',        md: '__'},
+        {name: '加粗',   icon: 'bold',          md: '**'},
+        {name: '斜体',   icon: 'italic',        md: '__'},
         // {name: '下划线', icon: 'fa-solid fa-underline',     md: '--'},
-        {name: '划掉',   icon: 'fa-solid fa-strikethrough', md: '~~'},
-        {name: '代码',   icon: 'fa-solid fa-code',          md: '`'},
-        {name: '黑幕',   icon: 'fa-solid fa-eye-slash',     md: '||'},
+        {name: '划掉',   icon: 'strikethrough', md: '~~'},
+        {name: '代码',   icon: 'code',          md: '`'},
+        {name: '黑幕',   icon: 'spoiler',       md: '||'},
     ]
 
     @Ref() el!: HTMLElement
@@ -158,6 +162,10 @@ export default class MarkdownTooltip extends Vue
 
     border-radius: 10px
     padding: 5px
+
+    display: flex
+    align-items: center
+    z-index: 255
 
     white-space: nowrap
 
