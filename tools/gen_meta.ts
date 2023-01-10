@@ -153,7 +153,7 @@ async function genMeta()
 
   // Optimize font
   console.log("Optimizing font...")
-  await optimize_font(dist.join('fonts/851tegaki_zatsu_normal_0883.woff2'), Array.from(characters).join(''), dist)
+  await optimize_font(dist.join('fonts/FZSJ-HUAZCMWWKQ.woff2'), Array.from(characters).join(''), dist)
   console.log("> Font optimized.")
 
   // Take screenshots
