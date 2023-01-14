@@ -167,6 +167,22 @@ export default class ProfileComments extends Vue
     .from.anonymous
         color: lighten($color-text-light, 20%)
 
+    .replies
+        .reply-title
+            font-size: 0.7em
+            color: $color-text-light
+
+        margin-top: 0.3em
+        padding: 0.5em 20px
+
+        background: $color-bg-5
+        border-radius: 5px 10px 10px 5px
+        border-left: 3px solid #ba8746
+
+        // Gap between replies
+        > .reply + .reply
+            margin-top: 0.5em
+
 
 #add-comment
     margin-top: 20px
