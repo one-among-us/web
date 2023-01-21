@@ -21,12 +21,7 @@ jobs:
         run: |
           export NODE_OPTIONS="--max-old-space-size=4096"
           yarn install
-          # pass --base if CNAME is not used
-          # npm run build -- --base=/${{ github.event.repository.name }}/
           yarn build
-          
-          # Enable Vue Router history mode with 404.html hack for Github Pages
-          ln -s dist/index.html dist/404.html
 
       - name: Publish artifact code
         uses: actions/upload-artifact@v3
