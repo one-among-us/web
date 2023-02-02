@@ -1,33 +1,30 @@
 <template>
     <a class="backup button anim" :href="computedUrl">
         <i class="icon" :class="icon ? icon : `fab fa-${platform}`"></i>
-        <span class="text">{{computedText}}</span>
+        <span class="text">{{ computedText }}</span>
     </a>
 </template>
 
 <script lang="ts">
-import {Options, Vue} from 'vue-class-component';
-import {Prop} from "vue-property-decorator";
+import { Options, Vue } from 'vue-class-component';
+import { Prop } from "vue-property-decorator";
 import urljoin from "url-join";
 
-const kvs = {'telegram': '电报', 'twitter': '推特'}
+const kvs = { 'telegram': '电报', 'twitter': '推特' }
 
-@Options({components: {}})
-export default class ChannelBackupButton extends Vue
-{
-    @Prop({default: "telegram"}) platform: string
+@Options({ components: {} })
+export default class ChannelBackupButton extends Vue {
+    @Prop({ default: "telegram" }) platform: string
     @Prop() icon: string
     @Prop() url: string
     @Prop() text: string
 
-    get computedUrl()
-    {
+    get computedUrl() {
         if (this.url) return this.url
         return urljoin(window.location.href, `backup/${this.platform}`)
     }
 
-    get computedText()
-    {
+    get computedText() {
         if (this.text) return this.text
         return '查看' + (kvs[this.platform] ?? ` ${this.platform} `) + '备份'
     }
@@ -35,7 +32,7 @@ export default class ChannelBackupButton extends Vue
 </script>
 
 <style lang="sass" scoped>
-@import "../css/colors"
+@import "src/css/colors"
 
 .backup
     padding: 10px

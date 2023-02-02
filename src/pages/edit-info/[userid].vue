@@ -1,45 +1,44 @@
 <template>
     <div id="container" class="fbox-vcenter">
-        <div class="spacer"/>
+        <div class="spacer" />
         <div id="EditInfo" v-if="p">
             <div class="head-text info">信息卡片</div>
-            <div id="id">@{{userid}}</div>
+            <div id="id">@{{ userid }}</div>
             <div class="fields info">
                 <div class="input-box" v-for="(info, i) in editInfo" :key="i">
-                    <input class="key" v-model="info.k" @change="change"/>
-                    <input class="value" v-model="info.v" @change="change"/>
+                    <input class="key" v-model="info.k" @change="change" />
+                    <input class="value" v-model="info.v" @change="change" />
                 </div>
             </div>
             <div class="head-text websites">网站</div>
             <div class="fields websites">
                 <div class="input-box" v-for="(web, i) in editWebsites" :key="i">
-                    <input class="key" v-model="web.k" @change="change"/>
-                    <input class="value" v-model="web.v" @change="change"/>
+                    <input class="key" v-model="web.k" @change="change" />
+                    <input class="value" v-model="web.v" @change="change" />
                 </div>
             </div>
             <div class="button submit" @click="submitBtn">提交</div>
         </div>
-        <div class="spacer"/>
+        <div class="spacer" />
 
-        <SubmitPrompt v-if="submitParams" @submit="submitRequest" @close="() => submitParams = null"/>
+        <SubmitPrompt v-if="submitParams" @submit="submitRequest" @close="() => submitParams = null" />
     </div>
 </template>
 
 <script lang="ts">
-import {Options, Vue} from 'vue-class-component';
-import {Prop} from "vue-property-decorator";
-import {parsePeopleJson, Person} from "@/logic/data";
-import {backendHost, peopleUrl} from "@/logic/config";
-import SubmitPrompt, {CaptchaResponse} from "@/components/SubmitPrompt.vue";
+import { Options, Vue } from 'vue-class-component';
+import { Prop } from "vue-property-decorator";
+import { parsePeopleJson, Person } from "@/logic/data";
+import { backendHost, peopleUrl } from "@/logic/config";
+import SubmitPrompt, { CaptchaResponse } from "@/components/SubmitPrompt.vue";
 import urljoin from "url-join";
-import {fetchText} from "@/logic/helper";
-import {error} from "@/logic/utils";
-import {ElMessage, ElMessageBox} from "element-plus";
+import { fetchText } from "@/logic/helper";
+import { error } from "@/logic/utils";
+import { ElMessage, ElMessageBox } from "element-plus";
 
 interface KVPair { k: string, v: string }
 
-export function removeEmpty(arr: KVPair[]): void
-{
+export function removeEmpty(arr: KVPair[]): void {
     let i = 0;
     while (i < arr.length) {
         if (!arr[i].k && !arr[i].v) arr.splice(i, 1)
@@ -47,9 +46,8 @@ export function removeEmpty(arr: KVPair[]): void
     }
 }
 
-@Options({components: {SubmitPrompt}})
-export default class EditInfo extends Vue
-{
+@Options({ components: { SubmitPrompt } })
+export default class EditInfo extends Vue {
     @Prop() userid!: string
     p: Person = null as never as Person
 
@@ -58,18 +56,16 @@ export default class EditInfo extends Vue
     editInfo: KVPair[] = []
     editWebsites: KVPair[] = []
 
-    submitParams: {[id: string]: string} = null as never
+    submitParams: { [id: string]: string } = null as never
 
-    json(): string
-    {
+    json(): string {
         return JSON.stringify({
             info: Object.fromEntries(this.p.info),
             websites: Object.fromEntries(this.p.websites)
         }, null, 2)
     }
 
-    created(): void
-    {
+    created(): void {
         // TODO: Handle errors
         // Get data from server
         fetch(urljoin(peopleUrl(this.userid), `info.json`))
@@ -77,28 +73,25 @@ export default class EditInfo extends Vue
             .then(it => {
                 this.p = parsePeopleJson(it)
                 this.initialJson = this.json()
-                this.p.info.forEach((a) => this.editInfo.push({k: a[0], v: a[1]}))
-                this.p.websites.forEach((a) => this.editWebsites.push({k: a[0], v: a[1]}))
+                this.p.info.forEach((a) => this.editInfo.push({ k: a[0], v: a[1] }))
+                this.p.websites.forEach((a) => this.editWebsites.push({ k: a[0], v: a[1] }))
                 this.change()
             })
     }
 
-    change(): void
-    {
-        for (const list of [this.editInfo, this.editWebsites])
-        {
+    change(): void {
+        for (const list of [this.editInfo, this.editWebsites]) {
             // Remove redundant last entries
             if (list.filter(it => !it.k && !it.v).length > 1)
                 removeEmpty(list)
 
             // Add empty
             if (list.filter(it => !it.k && !it.v).length == 0)
-                list.push({k: '', v: ''})
+                list.push({ k: '', v: '' })
         }
     }
 
-    submitBtn(): void
-    {
+    submitBtn(): void {
         removeEmpty(this.editInfo)
         removeEmpty(this.editWebsites)
         this.p.info = this.editInfo.map(it => [it.k, it.v])
@@ -108,24 +101,22 @@ export default class EditInfo extends Vue
         this.change()
 
         // Didn't change anything
-        if (json == this.initialJson)
-        {
+        if (json == this.initialJson) {
             ElMessageBox.alert('什么都没改怎么提交啦 (╯‵□′)╯︵┻━┻', '👀',
-                {confirmButtonText: '好好好'})
+                { confirmButtonText: '好好好' })
             return
         }
 
         // Show submit prompt
-        this.submitParams = {id: this.p.id, content: json}
+        this.submitParams = { id: this.p.id, content: json }
     }
 
-    submitRequest(p: CaptchaResponse): void
-    {
+    submitRequest(p: CaptchaResponse): void {
         ElMessage.success('正在创建更改请求 (Pull Request)...')
 
-        const params = {...this.submitParams, ...p}
+        const params = { ...this.submitParams, ...p }
 
-        fetchText(backendHost + '/edit/info', {method: 'POST', params})
+        fetchText(backendHost + '/edit/info', { method: 'POST', params })
             .then(text => {
                 console.log(text)
                 ElMessageBox.alert('提交成功！谢谢你。我们将尽快审核您的更改',
@@ -145,7 +136,7 @@ export default class EditInfo extends Vue
 </script>
 
 <style lang="sass" scoped>
-@import "../css/colors"
+@import "src/css/colors"
 
 #container
     height: 100%

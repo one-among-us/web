@@ -52,7 +52,7 @@ export default class Profile extends Vue {
 
 <!-- Scoped Style -->
 <style lang="sass" scoped>
-@import "../css/colors"
+@import "src/css/colors"
 
 .profile-page
     padding: 0 20px

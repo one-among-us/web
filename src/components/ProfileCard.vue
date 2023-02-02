@@ -3,36 +3,38 @@
         <!-- Horizontal Alignment of profile pic and the rest -->
         <div id="left" class="fbox-v">
             <img :src="profileUrl" draggable="false" alt="profile">
-            <div class="spacer"/>
+            <div class="spacer" />
             <div id="buttons" v-if="!screenshotMode">
                 <div class="button-container">
                     <el-tooltip content="献花" :show-after="1000" :disabled="flowersGiven || loading.has('flower')">
                         <div class="button anim fbox-vcenter" @click="flower"
-                             :class="(flowersGiven || loading.has('flower')) ? 'disabled' : ''">
+                            :class="(flowersGiven || loading.has('flower')) ? 'disabled' : ''">
                             <IEpCheck v-if="flowersGiven" />
                             <IEpLollipop v-else-if="!loading.has('flower')" />
                             <IEpLoading v-else />
                         </div>
                     </el-tooltip>
-                    <div class="text-under-button">{{flowerText}}</div>
+                    <div class="text-under-button">{{ flowerText }}</div>
                 </div>
                 <div class="button-container edit">
-                    <div class="button anim fbox-vcenter" @click="edit"><IEpEdit /></div>
+                    <div class="button anim fbox-vcenter" @click="edit">
+                        <IEpEdit />
+                    </div>
                     <div class="text-under-button">Edit</div>
                 </div>
             </div>
-            <div class="spacer-bottom f-grow1"/>
+            <div class="spacer-bottom f-grow1" />
         </div>
         <!-- Vertical Alignment of info section -->
         <div id="right">
             <div id="name-box">
-                <span id="name-text">{{p.name}}</span>
-                <span id="id">@{{p.id}}</span>
+                <span id="name-text">{{ p.name }}</span>
+                <span id="id">@{{ p.id }}</span>
             </div>
             <ul id="fields" class="f-grow1">
                 <li v-for="info of p.info" :key="info[0]">
-                    <span class="key">{{info[0]}}：</span>
-                    <span class="value">{{info[1]}}</span>
+                    <span class="key">{{ info[0]}}：</span>
+                    <span class="value">{{ info[1]}}</span>
                 </li>
             </ul>
             <div id="websites" v-if="p.websites?.length">
@@ -49,29 +51,27 @@
 </template>
 
 <script lang="ts">
-import {Options, Vue} from 'vue-class-component';
-import {Prop} from "vue-property-decorator";
-import {backendHost, replaceUrlVars} from "@/logic/config";
-import {abbreviateNumber, getTodayDate} from "@/logic/helper";
-import {Person} from "@/logic/data";
+import { Options, Vue } from 'vue-class-component';
+import { Prop } from "vue-property-decorator";
+import { backendHost, replaceUrlVars } from "@/logic/config";
+import { abbreviateNumber, getTodayDate } from "@/logic/helper";
+import { Person } from "@/logic/data";
 import { info } from '@/logic/utils';
-import {fab} from "@/logic/constants";
+import { fab } from "@/logic/constants";
 import { ElMessageBox } from 'element-plus';
 
-@Options({components: {}})
-export default class ProfileCard extends Vue
-{
-    @Prop({required: true}) userid!: string
-    @Prop({required: true}) p!: Person
-    @Prop({default: false}) screenshotMode!: boolean
+@Options({ components: {} })
+export default class ProfileCard extends Vue {
+    @Prop({ required: true }) userid!: string
+    @Prop({ required: true }) p!: Person
+    @Prop({ default: false }) screenshotMode!: boolean
 
     flowers = 0
     flowersGiven = false
 
     loading = new Set<string>()
 
-    created()
-    {
+    created() {
         this.flowersGiven = localStorage.getItem(`last_flower_given@${this.userid}`) === getTodayDate()
 
         // TODO: Handle errors
@@ -83,23 +83,20 @@ export default class ProfileCard extends Vue
             })
     }
 
-    getIcon(platform: string): string | undefined
-    {
+    getIcon(platform: string): string | undefined {
         platform = platform.toLowerCase()
         if (fab.includes(platform)) return `fab fa-${platform}`
         if (platform.startsWith('custom-icon:')) return platform.replace('custom-icon:', '')
     }
 
-    flower(): void
-    {
+    flower(): void {
         if (this.flowersGiven || this.loading.has('flower')) return
 
         // TODO: Handle errors
         // TODO: Better user interaction (probably like +1 animation or something)
         this.loading.add('flower')
         fetch(backendHost + `/flowers/give?id=${this.userid}`)
-            .then(() =>
-            {
+            .then(() => {
                 this.flowers += 1
 
                 // Set flowers given
@@ -109,13 +106,11 @@ export default class ProfileCard extends Vue
             .finally(() => this.loading.delete('flower'))
     }
 
-    get flowerText(): string
-    {
+    get flowerText(): string {
         return abbreviateNumber(this.flowers)
     }
 
-    edit(): void
-    {
+    edit(): void {
         ElMessageBox.confirm('要编辑什么呢？',
             {
                 distinguishCancelAndClose: true,
@@ -130,15 +125,14 @@ export default class ProfileCard extends Vue
             })
     }
 
-    get profileUrl(): string
-    {
+    get profileUrl(): string {
         return replaceUrlVars(this.p.profileUrl, this.userid)
     }
 }
 </script>
 
 <style lang="sass" scoped>
-@import "../css/colors"
+@import "src/css/colors"
 
 // Screenshot mode
 .screenshot #info

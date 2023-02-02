@@ -5,17 +5,15 @@
 </template>
 
 <script lang="ts">
-import {Options, Vue} from 'vue-class-component';
-import {getLang, setLang} from "@/logic/config";
-import {info} from "@/logic/utils";
+import { Options, Vue } from 'vue-class-component';
+import { getLang, setLang } from "@/logic/config";
+import { info } from "@/logic/utils";
 
-@Options({components: {}})
-export default class LangButton extends Vue
-{
+@Options({ components: {} })
+export default class LangButton extends Vue {
     lang = getLang()
 
-    click()
-    {
+    click() {
         const newLang = getLang() == 'zh_hans' ? 'zh_hant' : 'zh_hans'
         info(`Switching to ${newLang}`)
         setLang(newLang)
@@ -25,7 +23,7 @@ export default class LangButton extends Vue
 </script>
 
 <style lang="sass" scoped>
-@import "../css/colors"
+@import "src/css/colors"
 
 #LangButton
     // Fixed positioning
