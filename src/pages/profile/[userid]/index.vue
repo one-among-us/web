@@ -1,37 +1,24 @@
-<template>
-    <div>
-        <div class="profile-page" :class="{screenshot: screenshotMode}">
-            <ProfileCard class="profile-card" :userid="userid" :p="p" v-if="p" :screenshot-mode="screenshotMode" />
-
-            <MDX class="content" :code="compiledMdxCode"/>
-
-            <ProfileComments class="comments" :p="p" v-if="p && !screenshotMode"/>
-        </div>
-    </div>
-</template>
 
 <script lang="ts">
-import {Options, Vue} from 'vue-class-component';
-import {Prop} from "vue-property-decorator";
-import {parsePeopleJson, Person} from "@/logic/data";
-import {fetchWithLang} from "@/logic/helper"
-import {peopleUrl, replaceUrlVars} from "@/logic/config";
+import { Options, Vue } from 'vue-class-component';
+import { Prop } from "vue-property-decorator";
+import { parsePeopleJson, Person } from "@/logic/data";
+import { fetchWithLang } from "@/logic/helper"
+import { peopleUrl, replaceUrlVars } from "@/logic/config";
 import MDX from "@/components/MDX.vue";
 import urljoin from "url-join";
-import ProfileComments from "@/views/ProfileComments.vue";
+import ProfileComments from "@/components/ProfileComments.vue";
 import ProfileCard from '@/components/ProfileCard.vue';
 
-@Options({components: {ProfileCard, ProfileComments, MDX}})
-export default class Profile extends Vue
-{
-    @Prop({required: true}) userid!: string
-    @Prop({default: false}) screenshotMode!: boolean
+@Options({ components: { ProfileCard, ProfileComments, MDX } })
+export default class Profile extends Vue {
+    @Prop({ required: true }) userid!: string
+    @Prop({ default: false }) screenshotMode!: boolean
 
     p?: Person = null
     compiledMdxCode = ''
 
-    created(): void
-    {
+    created(): void {
         const pu = peopleUrl(this.userid)
 
         // TODO: Handle errors
@@ -50,6 +37,18 @@ export default class Profile extends Vue
     }
 }
 </script>
+
+<template>
+    <div>
+        <div class="profile-page" :class="{ screenshot: screenshotMode }">
+            <ProfileCard class="profile-card" :userid="userid" :p="p" v-if="p" :screenshot-mode="screenshotMode" />
+
+            <MDX class="content" :code="compiledMdxCode" />
+
+            <ProfileComments class="comments" :p="p" v-if="p && !screenshotMode" />
+        </div>
+    </div>
+</template>
 
 <!-- Scoped Style -->
 <style lang="sass" scoped>

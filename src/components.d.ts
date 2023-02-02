@@ -30,6 +30,7 @@ declare module '@vue/runtime-core' {
     MDX: typeof import('./components/MDX.vue')['default']
     PhotoScroll: typeof import('./components/PhotoScroll.vue')['default']
     ProfileCard: typeof import('./components/ProfileCard.vue')['default']
+    ProfileComments: typeof import('./components/ProfileComments.vue')['default']
     RecaptchaV2: typeof import('./components/RecaptchaV2.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

@@ -17,7 +17,7 @@
     "tg-blog": "^1.0.11",
     "url-join": "^5.0.0",
     "vue": "^3.0.0",
-    "vue-router": "^4.1.4"
+    "vue-router": "^4.1.6"
   },
   "devDependencies": {
     "@iconify-json/ep": "^1.1.8",
@@ -52,6 +52,7 @@
     "unplugin-icons": "^0.15.1",
     "unplugin-vue-components": "^0.22.12",
     "vite": "^4.0.3",
+    "vite-plugin-pages": "^0.28.0",
     "vue-class-component": "^8.0.0-0",
     "vue-property-decorator": "^10.0.0-rc.3",
     "vue-tsc": "^1.0.8"

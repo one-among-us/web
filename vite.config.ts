@@ -1,5 +1,6 @@
 import path from "path";
 
+import Pages from 'vite-plugin-pages'
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
@@ -19,6 +20,10 @@ export default defineConfig({
     vueJsx(),
     markdown(),
 
+    Pages({
+      // default
+      pagesDir: 'src/pages'
+    }),
     AutoImport({
       // Auto import functions from Vue, e.g. ref, reactive, toRef...
       // 自动导入 Vue 相关函数，如：ref, reactive, toRef 等
