@@ -2,16 +2,27 @@
     <div id="ProfileComments" class="markdown-content">
         <h1>留言</h1>
 
+        <!-- Comments -->
         <div id="comments" v-if="p.comments.length > 0">
-            <p class="comment" v-for="c in comments" :key="c.id">
+            <div class="comment" v-for="c in comments" :key="c.id">
                 <span class="content" v-html="c.content"></span>
                 <span class="from anonymous" v-if="c.anonymous">——匿名小可爱</span>
                 <span class="from" v-else>——{{c.submitter}}</span>
-            </p>
+
+                <!-- Replies -->
+                <div class="replies" v-if="c.replies">
+                    <div class="reply-title">回复 @{{c.submitter}}</div>
+                    <div class="reply" v-for="(r, idx) in c.replies" :key="idx">
+                        <span class="content" v-html="r.content"></span>
+                        <span class="from">——{{r.submitter}}</span>
+                    </div>
+                </div>
+            </div>
         </div>
 
+        <!-- Add comment textbox -->
         <div id="add-comment">
-            <textarea id="comment-textarea" v-model="textInput" placeholder="添加留言... （支持 Markdown 哦！"
+            <textarea id="comment-textarea" v-model="textInput" placeholder="添加留言... （支持 Markdown"
                       @input="resizeInput" ref="input"/>
             <div id="send-comment-btn" v-if="textInput.length > 0">
                 <span class="char-count unselectable">{{textInput.length}} 字（已存草稿）</span>
@@ -142,13 +153,35 @@ export default class ProfileComments extends Vue
 @import src/css/global
 @import src/css/colors
 
+.divp
+    margin: 0.65em 0
+    line-height: 1.6
+
 .comment
+    @extend .divp
+
     .from
         color: $color-text-light
         margin-left: 10px
 
     .from.anonymous
         color: lighten($color-text-light, 20%)
+
+    .replies
+        .reply-title
+            font-size: 0.7em
+            color: $color-text-light
+
+        margin-top: 0.3em
+        padding: 0.5em 20px
+
+        background: $color-bg-5
+        border-radius: 5px 10px 10px 5px
+        border-left: 3px solid #ba8746
+
+        // Gap between replies
+        > .reply + .reply
+            margin-top: 0.5em
 
 
 #add-comment

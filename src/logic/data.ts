@@ -6,12 +6,17 @@ export interface PersonMeta
     profileUrl: string
 }
 
-export interface Comment
+export interface CommentReply
 {
-    id: number
     content: string
     submitter: string
+}
+
+export interface Comment extends CommentReply
+{
+    id: number
     date?: string
+    replies: CommentReply[]
 }
 
 export interface Person

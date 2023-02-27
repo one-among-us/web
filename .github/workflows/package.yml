@@ -50,9 +50,10 @@ jobs:
           path: dist
 
       - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: cloudflare/pages-action@v1
         with:
-          folder: dist
-          single-commit: true
-
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: one-among-us
+          directory: dist
 

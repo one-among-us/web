@@ -113,8 +113,10 @@ async function genMeta()
 
   // Track characters in markdown
   const characters = new Set()
-  const mustHaveChars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ网站"
-  for (const c of mustHaveChars) characters.add(c)
+  const addChars = (str: string) => { for (const char of str) characters.add(char) }
+  const addCharsFile = (file: string) => addChars(file.read_file() ?? "")
+
+  addChars("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ网站")
 
   // Create people pages
   for (const person of people)
@@ -124,7 +126,8 @@ async function genMeta()
     const image = screenshotUrl(person.path, host)
 
     // Track characters
-    for (const char of md) characters.add(char)
+    addCharsFile(p.join(`info.json`))
+    addCharsFile(p.join(`info.zh_hant.json`))
 
     // Profile
     const pUrl = `/profile/${person.path}`

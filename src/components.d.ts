@@ -23,7 +23,6 @@ declare module '@vue/runtime-core' {
     IFasItalic: typeof import('~icons/fa6-solid/italic')['default']
     IFasLink: typeof import('~icons/fa6-solid/link')['default']
     IFasPaperPlane: typeof import('~icons/fa6-solid/paper-plane')['default']
-    IFasSlash: typeof import('~icons/fa6-solid/slash')['default']
     IFasStrikethrough: typeof import('~icons/fa6-solid/strikethrough')['default']
     IFasXmark: typeof import('~icons/fa6-solid/xmark')['default']
     LangButton: typeof import('./components/LangButton.vue')['default']
