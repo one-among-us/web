@@ -5,6 +5,12 @@
 > 虽然 One Among Us 目前尚不具备自杀干预能力，但是如果您实在需要帮助，可以发站内信给我们的官方推特 [@oneamong_us](https://twitter.com/oneamong_us) 或发邮件给 [info@one-among.us](mailto:info@one-among.us)。我们会提供简单的帮助，或者转介给其他有能力处理的医院或社会机构。请注意这两种方式均非 7 × 24 小时有人值守。
 >
 > 让我们团结起来，活下去，直到乌云散去的一天。
+>
+> **可信任跨性别自杀干预联系方式**
+>
+> （中国）[跨儿心理小组](https://kuaerxinli.org/) - 邮箱 [kuaerxinli@protonmail.com](mailto:kuaerxinli@protonmail.com), 微信 *kuaerxinli-01*
+>
+> （加拿大、美国）[Trans Lifeline](https://translifeline.org/) - Canada (877) 330-6366, US (877) 565-8860
 
 我一直记得《寻梦环游记》里面一句话：死亡不是生命的终点，遗忘才是。那些离开了我们的人，或许正在某个地方对我们说：「请你们不要忘记我。」
 
