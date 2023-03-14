@@ -21,12 +21,12 @@ export function replaceUrlVars(str: string, id: string): string
 }
 
 const zhMap = {'zh-tw': 'zh_hant', 'zh-hk': 'zh_hant', 'zh-sg': 'zh_hans', 'zh-cn': 'zh_hans', 'en':'en'}
-type Lang = 'zh_hans' | 'zh_hant' | 'en'
+export type Lang = 'zh_hans' | 'zh_hant' | 'en'
 
 /**
  * Get language
  *
- * @return 'hans' or 'hant'
+ * @return 'zh_hans', 'zh_hant' or 'en'
  */
 export function getLang(): Lang
 {

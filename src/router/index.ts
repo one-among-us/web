@@ -15,14 +15,8 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('../views/About.vue')
     },
     {
-        path: '/profile/:userid/en',
-        name: 'Profile_En',
-        component: () => import("../views/Profile.vue"),
-        props: route => Object.assign({}, route.params, {en: true})
-    },
-    {
-        path: '/profile/:userid',
-        alias: '/p/:userid',
+        path: '/profile/:userid/:lang?',
+        alias: '/p/:userid/:lang?',
         name: 'Profile',
         component: () => import("../views/Profile.vue"),
         props: true

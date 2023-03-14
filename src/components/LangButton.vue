@@ -1,24 +1,31 @@
 <template>
-    <div id="LangButton" class="clickable hy-button" @click="click" v-if="lang !== 'en'">
-        {{ lang === 'zh_hans' ? '繁' : '简' }}
+    <div id="LangButton" class="clickable hy-button" @click="click">
+        {{ supportedLang[lang] }}
     </div>
 </template>
 
 <script lang="ts">
-import {Options, Vue} from 'vue-class-component';
-import {getLang, setLang} from "@/logic/config";
-import {info} from "@/logic/utils";
+import { Options, Vue } from 'vue-class-component';
+import { getLang, setLang, Lang } from "@/logic/config";
+import { info } from "@/logic/utils";
 
-@Options({components: {}})
-export default class LangButton extends Vue
-{
+
+@Options({ components: {} })
+export default class LangButton extends Vue {
     lang = getLang()
+    supportedLang = {
+        'zh_hans': '简',
+        'zh_hant': '繁',
+        'en': '英'
+    }
 
-    click()
-    {
-        const newLang = getLang() == 'zh_hans' ? 'zh_hant' : 'zh_hans'
+    click() {
+        const langList = Object.keys(this.supportedLang)
+        const currentIndex = langList.indexOf(this.lang);
+        const nextIndex = (currentIndex + 1) % langList.length;
+        const newLang = langList[nextIndex];
         info(`Switching to ${newLang}`)
-        setLang(newLang)
+        setLang(newLang as Lang)
         location.reload()
     }
 }
