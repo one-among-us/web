@@ -19,7 +19,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'npm'
+          cache: 'yarn'
       - run: yarn install
         env:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: "true"
@@ -48,6 +48,12 @@ jobs:
         with:
           name: packaged
           path: dist
+
+      - name: Deploy to GitHub branch
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: dist
 
       - name: Deploy 🚀
         uses: cloudflare/pages-action@v1

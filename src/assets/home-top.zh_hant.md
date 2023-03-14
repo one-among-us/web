@@ -5,6 +5,12 @@
 > 雖然 One Among Us 目前尚不具備自殺幹預能力，但是如果您實在需要幫助，可以發站內信給我們的官方推特 [@oneamong_us](https://twitter.com/oneamong_us) 或發郵件給 [info@one-among.us](mailto:info@one-among.us)。我們會提供簡單的幫助，或者轉介給其他有能力處理的醫院或社會機構。請註意這兩種方式均非 7 × 24 小時有人值守。
 >
 > 讓我們團結起來，活下去，直到烏雲散去的一天。
+>
+> **可信任跨性別自殺預防聯系方式**
+>
+> （中國）[跨兒心理小組](https://kuaerxinli.org/) - 電郵 [kuaerxinli@protonmail.com](mailto:kuaerxinli@protonmail.com), 微信 *kuaerxinli-01*
+>
+> （加拿大、美國）[Trans Lifeline](https://translifeline.org/) - Canada (877) 330-6366, US (877) 565-8860
 
 我一直記得《尋夢環遊記》裏面一句話：死亡不是生命的終點，遺忘纔是。那些離開了我們的人，或許正在某個地方對我們說：「請你們不要忘記我。」
 
