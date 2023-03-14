@@ -15,7 +15,7 @@ import {Options, Vue} from 'vue-class-component';
 import {Prop} from "vue-property-decorator";
 import {parsePeopleJson, Person} from "@/logic/data";
 import {fetchWithLang} from "@/logic/helper"
-import {peopleUrl, replaceUrlVars} from "@/logic/config";
+import {peopleUrl, replaceUrlVars, setLang} from "@/logic/config";
 import MDX from "@/components/MDX.vue";
 import urljoin from "url-join";
 import ProfileComments from "@/views/ProfileComments.vue";
@@ -26,12 +26,18 @@ export default class Profile extends Vue
 {
     @Prop({required: true}) userid!: string
     @Prop({default: false}) screenshotMode!: boolean
+    @Prop({default: false}) en!: boolean
+
 
     p?: Person = null
     compiledMdxCode = ''
 
     created(): void
     {
+        if (this.en){
+            setLang('en');
+        }
+
         const pu = peopleUrl(this.userid)
 
         // TODO: Handle errors
@@ -47,6 +53,13 @@ export default class Profile extends Vue
         if (!this.screenshotMode) fetchWithLang(urljoin(pu, `page.js`))
             .then(it => it.text())
             .then(it => this.compiledMdxCode = replaceUrlVars(it, this.userid))
+    }
+
+    unmounted():void
+    {
+        if (this.en){
+            setLang('zh_hant');
+        }
     }
 }
 </script>

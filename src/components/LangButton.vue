@@ -1,5 +1,5 @@
 <template>
-    <div id="LangButton" class="clickable hy-button" @click="click">
+    <div id="LangButton" class="clickable hy-button" @click="click" v-if="lang !== 'en'">
         {{ lang === 'zh_hans' ? '繁' : '简' }}
     </div>
 </template>

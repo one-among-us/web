@@ -1,4 +1,4 @@
-import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router'
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 
 /**
  * NOTICE: WHEN YOU CHANGE ROUTES, PLEASE ALSO CHANGE tools/gen_meta.ts
@@ -13,6 +13,12 @@ const routes: Array<RouteRecordRaw> = [
         path: '/about',
         name: 'About',
         component: () => import('../views/About.vue')
+    },
+    {
+        path: '/profile/:userid/en',
+        name: 'Profile_En',
+        component: () => import("../views/Profile.vue"),
+        props: route => Object.assign({}, route.params, {en: true})
     },
     {
         path: '/profile/:userid',
