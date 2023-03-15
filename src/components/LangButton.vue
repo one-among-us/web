@@ -1,5 +1,5 @@
 <template>
-    <div id="LangButton" class="clickable hy-button" @click="click">
+    <div id="LangButton" class="clickable hy-button" @click="click" v-if="showBtn">
         {{ supportedLang[lang] }}
     </div>
 </template>
@@ -18,12 +18,12 @@ export default class LangButton extends Vue {
         'zh_hant': '繁',
         'en': '英'
     }
-
+    langList = Object.keys(this.supportedLang)
+    showBtn = localStorage.getItem('showBtn')
     click() {
-        const langList = Object.keys(this.supportedLang)
-        const currentIndex = langList.indexOf(this.lang);
-        const nextIndex = (currentIndex + 1) % langList.length;
-        const newLang = langList[nextIndex];
+        const currentIndex = this.langList.indexOf(this.lang);
+        const nextIndex = (currentIndex + 1) % this.langList.length;
+        const newLang = this.langList[nextIndex];
         info(`Switching to ${newLang}`)
         setLang(newLang as Lang)
         location.reload()

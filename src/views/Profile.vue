@@ -36,6 +36,13 @@ export default class Profile extends Vue
     {
         const pu = peopleUrl(this.userid)
 
+        localStorage.setItem('showBtn', '1')
+        
+        if (this.lang) {
+            setLang(this.lang)
+            localStorage.setItem('showBtn', '')
+        }
+
         // TODO: Handle errors
         // Get data from server
         fetchWithLang(urljoin(pu, `info.json`))
