@@ -1,14 +1,16 @@
 > **警示**
 >
-> 目前 One Among Us 的運營處於非常時期。我們已經接到大量關於自殺的報道。如果您在瀏覽逝者頁面的時候產生不適，請立即退出並尋求醫生和社群的幫助，必要時尋找當地自殺幹預機構。並且，請在確保自身心理狀況穩定的情況下，盡量幫助別人。
+> 目前 One Among Us 的運營處於非常時期。我們已經接到大量關於自殺的報道。如果您在瀏覽逝者頁面的時候產生不適，請立即退出並尋求醫生和社群的幫助，必要時尋找當地自殺干預機構。並且，請在確保自身心理狀況穩定的情況下，盡量幫助別人。
 >
-> 雖然 One Among Us 目前尚不具備自殺幹預能力，但是如果您實在需要幫助，可以發站內信給我們的官方推特 [@oneamong_us](https://twitter.com/oneamong_us) 或發郵件給 [info@one-among.us](mailto:info@one-among.us)。我們會提供簡單的幫助，或者轉介給其他有能力處理的醫院或社會機構。請註意這兩種方式均非 7 × 24 小時有人值守。
+> 雖然 One Among Us 目前尚不具備自殺干預能力，但是如果您實在需要幫助，可以發站內信給我們的官方推特 [@oneamong_us](https://twitter.com/oneamong_us) 或發郵件給 [info@one-among.us](mailto:info@one-among.us)。我們會提供簡單的幫助，或者轉介給其他有能力處理的醫院或社會機構。請註意這兩種方式均非 7 × 24 小時有人值守。
 >
 > 讓我們團結起來，活下去，直到烏雲散去的一天。
 >
-> **可信任跨性別自殺預防聯系方式**
+> **可信任跨性別自殺干預聯絡方式**
 >
-> （中國）[跨兒心理小組](https://kuaerxinli.org/) - 電郵 [kuaerxinli@protonmail.com](mailto:kuaerxinli@protonmail.com), 微信 *kuaerxinli-01*
+> （中國）[跨兒心理小組](https://kuaerxinli.org/) - 電郵 [kuaerxinli@protonmail.com](mailto:kuaerxinli@protonmail.com), 微信 *kuaerxinli-01*（建議優先使用微信聯絡）
+>
+> 請注意：**跨兒心理小組並不直接提供自殺干預服務**，請查看其提供的 [自殺干預熱線列表](https://kuaerxinli.org/%E6%96%87%E7%AB%A0%E4%B8%8E%E9%87%87%E8%AE%BF/1520) 和撰寫的 [跨兒自殺危機自救和干預微信專欄](https://mp.weixin.qq.com/mp/appmsgalbum?action=getalbum&__biz=MzUyNjc4Nzk2OA==&scene=1&album_id=1589990820231856129&count=3#wechat_redirect) 尋找你所需要的信息。
 >
 > （加拿大、美國）[Trans Lifeline](https://translifeline.org/) - Canada (877) 330-6366, US (877) 565-8860
 

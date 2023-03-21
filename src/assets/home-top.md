@@ -8,7 +8,9 @@
 >
 > **可信任跨性别自杀干预联系方式**
 >
-> （中国）[跨儿心理小组](https://kuaerxinli.org/) - 邮箱 [kuaerxinli@protonmail.com](mailto:kuaerxinli@protonmail.com), 微信 *kuaerxinli-01*
+> （中国）[跨儿心理小组](https://kuaerxinli.org/) - 邮箱 [kuaerxinli@protonmail.com](mailto:kuaerxinli@protonmail.com), 微信 *kuaerxinli-01*（建议优先使用微信联系）
+>
+> 请注意：**跨儿心理小组并不直接提供自杀干预服务**，请查看其提供的 [自杀干预热线列表](https://kuaerxinli.org/%E6%96%87%E7%AB%A0%E4%B8%8E%E9%87%87%E8%AE%BF/1520) 和撰写的 [跨儿自杀危机自救和干预微信专栏](https://mp.weixin.qq.com/mp/appmsgalbum?action=getalbum&__biz=MzUyNjc4Nzk2OA==&scene=1&album_id=1589990820231856129&count=3#wechat_redirect) 寻找你所需要的信息。
 >
 > （加拿大、美国）[Trans Lifeline](https://translifeline.org/) - Canada (877) 330-6366, US (877) 565-8860
 
