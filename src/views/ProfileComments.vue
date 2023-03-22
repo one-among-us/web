@@ -66,7 +66,7 @@ export default class ProfileComments extends Vue
     {
         return this.p.comments.map(c => {return {...c,
             anonymous: c.submitter === "Anonymous",
-            content: mdParseInline(c.content)
+            content: mdParseInline(c.content.replaceAll("\n", "<br />"))
         }})
     }
 
