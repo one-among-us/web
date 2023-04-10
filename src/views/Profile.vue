@@ -1,75 +1,73 @@
 <template>
-  <div>
-    <div class="profile-page" :class="{ screenshot: screenshotMode }">
-      <ProfileCard
-        class="profile-card"
-        :userid="userid"
-        :p="p"
-        v-if="p"
-        :screenshot-mode="screenshotMode"
-      />
-      <MDX class="content" :code="compiledMdxCode" />
-      <ProfileComments class="comments" :p="p" v-if="p && !screenshotMode" />
+    <div>
+        <div class="profile-page" :class="{ screenshot: screenshotMode }">
+            <ProfileCard
+                class="profile-card"
+                :userid="userid"
+                :p="p"
+                v-if="p"
+                :screenshot-mode="screenshotMode"
+            />
+            <MDX class="content" :code="compiledMdxCode" />
+            <ProfileComments class="comments" :p="p" v-if="p && !screenshotMode" />
+        </div>
     </div>
-  </div>
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
-import { Prop } from "vue-property-decorator";
-import { parsePeopleJson, Person } from "@/logic/data";
-import { fetchWithLang } from "@/logic/helper";
-import { peopleUrl, replaceUrlVars, setLang, Lang } from "@/logic/config";
-import MDX from "@/components/MDX.vue";
-import urljoin from "url-join";
-import ProfileComments from "@/views/ProfileComments.vue";
-import ProfileCard from "@/components/ProfileCard.vue";
-import person, { info } from "virtual:person";
+import { Options, Vue } from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
+import { parsePeopleJson, Person } from '@/logic/data';
+import { fetchWithLang } from '@/logic/helper';
+import { peopleUrl, replaceUrlVars, setLang, Lang } from '@/logic/config';
+import MDX from '@/components/MDX.vue';
+import urljoin from 'url-join';
+import ProfileComments from '@/views/ProfileComments.vue';
+import ProfileCard from '@/components/ProfileCard.vue';
+import person, { info } from 'virtual:person';
 
 @Options({ components: { ProfileCard, ProfileComments, MDX } })
 export default class Profile extends Vue {
-  @Prop({ required: true }) userid!: string;
-  @Prop({ default: false }) screenshotMode!: boolean;
-  @Prop({ default: "" }) lang!: Lang;
+    @Prop({ required: true }) userid!: string;
+    @Prop({ default: false }) screenshotMode!: boolean;
+    @Prop({ default: '' }) lang!: Lang;
 
-  p?: Person = null;
-  compiledMdxCode = "";
+    p?: Person = null;
+    compiledMdxCode = '';
 
-  created(): void {
-    // In preview mode
-    if (person && this.$route.path.includes(person.id)) {
-      this.p = info;
-      import("../../draft/page.md").then((page) => {
-        this.compiledMdxCode = replaceUrlVars(page.default, this.userid);
-      });
-    } else {
-      const pu = peopleUrl(this.userid);
+    created(): void {
+        // In preview mode
+        if (person && this.$route.path.includes(person.id)) {
+            this.p = info;
+            import('../../draft/page.md').then((page) => {
+                this.compiledMdxCode = replaceUrlVars(page.default, this.userid);
+            });
+        } else {
+            const pu = peopleUrl(this.userid);
 
-      localStorage.setItem("showBtn", "1");
+            localStorage.setItem('showBtn', '1');
 
-      if (this.lang) {
-        setLang(this.lang);
-        localStorage.setItem("showBtn", "");
-      }
+            if (this.lang) {
+                setLang(this.lang);
+                localStorage.setItem('showBtn', '');
+            }
 
-      // TODO: Handle errors
-      // Get data from server
-      fetchWithLang(urljoin(pu, `info.json`))
-        .then((it) => it.text())
-        .then((it) => {
-          this.p = parsePeopleJson(it);
-        });
+            // TODO: Handle errors
+            // Get data from server
+            fetchWithLang(urljoin(pu, `info.json`))
+                .then((it) => it.text())
+                .then((it) => {
+                    this.p = parsePeopleJson(it);
+                });
 
-      // TODO: Handle errors
-      // Load compile MDX code from server
-      if (!this.screenshotMode)
-        fetchWithLang(urljoin(pu, `page.js`))
-          .then((it) => it.text())
-          .then(
-            (it) => (this.compiledMdxCode = replaceUrlVars(it, this.userid))
-          );
+            // TODO: Handle errors
+            // Load compile MDX code from server
+            if (!this.screenshotMode)
+                fetchWithLang(urljoin(pu, `page.js`))
+                    .then((it) => it.text())
+                    .then((it) => (this.compiledMdxCode = replaceUrlVars(it, this.userid)));
+        }
     }
-  }
 }
 </script>
 
