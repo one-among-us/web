@@ -1,91 +1,102 @@
 <template>
-    <div>
+  <div>
     <div id="home" :class="clicked ? 'clicked' : ''">
-        <div class="introduction markdown-content" v-html="htmlTop" />
+      <div class="introduction markdown-content" v-html="htmlTop" />
 
-        <div id="profiles" class="unselectable" v-if="people">
-            <div class="profile" v-for="(p, i) in people" :key="i">
-                <div class="back"/>
-                <a :href="`/profile/${p.id}`" @click.exact.prevent.stop="() => false">
-                    <transition name="fade" @after-leave="() => switchPage(p)">
-                        <img :src="profileUrl(p)" draggable="false" alt="profile" class="front clickable"
-                             @click.exact="() => { if (!clicked) { clicked = p.name; } return false }"
-                             v-if="clicked !== p.name">
-                    </transition>
-                </a>
-                <div class="name font-custom" ref="bookmarkTexts">{{p.name}}</div>
-                <div class="bookmark" ref="bookmark"/>
-            </div>
-            <div class="profile" v-if="showAdd">
-                <div class="back add fbox-vcenter">+</div>
-            </div>
+      <div id="profiles" class="unselectable" v-if="people">
+        <div class="profile" v-for="(p, i) in people" :key="i">
+          <div class="back" />
+          <a :href="`/profile/${p.id}`" @click.exact.prevent.stop="() => false">
+            <transition name="fade" @after-leave="() => switchPage(p)">
+              <img
+                :src="profileUrl(p)"
+                draggable="false"
+                alt="profile"
+                class="front clickable"
+                @click.exact="
+                  () => {
+                    if (!clicked) {
+                      clicked = p.name;
+                    }
+                    return false;
+                  }
+                "
+                v-if="clicked !== p.name"
+              />
+            </transition>
+          </a>
+          <div class="name font-custom" ref="bookmarkTexts">{{ p.name }}</div>
+          <div class="bookmark" ref="bookmark" />
         </div>
+        <div class="profile" v-if="showAdd">
+          <div class="back add fbox-vcenter">+</div>
+        </div>
+      </div>
 
-        <div class="introduction markdown-content" v-html="htmlBottom" />
+      <div class="introduction markdown-content" v-html="htmlBottom" />
     </div>
-    </div>
+  </div>
 </template>
 
 <script lang="ts">
-import {Options, Vue} from 'vue-class-component';
+import { Options, Vue } from "vue-class-component";
 import htmlTop from "@/assets/home-top.md";
 import htmlTopHant from "@/assets/home-top.zh_hant.md";
 import htmlBottom from "@/assets/home-bottom.md";
 import htmlBottomHant from "@/assets/home-bottom.zh_hant.md";
-import {PersonMeta} from "@/logic/data";
-import {dataHost, getLang, replaceUrlVars} from "@/logic/config";
+import { PersonMeta } from "@/logic/data";
+import { dataHost, getLang, replaceUrlVars } from "@/logic/config";
 import urljoin from "url-join";
-import { info } from '@/logic/utils';
-import {fetchWithLang} from "@/logic/helper";
-import {Ref} from "vue-property-decorator";
-import {fitText} from "@/logic/dom_utils";
+import { info } from "@/logic/utils";
+import { fetchWithLang } from "@/logic/helper";
+import { Ref } from "vue-property-decorator";
+import { fitText } from "@/logic/dom_utils";
+import person from "virtual:person";
 
 @Options({})
-export default class Home extends Vue
-{
-    clicked = ''
-    showAdd = false
+export default class Home extends Vue {
+  clicked = "";
+  showAdd = false;
 
-    lang = getLang()
-    htmlTop = this.lang === 'zh_hans' ?  htmlTop : htmlTopHant
-    htmlBottom = this.lang === 'zh_hans' ? htmlBottom : htmlBottomHant
+  lang = getLang();
+  htmlTop = this.lang === "zh_hans" ? htmlTop : htmlTopHant;
+  htmlBottom = this.lang === "zh_hans" ? htmlBottom : htmlBottomHant;
 
-    people: PersonMeta[] = null as never as PersonMeta[]
+  people: PersonMeta[] = null as never as PersonMeta[];
 
-    @Ref() bookmarkTexts: HTMLDivElement[]
-    @Ref() bookmark: HTMLDivElement[]
+  @Ref() bookmarkTexts: HTMLDivElement[];
+  @Ref() bookmark: HTMLDivElement[];
 
-    updated()
-    {
-        if (this.bookmark != undefined)
-        {
-            const width = this.bookmark[0].offsetWidth - 10
-            for (const b of this.bookmarkTexts) fitText(b, { width })
+  updated() {
+    if (this.bookmark != undefined) {
+      const width = this.bookmark[0].offsetWidth - 10;
+      for (const b of this.bookmarkTexts) fitText(b, { width });
+    }
+  }
+
+  created(): void {
+    info(`Language: ${this.lang}`);
+    fetchWithLang(urljoin(dataHost, "people-list.json"))
+      .then((it) => it.text())
+      .then((it) => {
+        if (person) {
+          this.people = [person].concat(JSON.parse(it));
+        } else {
+          this.people = JSON.parse(it);
         }
-    }
+        // console.log(it)
+        // console.log(this.people)
+      });
+  }
 
-    created(): void
-    {
-        info(`Language: ${this.lang}`)
-        fetchWithLang(urljoin(dataHost, 'people-list.json'))
-            .then(it => it.text())
-            .then(it => {
-                this.people = JSON.parse(it)
-                // console.log(it)
-                // console.log(this.people)
-            })
-    }
+  switchPage(p: PersonMeta): void {
+    info(`switchPage(${p.id})`);
+    this.$router.push(`/profile/${p.id}`);
+  }
 
-    switchPage(p: PersonMeta): void
-    {
-        info(`switchPage(${p.id})`)
-        this.$router.push(`/profile/${p.id}`)
-    }
-
-    profileUrl(p: PersonMeta): string
-    {
-        return replaceUrlVars(p.profileUrl, p.id)
-    }
+  profileUrl(p: PersonMeta): string {
+    return replaceUrlVars(p.profileUrl, p.id);
+  }
 }
 </script>
 

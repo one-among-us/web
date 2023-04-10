@@ -10,6 +10,7 @@ import Components from "unplugin-vue-components/vite";
 import Icons from "unplugin-icons/vite";
 import IconsResolver from "unplugin-icons/resolver";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
+import virtualPerson from "./vite/virtualPerson";
 
 const src = path.resolve(__dirname, "src");
 
@@ -18,6 +19,7 @@ export default defineConfig({
     vue(),
     vueJsx(),
     markdown(),
+    virtualPerson(),
 
     AutoImport({
       // Auto import functions from Vue, e.g. ref, reactive, toRef...

@@ -1,0 +1,7 @@
+id: Campanella
+profileUrl: ${path}/photos/profile.png
+info:
+  born: "1989-06-04"
+  died: "2022-11-27"
+websites:
+  twitter: https://twitter.com/114514
