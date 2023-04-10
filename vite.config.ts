@@ -5,13 +5,13 @@ import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import markdown from "./vite/markdown";
 
-import AutoImport from 'unplugin-auto-import/vite'
-import Components from 'unplugin-vue-components/vite'
-import Icons from 'unplugin-icons/vite'
-import IconsResolver from 'unplugin-icons/resolver'
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import AutoImport from "unplugin-auto-import/vite";
+import Components from "unplugin-vue-components/vite";
+import Icons from "unplugin-icons/vite";
+import IconsResolver from "unplugin-icons/resolver";
+import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 
-const src = path.resolve(__dirname, 'src')
+const src = path.resolve(__dirname, "src");
 
 export default defineConfig({
   plugins: [
@@ -22,7 +22,7 @@ export default defineConfig({
     AutoImport({
       // Auto import functions from Vue, e.g. ref, reactive, toRef...
       // 自动导入 Vue 相关函数，如：ref, reactive, toRef 等
-      imports: ['vue'],
+      imports: ["vue"],
 
       // Auto import functions from Element Plus, e.g. ElMessage, ElMessageBox... (with style)
       // 自动导入 Element Plus 相关函数，如：ElMessage, ElMessageBox... (带样式)
@@ -32,13 +32,13 @@ export default defineConfig({
         // Auto import icon components
         // 自动导入图标组件
         IconsResolver({
-          prefix: 'Icon',
+          prefix: "Icon",
         }),
       ],
 
       eslintrc: { enabled: true },
 
-      dts: path.resolve(src, 'auto-imports.d.ts'),
+      dts: path.resolve(src, "auto-imports.d.ts"),
     }),
 
     Components({
@@ -46,10 +46,10 @@ export default defineConfig({
         // Auto register icon components
         // 自动注册图标组件
         IconsResolver({
-          enabledCollections: ['ep', 'fa6-solid'],
+          enabledCollections: ["ep", "fa6-solid"],
           alias: {
-            fas: 'fa6-solid',
-          }
+            fas: "fa6-solid",
+          },
         }),
 
         // Auto register Element Plus components
@@ -57,17 +57,23 @@ export default defineConfig({
         ElementPlusResolver(),
       ],
 
-      dts: path.resolve(src, 'components.d.ts'),
+      dts: path.resolve(src, "components.d.ts"),
     }),
 
     Icons({
-      autoInstall: true
+      autoInstall: true,
     }),
   ],
   resolve: {
-    dedupe: ['vue'],
+    dedupe: ["vue"],
     alias: {
-      '@': src
-    }
-  }
+      "@": src,
+    },
+  },
+  optimizeDeps: {
+    include: [
+      "element-plus/es",
+      "element-plus/es/components/tooltip/style/css",
+    ],
+  },
 });
