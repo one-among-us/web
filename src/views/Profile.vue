@@ -53,8 +53,8 @@ export default class Profile extends Vue
 
         // TODO: Handle errors
         // Load compile MDX code from server
-        if (!this.screenshotMode) fetchWithLang(urljoin(pu, `page.js`))
-            .then(it => it.text())
+        if (!this.screenshotMode) fetchWithLang(urljoin(pu, `page.json`))
+            .then(it => it.json())
             .then(it => this.compiledMdxCode = replaceUrlVars(it, this.userid))
     }
 }
