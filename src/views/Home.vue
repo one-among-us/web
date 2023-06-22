@@ -30,8 +30,10 @@
 import {Options, Vue} from 'vue-class-component';
 import htmlTop from "@/assets/home-top.md";
 import htmlTopHant from "@/assets/home-top.zh_hant.md";
+import htmlTopEn from "@/assets/home-top.en.md";
 import htmlBottom from "@/assets/home-bottom.md";
 import htmlBottomHant from "@/assets/home-bottom.zh_hant.md";
+import htmlBottomEn from "@/assets/home-bottom.en.md";
 import {PersonMeta} from "@/logic/data";
 import {dataHost, getLang, replaceUrlVars} from "@/logic/config";
 import urljoin from "url-join";
@@ -47,8 +49,8 @@ export default class Home extends Vue
     showAdd = false
 
     lang = getLang()
-    htmlTop = this.lang === 'zh_hans' ?  htmlTop : htmlTopHant
-    htmlBottom = this.lang === 'zh_hans' ? htmlBottom : htmlBottomHant
+    htmlTop = this.lang === 'zh_hans' ?  htmlTop : (this.lang === 'zh_hant' ? htmlTopHant : htmlTopEn)
+    htmlBottom = this.lang === 'zh_hans' ? htmlBottom : (this.lang === 'zh_hant' ? htmlBottomHant : htmlBottomEn)
 
     people: PersonMeta[] = null as never as PersonMeta[]
 
