@@ -25,6 +25,7 @@ import Divider from "@/components/divider.vue";
 import LangButton from "@/components/LangButton.vue";
 import {info, logPrefixCss} from "@/logic/utils";
 import {transColors} from "@/logic/constants";
+import {Lang, getLang, setLang} from './logic/config';
 
 @Options({components: {LangButton, Divider}})
 export default class App extends Vue
@@ -40,6 +41,17 @@ export default class App extends Vue
             'font-size: 1.5em; color: #ff8373',
             'color: pink; line-height: 1.5em'
         )
+        let lang = getLang();
+        if (lang === 'zh_hant')
+        {
+            ((document.querySelector('div#nav') as Element).firstElementChild.children.item(0) as Element).textContent = "首頁" as string
+            ((document.querySelector('div#nav') as Element).firstElementChild.children.item(1) as Element).textContent = "聯繫" as string
+        }
+        if (lang === 'en')
+        {
+            ((document.querySelector('div#nav') as Element).firstElementChild.children.item(0) as Element).textContent = "Home" as string
+            ((document.querySelector('div#nav') as Element).firstElementChild.children.item(1) as Element).textContent = "Contact" as string
+        }
     }
 }
 </script>
