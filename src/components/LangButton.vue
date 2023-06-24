@@ -16,7 +16,7 @@ export default class LangButton extends Vue {
     supportedLang = {
         'zh_hans': '简',
         'zh_hant': '繁',
-        'en': '英'
+        'en': 'En'
     }
     langList = Object.keys(this.supportedLang)
     showBtn = localStorage.getItem('showBtn')
