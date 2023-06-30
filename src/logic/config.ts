@@ -49,3 +49,18 @@ export function setLang(name: Lang)
     if (name in zhMap) name = zhMap[name]
     localStorage.setItem('lang', name)
 }
+
+export const i18n = {
+    "en": {
+        "nav_home": "Home",
+        "nav_contact": "Contact",
+    },
+    "zh_hans": {
+        "nav_home": "首页",
+        "nav_contact": "联系",
+    },
+    "zh_hant": {
+        "nav_home": "首頁",
+        "nav_contact": "聯繫",
+    }
+}

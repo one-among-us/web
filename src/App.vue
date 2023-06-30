@@ -7,8 +7,8 @@
 
     <div id="nav" class="fbox-vcenter unselectable">
         <div>
-            <router-link class="router-link" to="/">首页</router-link>
-            <router-link class="router-link" to="/about">联系</router-link>
+            <router-link class="router-link" to="/">{{ i18n.nav_home }}</router-link>
+            <router-link class="router-link" to="/about">{{ i18n.nav_contact }}</router-link>
         </div>
     </div>
 
@@ -25,11 +25,13 @@ import Divider from "@/components/divider.vue";
 import LangButton from "@/components/LangButton.vue";
 import {info, logPrefixCss} from "@/logic/utils";
 import {transColors} from "@/logic/constants";
-import {Lang, getLang, setLang} from './logic/config';
+import {getLang, i18n} from './logic/config';
 
 @Options({components: {LangButton, Divider}})
 export default class App extends Vue
 {
+    i18n = i18n[getLang()]
+
     mounted()
     {
         info(`One Among Us - Web Frontend loaded`)
@@ -41,17 +43,6 @@ export default class App extends Vue
             'font-size: 1.5em; color: #ff8373',
             'color: pink; line-height: 1.5em'
         )
-        let lang = getLang();
-        if (lang === 'zh_hant')
-        {
-            ((document.querySelector('div#nav') as Element).firstElementChild.children.item(0) as Element).textContent = "首頁" as string
-            ((document.querySelector('div#nav') as Element).firstElementChild.children.item(1) as Element).textContent = "聯繫" as string
-        }
-        if (lang === 'en')
-        {
-            ((document.querySelector('div#nav') as Element).firstElementChild.children.item(0) as Element).textContent = "Home" as string
-            ((document.querySelector('div#nav') as Element).firstElementChild.children.item(1) as Element).textContent = "Contact" as string
-        }
     }
 }
 </script>
