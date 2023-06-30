@@ -22,6 +22,11 @@ export function replaceUrlVars(str: string, id: string): string
 
 const zhMap = {'zh-tw': 'zh_hant', 'zh-hk': 'zh_hant', 'zh-sg': 'zh_hans', 'zh-cn': 'zh_hans', 'en':'en'}
 export type Lang = 'zh_hans' | 'zh_hant' | 'en'
+export const supportedLang: Record<Lang, string> = {
+    'zh_hans': '简',
+    'zh_hant': '繁',
+    'en': 'En'
+}
 
 /**
  * Get language
