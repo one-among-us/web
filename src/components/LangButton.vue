@@ -1,7 +1,7 @@
 <template>
-    <div class="lang-btns">
+    <div class="lang-btns" v-if="showBtn">
         <div class="clickable hy-button" 
-            @click="() => click(l)" v-if="showBtn" v-for="l in targets">
+            @click="() => click(l)" v-for="l in targets" :key="l">
             {{ supportedLang[l] }}
         </div>
     </div>
