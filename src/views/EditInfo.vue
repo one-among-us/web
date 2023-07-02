@@ -34,7 +34,6 @@ import SubmitPrompt, {CaptchaResponse} from "@/components/SubmitPrompt.vue";
 import urljoin from "url-join";
 import {fetchText} from "@/logic/helper";
 import {error, info} from "@/logic/utils";
-import {ElMessage, ElMessageBox} from "element-plus";
 import Swal from 'sweetalert2';
 
 interface KVPair { k: string, v: string }
