@@ -46,7 +46,7 @@ import {backendHost} from "@/logic/config";
 import MarkdownTooltip from "@/components/MarkdownTooltip.vue";
 import {error, info} from "@/logic/utils";
 import {initSpoilers, mdParseInline} from "tg-blog";
-import {ElMessage, ElMessageBox} from "element-plus";
+import Swal from 'sweetalert2';
 
 @Options({components: {MarkdownTooltip, SubmitPrompt}})
 export default class ProfileComments extends Vue
@@ -85,20 +85,43 @@ export default class ProfileComments extends Vue
     submitRequest(p: CaptchaResponse)
     {
         this.showCaptchaPrompt = false
-        ElMessage.success('正在提交留言...')
 
         const params = {id: this.p.id, content: this.textInput, ...p}
         info(params)
-
-        fetchText(backendHost + '/comment/add', {method: 'POST', params})
-            .then(() => {
-                this.textInput = ""
-                ElMessageBox.alert('提交成功！谢谢你！\n我们审核之后会给你发邮件')
+        
+        Swal.fire({
+            title: "正在提交留言...",
+            showConfirmButton: false,
+            icon: null,
+            didOpen: (() => {
+                fetchText(backendHost + '/comment/add', {method: 'POST', params})
+                    .then(() => {
+                        this.textInput = "";
+                        Swal.fire({
+                            title: "提交成功",
+                            text: "谢谢你. 我们审核之后会给你发邮件",
+                            icon: 'success',
+                            timer: 5000,
+                            timerProgressBar: true,
+                            showConfirmButton: true,
+                            confirmButtonText: "好诶",
+                            showCloseButton: true
+                        })
+                    })
+                    .catch(err => {
+                        error(err);
+                        Swal.fire({
+                            title: "提交失败",
+                            text: "失败原因: " + err.message,
+                            icon: 'error',
+                            timer: 5000,
+                            timerProgressBar: true,
+                            showConfirmButton: false,
+                            showCloseButton: false
+                        })
+                    })
             })
-            .catch(err => {
-                error(err)
-                ElMessageBox.alert('失败原因：' + err.message, '提交失败')
-            })
+        })
     }
 
     /**

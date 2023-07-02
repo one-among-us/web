@@ -56,7 +56,7 @@ import {abbreviateNumber, getTodayDate} from "@/logic/helper";
 import {Person} from "@/logic/data";
 import { info } from '@/logic/utils';
 import {fab} from "@/logic/constants";
-import { ElMessageBox } from 'element-plus';
+import Swal from 'sweetalert2';
 
 @Options({components: {}})
 export default class ProfileCard extends Vue
@@ -116,18 +116,19 @@ export default class ProfileCard extends Vue
 
     edit(): void
     {
-        ElMessageBox.confirm('要编辑什么呢？',
-            {
-                distinguishCancelAndClose: true,
-                confirmButtonText: '信息卡片',
-                cancelButtonText: '简介条目',
-            })
-            .then(() => {
-                this.$router.push(`/edit-info/${this.p.id}`)
-            })
-            .catch((action) => {
-                if (action === 'cancel') open(`https://github.com/one-among-us/data/tree/main/people/${this.userid}/page.md`)
-            })
+        Swal.fire({
+            title: "要编辑什么呢",
+            icon: "question",
+            showConfirmButton: true,
+            showCancelButton: true,
+            confirmButtonText: "信息卡片",
+            cancelButtonText: "简介条目"
+        }).then((result) => {
+            if (result.isConfirmed)
+                this.$router.push(`/edit-info/${this.p.id}`);
+            else if (result.dismiss === Swal.DismissReason.cancel)
+                open(`https://github.com/one-among-us/data/tree/main/people/${this.userid}/page.md`)
+        })
     }
 
     get profileUrl(): string

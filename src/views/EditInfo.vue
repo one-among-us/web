@@ -33,8 +33,9 @@ import {backendHost, peopleUrl} from "@/logic/config";
 import SubmitPrompt, {CaptchaResponse} from "@/components/SubmitPrompt.vue";
 import urljoin from "url-join";
 import {fetchText} from "@/logic/helper";
-import {error} from "@/logic/utils";
+import {error, info} from "@/logic/utils";
 import {ElMessage, ElMessageBox} from "element-plus";
+import Swal from 'sweetalert2';
 
 interface KVPair { k: string, v: string }
 
@@ -110,8 +111,13 @@ export default class EditInfo extends Vue
         // Didn't change anything
         if (json == this.initialJson)
         {
-            ElMessageBox.alert('什么都没改怎么提交啦 (╯‵□′)╯︵┻━┻', '👀',
-                {confirmButtonText: '好好好'})
+            Swal.fire({
+                title: "什么都没改怎么提交啦",
+                text: "(╯‵□′)╯︵┻━┻",
+                icon: "error",
+                confirmButtonText: "好好好",
+                showCloseButton: false
+            })
             return
         }
 
@@ -121,24 +127,45 @@ export default class EditInfo extends Vue
 
     submitRequest(p: CaptchaResponse): void
     {
-        ElMessage.success('正在创建更改请求 (Pull Request)...')
-
         const params = {...this.submitParams, ...p}
 
-        fetchText(backendHost + '/edit/info', {method: 'POST', params})
-            .then(text => {
-                console.log(text)
-                ElMessageBox.alert('提交成功！谢谢你。我们将尽快审核您的更改',
-                    {
-                        cancelButtonText: '好的',
-                        type: 'warning',
+        Swal.fire({
+            title: "正在创建更改请求...",
+            text: "其实就是 Pull Request 啦",
+            icon: null,
+            showConfirmButton: false,
+            didOpen: (() => {
+                Swal.showLoading();
+                fetchText(backendHost + '/edit/info', {method: 'POST', params})
+                    .then(text => {
+                        info(text);
+                        Swal.fire({
+                            title: "提交成功",
+                            text: "谢谢你. 我们将尽快审核您的更改. ",
+                            icon: "success",
+                            timer: 5000,
+                            timerProgressBar: true,
+                            showConfirmButton: true,
+                            confirmButtonText: "好诶"
+                        }).then((result) => {
+                            if ((result.isConfirmed) || (result.dismiss === Swal.DismissReason.timer))
+                                this.$router.push(`/profile/${this.p.id}`);
+                        })
+                    })
+                    .catch(err => {
+                        error(err);
+                        Swal.fire({
+                            title: "提交失败",
+                            text: "失败原因: " + err.message,
+                            icon: "error",
+                            timer: 5000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        })
                     })
             })
-            .catch(err => {
-                error(err)
-                ElMessageBox.alert('失败原因：' + err.message, '提交失败')
-            })
-
+        })
+        
         this.submitParams = null
     }
 }
