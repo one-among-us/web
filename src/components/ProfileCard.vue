@@ -120,12 +120,12 @@ export default class ProfileCard extends Vue
     edit(): void
     {
         Swal.fire({
-            title: "要编辑什么呢",
+            title: i18n[getLang()].nav_what_to_edit,
             icon: "question",
             showConfirmButton: true,
             showCancelButton: true,
-            confirmButtonText: "信息卡片",
-            cancelButtonText: "简介条目"
+            confirmButtonText: i18n[getLang()].nav_profile_card,
+            cancelButtonText: i18n[getLang()].nav_introduction
         }).then((result) => {
             if (result.isConfirmed)
                 this.$router.push(`/edit-info/${this.p.id}`);

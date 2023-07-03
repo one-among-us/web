@@ -2,7 +2,7 @@
     <div id="container" class="fbox-vcenter">
         <div class="spacer"/>
         <div id="EditInfo" v-if="p">
-            <div class="head-text info">信息卡片</div>
+            <div class="head-text info">{{i18n.nav_profile_card}}</div>
             <div id="id">@{{userid}}</div>
             <div class="fields info">
                 <div class="input-box" v-for="(info, i) in editInfo" :key="i">
@@ -10,14 +10,14 @@
                     <input class="value" v-model="info.v" @change="change"/>
                 </div>
             </div>
-            <div class="head-text websites">网站</div>
+            <div class="head-text websites">{{i18n.nav_website}}</div>
             <div class="fields websites">
                 <div class="input-box" v-for="(web, i) in editWebsites" :key="i">
                     <input class="key" v-model="web.k" @change="change"/>
                     <input class="value" v-model="web.v" @change="change"/>
                 </div>
             </div>
-            <div class="button submit" @click="submitBtn">提交</div>
+            <div class="button submit" @click="submitBtn">{{i18n.nav_submit}}</div>
         </div>
         <div class="spacer"/>
 
@@ -35,6 +35,7 @@ import urljoin from "url-join";
 import {fetchText} from "@/logic/helper";
 import {error, info} from "@/logic/utils";
 import Swal from 'sweetalert2';
+import {i18n, getLang} from "@/logic/config";
 
 interface KVPair { k: string, v: string }
 
@@ -59,6 +60,8 @@ export default class EditInfo extends Vue
     editWebsites: KVPair[] = []
 
     submitParams: {[id: string]: string} = null as never
+
+    i18n = i18n[getLang()]
 
     json(): string
     {
@@ -111,10 +114,10 @@ export default class EditInfo extends Vue
         if (json == this.initialJson)
         {
             Swal.fire({
-                title: "什么都没改怎么提交啦",
+                title: i18n[getLang()].nav_unable_submit,
                 text: "(╯‵□′)╯︵┻━┻",
                 icon: "error",
-                confirmButtonText: "好好好",
+                confirmButtonText: i18n[getLang()].nav_ok_0,
                 showCloseButton: false
             })
             return
@@ -129,8 +132,8 @@ export default class EditInfo extends Vue
         const params = {...this.submitParams, ...p}
 
         Swal.fire({
-            title: "正在创建更改请求...",
-            text: "其实就是 Pull Request 啦",
+            title: i18n[getLang()].nav_creating_pull_request,
+            text: i18n[getLang()].nav_description_pull_request,
             icon: null,
             showConfirmButton: false,
             didOpen: (() => {
@@ -139,13 +142,13 @@ export default class EditInfo extends Vue
                     .then(text => {
                         info(text);
                         Swal.fire({
-                            title: "提交成功",
-                            text: "谢谢你. 我们将尽快审核您的更改. ",
+                            title: i18n[getLang()].nav_success,
+                            text: i18n[getLang()].nav_success_text,
                             icon: "success",
                             timer: 5000,
                             timerProgressBar: true,
                             showConfirmButton: true,
-                            confirmButtonText: "好诶"
+                            confirmButtonText: i18n[getLang()].nav_ok_1
                         }).then((result) => {
                             if ((result.isConfirmed) || (result.dismiss === Swal.DismissReason.timer))
                                 this.$router.push(`/profile/${this.p.id}`);
@@ -154,8 +157,8 @@ export default class EditInfo extends Vue
                     .catch(err => {
                         error(err);
                         Swal.fire({
-                            title: "提交失败",
-                            text: "失败原因: " + err.message,
+                            title: i18n[getLang()].nav_failed,
+                            text: i18n[getLang()].nav_fail_reason + err.message,
                             icon: "error",
                             timer: 5000,
                             timerProgressBar: true,
