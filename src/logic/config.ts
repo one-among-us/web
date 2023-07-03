@@ -76,6 +76,10 @@ export const i18n = {
         "nav_success_text_reply": "Thank you! We will email you after review.",
         "nav_fail_reason": "Reason: ",
         "nav_anonymous": "——Anonymous",
+        "nav_will_submit": "Submit?",
+        "nav_req_name": "Thank you! Your nickname, Please?",
+        "nav_req_anonymous": "Anonymous is available if you don't want to leave a nickname.",
+        "nav_reCAPTCHA": "Click the reCAPTCHA below to submit.",
     },
     "zh_hans": {
         "nav_home": "首页",
@@ -97,6 +101,10 @@ export const i18n = {
         "nav_success_text_reply": "谢谢你. 我们审核之后会给你发邮件.",
         "nav_fail_reason": "失败原因: ",
         "nav_anonymous": "——匿名小可爱",
+        "nav_will_submit": "要提交编辑嘛?",
+        "nav_req_name": "谢谢你! 请留下你的昵称",
+        "nav_req_anonymous": " (如果不想留名字也可以填匿名哦) ",
+        "nav_reCAPTCHA": "点击下面的验证码就可以提交啦! ",
     },
     "zh_hant": {
         "nav_home": "首頁",
@@ -118,5 +126,9 @@ export const i18n = {
         "nav_success_text_reply": "谢谢你. 我們審覈之後會給你發郵件.",
         "nav_fail_reason": "失敗原因: ",
         "nav_anonymous": "——沒留名字的小可愛",
+        "nav_will_submit": "要提交編輯嘛?",
+        "nav_req_name": "謝謝你! 請留下你的暱稱",
+        "nav_req_anonymous": " (不想留名字的話...匿名也是可以的哦) ",
+        "nav_reCAPTCHA": "點擊下面的reCAPTCHA就可以提交啦! ",
     }
 }

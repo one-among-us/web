@@ -1,17 +1,17 @@
 <template>
     <div id="SubmitPrompt" class="fbox-vcenter">
         <div id="prompt">
-            <div id="header">要提交编辑吗？
+            <div id="header">{{i18n.nav_will_submit}}
                 <IFasXmark class="clickable" @click="() => $emit('close')"></IFasXmark>
             </div>
 
-            <div class="text">谢谢你！请留下你的昵称！
-                <div class="sub">（如果不想留名字也可以填匿名哦）</div>
+            <div class="text">{{i18n.nav_req_name}}
+                <div class="sub">{{i18n.nav_req_anonymous}}</div>
             </div>
             <HyInput class="input first" placeholder="名字" v-model="name"/>
             <HyInput class="input" placeholder="邮箱（可选）" v-model="email"/>
 
-            <div>点击下面的验证码就能提交啦！</div>
+            <div>{{i18n.nav_reCAPTCHA}}</div>
             <RecaptchaV2 @verify="submit"/>
         </div>
     </div>
@@ -21,6 +21,7 @@
 import {Options, Vue} from 'vue-class-component';
 import HyInput from "@/components/HyInput.vue";
 import RecaptchaV2 from "@/components/RecaptchaV2.vue";
+import {i18n, getLang} from "@/logic/config";
 
 
 export interface CaptchaResponse
@@ -36,6 +37,8 @@ export default class SubmitPrompt extends Vue
 {
     name = ''
     email = ''
+
+    i18n = i18n[getLang()];
 
     submit(captcha: string): void
     {
