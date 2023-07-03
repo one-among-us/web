@@ -59,13 +59,16 @@ export const i18n = {
     "en": {
         "nav_home": "Home",
         "nav_contact": "Contact",
+        "nav_website": "Website",
     },
     "zh_hans": {
         "nav_home": "首页",
         "nav_contact": "联系",
+        "nav_website": "网站",
     },
     "zh_hant": {
         "nav_home": "首頁",
         "nav_contact": "聯繫",
+        "nav_website": "網路站點",
     }
 }
