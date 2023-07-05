@@ -97,6 +97,7 @@ export default class ProfileComments extends Vue
             showConfirmButton: false,
             icon: null,
             didOpen: (() => {
+                Swal.showLoading();
                 fetchText(backendHost + '/comment/add', {method: 'POST', params})
                     .then(() => {
                         this.textInput = "";
