@@ -132,3 +132,27 @@ export const i18n = {
         "nav_reCAPTCHA": "點擊下面的reCAPTCHA就可以提交啦! ",
     }
 }
+
+export const info_i18n = {
+    "en": {
+        "alias": "Alias",
+        "location": "Location",
+        "born": "Born",
+        "died": "Departed",
+        "age": "Age",
+    },
+    "zh_hans": {
+        "alias": "昵称",
+        "location": "地区",
+        "born": "出生",
+        "died": "逝世",
+        "age": "年龄",
+    },
+    "zh_hant": {
+        "alias": "暱稱",
+        "location": "地區",
+        "born": "誕生",
+        "died": "去世",
+        "age": "年齡",
+    }
+}

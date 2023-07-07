@@ -35,7 +35,7 @@ import urljoin from "url-join";
 import {fetchText} from "@/logic/helper";
 import {error, info} from "@/logic/utils";
 import Swal from 'sweetalert2';
-import {i18n, getLang} from "@/logic/config";
+import {i18n, getLang, info_i18n} from "@/logic/config";
 
 interface KVPair { k: string, v: string }
 
@@ -80,7 +80,35 @@ export default class EditInfo extends Vue
             .then(it => {
                 this.p = parsePeopleJson(it)
                 this.initialJson = this.json()
-                this.p.info.forEach((a) => this.editInfo.push({k: a[0], v: a[1]}))
+                this.p.info.forEach((a) => {
+                    if (getLang() === 'zh_hans')
+                        this.editInfo.push({k: a[0], v: a[1]})
+                    else {
+                        var targeti18n = info_i18n[getLang()]
+                        var s = "" as string
+                        switch (a[0]) {
+                            case info_i18n['zh_hans'].alias:
+                                s = targeti18n.alias;
+                                break;
+                            case info_i18n['zh_hans'].age:
+                                s = targeti18n.age;
+                                break;
+                            case info_i18n['zh_hans'].born:
+                                s = targeti18n.born;
+                                break;
+                            case info_i18n['zh_hans'].died:
+                                s = targeti18n.died;
+                                break;
+                            case info_i18n['zh_hans'].location:
+                                s = targeti18n.location;
+                                break;
+                            default:
+                                s = a[0];
+                                break;
+                        }
+                        this.editInfo.push({k: s, v: a[1]});
+                    }
+                })
                 this.p.websites.forEach((a) => this.editWebsites.push({k: a[0], v: a[1]}))
                 this.change()
             })
