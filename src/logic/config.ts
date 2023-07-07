@@ -42,10 +42,15 @@ export function getLang(): Lang
     // No language preference, infer from user agent
     const langs = navigator.languages.map(it => it.toLowerCase())
 
+    // If user agent contains any langauges starting with en[-]
+    const en = langs.filter(it => it.startsWith("en"))
+    if (en.length > 0) return 'en'
+
     // If user agent contains any langauges starting with zh-
     const zh = langs.filter(it => it.startsWith("zh-"))
     if (zh.length > 0 && zhMap[zh[0]]) return zhMap[zh[0]]
 
+    // default
     return 'zh_hans'
 }
 
