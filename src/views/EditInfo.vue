@@ -133,7 +133,28 @@ export default class EditInfo extends Vue
         removeEmpty(this.editInfo)
         removeEmpty(this.editWebsites)
         this.p.info = this.editInfo.map(it => [it.k, it.v])
-        this.p.websites = this.editWebsites.map(it => [it.k, it.v])
+        this.p.websites= this.editWebsites.map(it => [it.k, it.v])
+        this.p.info.forEach((e, i) => {
+            switch(e[0]) {
+                case info_i18n[getLang()].age:
+                    (this.p.info[i])[0] = info_i18n['zh_hans'].age;
+                    break;
+                case info_i18n[getLang()].alias:
+                    (this.p.info[i])[0] = info_i18n['zh_hans'].alias;
+                    break;
+                case info_i18n[getLang()].born:
+                    (this.p.info[i])[0] = info_i18n['zh_hans'].born;
+                    break;
+                case info_i18n[getLang()].died:
+                    (this.p.info[i])[0] = info_i18n['zh_hans'].died;
+                    break;
+                case info_i18n[getLang()].location:
+                    (this.p.info[i])[0] = info_i18n['zh_hans'].location;
+                    break;
+                default:
+                    break;
+            }
+        })
         const json = this.json()
         console.log(json)
         this.change()
