@@ -83,7 +83,7 @@ export const i18n = {
         "nav_anonymous": "——Anonymous",
         "nav_will_submit": "Submit?",
         "nav_req_name": "Thank you! Your nickname, Please?",
-        "nav_req_anonymous": "Anonymous is available if you don't want to leave a nickname.",
+        "nav_req_anonymous": "(You don't have to leave a nickname.)",
         "nav_reCAPTCHA": "Click the reCAPTCHA below to submit.",
     },
     "zh_hans": {
