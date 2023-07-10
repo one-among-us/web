@@ -36,7 +36,7 @@
                 </li>
             </ul>
             <div id="websites" v-if="p.websites?.length">
-                <span id="websites-text">网站</span>
+                <span id="websites-text">{{i18n.nav_website}}</span>
                 <a v-for="web of p.websites" :key="web[0]" :href="web[1]">
                     <i v-if="getIcon(web[0])" :class="getIcon(web[0])"></i>
                     <IFasLink v-else />
@@ -56,7 +56,8 @@ import {abbreviateNumber, getTodayDate} from "@/logic/helper";
 import {Person} from "@/logic/data";
 import { info } from '@/logic/utils';
 import {fab} from "@/logic/constants";
-import { ElMessageBox } from 'element-plus';
+import Swal from 'sweetalert2';
+import {getLang, i18n} from '@/logic/config';
 
 @Options({components: {}})
 export default class ProfileCard extends Vue
@@ -69,6 +70,8 @@ export default class ProfileCard extends Vue
     flowersGiven = false
 
     loading = new Set<string>()
+
+    i18n = i18n[getLang()];
 
     created()
     {
@@ -116,18 +119,19 @@ export default class ProfileCard extends Vue
 
     edit(): void
     {
-        ElMessageBox.confirm('要编辑什么呢？',
-            {
-                distinguishCancelAndClose: true,
-                confirmButtonText: '信息卡片',
-                cancelButtonText: '简介条目',
-            })
-            .then(() => {
-                this.$router.push(`/edit-info/${this.p.id}`)
-            })
-            .catch((action) => {
-                if (action === 'cancel') open(`https://github.com/one-among-us/data/tree/main/people/${this.userid}/page.md`)
-            })
+        Swal.fire({
+            title: i18n[getLang()].nav_what_to_edit,
+            icon: "question",
+            showConfirmButton: true,
+            showCancelButton: true,
+            confirmButtonText: i18n[getLang()].nav_profile_card,
+            cancelButtonText: i18n[getLang()].nav_introduction
+        }).then((result) => {
+            if (result.isConfirmed)
+                this.$router.push(`/edit-info/${this.p.id}`);
+            else if (result.dismiss === Swal.DismissReason.cancel)
+                open(`https://github.com/one-among-us/data/tree/main/people/${this.userid}/page.md`)
+        })
     }
 
     get profileUrl(): string

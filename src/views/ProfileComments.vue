@@ -6,7 +6,7 @@
         <div id="comments" v-if="p.comments.length > 0">
             <div class="comment" v-for="c in comments" :key="c.id">
                 <span class="content" v-html="c.content"></span>
-                <span class="from anonymous" v-if="c.anonymous">——匿名小可爱</span>
+                <span class="from anonymous" v-if="c.anonymous">{{i18n.nav_anonymous}}</span>
                 <span class="from" v-else>——{{c.submitter}}</span>
 
                 <!-- Replies -->
@@ -22,7 +22,7 @@
 
         <!-- Add comment textbox -->
         <div id="add-comment">
-            <textarea id="comment-textarea" v-model="textInput" placeholder="添加留言... （支持 Markdown"
+            <textarea id="comment-textarea" v-model="textInput" placeholder="添加留言... （支持 Markdown）"
                       @input="resizeInput" ref="input"/>
             <div id="send-comment-btn" v-if="textInput.length > 0">
                 <span class="char-count unselectable">{{textInput.length}} 字（已存草稿）</span>
@@ -46,7 +46,8 @@ import {backendHost} from "@/logic/config";
 import MarkdownTooltip from "@/components/MarkdownTooltip.vue";
 import {error, info} from "@/logic/utils";
 import {initSpoilers, mdParseInline} from "tg-blog";
-import {ElMessage, ElMessageBox} from "element-plus";
+import Swal from 'sweetalert2';
+import {i18n, getLang} from "@/logic/config";
 
 @Options({components: {MarkdownTooltip, SubmitPrompt}})
 export default class ProfileComments extends Vue
@@ -61,6 +62,8 @@ export default class ProfileComments extends Vue
     private textInputKey: string
 
     showCaptchaPrompt = false
+
+    i18n = i18n[getLang()]
 
     get comments()
     {
@@ -85,20 +88,44 @@ export default class ProfileComments extends Vue
     submitRequest(p: CaptchaResponse)
     {
         this.showCaptchaPrompt = false
-        ElMessage.success('正在提交留言...')
 
         const params = {id: this.p.id, content: this.textInput, ...p}
         info(params)
-
-        fetchText(backendHost + '/comment/add', {method: 'POST', params})
-            .then(() => {
-                this.textInput = ""
-                ElMessageBox.alert('提交成功！谢谢你！\n我们审核之后会给你发邮件')
+        
+        Swal.fire({
+            title: i18n[getLang()].nav_comment_submit,
+            showConfirmButton: false,
+            icon: null,
+            didOpen: (() => {
+                Swal.showLoading();
+                fetchText(backendHost + '/comment/add', {method: 'POST', params})
+                    .then(() => {
+                        this.textInput = "";
+                        Swal.fire({
+                            title: i18n[getLang()].nav_success,
+                            text: i18n[getLang()].nav_success_text_reply,
+                            icon: 'success',
+                            timer: 5000,
+                            timerProgressBar: true,
+                            showConfirmButton: true,
+                            confirmButtonText: i18n[getLang()].nav_ok_1,
+                            showCloseButton: true
+                        })
+                    })
+                    .catch(err => {
+                        error(err);
+                        Swal.fire({
+                            title: i18n[getLang()].nav_failed,
+                            text: i18n[getLang()].nav_fail_reason + err.message,
+                            icon: 'error',
+                            timer: 5000,
+                            timerProgressBar: true,
+                            showConfirmButton: false,
+                            showCloseButton: false
+                        })
+                    })
             })
-            .catch(err => {
-                error(err)
-                ElMessageBox.alert('失败原因：' + err.message, '提交失败')
-            })
+        })
     }
 
     /**

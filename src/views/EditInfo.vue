@@ -2,7 +2,7 @@
     <div id="container" class="fbox-vcenter">
         <div class="spacer"/>
         <div id="EditInfo" v-if="p">
-            <div class="head-text info">信息卡片</div>
+            <div class="head-text info">{{i18n.nav_profile_card}}</div>
             <div id="id">@{{userid}}</div>
             <div class="fields info">
                 <div class="input-box" v-for="(info, i) in editInfo" :key="i">
@@ -10,14 +10,14 @@
                     <input class="value" v-model="info.v" @change="change"/>
                 </div>
             </div>
-            <div class="head-text websites">网站</div>
+            <div class="head-text websites">{{i18n.nav_website}}</div>
             <div class="fields websites">
                 <div class="input-box" v-for="(web, i) in editWebsites" :key="i">
                     <input class="key" v-model="web.k" @change="change"/>
                     <input class="value" v-model="web.v" @change="change"/>
                 </div>
             </div>
-            <div class="button submit" @click="submitBtn">提交</div>
+            <div class="button submit" @click="submitBtn">{{i18n.nav_submit}}</div>
         </div>
         <div class="spacer"/>
 
@@ -33,8 +33,9 @@ import {backendHost, peopleUrl} from "@/logic/config";
 import SubmitPrompt, {CaptchaResponse} from "@/components/SubmitPrompt.vue";
 import urljoin from "url-join";
 import {fetchText} from "@/logic/helper";
-import {error} from "@/logic/utils";
-import {ElMessage, ElMessageBox} from "element-plus";
+import {error, info} from "@/logic/utils";
+import Swal from 'sweetalert2';
+import {i18n, getLang, info_i18n} from "@/logic/config";
 
 interface KVPair { k: string, v: string }
 
@@ -60,6 +61,8 @@ export default class EditInfo extends Vue
 
     submitParams: {[id: string]: string} = null as never
 
+    i18n = i18n[getLang()]
+
     json(): string
     {
         return JSON.stringify({
@@ -77,7 +80,35 @@ export default class EditInfo extends Vue
             .then(it => {
                 this.p = parsePeopleJson(it)
                 this.initialJson = this.json()
-                this.p.info.forEach((a) => this.editInfo.push({k: a[0], v: a[1]}))
+                this.p.info.forEach((a) => {
+                    if (getLang() === 'zh_hans')
+                        this.editInfo.push({k: a[0], v: a[1]})
+                    else {
+                        var targeti18n = info_i18n[getLang()]
+                        var s = "" as string
+                        switch (a[0]) {
+                            case info_i18n['zh_hans'].alias:
+                                s = targeti18n.alias;
+                                break;
+                            case info_i18n['zh_hans'].age:
+                                s = targeti18n.age;
+                                break;
+                            case info_i18n['zh_hans'].born:
+                                s = targeti18n.born;
+                                break;
+                            case info_i18n['zh_hans'].died:
+                                s = targeti18n.died;
+                                break;
+                            case info_i18n['zh_hans'].location:
+                                s = targeti18n.location;
+                                break;
+                            default:
+                                s = a[0];
+                                break;
+                        }
+                        this.editInfo.push({k: s, v: a[1]});
+                    }
+                })
                 this.p.websites.forEach((a) => this.editWebsites.push({k: a[0], v: a[1]}))
                 this.change()
             })
@@ -102,7 +133,28 @@ export default class EditInfo extends Vue
         removeEmpty(this.editInfo)
         removeEmpty(this.editWebsites)
         this.p.info = this.editInfo.map(it => [it.k, it.v])
-        this.p.websites = this.editWebsites.map(it => [it.k, it.v])
+        this.p.websites= this.editWebsites.map(it => [it.k, it.v])
+        this.p.info.forEach((e, i) => {
+            switch(e[0]) {
+                case info_i18n[getLang()].age:
+                    (this.p.info[i])[0] = info_i18n['zh_hans'].age;
+                    break;
+                case info_i18n[getLang()].alias:
+                    (this.p.info[i])[0] = info_i18n['zh_hans'].alias;
+                    break;
+                case info_i18n[getLang()].born:
+                    (this.p.info[i])[0] = info_i18n['zh_hans'].born;
+                    break;
+                case info_i18n[getLang()].died:
+                    (this.p.info[i])[0] = info_i18n['zh_hans'].died;
+                    break;
+                case info_i18n[getLang()].location:
+                    (this.p.info[i])[0] = info_i18n['zh_hans'].location;
+                    break;
+                default:
+                    break;
+            }
+        })
         const json = this.json()
         console.log(json)
         this.change()
@@ -110,8 +162,13 @@ export default class EditInfo extends Vue
         // Didn't change anything
         if (json == this.initialJson)
         {
-            ElMessageBox.alert('什么都没改怎么提交啦 (╯‵□′)╯︵┻━┻', '👀',
-                {confirmButtonText: '好好好'})
+            Swal.fire({
+                title: i18n[getLang()].nav_unable_submit,
+                text: "(╯‵□′)╯︵┻━┻",
+                icon: "error",
+                confirmButtonText: i18n[getLang()].nav_ok_0,
+                showCloseButton: false
+            })
             return
         }
 
@@ -121,24 +178,45 @@ export default class EditInfo extends Vue
 
     submitRequest(p: CaptchaResponse): void
     {
-        ElMessage.success('正在创建更改请求 (Pull Request)...')
-
         const params = {...this.submitParams, ...p}
 
-        fetchText(backendHost + '/edit/info', {method: 'POST', params})
-            .then(text => {
-                console.log(text)
-                ElMessageBox.alert('提交成功！谢谢你。我们将尽快审核您的更改',
-                    {
-                        cancelButtonText: '好的',
-                        type: 'warning',
+        Swal.fire({
+            title: i18n[getLang()].nav_creating_pull_request,
+            text: i18n[getLang()].nav_description_pull_request,
+            icon: null,
+            showConfirmButton: false,
+            didOpen: (() => {
+                Swal.showLoading();
+                fetchText(backendHost + '/edit/info', {method: 'POST', params})
+                    .then(text => {
+                        info(text);
+                        Swal.fire({
+                            title: i18n[getLang()].nav_success,
+                            text: i18n[getLang()].nav_success_text,
+                            icon: "success",
+                            timer: 5000,
+                            timerProgressBar: true,
+                            showConfirmButton: true,
+                            confirmButtonText: i18n[getLang()].nav_ok_1
+                        }).then((result) => {
+                            if ((result.isConfirmed) || (result.dismiss === Swal.DismissReason.timer))
+                                this.$router.push(`/profile/${this.p.id}`);
+                        })
+                    })
+                    .catch(err => {
+                        error(err);
+                        Swal.fire({
+                            title: i18n[getLang()].nav_failed,
+                            text: i18n[getLang()].nav_fail_reason + err.message,
+                            icon: "error",
+                            timer: 5000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        })
                     })
             })
-            .catch(err => {
-                error(err)
-                ElMessageBox.alert('失败原因：' + err.message, '提交失败')
-            })
-
+        })
+        
         this.submitParams = null
     }
 }
