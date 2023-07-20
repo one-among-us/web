@@ -84,8 +84,8 @@ export default class EditInfo extends Vue
                     if (getLang() === 'zh_hans')
                         this.editInfo.push({k: a[0], v: a[1]})
                     else {
-                        var targeti18n = info_i18n[getLang()]
-                        var s = "" as string
+                        const targeti18n = info_i18n[getLang()]
+                        let s = "" as string
                         switch (a[0]) {
                             case info_i18n['zh_hans'].alias:
                                 s = targeti18n.alias;

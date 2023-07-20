@@ -44,11 +44,18 @@ export function getLang(): Lang
 
     // If user agent contains any langauges starting with en[-]
     const en = langs.filter(it => it.startsWith("en"))
-    if (en.length > 0) return 'en'
-
+    if (en.length > 0) 
+    {
+        localStorage.setItem('lang', 'en')
+        return 'en'
+    }
     // If user agent contains any langauges starting with zh-
     const zh = langs.filter(it => it.startsWith("zh-"))
-    if (zh.length > 0 && zhMap[zh[0]]) return zhMap[zh[0]]
+    if (zh.length > 0 && zhMap[zh[0]]) 
+    {
+        localStorage.setItem('lang', zhMap[zh[0]])
+        return zhMap[zh[0]]
+    }
 
     // default
     return 'zh_hans'
