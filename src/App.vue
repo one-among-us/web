@@ -32,6 +32,12 @@ export default class App extends Vue
 {
     i18n = i18n[getLang()]
 
+    beforeCreate(): void 
+    {
+        if (!!!localStorage.getItem('showBtn'))
+            localStorage.setItem('showBtn', '1')
+    }
+
     mounted()
     {
         info(`One Among Us - Web Frontend loaded`)
