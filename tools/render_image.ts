@@ -41,10 +41,13 @@ export async function renderScreenshots(...people: string[])
 {
   const terminate = createServer()
   const browser = await puppeteer.launch({ headless: true,
-    args: ['--no-sandbox'],
+    args: ['--no-sandbox', '--lang=zh-CN,zh'],
     executablePath: process.env.PUPPETEER_EXEC_PATH, // set by docker container
   })
   const page = await browser.newPage()
+  await page.setExtraHTTPHeaders({
+    'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+  })
   await page.setViewport({width: 700, height: 700, deviceScaleFactor: 2})
 
   for (const person of people)
