@@ -45,10 +45,20 @@ export async function renderScreenshots(...people: string[])
     executablePath: process.env.PUPPETEER_EXEC_PATH, // set by docker container
   })
   const page = await browser.newPage()
+  await page.setViewport({width: 700, height: 700, deviceScaleFactor: 2})
+  
+  // Set language to Simplified Chinese
   await page.setExtraHTTPHeaders({
     'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
   })
-  await page.setViewport({width: 700, height: 700, deviceScaleFactor: 2})
+  await page.evaluateOnNewDocument(() => {
+    Object.defineProperty(navigator, "language", {
+        get: () => { return "zh-CN" }
+    });
+    Object.defineProperty(navigator, "languages", {
+        get: () => { return ["zh-CN", "zh"] }
+    });
+  });
 
   for (const person of people)
   {
