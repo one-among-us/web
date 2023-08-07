@@ -186,7 +186,7 @@ export default class EditInfo extends Vue
             icon: null,
             showConfirmButton: false,
             didOpen: (() => {
-                Swal.showLoading();
+                Swal.showLoading(null);
                 fetchText(backendHost + '/edit/info', {method: 'POST', params})
                     .then(text => {
                         info(text);
