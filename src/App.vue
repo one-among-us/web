@@ -34,7 +34,7 @@ export default class App extends Vue
 
     beforeCreate(): void 
     {
-        if (!!!localStorage.getItem('showBtn'))
+        if (!localStorage.getItem('showBtn'))
             localStorage.setItem('showBtn', '1')
     }
 
