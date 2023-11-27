@@ -213,6 +213,7 @@ export default class ProfileComments extends Vue
 
 #add-comment
     margin-top: 20px
+    margin-bottom: 50px
 
     textarea
         font-family: $font
