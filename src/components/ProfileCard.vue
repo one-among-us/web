@@ -54,7 +54,6 @@ import {backendHost, replaceUrlVars} from "@/logic/config";
 import {abbreviateNumber, getTodayDate} from "@/logic/helper";
 import {Person} from "@/logic/data";
 import { info } from '@/logic/utils';
-import {fab} from "@/logic/constants";
 import Swal from 'sweetalert2';
 import {getLang, i18n} from '@/logic/config';
 
