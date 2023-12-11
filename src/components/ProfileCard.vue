@@ -38,8 +38,7 @@
             <div id="websites" v-if="p.websites?.length">
                 <span id="websites-text">{{i18n.nav_website}}</span>
                 <a v-for="web of p.websites" :key="web[0]" :href="web[1]">
-                    <i v-if="getIcon(web[0])" :class="getIcon(web[0])"></i>
-                    <IFasLink v-else />
+                    <DynamicIcon :icon="web[0]" />
                 </a>
             </div>
         </div>
@@ -84,13 +83,6 @@ export default class ProfileCard extends Vue
                 info(`Flowers: ${it}`)
                 this.flowers = parseInt(it)
             })
-    }
-
-    getIcon(platform: string): string | undefined
-    {
-        platform = platform.toLowerCase()
-        if (fab.includes(platform)) return `fab fa-${platform}`
-        if (platform.startsWith('custom-icon:')) return platform.replace('custom-icon:', '')
     }
 
     flower(): void
