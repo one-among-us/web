@@ -24,6 +24,7 @@
   "devDependencies": {
     "@iconify-json/ep": "^1.1.8",
     "@iconify-json/fa6-solid": "^1.1.10",
+    "@iconify/vue": "^4.1.1",
     "@types/fs-extra": "^11.0.0",
     "@types/gtag.js": "^0.0.12",
     "@types/marked": "^4.0.8",
