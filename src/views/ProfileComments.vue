@@ -10,7 +10,7 @@
                 <span class="from" v-else>——{{c.submitter}}</span>
 
                 <!-- Replies -->
-                <div class="replies" v-if="c.replies">
+                <div class="replies" v-if="c.replies.length">
                     <div class="reply-title">回复 @{{c.submitter}}</div>
                     <div class="reply" v-for="(r, idx) in c.replies" :key="idx">
                         <span class="content" v-html="r.content"></span>
@@ -69,7 +69,15 @@ export default class ProfileComments extends Vue
     {
         return this.p.comments.map(c => {return {...c,
             anonymous: c.submitter === "Anonymous",
-            content: mdParseInline(c.content.replaceAll("\n", "<br />"))
+            content: mdParseInline(c.content.replaceAll("\n", "<br />")),
+            replies: c.replies
+                ? c.replies.map(r => {
+                return {
+                    ...r,
+                    content: mdParseInline(r.content.replaceAll("\n", "<br />")),
+                }
+                })
+                :[]
         }})
     }
 
