@@ -3,40 +3,43 @@
         <!-- Horizontal Alignment of profile pic and the rest -->
         <div id="left" class="fbox-v">
             <img :src="profileUrl" draggable="false" alt="profile">
-            <div class="spacer"/>
+            <div class="spacer" />
             <div id="buttons" v-if="!screenshotMode">
                 <div class="button-container">
                     <el-tooltip content="献花" :show-after="1000" :disabled="flowersGiven || loading.has('flower')">
                         <div class="button anim fbox-vcenter" @click="flower"
-                             :class="(flowersGiven || loading.has('flower')) ? 'disabled' : ''">
+                            :class="(flowersGiven || loading.has('flower')) ? 'disabled' : ''">
                             <IEpCheck v-if="flowersGiven" />
                             <IEpLollipop v-else-if="!loading.has('flower')" />
                             <IEpLoading v-else />
                         </div>
                     </el-tooltip>
-                    <div class="text-under-button">{{flowerText}}</div>
+                    <div class="text-under-button">{{ flowerText }}</div>
                 </div>
                 <div class="button-container edit">
-                    <div class="button anim fbox-vcenter" @click="edit"><IEpEdit /></div>
+                    <div class="button anim fbox-vcenter" @click="edit">
+                        <IEpEdit />
+                    </div>
                     <div class="text-under-button">Edit</div>
                 </div>
             </div>
-            <div class="spacer-bottom f-grow1"/>
+            <div class="spacer-bottom f-grow1" />
         </div>
         <!-- Vertical Alignment of info section -->
         <div id="right">
             <div id="name-box">
-                <span id="name-text">{{p.name}}</span>
-                <span id="id">@{{p.id}}</span>
+                <span id="name-text">{{ p.name }}</span>
+                <span id="id">@{{ p.id }}</span>
             </div>
+            <div id="hr" />
             <ul id="fields" class="f-grow1">
                 <li v-for="info of p.info" :key="info[0]">
-                    <span class="key">{{info[0]}}：</span>
-                    <span class="value">{{info[1]}}</span>
+                    <span class="key">{{ info[0] }}：</span>
+                    <span class="value">{{ info[1] }}</span>
                 </li>
             </ul>
             <div id="websites" v-if="p.websites?.length">
-                <span id="websites-text">{{i18n.nav_website}}</span>
+                <span id="websites-text">{{ i18n.nav_website }}</span>
                 <a v-for="web of p.websites" :key="web[0]" :href="web[1]">
                     <DynamicIcon :icon="web[0]" />
                 </a>
@@ -48,21 +51,20 @@
 </template>
 
 <script lang="ts">
-import {Options, Vue} from 'vue-class-component';
-import {Prop} from "vue-property-decorator";
-import {backendHost, replaceUrlVars} from "@/logic/config";
-import {abbreviateNumber, getTodayDate} from "@/logic/helper";
-import {Person} from "@/logic/data";
+import { Options, Vue } from 'vue-class-component';
+import { Prop } from "vue-property-decorator";
+import { backendHost, replaceUrlVars } from "@/logic/config";
+import { abbreviateNumber, getTodayDate } from "@/logic/helper";
+import { Person } from "@/logic/data";
 import { info } from '@/logic/utils';
 import Swal from 'sweetalert2';
-import {getLang, i18n} from '@/logic/config';
+import { getLang, i18n } from '@/logic/config';
 
-@Options({components: {}})
-export default class ProfileCard extends Vue
-{
-    @Prop({required: true}) userid!: string
-    @Prop({required: true}) p!: Person
-    @Prop({default: false}) screenshotMode!: boolean
+@Options({ components: {} })
+export default class ProfileCard extends Vue {
+    @Prop({ required: true }) userid!: string
+    @Prop({ required: true }) p!: Person
+    @Prop({ default: false }) screenshotMode!: boolean
 
     flowers = 0
     flowersGiven = false
@@ -71,8 +73,7 @@ export default class ProfileCard extends Vue
 
     i18n = i18n[getLang()];
 
-    created()
-    {
+    created() {
         this.flowersGiven = localStorage.getItem(`last_flower_given@${this.userid}`) === getTodayDate()
 
         // TODO: Handle errors
@@ -84,16 +85,14 @@ export default class ProfileCard extends Vue
             })
     }
 
-    flower(): void
-    {
+    flower(): void {
         if (this.flowersGiven || this.loading.has('flower')) return
 
         // TODO: Handle errors
         // TODO: Better user interaction (probably like +1 animation or something)
         this.loading.add('flower')
         fetch(backendHost + `/flowers/give?id=${this.userid}`)
-            .then(() =>
-            {
+            .then(() => {
                 this.flowers += 1
 
                 // Set flowers given
@@ -103,13 +102,11 @@ export default class ProfileCard extends Vue
             .finally(() => this.loading.delete('flower'))
     }
 
-    get flowerText(): string
-    {
+    get flowerText(): string {
         return abbreviateNumber(this.flowers)
     }
 
-    edit(): void
-    {
+    edit(): void {
         Swal.fire({
             title: i18n[getLang()].nav_what_to_edit,
             icon: "question",
@@ -125,8 +122,7 @@ export default class ProfileCard extends Vue
         })
     }
 
-    get profileUrl(): string
-    {
+    get profileUrl(): string {
         return replaceUrlVars(this.p.profileUrl, this.userid)
     }
 }
@@ -190,13 +186,19 @@ export default class ProfileCard extends Vue
     overflow: hidden
 
     #name-box
-        border-bottom: 2px solid $color-text-main
         line-height: normal
+        max-width: 60%
 
         #name-text
             font-size: 1.7em
             font-weight: bold
             margin-right: 8px
+
+    #hr
+        width: 100%
+        height: 2px
+        background-color: $color-text-main
+        border-radius: 1px
 
     #fields
         font-size: 1.1em
@@ -347,4 +349,5 @@ export default class ProfileCard extends Vue
                 font-size: 15px
                 width: 30px
                 height: 30px
+
 </style>
