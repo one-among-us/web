@@ -8,9 +8,3 @@
   src: url("/fonts/FZSJ-HUAZCMWWKQ.woff2") format('woff2'),
        url("/fonts/FZSJ-HUAZCMWWKQ.woff") format('woff')
 }
-
-.font-custom
-{
-  font-family: "Hua", Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.3em;
-}

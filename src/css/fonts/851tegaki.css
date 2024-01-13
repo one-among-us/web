@@ -8,9 +8,3 @@
   src: url("/fonts/851tegaki_zatsu_normal_0883.woff2") format('woff2'),
        url("/fonts/851tegaki_zatsu_normal_0883.woff") format('woff')
 }
-
-.font-custom
-{
-  font-family: "851", Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.3em;
-}
