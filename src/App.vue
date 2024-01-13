@@ -57,7 +57,7 @@ export default class App extends Vue
 <style lang="sass">
 @import "css/animations"
 @import "css/global"
-@import "css/fonts/hua.css"
+@import "css/fonts/font-custom.css"
 @import "css/fonts/BackIcon.css"
 @import "css/colors"
 @import "css/markdown"

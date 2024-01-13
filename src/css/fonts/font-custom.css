@@ -1,0 +1,8 @@
+@import "./hua.css";
+@import "./stxingka.css";
+@import "./851tegaki.css";
+
+.font-custom {
+    font-family: 'Hua', '851', 'STXINGKA', Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.3rem;
+}
