@@ -50,4 +50,5 @@ export default class LangButton extends Vue {
         width: 25px
         height: 25px
         border-radius: 56562px
+        border: 1px solid $color-text-main
 </style>
