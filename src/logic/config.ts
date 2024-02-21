@@ -92,6 +92,10 @@ export const i18n = {
         "nav_req_name": "Thank you! Your nickname, Please?",
         "nav_req_anonymous": "(You don't have to leave a nickname.)",
         "nav_reCAPTCHA": "Click the reCAPTCHA below to submit.",
+        "nav_comments": "Remembrances",
+        "nav_comment_placeholder": "Add a message... (Markdown supported)",
+        "nav_comment_status": "chars (draft saved)",
+        "nav_comment_in_reply_to": "In reply to",
     },
     "zh_hans": {
         "nav_home": "首页",
@@ -117,6 +121,10 @@ export const i18n = {
         "nav_req_name": "谢谢你! 请留下你的昵称",
         "nav_req_anonymous": " (如果不想留名字也可以填匿名哦) ",
         "nav_reCAPTCHA": "点击下面的验证码就可以提交啦! ",
+        "nav_comments": "留言",
+        "nav_comment_placeholder": "添加留言... （支持 Markdown）",
+        "nav_comment_status": "字（已存草稿）",
+        "nav_comment_in_reply_to": "回复",
     },
     "zh_hant": {
         "nav_home": "首頁",
@@ -135,13 +143,17 @@ export const i18n = {
         "nav_success": "提交完成",
         "nav_failed": "提交失败",
         "nav_success_text": "謝謝你. 我們將儘快審覈您的更改. ",
-        "nav_success_text_reply": "谢谢你. 我們審覈之後會給你發郵件.",
+        "nav_success_text_reply": "谢谢你. 我們審覈之後會答覆你郵件.",
         "nav_fail_reason": "失敗原因: ",
         "nav_anonymous": "——沒留名字的小可愛",
         "nav_will_submit": "要提交編輯嘛?",
         "nav_req_name": "謝謝你! 請留下你的暱稱",
         "nav_req_anonymous": " (不想留名字的話...匿名也是可以的哦) ",
-        "nav_reCAPTCHA": "點擊下面的reCAPTCHA就可以提交啦! ",
+        "nav_reCAPTCHA": "點一下底下的reCAPTCHA就可以提交啦! ",
+        "nav_comments": "留言",
+        "nav_comment_placeholder": "添加留言... （支援 Markdown）",
+        "nav_comment_status": "字（草案已儲存）",
+        "nav_comment_in_reply_to": "回覆",
     }
 }
 

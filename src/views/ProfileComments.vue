@@ -1,6 +1,6 @@
 <template>
     <div id="ProfileComments" class="markdown-content">
-        <h1>留言</h1>
+        <h1>{{i18n.nav_comments}}</h1>
 
         <!-- Comments -->
         <div id="comments" v-if="p.comments.length > 0">
@@ -11,7 +11,7 @@
 
                 <!-- Replies -->
                 <div class="replies" v-if="c.replies.length">
-                    <div class="reply-title">回复 @{{c.submitter}}</div>
+                    <div class="reply-title">{{i18n.nav_comment_in_reply_to}} @{{c.submitter}}</div>
                     <div class="reply" v-for="(r, idx) in c.replies" :key="idx">
                         <span class="content" v-html="r.content"></span>
                         <span class="from">——{{r.submitter}}</span>
@@ -22,10 +22,10 @@
 
         <!-- Add comment textbox -->
         <div id="add-comment">
-            <textarea id="comment-textarea" v-model="textInput" placeholder="添加留言... （支持 Markdown）"
+            <textarea id="comment-textarea" v-model="textInput" :placeholder="i18n.nav_comment_placeholder"
                       @input="resizeInput" ref="input"/>
             <div id="send-comment-btn" v-if="textInput.length > 0">
-                <span class="char-count unselectable">{{textInput.length}} 字（已存草稿）</span>
+                <span class="char-count unselectable">{{textInput.length}} {{i18n.nav_comment_status}}</span>
                 <IFasPaperPlane class="icon" @click="btnSend"/>
             </div>
 
