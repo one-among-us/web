@@ -96,6 +96,7 @@ export const i18n = {
         "nav_comment_placeholder": "Add a message... (Markdown supported)",
         "nav_comment_status": "chars (draft saved)",
         "nav_comment_in_reply_to": "In reply to",
+        "random": "Click here to visit a random page",
     },
     "zh_hans": {
         "nav_home": "首页",
@@ -125,6 +126,7 @@ export const i18n = {
         "nav_comment_placeholder": "添加留言... （支持 Markdown）",
         "nav_comment_status": "字（已存草稿）",
         "nav_comment_in_reply_to": "回复",
+        "random": "随机看望一位朋友",
     },
     "zh_hant": {
         "nav_home": "首頁",
@@ -154,6 +156,7 @@ export const i18n = {
         "nav_comment_placeholder": "添加留言... （支援 Markdown）",
         "nav_comment_status": "字（草案已儲存）",
         "nav_comment_in_reply_to": "回覆",
+        "random": "點一下這裏查看一個隨機頁面",
     }
 }
 
