@@ -3,6 +3,8 @@
     <div id="home" :class="clicked ? 'clicked' : ''">
         <div class="introduction markdown-content" v-html="htmlTop" />
 
+        <RandomPerson />
+
         <div id="profiles" class="unselectable" v-if="people">
             <div class="profile" v-for="(p, i) in people" :key="i">
                 <div class="back"/>
