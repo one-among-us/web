@@ -40,7 +40,7 @@ import {PersonMeta} from "@/logic/data";
 import {dataHost, getLang, replaceUrlVars} from "@/logic/config";
 import urljoin from "url-join";
 import { info } from '@/logic/utils';
-import {fetchWithLang} from "@/logic/helper";
+import {fetchWithLang, handleIconFromString} from "@/logic/helper";
 import {Ref} from "vue-property-decorator";
 import {fitText} from "@/logic/dom_utils";
 
@@ -51,8 +51,8 @@ export default class Home extends Vue
     showAdd = false
 
     lang = getLang()
-    htmlTop = this.lang === 'zh_hans' ?  htmlTop : (this.lang === 'zh_hant' ? htmlTopHant : htmlTopEn)
-    htmlBottom = this.lang === 'zh_hans' ? htmlBottom : (this.lang === 'zh_hant' ? htmlBottomHant : htmlBottomEn)
+    htmlTop = handleIconFromString(this.lang === 'zh_hans' ? htmlTop : (this.lang === 'zh_hant' ? htmlTopHant : htmlTopEn));
+    htmlBottom = handleIconFromString(this.lang === 'zh_hans' ? htmlBottom : (this.lang === 'zh_hant' ? htmlBottomHant : htmlBottomEn));
 
     people: PersonMeta[] = null as never as PersonMeta[]
 

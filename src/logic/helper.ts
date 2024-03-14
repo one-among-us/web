@@ -1,6 +1,7 @@
 import moment from 'moment'
 import {getLang} from "@/logic/config";
-import {info} from "@/logic/utils";
+import { info } from "@/logic/utils";
+import { Icon } from "@/logic/icon";
 
 /**
  * https://github.com/moh3n9595/js-abbreviation-number
@@ -120,4 +121,9 @@ export async function fetchText(url: string, init?: RequestInitWithParams): Prom
     const text = await response.text()
     if (!response.ok) throw new Error(text)
     return text
+}
+
+export function handleIconFromString(html: string): string {
+    if (!html.includes('[!')) return html;
+    return html.replace(/\[!(\w+)\](?::\s*(.*))?/g, (match, icon) => (Icon[icon as string]));
 }
