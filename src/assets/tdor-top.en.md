@@ -6,6 +6,8 @@ As advocates in the transgender/queer movement, we deeply understand: every simp
 
 We'll read some of the letters selected in our 'TDOV 2024 Night' livestream around March 31.
 
-**Note: The deadline for letters is March 27 23:59 (China Standard Time); March 27 16:00 (UTC).** As the Night will livestream on Chinese domestic platforms, please be mindful of sociopolitical risks when writing your letter. One Among Us reserves the right to lightly edit the letters received, to ensure smooth broadcasting of the Night.
+**Note: The deadline for letters is March 27 23:59 (China Standard Time); March 27 16:00 (UTC).**
+
+The Night will livestream on Chinese domestic platforms; One Among Us reserves the right to lightly edit the letters received, to ensure smooth broadcasting of the Night.
 
 Write a letter:
