@@ -1,3 +1,11 @@
+# 自杀干预联系方式
+
+（中国）[跨儿心理小组自杀干预热线列表](https://kuaerxinli.org/%E6%96%87%E7%AB%A0%E4%B8%8E%E9%87%87%E8%AE%BF/1520)。另可参考其 [跨儿自杀危机自救和干预微信专栏](https://mp.weixin.qq.com/mp/appmsgalbum?action=getalbum&__biz=MzUyNjc4Nzk2OA==&scene=1&album_id=1589990820231856129&count=3#wechat_redirect) 寻找你所需要的信息。
+
+（加拿大、美国）[Trans Lifeline](https://translifeline.org/) - Canada (877) 330-6366, US (877) 565-8860
+
+虽然 One Among Us 目前尚不具备自杀干预能力，但是如果您实在需要帮助，可以发邮件给 [info@one-among.us](mailto:info@one-among.us)。我们会提供简单的帮助，或者转介给其他有能力处理的医院或社会机构。请注意这两种方式均非 7 × 24 小时有人值守。
+
 # 拒绝对跨性别的暴力
 
 联合国人权高专办的 [小册子](https://www.unfe.org/wp-content/uploads/2019/03/Transgender_Factsheet-CHINESE.pdf) 指出，「在世界各地，跨性别者遭受暴力、骚扰和歧视的风险非常高。侵犯他们人权的行为包括欺凌和言语虐待，拒绝提供卫生保健服务、教育、工作机会和住房，刑罪化、任意逮捕和羁押，暴力、攻击、酷刑、强奸和谋杀。而年龄、族裔、职业、社会经济阶层和残障状况等其他因素可能加重他们所面临的暴力和歧视。」

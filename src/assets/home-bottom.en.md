@@ -1,3 +1,10 @@
+# Suicide Prevention
+
+(Canada/US) [Trans Lifeline](https://translifeline.org/) - Canada (877) 330-6366, US (877) 565-8860  
+
+Although One Among Us does not currently have suicide prevention capabilities, if you really need help, you can send an email to [info@one-among.us](mailto:info@one-among.us). We will provide simple assistance or refer you to other hospitals or social agencies that can handle it. Please note that neither of these options is monitored 24/7.  
+
+
 # Stopping Transphobic Violence
 
 The [Transgender Factsheet](https://www.unfe.org/wp-content/uploads/2019/03/Transgender_Factsheet_English.pdf) from the UN Human Rights Office states that “Trans people in all parts of the world are at heightened risk of violence, harassment and discrimination.
