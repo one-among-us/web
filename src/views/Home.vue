@@ -1,6 +1,11 @@
 <template>
     <div>
     <div id="home" :class="clicked ? 'clicked' : ''">
+
+        <div class="introduction markdown-content" v-html="tdorTop" />
+
+        <TdorComments />
+
         <div class="introduction markdown-content" v-html="htmlTop" />
 
         <RandomPerson />
@@ -30,6 +35,9 @@
 
 <script lang="ts">
 import {Options, Vue} from 'vue-class-component';
+import tdorTop from "@/assets/tdor-top.md";
+import tdorTopHant from "@/assets/tdor-top.zh_hant.md";
+import tdorTopEn from "@/assets/tdor-top.en.md";
 import htmlTop from "@/assets/home-top.md";
 import htmlTopHant from "@/assets/home-top.zh_hant.md";
 import htmlTopEn from "@/assets/home-top.en.md";
@@ -43,14 +51,16 @@ import { info } from '@/logic/utils';
 import {fetchWithLang, handleIconFromString} from "@/logic/helper";
 import {Ref} from "vue-property-decorator";
 import {fitText} from "@/logic/dom_utils";
+import TdorComments from "@/views/TdorComments.vue";
 
-@Options({})
+@Options({components: {TdorComments}})
 export default class Home extends Vue
 {
     clicked = ''
     showAdd = false
 
     lang = getLang()
+    tdorTop = handleIconFromString(this.lang === 'zh_hans' ? tdorTop : (this.lang === 'zh_hant' ? tdorTopHant : tdorTopEn));
     htmlTop = handleIconFromString(this.lang === 'zh_hans' ? htmlTop : (this.lang === 'zh_hant' ? htmlTopHant : htmlTopEn));
     htmlBottom = handleIconFromString(this.lang === 'zh_hans' ? htmlBottom : (this.lang === 'zh_hant' ? htmlBottomHant : htmlBottomEn));
 

@@ -97,6 +97,7 @@ export const i18n = {
         "nav_comment_status": "chars (draft saved)",
         "nav_comment_in_reply_to": "In reply to",
         "random": "Click here to visit a random page",
+        "tdor_btn": "Click here to leave your message",
     },
     "zh_hans": {
         "nav_home": "首页",
@@ -127,6 +128,7 @@ export const i18n = {
         "nav_comment_status": "字（已存草稿）",
         "nav_comment_in_reply_to": "回复",
         "random": "随机看望一位朋友",
+        "tdor_btn": "填写现身日晚会来信请点这里",
     },
     "zh_hant": {
         "nav_home": "首頁",
@@ -157,6 +159,7 @@ export const i18n = {
         "nav_comment_status": "字（草案已儲存）",
         "nav_comment_in_reply_to": "回覆",
         "random": "點一下這裏查看一個隨機頁面",
+        "tdor_btn": "點一下這裏填寫現身日晚會來信",
     }
 }
 

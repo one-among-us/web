@@ -36,5 +36,8 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SubmitPrompt: typeof import('./components/SubmitPrompt.vue')['default']
+    TdorBtn: typeof import('./components/TdorBtn.vue')['default']
+    TdorComments: typeof import('./components/TdorComments.vue')['default']
+    TdorMsgBtn: typeof import('./components/TdorMsgBtn.vue')['default']
   }
 }
