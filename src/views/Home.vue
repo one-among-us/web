@@ -2,9 +2,9 @@
     <div>
     <div id="home" :class="clicked ? 'clicked' : ''">
 
-        <div class="introduction markdown-content" v-html="tdorTop" />
+        <div class="introduction markdown-content" v-html="tdorTop" v-if="!isDeadlinePassed()"/>
 
-        <TdorComments />
+        <TdorComments  v-if="!isDeadlinePassed()" />
 
         <div class="introduction markdown-content" v-html="htmlTop" />
 
@@ -68,6 +68,12 @@ export default class Home extends Vue
 
     @Ref() bookmarkTexts: HTMLDivElement[]
     @Ref() bookmark: HTMLDivElement[]
+
+    isDeadlinePassed() {
+        const deadlineDate = new Date(2024, 2, 27, 16, 0); // March 27, 2024, 16:00 (UTC);
+        const now = new Date();
+        return now > deadlineDate;
+    }
 
     updated()
     {
