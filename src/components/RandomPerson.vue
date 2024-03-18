@@ -1,6 +1,6 @@
 <template>
     <button class="random clickable hy-button" v-on:click="rand">
-        <Icon class="iconR" icon="subway:random"/>
+        <Icon class="iconR" icon="lets-icons:sort-random-light"/>
         <span class="textR">{{ i18n.random }}</span>
     </button>
 </template>
@@ -37,6 +37,7 @@ export default class RandomPerson extends Vue {
 
 <style lang="sass" scoped>
 @import "../css/colors"
+@import "../css/global"
 
 .random
     // Outer alignment
@@ -53,5 +54,6 @@ export default class RandomPerson extends Vue {
     color: $color-text-main
 
     font-size: 1rem
+    font-family: 'Hua', $font
 
 </style>
