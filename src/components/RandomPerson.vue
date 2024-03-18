@@ -6,12 +6,12 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
-import { getLang, i18n, dataHost } from '../logic/config';
-import { PersonMeta } from '../logic/data';
 import urljoin from 'url-join';
-import { info } from '../logic/utils';
+import { Options, Vue } from 'vue-class-component';
+import { dataHost, getLang, i18n } from '../logic/config';
+import { PersonMeta } from '../logic/data';
 import { fetchWithLang } from '../logic/helper';
+import { info } from '../logic/utils';
 
 @Options({ components: {} })
 export default class RandomPerson extends Vue {
@@ -22,11 +22,9 @@ export default class RandomPerson extends Vue {
     created(): void {
         info(`Language: ${this.lang}`);
         fetchWithLang(urljoin(dataHost, 'people-list.json'))
-            .then((it) => it.text())
+            .then((it) => it.json())
             .then((it) => {
-                this.people = JSON.parse(it);
-                // console.log(it)
-                // console.log(this.people)
+                this.people = it;
             });
     }
 
@@ -42,7 +40,8 @@ export default class RandomPerson extends Vue {
 @import "../css/colors"
 
 .random
-    display: flexbox
+    margin: auto
+    display: flex
     background: $color-bg-6
     border-radius: 20px
     border-style: solid
@@ -50,9 +49,9 @@ export default class RandomPerson extends Vue {
     border-color: $color-text-light
     padding: 10px
     width: fit-content
-    gap: 8px
     align-items: center
     color: $color-text-main
+    cursor: pointer
 
     filter: drop-shadow(0 2px 3px rgba(188 140 68 / 0.2))
 
@@ -67,9 +66,7 @@ export default class RandomPerson extends Vue {
         font-size: 1.65em
         margin-left: 10px
         font-family: '851'
-        vertical-align: middle
         display: inline-block
-        padding-bottom: 0.6rem
 
 .shadow:hover
     box-shadow: 15px 15px 15px -5px rgba(166 134 89 / 0.3)
