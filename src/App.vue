@@ -63,7 +63,7 @@ export default class App extends Vue
 @import "css/markdown"
 
 #app
-    font-family: "Microsoft YaHei UI", Avenir, Helvetica, Arial, sans-serif
+    font-family: $font
     -webkit-font-smoothing: antialiased
     -moz-osx-font-smoothing: grayscale
     text-align: center
