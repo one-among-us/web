@@ -191,6 +191,8 @@ export default class ProfileCard extends Vue {
         display: flex
         align-items: flex-end
         flex-wrap: nowrap
+        white-space: nowrap
+        text-overflow: ellipsis
 
         #name-text
             font-size: 1.7em
