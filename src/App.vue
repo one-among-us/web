@@ -49,6 +49,8 @@ export default class App extends Vue
             'font-size: 1.5em; color: #ff8373',
             'color: pink; line-height: 1.5em'
         )
+
+        document.getElementById("app").dataset.lang = getLang()
     }
 }
 </script>
@@ -77,6 +79,9 @@ export default class App extends Vue
     display: flex
     flex-flow: column
     height: 100vh
+
+    &[data-lang="en"]
+        font-family: $font-en
 </style>
 
 <!-- Scoped Style -->

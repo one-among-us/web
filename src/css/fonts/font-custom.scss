@@ -3,7 +3,8 @@
 @import 'source/source';
 
 // Constants
-$font: "Source Sans 3", "LXGW Wenkai", --apple-system, Avenir, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+$font: "LXGW Wenkai", --apple-system, Avenir, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+$font-en: "Source Sans 3", $font;
 
 @font-face {
     font-family: 'Hua';
