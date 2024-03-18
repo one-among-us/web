@@ -172,6 +172,7 @@ export default class ProfileCard extends Vue {
         right: 20px
         bottom: 20px
         transform: rotate(13deg)
+        pointer-events: none
 
 #right
     display: flex
