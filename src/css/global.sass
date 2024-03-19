@@ -1,7 +1,5 @@
 @import colors
-
-// Constants
-$font: Avenir, Helvetica, Arial, sans-serif
+@import fonts/font-custom
 
 // Container width (This is normally 50vw,
 //   but when it's smaller than 900px, use 100vw - 50px, because 50px is the margin)
@@ -16,7 +14,6 @@ $c-highlight: #ff7878
 .unselectable
   -webkit-touch-callout: none
   -webkit-user-select: none
-  -khtml-user-select: none
   -moz-user-select: none
   -ms-user-select: none
   user-select: none
@@ -168,14 +165,17 @@ $c-highlight: #ff7878
   padding: 8px 15px
   border-radius: 5px
 
+  border: 1px solid $color-text-main
 
-.hy-button:hover
-  // Move up
-  transform: translateY(-5px)
+  &:hover
+    // Move up
+    transform: translateY(-5px)
 
-  // Heavier shadow
-  box-shadow: 0 10px 10px -5px rgb(166 134 89 / 84%)
+    // Heavier shadow
+    box-shadow: 0 10px 10px -5px rgb(166 134 89 / 84%)
 
+button
+  font-family: inherit
 
 svg.icon
   @extend .clickable

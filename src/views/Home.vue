@@ -168,6 +168,7 @@ export default class Home extends Vue
         z-index: 3
         display: inline-flex
         align-items: center
+        font-weight: bold
 
     .back.add
         outline: 2px dashed $color-text-main

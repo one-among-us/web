@@ -49,6 +49,8 @@ export default class App extends Vue
             'font-size: 1.5em; color: #ff8373',
             'color: pink; line-height: 1.5em'
         )
+
+        document.getElementById("app").dataset.lang = getLang()
     }
 }
 </script>
@@ -57,13 +59,13 @@ export default class App extends Vue
 <style lang="sass">
 @import "css/animations"
 @import "css/global"
-@import "css/fonts/font-custom.css"
+@import "css/fonts/font-custom.scss"
 @import "css/fonts/BackIcon.css"
 @import "css/colors"
 @import "css/markdown"
 
 #app
-    font-family: "Microsoft YaHei UI", Avenir, Helvetica, Arial, sans-serif
+    font-family: $font
     -webkit-font-smoothing: antialiased
     -moz-osx-font-smoothing: grayscale
     text-align: center
@@ -77,6 +79,9 @@ export default class App extends Vue
     display: flex
     flex-flow: column
     height: 100vh
+
+    &[data-lang="en"]
+        font-family: $font-en
 </style>
 
 <!-- Scoped Style -->

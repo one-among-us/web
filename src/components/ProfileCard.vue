@@ -172,6 +172,7 @@ export default class ProfileCard extends Vue {
         right: 20px
         bottom: 20px
         transform: rotate(13deg)
+        pointer-events: none
 
 #right
     display: flex
@@ -187,7 +188,11 @@ export default class ProfileCard extends Vue {
 
     #name-box
         line-height: normal
-        max-width: 60%
+        display: flex
+        align-items: flex-end
+        flex-wrap: nowrap
+        white-space: nowrap
+        text-overflow: ellipsis
 
         #name-text
             font-size: 1.7em
@@ -278,6 +283,10 @@ export default class ProfileCard extends Vue {
     #info
         flex-direction: column
 
+        // Leave space for the profile pic
+        #name-box
+            max-width: calc(100% - 100px)
+
     #left
         flex-direction: row
         margin-bottom: -40px
@@ -326,6 +335,10 @@ export default class ProfileCard extends Vue {
         margin-right: 0
         margin-left: 0
         border-radius: 0
+
+        // Leave space for the profile pic
+        #name-box
+            max-width: calc(100% - 80px)
 
     #left
         img

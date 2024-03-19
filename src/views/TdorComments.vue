@@ -1,5 +1,5 @@
 <template>
-  <div id="TdorComments">
+  <div id="TdorComments" class="introduction">
     <!-- Add comment textbox -->
     <transition name="collapse">
       <div id="add-comment" v-show="showInputArea">
@@ -29,7 +29,6 @@ import { error, info } from "@/logic/utils";
 import { initSpoilers, mdParseInline } from "tg-blog";
 import Swal from 'sweetalert2';
 import { i18n, getLang } from "@/logic/config";
-import { fa } from 'element-plus/es/locale';
 
 @Options({ components: { MarkdownTooltip, SubmitPrompt } })
 export default class TdorComments extends Vue {
@@ -183,10 +182,7 @@ export default class TdorComments extends Vue {
 
 
   #add-comment
-    margin: auto
-    margin-top: 20px
-    margin-bottom: 50px
-    width: 90%
+    margin: 20px auto 50px
 
     textarea
         font-family: $font
