@@ -1,11 +1,11 @@
 <template>
     <div>
         <div class="profile-page" :class="{screenshot: screenshotMode}">
-            <ProfileCard class="profile-card" :userid="userid" :p="p" v-if="p" :screenshot-mode="screenshotMode" />
+            <ProfileCard class="profile-card" :userid="userid" :p="p" v-if="p.info.length != 0" :screenshot-mode="screenshotMode" />
 
-            <MDX class="content" :code="compiledMdxCode"/>
+            <MDX class="content" :code="compiledMdxCode" v-if="p.info.length != 0"/>
 
-            <ProfileComments class="comments" :p="p" v-if="p && !screenshotMode"/>
+            <ProfileComments class="comments" :p="p" v-if="p.comments && !screenshotMode"/>
         </div>
     </div>
 </template>
@@ -49,6 +49,10 @@ export default class Profile extends Vue
             .then(it => it.text())
             .then(it => {
                 this.p = parsePeopleJson(it)
+                if (!this.p.id) {
+                    this.p.id = this.$route.path.replaceAll('/profile/', '');
+                    console.log(this.p.id);
+                }
             })
 
         // TODO: Handle errors
@@ -56,6 +60,7 @@ export default class Profile extends Vue
         if (!this.screenshotMode) fetchWithLang(urljoin(pu, `page.json`))
             .then(it => it.json())
             .then(it => this.compiledMdxCode = replaceUrlVars(it, this.userid))
+
     }
 }
 </script>
