@@ -85,8 +85,9 @@ export default class Home extends Vue
 
     isShowCommentsEntry(): boolean {
         const startTime = new Date(2024, 2, 31, 12, 0); // March 31, 2024, 20:00 (CST)
+        const endTime = new Date(2024, 3, 6, 12, 0); // April 6, 2024, 20:00 (CST)
         const now = new Date();
-        return now > startTime;
+        return (now > startTime) && (now < endTime);
     }
 
     updated()
