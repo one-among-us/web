@@ -78,16 +78,18 @@ export default class Home extends Vue
     @Ref() bookmark: HTMLDivElement[]
 
     isDeadlinePassed(): boolean {
-        const deadlineDate = new Date(2024, 2, 27, 16, 0); // March 27, 2024, 16:00 (UTC);
-        const now = new Date();
-        return now > deadlineDate;
+        // const deadlineDate = new Date(2024, 2, 27, 16, 0); // March 27, 2024, 16:00 (UTC); Wrong! not UTC!
+        // const now = new Date();
+        // return now > deadlineDate;
+        return false;
     }
 
     isShowCommentsEntry(): boolean {
-        const startTime = new Date(2024, 2, 31, 12, 0); // March 31, 2024, 20:00 (CST)
-        const endTime = new Date(2024, 3, 6, 12, 0); // April 6, 2024, 20:00 (CST)
-        const now = new Date();
-        return (now > startTime) && (now < endTime);
+        // const startTime = new Date(2024, 2, 31, 12, 0); // March 31, 2024, 20:00 (CST) Wrong! not UTC!
+        // const endTime = new Date(2024, 3, 6, 12, 0); // April 6, 2024, 20:00 (CST) Wrong! not UTC!
+        // const now = new Date();
+        // return (now > startTime) && (now < endTime);
+        return false;
     }
 
     updated()
