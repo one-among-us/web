@@ -2,6 +2,10 @@
     <div>
     <div id="home" :class="clicked ? 'clicked' : ''">
 
+        <!-- If needed, delete 3 lines below. -->
+
+        <div class="introduction markdown-content" v-html="tdorCommentView" v-if="isShowCommentsEntry()"/>
+
         <div class="introduction markdown-content" v-html="tdorTop" v-if="!isDeadlinePassed()"/>
 
         <TdorComments  v-if="!isDeadlinePassed()" />
@@ -38,6 +42,9 @@ import {Options, Vue} from 'vue-class-component';
 import tdorTop from "@/assets/tdor-top.md";
 import tdorTopHant from "@/assets/tdor-top.zh_hant.md";
 import tdorTopEn from "@/assets/tdor-top.en.md";
+import tdorCommentView from "@/assets/tdor-comments-head.md";
+import tdorCommentViewEn from "@/assets/tdor-comments-head-en.md";
+import tdorCommentViewHant from "@/assets/tdor-comments-head-zh_hant.md";
 import htmlTop from "@/assets/home-top.md";
 import htmlTopHant from "@/assets/home-top.zh_hant.md";
 import htmlTopEn from "@/assets/home-top.en.md";
@@ -61,6 +68,7 @@ export default class Home extends Vue
 
     lang = getLang()
     tdorTop = handleIconFromString(this.lang === 'zh_hans' ? tdorTop : (this.lang === 'zh_hant' ? tdorTopHant : tdorTopEn));
+    tdorCommentView = handleIconFromString(this.lang === 'zh_hans' ? tdorCommentView : (this.lang === 'zh_hant' ? tdorCommentViewHant : tdorCommentViewEn));
     htmlTop = handleIconFromString(this.lang === 'zh_hans' ? htmlTop : (this.lang === 'zh_hant' ? htmlTopHant : htmlTopEn));
     htmlBottom = handleIconFromString(this.lang === 'zh_hans' ? htmlBottom : (this.lang === 'zh_hant' ? htmlBottomHant : htmlBottomEn));
 
@@ -69,10 +77,16 @@ export default class Home extends Vue
     @Ref() bookmarkTexts: HTMLDivElement[]
     @Ref() bookmark: HTMLDivElement[]
 
-    isDeadlinePassed() {
+    isDeadlinePassed(): boolean {
         const deadlineDate = new Date(2024, 2, 27, 16, 0); // March 27, 2024, 16:00 (UTC);
         const now = new Date();
         return now > deadlineDate;
+    }
+
+    isShowCommentsEntry(): boolean {
+        const startTime = new Date(2024, 2, 31, 12, 0); // March 31, 2024, 20:00 (CST)
+        const now = new Date();
+        return now > startTime;
     }
 
     updated()
