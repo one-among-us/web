@@ -1,1 +1,1 @@
-[!Note] The TDOV party has been broadcast. [Click here](profile/tdor) to view the messages received.
+[!Note] The Transgender Day of Visibility Gala would like to thank everyone for their messages. To view the message, please [click here](profile/tdor).
