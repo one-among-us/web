@@ -81,7 +81,7 @@ export default class Home extends Vue
         // const deadlineDate = new Date(2024, 2, 27, 16, 0); // March 27, 2024, 16:00 (UTC); Wrong! not UTC!
         // const now = new Date();
         // return now > deadlineDate;
-        return false;
+        return true;
     }
 
     isShowCommentsEntry(): boolean {
