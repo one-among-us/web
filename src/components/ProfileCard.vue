@@ -153,9 +153,8 @@ export default class ProfileCard extends Vue {
 #info
     width: 100%
     background-color: $color-bg-6
-    //border: 4px solid $color-text-main
     filter: drop-shadow(0 2px 5px rgba(166, 134, 89, 0.42))
-    border-radius: 40px
+    border-radius: 24px
     animation: fade-in-top 1s 0s ease
 
     .button svg
@@ -189,8 +188,8 @@ export default class ProfileCard extends Vue {
     #name-box
         line-height: normal
         display: flex
-        align-items: flex-end
-        flex-wrap: nowrap
+        align-items: flex-start
+        flex-wrap: wrap-reverse
         white-space: nowrap
         text-overflow: ellipsis
 
@@ -212,8 +211,6 @@ export default class ProfileCard extends Vue {
         flex-direction: column
         flex-wrap: wrap
         margin: 10px 0
-
-        white-space: nowrap
 
         li
             margin-left: 20px
@@ -258,8 +255,8 @@ export default class ProfileCard extends Vue {
             display: inline-flex
             flex-direction: column
 
-        .button-container:first-child
-            margin-right: 20px
+        .button-container + .button-container
+            margin-left: 20px
 
         .button
             display: inline-flex
@@ -280,53 +277,56 @@ export default class ProfileCard extends Vue {
 
 // Phone layout: left becomes top and right becomes bottom
 @media screen and (max-width: 570px)
+
     #info
         flex-direction: column
 
         // Leave space for the profile pic
-        #name-box
-            max-width: calc(100% - 100px)
+        #name-box, #fields > li:first-child
+           max-width: calc(100% - 100px)
+
+        // Hide li dots
+        #fields li
+            list-style-type: none
+            margin-left: 0
+
+            // Wrap text
+            .value
+                word-break: break-all
 
     #left
         flex-direction: row
-        margin-bottom: -40px
 
         #buttons
             display: flex
-            margin-top: 20px
-            margin-right: 10px
-            order: 1
-
-        //.button-container:first-child
-        //    margin-right: 0
+            position: absolute
+            bottom: 0
+            right: 20px
 
         img
-            order: 3
             transform: rotate(15deg)
-            margin-right: -20px
+            position: absolute
+            top: 0
+            right: -5px
 
         .spacer-bottom
             flex-grow: 0
 
         .spacer
-            order: 2
+            display: none
 
     #right
-        margin-left: 5vw
-        margin-right: 5vw
-        margin-top: 0
+        margin-left: 32px
+        margin-right: 32px
 
 // Even smaller screen
 @media screen and (max-width: 400px)
     #profile-page
-        margin: 0
-        padding: 0
-
         // overflow hack
         // https://stackoverflow.com/questions/6421966/css-overflow-x-visible-and-overflow-y-hidden-causing-scrollbar-issue
         overflow: hidden
-        margin-top: -50px
-        padding-top: 50px
+        margin: -50px 0 0
+        padding: 50px 0 0
 
         #content, #comments
             margin: 10px
@@ -337,8 +337,8 @@ export default class ProfileCard extends Vue {
         border-radius: 0
 
         // Leave space for the profile pic
-        #name-box
-            max-width: calc(100% - 80px)
+        #name-box, #fields > li:first-child
+            max-width: calc(100% - 60px)
 
     #left
         img
@@ -351,12 +351,12 @@ export default class ProfileCard extends Vue {
             display: none !important
 
         #buttons
+            bottom: 0.5em
+
             .button-container
                 flex-direction: row
-
-            .text-under-button
-                margin-left: 5px
-                margin-top: 8px
+                align-items: center
+                gap: 5px
 
             .button
                 font-size: 15px
