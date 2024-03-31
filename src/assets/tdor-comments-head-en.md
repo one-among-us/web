@@ -1,1 +1,1 @@
-[!Note] The Transgender Day of Visibility Gala would like to thank everyone for their messages. To view the message, please [click here](profile/tdor).
+[!Note] "2024 Transgender Day of Visibility Gala" [message collection text version](/profile/tdor) is now open for reading. Thank you for your messages.
