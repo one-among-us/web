@@ -1,4 +1,4 @@
-import{g as Ss,a as Ds}from"./index-62c810b1.js";//! moment.js
+import{g as Ss,a as Ds}from"./index-ea6f25ba.js";//! moment.js
 //! version : 2.29.4
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
 //! license : MIT
