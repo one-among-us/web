@@ -89,7 +89,7 @@ export default class Home extends Vue
         // const endTime = new Date(2024, 3, 6, 12, 0); // April 6, 2024, 20:00 (CST) Wrong! not UTC!
         // const now = new Date();
         // return (now > startTime) && (now < endTime);
-        return false;
+        return true;
     }
 
     updated()
