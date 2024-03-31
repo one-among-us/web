@@ -1,6 +1,6 @@
 <template>
     <div id="ProfileComments" class="markdown-content">
-        <h1>{{i18n.nav_comments}}</h1>
+        <h1>{{isOverride() ? text : i18n.nav_comments}}</h1>
 
         <!-- Comments -->
         <div id="comments" v-if="p.comments.length > 0">
@@ -47,7 +47,8 @@ import MarkdownTooltip from "@/components/MarkdownTooltip.vue";
 import {error, info} from "@/logic/utils";
 import {initSpoilers, mdParseInline} from "tg-blog";
 import Swal from 'sweetalert2';
-import {i18n, getLang} from "@/logic/config";
+import { i18n, getLang, RemembranceRouter } from "@/logic/config";
+import { RemRouter } from '@/logic/data';
 
 @Options({components: {MarkdownTooltip, SubmitPrompt}})
 export default class ProfileComments extends Vue
@@ -64,6 +65,15 @@ export default class ProfileComments extends Vue
     showCaptchaPrompt = false
 
     i18n = i18n[getLang()]
+    rem = RemembranceRouter as RemRouter[];
+    text = ""
+
+    isOverride() :boolean {
+        for (let i = 0; i < this.rem.length; ++i) {
+            if (this.rem[i].path == this.$route.path) return true;
+        }
+        return false
+    }
 
     get comments()
     {
@@ -143,6 +153,11 @@ export default class ProfileComments extends Vue
     {
         this.textInputKey = `draft-${this.p.id}`
         this.textInputCache = localStorage.getItem(this.textInputKey) ?? ""
+        if (this.isOverride) {
+            for (let i = 0; i < this.rem.length; ++i) {
+                if (this.rem[i].path == this.$route.path) this.text = this.rem[i].text;
+            }
+        }
     }
 
     /**

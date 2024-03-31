@@ -186,3 +186,10 @@ export const info_i18n = {
         "age": "年齡",
     }
 }
+
+export const RemembranceRouter = [
+    {
+        "path": "/profile/tdor",
+        "text": "For Being Out And Proud\nーー2024年跨性别现身日晚会 来信集合"
+    }
+]

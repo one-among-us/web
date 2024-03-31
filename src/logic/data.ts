@@ -30,6 +30,11 @@ export interface Person
     comments: Comment[]
 }
 
+export interface RemRouter {
+    path: string,
+    text: string
+}
+
 export function parsePeopleJson(json: string): Person
 {
     const p = JSON.parse(json)
