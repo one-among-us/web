@@ -21,7 +21,7 @@
         </div>
 
         <!-- Add comment textbox -->
-        <div id="add-comment">
+        <div id="add-comment" v-if="!!p.info.length">
             <textarea id="comment-textarea" v-model="textInput" :placeholder="i18n.nav_comment_placeholder"
                       @input="resizeInput" ref="input"/>
             <div id="send-comment-btn" v-if="textInput.length > 0">
