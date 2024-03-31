@@ -47,8 +47,7 @@ import MarkdownTooltip from "@/components/MarkdownTooltip.vue";
 import {error, info} from "@/logic/utils";
 import {initSpoilers, mdParseInline} from "tg-blog";
 import Swal from 'sweetalert2';
-import { i18n, getLang, RemembranceRouter } from "@/logic/config";
-import { RemRouter } from '@/logic/data';
+import { i18n, getLang } from "@/logic/config";
 
 @Options({components: {MarkdownTooltip, SubmitPrompt}})
 export default class ProfileComments extends Vue
@@ -144,11 +143,6 @@ export default class ProfileComments extends Vue
     {
         this.textInputKey = `draft-${this.p.id}`
         this.textInputCache = localStorage.getItem(this.textInputKey) ?? ""
-        if (this.isOverride) {
-            for (let i = 0; i < this.rem.length; ++i) {
-                if (this.rem[i].path == this.$route.path) this.text = this.rem[i].text;
-            }
-        }
     }
 
     /**
