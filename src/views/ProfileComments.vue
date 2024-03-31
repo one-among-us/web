@@ -1,6 +1,6 @@
 <template>
     <div id="ProfileComments" class="markdown-content">
-        <h1>{{isOverride() ? text : i18n.nav_comments}}</h1>
+        <h1>{{p.id == 'tdor' ? "For Being Out And Proud——2024年跨性别现身日晚会 来信集合" : i18n.nav_comments}}</h1>
 
         <!-- Comments -->
         <div id="comments" v-if="p.comments.length > 0">
@@ -21,7 +21,7 @@
         </div>
 
         <!-- Add comment textbox -->
-        <div id="add-comment" v-if="!!p.info.length">
+        <div id="add-comment" v-if="p.id != 'tdor'">
             <textarea id="comment-textarea" v-model="textInput" :placeholder="i18n.nav_comment_placeholder"
                       @input="resizeInput" ref="input"/>
             <div id="send-comment-btn" v-if="textInput.length > 0">
@@ -65,15 +65,6 @@ export default class ProfileComments extends Vue
     showCaptchaPrompt = false
 
     i18n = i18n[getLang()]
-    rem = RemembranceRouter as RemRouter[];
-    text = ""
-
-    isOverride() :boolean {
-        for (let i = 0; i < this.rem.length; ++i) {
-            if (this.rem[i].path == this.$route.path) return true;
-        }
-        return false
-    }
 
     get comments()
     {
@@ -193,6 +184,7 @@ export default class ProfileComments extends Vue
     resizeInput()
     {
         const el = this.$refs.input
+        if (!el) return
         el.style.height = "auto"
         el.style.height = `${el.scrollHeight + 18}px`
     }

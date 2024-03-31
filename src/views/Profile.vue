@@ -1,9 +1,9 @@
 <template>
     <div>
-        <div class="profile-page" :class="{screenshot: screenshotMode}">
-            <ProfileCard class="profile-card" :userid="userid" :p="p" v-if="p.info.length != 0" :screenshot-mode="screenshotMode" />
+        <div class="profile-page" :class="{screenshot: screenshotMode}" v-if="p">
+            <ProfileCard class="profile-card" :userid="pid" :p="p" v-if="pid != 'tdor'" :screenshot-mode="screenshotMode" />
 
-            <MDX class="content" :code="compiledMdxCode" v-if="p.info.length != 0"/>
+            <MDX class="content" :code="compiledMdxCode" v-if="pid != 'tdor'"/>
 
             <ProfileComments class="comments" :p="p" v-if="p.comments && !screenshotMode"/>
         </div>
@@ -28,13 +28,15 @@ export default class Profile extends Vue
     @Prop({default: false}) screenshotMode!: boolean
     @Prop({default: ''}) lang!: Lang
 
+    // Blame kuniklo
+    get pid(): string { return this.userid == 'tdov' ? 'tdor' : this.userid }
 
     p?: Person = null
     compiledMdxCode = ''
 
     created(): void
     {
-        const pu = peopleUrl(this.userid)
+        const pu = peopleUrl(this.pid)
 
         localStorage.setItem('showBtn', '1')
         
@@ -49,17 +51,16 @@ export default class Profile extends Vue
             .then(it => it.text())
             .then(it => {
                 this.p = parsePeopleJson(it)
-                if (!this.p.id) {
-                    this.p.id = this.$route.path.replaceAll('/profile/', '');
-                    console.log(this.p.id);
-                }
+                if (this.pid == 'tdor') this.p.id = 'tdor'
             })
+
+        if (this.pid == 'tdor') return
 
         // TODO: Handle errors
         // Load compile MDX code from server
         if (!this.screenshotMode) fetchWithLang(urljoin(pu, `page.json`))
             .then(it => it.json())
-            .then(it => this.compiledMdxCode = replaceUrlVars(it, this.userid))
+            .then(it => this.compiledMdxCode = replaceUrlVars(it, this.pid))
 
     }
 }
