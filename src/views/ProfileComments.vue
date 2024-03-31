@@ -191,6 +191,7 @@ export default class ProfileComments extends Vue
 .divp
     margin: 0.65em 0
     line-height: 1.6
+    margin-bottom: 1.6rem
 
 .comment
     @extend .divp
