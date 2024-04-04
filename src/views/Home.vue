@@ -104,7 +104,7 @@ export default class Home extends Vue
     created(): void
     {
         info(`Language: ${this.lang}`)
-        fetchWithLang(urljoin(dataHost, 'people-list.json'))
+        fetchWithLang(urljoin(dataHost, 'people-home-list.json'))
             .then(it => it.text())
             .then(it => {
                 this.people = JSON.parse(it)
