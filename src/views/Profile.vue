@@ -20,6 +20,7 @@ import MDX from "@/components/MDX.vue";
 import urljoin from "url-join";
 import ProfileComments from "@/views/ProfileComments.vue";
 import ProfileCard from '@/components/ProfileCard.vue';
+import Swal from 'sweetalert2';
 
 @Options({components: {ProfileCard, ProfileComments, MDX}})
 export default class Profile extends Vue
@@ -62,6 +63,26 @@ export default class Profile extends Vue
             .then(it => it.json())
             .then(it => this.compiledMdxCode = replaceUrlVars(it, this.pid))
 
+    }
+
+    mounted(): void {
+        if (this.$route.path == "/profile/MeowBot233") {
+            if (this.lang != "en") {
+                if (!localStorage.getItem("isSeenMeowBot233")) {
+                    localStorage.setItem("isSeenMeowBot233", "找到了喵~")
+                    Swal.fire({
+                        position: "top-end",
+                        title: "找到了喵~",
+                        timer: 2500,
+                        showConfirmButton: false,
+                        showCancelButton: false,
+                        timerProgressBar: true,
+                        iconHtml: `<img style="width: 128px;height: 114;border: none" src="/cat-face-emoji-2048x1828.png"></img>`,
+                        iconColor: "#00000000"
+                    })
+                }
+            }
+        }
     }
 }
 </script>
