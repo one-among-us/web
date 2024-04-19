@@ -66,7 +66,7 @@ export default class Profile extends Vue
     }
 
     mounted(): void {
-        var path = this.$route.path
+        const path = this.$route.path
         if (path == "/profile/MeowBot233") {
             if (this.lang != "en") {
                 if (!localStorage.getItem("isSeenMeowBot233")) {
