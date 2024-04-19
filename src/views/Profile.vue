@@ -72,13 +72,14 @@ export default class Profile extends Vue
                 if (!localStorage.getItem("isSeenMeowBot233")) {
                     localStorage.setItem("isSeenMeowBot233", "找到了喵~")
                     Swal.fire({
+                        toast: true,
                         position: "top-end",
                         title: "找到了喵~",
                         timer: 2500,
                         showConfirmButton: false,
                         showCancelButton: false,
                         timerProgressBar: true,
-                        iconHtml: `<img style="width: 128px;height: 114px;border: none" src="/cat-face-emoji-2048x1828.png"></img>`,
+                        iconHtml: `<img style="width: 64px;height: 57px;border: none" src="/cat-face-emoji-2048x1828.png"></img>`,
                         iconColor: "#00000000"
                     })
                 }
@@ -96,13 +97,15 @@ export default class Profile extends Vue
                 if (betelgeuse.includes("/profile/Anilovr") && betelgeuse.includes("/profile/noname3031") && betelgeuse.includes("/profile/dogesir_") && (!localStorage.getItem("BetelgeuseShown"))) {
                     localStorage.setItem("BetelgeuseShown", "R.I.P.")
                     Swal.fire({
+                        toast: true,
                         position: "top-end",
                         title: "参宿四 ~Betelgeuse~",
+                        text: "R.I.P  - Be resilient -",
                         timer: 2500,
                         showConfirmButton: false,
                         showCancelButton: false,
                         timerProgressBar: true,
-                        iconHtml: `<img style="width: 128px;height: 128px;border: none" src="/betelgeuse.png"></img>`,
+                        iconHtml: `<img style="width: 64px;height: 64px;border: none" src="/betelgeuse.png"></img>`,
                         iconColor: "#00000000",
                         background: "url(/stardust.jpg)",
                         color: "#f0f8ff"

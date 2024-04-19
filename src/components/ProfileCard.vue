@@ -104,6 +104,7 @@ export default class ProfileCard extends Vue {
         if (!localStorage.getItem("hasFlowered")) {
             localStorage.setItem("hasFlowered", "Meow")
             Swal.fire({
+                toast: true,
                 position: "top-end",
                 title: "花与秋叶",
                 text: `${this.p.name}收到你的小花啦~`,
@@ -111,7 +112,7 @@ export default class ProfileCard extends Vue {
                 showConfirmButton: false,
                 showCancelButton: false,
                 timerProgressBar: true,
-                iconHtml: `<img style="width: 100px;height: 100px;border: none" src="/lollipop_1f36d.png"></img>`,
+                iconHtml: `<img style="width: 64px;height: 64px;border: none" src="/lollipop_1f36d.png"></img>`,
                 iconColor: "#00000000"
             })
         }
