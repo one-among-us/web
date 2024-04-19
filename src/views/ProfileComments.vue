@@ -24,8 +24,8 @@
         <div id="add-comment" v-if="p.id != 'tdor'">
             <textarea id="comment-textarea" v-model="textInput" :placeholder="i18n.nav_comment_placeholder"
                       @input="resizeInput" ref="input"/>
-            <div id="send-comment-btn" v-if="textInput.length > 0">
-                <span class="char-count unselectable">{{textInput.length}} {{i18n.nav_comment_status}}</span>
+            <div id="send-comment-btn" v-if="textInput.trim().length > 0">
+                <span class="char-count unselectable">{{textInput.trim().length}} {{i18n.nav_comment_status}}</span>
                 <IFasPaperPlane class="icon" @click="btnSend"/>
             </div>
 
