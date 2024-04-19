@@ -93,17 +93,18 @@ export default class Profile extends Vue
                     betelgeuse.push(path)
                     localStorage.setItem("Betelgeuse", JSON.stringify(betelgeuse))
                 }
-                if (betelgeuse.includes("/profile/Anilovr") && betelgeuse.includes("/profile/noname3031") && betelgeuse.includes("/profile/dogesir_")) {
+                if (betelgeuse.includes("/profile/Anilovr") && betelgeuse.includes("/profile/noname3031") && betelgeuse.includes("/profile/dogesir_") && (!localStorage.getItem("BetelgeuseShown"))) {
+                    localStorage.setItem("BetelgeuseShown", "R.I.P.")
                     Swal.fire({
                         position: "top-end",
-                        title: "参宿四 ~ Betelgeuse ~",
+                        title: "参宿四 ~Betelgeuse~",
                         timer: 2500,
                         showConfirmButton: false,
                         showCancelButton: false,
                         timerProgressBar: true,
                         iconHtml: `<img style="width: 128px;height: 128px;border: none" src="/betelgeuse.png"></img>`,
                         iconColor: "#00000000",
-                        background: "#15100e",
+                        background: "url(/stardust.jpg)",
                         color: "#f0f8ff"
                     })
                 }
