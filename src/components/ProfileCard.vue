@@ -108,7 +108,7 @@ export default class ProfileCard extends Vue {
                 position: "top-end",
                 title: "花与秋叶",
                 text: `${this.p.name}收到你的小花啦~`,
-                timer: 2500,
+                timer: 5000,
                 showConfirmButton: false,
                 showCancelButton: false,
                 timerProgressBar: true,
