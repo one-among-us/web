@@ -66,8 +66,8 @@ export default class Profile extends Vue
     }
 
     mounted(): void {
-        const path = this.$route.path
-        if (path == "/profile/MeowBot233") {
+        const path = this.$route.path.replace('/profile/', '')
+        if (path == "MeowBot233") {
             if (this.lang != "en") {
                 if (!localStorage.getItem("isSeenMeowBot233")) {
                     localStorage.setItem("isSeenMeowBot233", "找到了喵~")
@@ -85,7 +85,7 @@ export default class Profile extends Vue
                 }
             }
         }
-        if ((path == "/profile/Anilovr") || (path == "/profile/noname3031") || (path == "/profile/dogesir_")) {
+        if ((path == "Anilovr") || (path == "noname3031") || (path == "dogesir_")) {
             if (!localStorage.getItem("Betelgeuse"))
                 localStorage.setItem("Betelgeuse", `["${path}"]`)
             else {
@@ -94,7 +94,7 @@ export default class Profile extends Vue
                     betelgeuse.push(path)
                     localStorage.setItem("Betelgeuse", JSON.stringify(betelgeuse))
                 }
-                if (betelgeuse.includes("/profile/Anilovr") && betelgeuse.includes("/profile/noname3031") && betelgeuse.includes("/profile/dogesir_") && (!localStorage.getItem("BetelgeuseShown"))) {
+                if (betelgeuse.includes("Anilovr") && betelgeuse.includes("noname3031") && betelgeuse.includes("dogesir_") && (!localStorage.getItem("BetelgeuseShown"))) {
                     localStorage.setItem("BetelgeuseShown", "R.I.P.")
                     Swal.fire({
                         toast: true,
@@ -109,6 +109,33 @@ export default class Profile extends Vue
                         iconColor: "#00000000",
                         background: "url(/stardust.jpg)",
                         color: "#f0f8ff"
+                    })
+                }
+            }
+        }
+        if ((path == "xuewulihuameng") || (path == "Futajuhuacha") || (path == "Xu_Yushu") || (path == "Dethelly")) {
+            if (!localStorage.getItem("ChongQing"))
+                localStorage.setItem("ChongQing", `["${path}"]`)
+            else {
+                const ch = JSON.parse(localStorage.getItem("ChongQing")) as string[]
+                if (!ch.includes(path)) {
+                    ch.push(path)
+                    localStorage.setItem("ChongQing", JSON.stringify(ch))
+                }
+                if (ch.includes("xuewulihuameng") && ch.includes("Futajuhuacha") && ch.includes("Xu_Yushu") && ch.includes("Dethelly") && (!localStorage.getItem("ChongQingShown"))) {
+                    localStorage.setItem("ChongQingShown", "Fog")
+                    Swal.fire({
+                        toast: true,
+                        position: "top-end",
+                        title: "嘉陵雾稠",
+                        text: "雾, 与投江",
+                        timer: 5000,
+                        showConfirmButton: false,
+                        showCancelButton: false,
+                        timerProgressBar: true,
+                        iconHtml: `<img style="width: 64px;height: 47px;border: none" src="/bridge.png"></img>`,
+                        iconColor: "#00000000",
+                        background: "url(/fog.jpg)"
                     })
                 }
             }
