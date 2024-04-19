@@ -102,7 +102,9 @@ export default class Profile extends Vue
                         showCancelButton: false,
                         timerProgressBar: true,
                         iconHtml: `<img style="width: 128px;height: 128px;border: none" src="/betelgeuse.png"></img>`,
-                        iconColor: "#00000000"
+                        iconColor: "#00000000",
+                        background: "#15100e",
+                        color: "#f0f8ff"
                     })
                 }
             }
