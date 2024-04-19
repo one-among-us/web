@@ -66,7 +66,8 @@ export default class Profile extends Vue
     }
 
     mounted(): void {
-        if (this.$route.path == "/profile/MeowBot233") {
+        var path = this.$route.path
+        if (path == "/profile/MeowBot233") {
             if (this.lang != "en") {
                 if (!localStorage.getItem("isSeenMeowBot233")) {
                     localStorage.setItem("isSeenMeowBot233", "找到了喵~")
@@ -77,7 +78,30 @@ export default class Profile extends Vue
                         showConfirmButton: false,
                         showCancelButton: false,
                         timerProgressBar: true,
-                        iconHtml: `<img style="width: 128px;height: 114;border: none" src="/cat-face-emoji-2048x1828.png"></img>`,
+                        iconHtml: `<img style="width: 128px;height: 114px;border: none" src="/cat-face-emoji-2048x1828.png"></img>`,
+                        iconColor: "#00000000"
+                    })
+                }
+            }
+        }
+        if ((path == "/profile/Anilovr") || (path == "/profile/noname3031") || (path == "/profile/dogesir_")) {
+            if (!localStorage.getItem("Betelgeuse"))
+                localStorage.setItem("Betelgeuse", `["${path}"]`)
+            else {
+                const betelgeuse = JSON.parse(localStorage.getItem("Betelgeuse")) as string[]
+                if (!betelgeuse.includes(path)) {
+                    betelgeuse.push(path)
+                    localStorage.setItem("Betelgeuse", JSON.stringify(betelgeuse))
+                }
+                if (betelgeuse.includes("/profile/Anilovr") && betelgeuse.includes("/profile/noname3031") && betelgeuse.includes("/profile/dogesir_")) {
+                    Swal.fire({
+                        position: "top-end",
+                        title: "参宿四 ~ Betelgeuse ~",
+                        timer: 2500,
+                        showConfirmButton: false,
+                        showCancelButton: false,
+                        timerProgressBar: true,
+                        iconHtml: `<img style="width: 128px;height: 128px;border: none" src="/betelgeuse.png"></img>`,
                         iconColor: "#00000000"
                     })
                 }
