@@ -100,6 +100,21 @@ export default class ProfileCard extends Vue {
                 localStorage.setItem(`last_flower_given@${this.userid}`, getTodayDate())
             })
             .finally(() => this.loading.delete('flower'))
+
+        if (!localStorage.getItem("hasFlowered")) {
+            localStorage.setItem("hasFlowered", "Meow")
+            Swal.fire({
+                position: "top-end",
+                title: "花与秋叶",
+                text: `${this.p.name}收到你的小花啦~`,
+                timer: 2500,
+                showConfirmButton: false,
+                showCancelButton: false,
+                timerProgressBar: true,
+                iconHtml: `<img style="width: 100px;height: 100px;border: none" src="/lollipop_1f36d.png"></img>`,
+                iconColor: "#00000000"
+            })
+        }
     }
 
     get flowerText(): string {
