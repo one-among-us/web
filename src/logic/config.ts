@@ -98,9 +98,9 @@ export const i18n = {
         "nav_comment_in_reply_to": "In reply to",
         "random": "Click here to visit a random page",
         "tdor_btn": "Click here to leave your message",
-        "too_many_view_title": "You have read too much. Take a rest~",
-        "too_many_view_text": "Take good care of yourself~",
-        "cannot_load": "You have read too much entry that we can't load any page.",
+        "view_limit.title": "Take a rest!",
+        "view_limit.warning.text": "You have read so many pages, please remember to take good care of yourself~",
+        "view_limit.error.text": "You have read too many pages, please take a short rest before reading more .",
     },
     "zh_hans": {
         "nav_home": "首页",
