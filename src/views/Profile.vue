@@ -67,22 +67,22 @@ export default class Profile extends Vue
             .then(it => this.compiledMdxCode = replaceUrlVars(it, this.pid))
         
         const now = new Date()
-        if ((!localStorage.getItem("lastViewTime")) || (!localStorage.getItem("lastViewEntry"))) {
+        if ((!localStorage.getItem("lastViewTime")) || (!localStorage.getItem("lastViewEntries"))) {
             localStorage.setItem("lastViewTime",now.toUTCString())
-            localStorage.setItem("lastViewEntry", `["${this.userid}"]`)
+            localStorage.setItem("lastViewEntries", `["${this.userid}"]`)
         }
         else {
             const last = new Date(localStorage.getItem("lastViewTime"))
             const minute = (now.getTime() - last.getTime()) / 60000
             if (minute > 20) {
                 localStorage.setItem("lastViewTime",now.toUTCString())
-                localStorage.setItem("lastViewEntry", `["${this.userid}"]`)
+                localStorage.setItem("lastViewEntries", `["${this.userid}"]`)
             }
             else {
-                const entryList = JSON.parse(localStorage.getItem("lastViewEntry")) as string[]
+                const entryList = JSON.parse(localStorage.getItem("lastViewEntries")) as string[]
                 if (!entryList.includes(this.userid)) {
                     entryList.push(this.userid)
-                    localStorage.setItem("lastViewEntry", JSON.stringify(entryList))
+                    localStorage.setItem("lastViewEntries", JSON.stringify(entryList))
                     if (entryList.length == 10) {
                         Swal.fire({
                             title: this.i18n['view_limit.title'],
