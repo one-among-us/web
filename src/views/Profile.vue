@@ -1,12 +1,14 @@
 <template>
-    <div>
-        <div class="profile-page" :class="{screenshot: screenshotMode}" v-if="p && isShow">
+    <div class="profile-wrapper">
+        <div class="profile-page" :class="{screenshot: screenshotMode}" v-if="p">
             <ProfileCard class="profile-card" :userid="pid" :p="p" v-if="pid != 'tdor'" :screenshot-mode="screenshotMode" />
 
             <MDX class="content" :code="compiledMdxCode" v-if="pid != 'tdor'"/>
 
             <ProfileComments class="comments" :p="p" v-if="p.comments && !screenshotMode"/>
         </div>
+
+        <div v-if="viewLimit" class="view-limit"></div>
     </div>
 </template>
 
@@ -23,6 +25,8 @@ import ProfileCard from '@/components/ProfileCard.vue';
 import Swal from 'sweetalert2';
 import { i18n, getLang } from '@/logic/config';
 
+const t = i18n[getLang()];
+
 @Options({components: {ProfileCard, ProfileComments, MDX}})
 export default class Profile extends Vue
 {
@@ -35,8 +39,7 @@ export default class Profile extends Vue
 
     p?: Person = null
     compiledMdxCode = ''
-    i18n = i18n[getLang()]
-    isShow = true
+    viewLimit = false
 
     created(): void
     {
@@ -65,50 +68,52 @@ export default class Profile extends Vue
         if (!this.screenshotMode) fetchWithLang(urljoin(pu, `page.json`))
             .then(it => it.json())
             .then(it => this.compiledMdxCode = replaceUrlVars(it, this.pid))
-        
+
+        this.viewLimit = this.checkViewLimit() === true
+        if (!this.viewLimit) localStorage.setItem("view_limit_time", new Date().toUTCString())
+    }
+    
+    checkViewLimit(): boolean | void {
         const now = new Date()
-        if ((!localStorage.getItem("lastViewTime")) || (!localStorage.getItem("lastViewEntries"))) {
-            localStorage.setItem("lastViewTime",now.toUTCString())
-            localStorage.setItem("lastViewEntries", `["${this.userid}"]`)
+        const [_time, _entries] = [localStorage.getItem("view_limit_time"), localStorage.getItem("view_limit_entries")]
+        const [time, entries] = [new Date(_time), JSON.parse(_entries ?? "[]")]
+        const elapsedMin = (now.getTime() - time.getTime()) / 60000
+
+        // Initialize
+        if (!_time || !_entries || elapsedMin > 20) {
+            localStorage.setItem("view_limit_entries", JSON.stringify([this.userid]))
+            return
         }
-        else {
-            const last = new Date(localStorage.getItem("lastViewTime"))
-            const minute = (now.getTime() - last.getTime()) / 60000
-            if (minute > 20) {
-                localStorage.setItem("lastViewTime",now.toUTCString())
-                localStorage.setItem("lastViewEntries", `["${this.userid}"]`)
-            }
-            else {
-                const entryList = JSON.parse(localStorage.getItem("lastViewEntries")) as string[]
-                if (!entryList.includes(this.userid)) {
-                    entryList.push(this.userid)
-                    localStorage.setItem("lastViewEntries", JSON.stringify(entryList))
-                    if (entryList.length == 10) {
-                        Swal.fire({
-                            title: this.i18n['view_limit.title'],
-                            text: this.i18n['view_limit.warning.text'],
-                            icon: 'warning',
-                            timer: 5000,
-                            timerProgressBar: true,
-                            showConfirmButton: false,
-                            showCancelButton: false,
-                            showCloseButton: false
-                        })
-                    }
-                    if (entryList.length == 20) {
-                        Swal.fire({
-                            title: this.i18n['view_limit.error.text'],
-                            icon: 'error',
-                            timer: 6000,
-                            timerProgressBar: true,
-                            showConfirmButton: false,
-                            showCancelButton: false,
-                            showCloseButton: false
-                        })
-                        this.isShow = false
-                    }
-                }
-            }
+
+        // Check if user has viewed this page before
+        if (!entries.includes(this.userid)) {
+            entries.push(this.userid)
+            localStorage.setItem("view_limit_entries", JSON.stringify(entries))
+        }
+
+        // Warn when the view count reaches 10
+        if (entries.length >= 10) {
+            console.log("View limit reached 10")
+            Swal.fire({
+                title: t.view_limit.title,
+                text: t.view_limit.warning,
+                icon: 'warning',
+                timer: 30000,
+                timerProgressBar: true,
+            })
+        }
+
+        // Hard limit at 20
+        if (entries.length >= 20) {
+            console.log("View limit reached 20")
+            Swal.fire({
+                title: t.view_limit.title,
+                text: t.view_limit.error,
+                icon: 'error',
+                showConfirmButton: false,
+                allowOutsideClick() { return false },
+            })
+            return true
         }
     }
 }
@@ -117,6 +122,14 @@ export default class Profile extends Vue
 <!-- Scoped Style -->
 <style lang="sass" scoped>
 @import "../css/colors"
+
+.profile-wrapper
+
+    .view-limit
+        position: absolute
+        inset: 0
+        backdrop-filter: blur(10px)
+        z-index: 50
 
 .profile-page
     padding: 0 20px
