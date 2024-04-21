@@ -1,11 +1,11 @@
 <template>
     <div>
         <div class="profile-page" :class="{screenshot: screenshotMode}" v-if="p">
-            <ProfileCard class="profile-card" :userid="pid" :p="p" v-if="pid != 'tdor'" :screenshot-mode="screenshotMode" />
+            <ProfileCard class="profile-card" :userid="pid" :p="p" v-if="(pid != 'tdor') && isShow" :screenshot-mode="screenshotMode" />
 
-            <MDX class="content" :code="compiledMdxCode" v-if="pid != 'tdor'"/>
+            <MDX class="content" :code="compiledMdxCode" v-if="(pid != 'tdor') && isShow"/>
 
-            <ProfileComments class="comments" :p="p" v-if="p.comments && !screenshotMode"/>
+            <ProfileComments class="comments" :p="p" v-if="p.comments && !screenshotMode && isShow"/>
         </div>
     </div>
 </template>
@@ -20,6 +20,8 @@ import MDX from "@/components/MDX.vue";
 import urljoin from "url-join";
 import ProfileComments from "@/views/ProfileComments.vue";
 import ProfileCard from '@/components/ProfileCard.vue';
+import Swal from 'sweetalert2';
+import { i18n, getLang } from '@/logic/config';
 
 @Options({components: {ProfileCard, ProfileComments, MDX}})
 export default class Profile extends Vue
@@ -33,6 +35,8 @@ export default class Profile extends Vue
 
     p?: Person = null
     compiledMdxCode = ''
+    i18n = i18n[getLang()]
+    isShow = true
 
     created(): void
     {
@@ -61,7 +65,51 @@ export default class Profile extends Vue
         if (!this.screenshotMode) fetchWithLang(urljoin(pu, `page.json`))
             .then(it => it.json())
             .then(it => this.compiledMdxCode = replaceUrlVars(it, this.pid))
-
+        
+        const now = new Date()
+        if ((!localStorage.getItem("lastViewTime")) || (!localStorage.getItem("lastViewEntry"))) {
+            localStorage.setItem("lastViewTime",now.toUTCString())
+            localStorage.setItem("lastViewEntry", `["${this.userid}"]`)
+        }
+        else {
+            const last = new Date(localStorage.getItem("lastViewTime"))
+            const minute = (now.getTime() - last.getTime()) / 60000
+            if (minute > 20) {
+                localStorage.setItem("lastViewTime",now.toUTCString())
+                localStorage.setItem("lastViewEntry", `["${this.userid}"]`)
+            }
+            else {
+                const entryList = JSON.parse(localStorage.getItem("lastViewEntry")) as string[]
+                if (!entryList.includes(this.userid)) {
+                    entryList.push(this.userid)
+                    localStorage.setItem("lastViewEntry", JSON.stringify(entryList))
+                    if (entryList.length == 10) {
+                        Swal.fire({
+                            title: this.i18n.too_many_view_title,
+                            text: this.i18n.too_many_view_text,
+                            icon: 'warning',
+                            timer: 5000,
+                            timerProgressBar: true,
+                            showConfirmButton: false,
+                            showCancelButton: false,
+                            showCloseButton: false
+                        })
+                    }
+                    if (entryList.length == 20) {
+                        Swal.fire({
+                            title: this.i18n.cannot_load,
+                            icon: 'error',
+                            timer: 6000,
+                            timerProgressBar: true,
+                            showConfirmButton: false,
+                            showCancelButton: false,
+                            showCloseButton: false
+                        })
+                        this.isShow = false
+                    }
+                }
+            }
+        }
     }
 }
 </script>
