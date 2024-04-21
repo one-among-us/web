@@ -132,9 +132,9 @@ export const i18n = {
         "nav_comment_in_reply_to": "回复",
         "random": "随机看望一位朋友",
         "tdor_btn": "填写现身日晚会来信请点这里",
-        "too_many_view_title": "看太多啦quq  休息一下吧~",
-        "too_many_view_text": "要好好照顾自己哦~",
-        "cannot_load": "读太多啦qwq 页面加载不出来啦qwq",
+        "view_limit.title": "看太多啦quq  休息一下吧~",
+        "view_limit.warning.text": "要好好照顾自己哦~",
+        "view_limit.error.text": "读太多啦qwq 页面加载不出来啦qwq",
     },
     "zh_hant": {
         "nav_home": "首頁",
@@ -166,9 +166,9 @@ export const i18n = {
         "nav_comment_in_reply_to": "回覆",
         "random": "點一下這裏查看一個隨機頁面",
         "tdor_btn": "點一下這裏填寫現身日晚會來信",
-        "too_many_view_title": "妳看太多條目啦quq  歇息一下吧~",
-        "too_many_view_text": "要好好照顧自己哦",
-        "cannot_load": "閱讀太多啦qwq 頁面加載壞掉啦qwq",
+        "view_limit.title": "妳看太多條目啦quq  歇息一下吧~",
+        "view_limit.warning.text": "要好好照顧自己哦",
+        "view_limit.error.text": "閱讀太多啦qwq 頁面加載壞掉啦qwq",
     }
 }
 

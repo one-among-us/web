@@ -1,11 +1,11 @@
 <template>
     <div>
-        <div class="profile-page" :class="{screenshot: screenshotMode}" v-if="p">
-            <ProfileCard class="profile-card" :userid="pid" :p="p" v-if="(pid != 'tdor') && isShow" :screenshot-mode="screenshotMode" />
+        <div class="profile-page" :class="{screenshot: screenshotMode}" v-if="p && isShow">
+            <ProfileCard class="profile-card" :userid="pid" :p="p" v-if="pid != 'tdor'" :screenshot-mode="screenshotMode" />
 
-            <MDX class="content" :code="compiledMdxCode" v-if="(pid != 'tdor') && isShow"/>
+            <MDX class="content" :code="compiledMdxCode" v-if="pid != 'tdor'"/>
 
-            <ProfileComments class="comments" :p="p" v-if="p.comments && !screenshotMode && isShow"/>
+            <ProfileComments class="comments" :p="p" v-if="p.comments && !screenshotMode"/>
         </div>
     </div>
 </template>
@@ -85,8 +85,8 @@ export default class Profile extends Vue
                     localStorage.setItem("lastViewEntry", JSON.stringify(entryList))
                     if (entryList.length == 10) {
                         Swal.fire({
-                            title: this.i18n.too_many_view_title,
-                            text: this.i18n.too_many_view_text,
+                            title: this.i18n['view_limit.title'],
+                            text: this.i18n['view_limit.warning.text'],
                             icon: 'warning',
                             timer: 5000,
                             timerProgressBar: true,
@@ -97,7 +97,7 @@ export default class Profile extends Vue
                     }
                     if (entryList.length == 20) {
                         Swal.fire({
-                            title: this.i18n.cannot_load,
+                            title: this.i18n['view_limit.error.text'],
                             icon: 'error',
                             timer: 6000,
                             timerProgressBar: true,
