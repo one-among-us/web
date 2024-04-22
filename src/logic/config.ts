@@ -98,6 +98,13 @@ export const i18n = {
         "nav_comment_in_reply_to": "In reply to",
         "random": "Click here to visit a random page",
         "tdor_btn": "Click here to leave your message",
+        view_limit: {
+            title: "Take a rest!",
+            warning: "You have read so many pages, please remember to take good care of yourself~",
+            error: "You have read too many pages, please take a short rest before reading more 🥺",
+            dom_removed_title: "Sure",
+            dom_removed: "Ok I see you removed the DOM element 🥺 I guess you can continue reading now",
+        }
     },
     "zh_hans": {
         "nav_home": "首页",
@@ -129,6 +136,13 @@ export const i18n = {
         "nav_comment_in_reply_to": "回复",
         "random": "随机看望一位朋友",
         "tdor_btn": "填写现身日晚会来信请点这里",
+        view_limit: {
+            title: "休息一下吧！",
+            warning: "读太多啦！要好好照顾自己哦~",
+            error: "读太多啦！页面暂停加载了哦，请休息一下再回来吧~ 🥺",
+            dom_removed_title: "盯——",
+            dom_removed: "好吧，看来你会编辑网页内容，那就让你继续读吧 🥺 不过也记得照顾好自己哦~",
+        }
     },
     "zh_hant": {
         "nav_home": "首頁",
@@ -160,6 +174,13 @@ export const i18n = {
         "nav_comment_in_reply_to": "回覆",
         "random": "點一下這裏查看一個隨機頁面",
         "tdor_btn": "點一下這裏填寫現身日晚會來信",
+        view_limit: {
+            title: "歇息一下吧！",
+            warning: "閲讀太多啦！要好好照顧自己哦",
+            error: "閱讀太多啦！頁面暫停加載了哦，請休息一下再回來吧~ 🥺",
+            dom_removed_title: "盯——",
+            dom_removed: "好吧，看來你會編輯網頁內容，那就讓你繼續讀吧 🥺 不過也記得照顧好自己哦~",
+        }
     }
 }
 
