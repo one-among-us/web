@@ -30,6 +30,7 @@ import { t, getLang } from './logic/config';
 @Component({components: {LangButton, Divider}})
 export default class App extends Vue
 {
+    $route: any
     t = t
 
     created(): void
