@@ -226,12 +226,14 @@ export default class Profile extends Vue
                             toast: true,
                             position: "top-end",
                             title: "过往苦难",
+                            text: "呐喊却无人知晓",
                             timer: 5000,
-                        showConfirmButton: false,
-                        showCancelButton: false,
-                        timerProgressBar: true,
-                        iconHtml: `<img style="width: 64px;height: 47px;border: none" src="/lifeline.png"></img>`,
-                        iconColor: "#00000000",
+                            showConfirmButton: false,
+                            showCancelButton: false,
+                            timerProgressBar: true,
+                            iconHtml: `<img style="width: 64px;height: 47px;border: none" src="/lifeline.png"></img>`,
+                            iconColor: "#00000000",
+                            background: "#DDDDDDFF"
                         })
                     }
                 }, false)
