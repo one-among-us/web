@@ -214,6 +214,34 @@ export default class Profile extends Vue
                 }
             }
         }
+        if ((this.userid == "yumao") || (this.userid == "Uekawakuyuurei") || (this.userid == "MizuharaNagisa")) {
+            if (!localStorage.getItem("Boat"))
+                localStorage.setItem("Boat", `["${this.userid}"]`)
+            else {
+                const boat = JSON.parse(localStorage.getItem("Boat")) as string[]
+                if (!boat.includes(this.userid)) {
+                    boat.push(this.userid)
+                    localStorage.setItem("Boat", JSON.stringify(boat))
+                }
+                if (boat.includes("yumao") && boat.includes("Uekawakuyuurei") && boat.includes("MizuharaNagisa") && (!localStorage.getItem("Sea"))) {
+                    localStorage.setItem("Sea", "with you")
+                    Swal.fire({
+                        toast: true,
+                        position: "top-end",
+                        title: "船与海",
+                        text: "妳把船往哪开呢?!",
+                        timer: 5000,
+                        showConfirmButton: false,
+                        showCancelButton: false,
+                        timerProgressBar: true,
+                        iconHtml: `<img style="width: 64px;height: 64px;border: none" src="/ship.png"></img>`,
+                        iconColor: "#00000000",
+                        background: "#0b2058ff",
+                        color: "#f0f8feff"
+                    })
+                }
+            }
+        }
         if ((this.userid == "yumao")) {
             const summaries = document.getElementsByTagName("summary")
             for (const v of summaries) {
@@ -231,7 +259,7 @@ export default class Profile extends Vue
                             showConfirmButton: false,
                             showCancelButton: false,
                             timerProgressBar: true,
-                            iconHtml: `<img style="width: 64px;height: 47px;border: none" src="/lifeline.png"></img>`,
+                            iconHtml: `<img style="width: 64px;height: 64px;border: none" src="/lifeline.png"></img>`,
                             iconColor: "#00000000",
                             background: "#DDDDDDFF"
                         })
