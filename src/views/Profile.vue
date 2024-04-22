@@ -70,6 +70,8 @@ export default class Profile extends Vue
     }
 
     checkViewLimit(): boolean | void {
+        if (this.screenshotMode) return
+
         const config = { warningLimit: 10, errorLimit: 20, cooldown: 30 }
 
         const now = new Date()
