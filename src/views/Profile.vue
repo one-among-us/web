@@ -1,5 +1,5 @@
 <template>
-    <div class="profile-wrapper">
+    <div>
         <div class="profile-page" :class="{screenshot: screenshotMode}" v-if="p">
             <ProfileCard class="profile-card" :userid="pid" :p="p" v-if="pid != 'tdor'" :screenshot-mode="screenshotMode" />
 
@@ -7,8 +7,6 @@
 
             <ProfileComments class="comments" :p="p" v-if="p.comments && !screenshotMode"/>
         </div>
-
-        <div v-if="viewLimit" class="view-limit"></div>
     </div>
 </template>
 
@@ -39,7 +37,6 @@ export default class Profile extends Vue
 
     p?: Person = null
     compiledMdxCode = ''
-    viewLimit = false
 
     created(): void
     {
@@ -69,7 +66,7 @@ export default class Profile extends Vue
             .then(it => it.json())
             .then(it => this.compiledMdxCode = replaceUrlVars(it, this.pid))
 
-        this.viewLimit = this.checkViewLimit() === true
+        this.checkViewLimit()
     }
     
     checkViewLimit(): boolean | void {
@@ -117,24 +114,45 @@ export default class Profile extends Vue
                 icon: 'error',
                 showConfirmButton: false,
                 allowOutsideClick() { return false },
+                customClass: 'view-limit-alert'
             })
+
+            // Easter egg: Watch when the user removes the DOM element in devtools
+            const observer = new MutationObserver((changes) => {
+                changes.forEach((change) => {
+                    console.log(changes)
+                    // Check if the removed node is the swal2 element
+                    if (change.removedNodes.length == 0) return
+                    if (!(change.removedNodes[0] as HTMLElement).classList.contains("swal2-container")) return
+
+                    console.log("User removed swal2 element")
+                    observer.disconnect()
+
+                    setTimeout(() => {
+                        Swal.fire({
+                            title: t.view_limit.title,
+                            text: t.view_limit.dom_removed,
+                            icon: 'info',
+                        })
+                    }, 100)
+                })
+            })
+            observer.observe(document.body, { childList: true, subtree: true })
+
             return true
         }
     }
 }
 </script>
 
+<style lang="sass">
+div:has(.view-limit-alert)
+    backdrop-filter: blur(10px)
+</style>
+
 <!-- Scoped Style -->
 <style lang="sass" scoped>
 @import "../css/colors"
-
-.profile-wrapper
-
-    .view-limit
-        position: absolute
-        inset: 0
-        backdrop-filter: blur(10px)
-        z-index: 50
 
 .profile-page
     padding: 0 20px
