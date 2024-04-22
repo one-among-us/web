@@ -43,7 +43,7 @@ export default class Profile extends Vue
         const pu = peopleUrl(this.pid)
 
         localStorage.setItem('showBtn', '1')
-        
+
         if (this.lang) {
             setLang(this.lang)
             localStorage.setItem('showBtn', '')
@@ -68,7 +68,7 @@ export default class Profile extends Vue
 
         this.checkViewLimit()
     }
-    
+
     checkViewLimit(): boolean | void {
         const config = { warningLimit: 10, errorLimit: 20, cooldown: 30 }
 
@@ -120,20 +120,20 @@ export default class Profile extends Vue
             // Easter egg: Watch when the user removes the DOM element in devtools
             const observer = new MutationObserver((changes) => {
                 changes.forEach((change) => {
-                    console.log(changes)
                     // Check if the removed node is the swal2 element
                     if (change.removedNodes.length == 0) return
                     if (!(change.removedNodes[0] as HTMLElement).classList.contains("swal2-container")) return
 
-                    console.log("User removed swal2 element")
                     observer.disconnect()
-
                     setTimeout(() => {
                         Swal.fire({
                             title: t.view_limit.dom_removed_title,
                             text: t.view_limit.dom_removed,
                             icon: 'info',
                         })
+
+                        // Reset the view limit
+                        localStorage.removeItem("view_limit_time")
                     }, 100)
                 })
             })
