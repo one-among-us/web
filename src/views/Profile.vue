@@ -142,8 +142,7 @@ export default class Profile extends Vue
     }
 
     mounted(): void {
-        const path = this.$route.path.replace('/profile/', '')
-        if (path == "MeowBot233") {
+        if (this.userid == "MeowBot233") {
             if (this.lang != "en") {
                 if (!localStorage.getItem("isSeenMeowBot233")) {
                     localStorage.setItem("isSeenMeowBot233", "找到了喵~")
@@ -161,13 +160,13 @@ export default class Profile extends Vue
                 }
             }
         }
-        if ((path == "Anilovr") || (path == "noname3031") || (path == "dogesir_")) {
+        if ((this.userid == "Anilovr") || (this.userid == "noname3031") || (this.userid == "dogesir_")) {
             if (!localStorage.getItem("Betelgeuse"))
-                localStorage.setItem("Betelgeuse", `["${path}"]`)
+                localStorage.setItem("Betelgeuse", `["${this.userid}"]`)
             else {
                 const betelgeuse = JSON.parse(localStorage.getItem("Betelgeuse")) as string[]
-                if (!betelgeuse.includes(path)) {
-                    betelgeuse.push(path)
+                if (!betelgeuse.includes(this.userid)) {
+                    betelgeuse.push(this.userid)
                     localStorage.setItem("Betelgeuse", JSON.stringify(betelgeuse))
                 }
                 if (betelgeuse.includes("Anilovr") && betelgeuse.includes("noname3031") && betelgeuse.includes("dogesir_") && (!localStorage.getItem("BetelgeuseShown"))) {
@@ -189,13 +188,13 @@ export default class Profile extends Vue
                 }
             }
         }
-        if ((path == "xuewulihuameng") || (path == "Futajuhuacha") || (path == "Xu_Yushu") || (path == "Dethelly")) {
+        if ((this.userid == "xuewulihuameng") || (this.userid == "Futajuhuacha") || (this.userid == "Xu_Yushu") || (this.userid == "Dethelly")) {
             if (!localStorage.getItem("ChongQing"))
-                localStorage.setItem("ChongQing", `["${path}"]`)
+                localStorage.setItem("ChongQing", `["${this.userid}"]`)
             else {
                 const ch = JSON.parse(localStorage.getItem("ChongQing")) as string[]
-                if (!ch.includes(path)) {
-                    ch.push(path)
+                if (!ch.includes(this.userid)) {
+                    ch.push(this.userid)
                     localStorage.setItem("ChongQing", JSON.stringify(ch))
                 }
                 if (ch.includes("xuewulihuameng") && ch.includes("Futajuhuacha") && ch.includes("Xu_Yushu") && ch.includes("Dethelly") && (!localStorage.getItem("ChongQingShown"))) {
