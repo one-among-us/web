@@ -141,7 +141,7 @@ export default class Profile extends Vue
         }
     }
 
-    mounted(): void {
+    updated(): void {
         if (localStorage.getItem('lang') === 'en') return;
         if (this.userid == "MeowBot233") {
             if (!localStorage.getItem("isSeenMeowBot233")) {
@@ -212,6 +212,29 @@ export default class Profile extends Vue
                         background: "url(/fog.jpg)"
                     })
                 }
+            }
+        }
+        if ((this.userid == "yumao")) {
+            const summaries = document.getElementsByTagName("summary")
+            for (const v of summaries) {
+                console.log(v)
+                v.addEventListener('click', (e) => {
+                    console.log("summary" + e)
+                    if (!localStorage.getItem('detailsByYumao')) {
+                        localStorage.setItem('detainsByYumao', 'forever.')
+                        Swal.fire({
+                            toast: true,
+                            position: "top-end",
+                            title: "过往苦难",
+                            timer: 5000,
+                        showConfirmButton: false,
+                        showCancelButton: false,
+                        timerProgressBar: true,
+                        iconHtml: `<img style="width: 64px;height: 47px;border: none" src="/lifeline.png"></img>`,
+                        iconColor: "#00000000",
+                        })
+                    }
+                }, false)
             }
         }
     }
