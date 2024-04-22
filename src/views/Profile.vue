@@ -130,7 +130,7 @@ export default class Profile extends Vue
 
                     setTimeout(() => {
                         Swal.fire({
-                            title: t.view_limit.title,
+                            title: t.view_limit.dom_removed_title,
                             text: t.view_limit.dom_removed,
                             icon: 'info',
                         })
