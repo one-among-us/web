@@ -2,7 +2,7 @@
     <div id="container" class="fbox-vcenter">
         <div class="spacer"/>
         <div id="EditInfo" v-if="p">
-            <div class="head-text info">{{i18n.nav_profile_card}}</div>
+            <div class="head-text info">{{ t.nav_profile_card }}</div>
             <div id="id">@{{userid}}</div>
             <div class="fields info">
                 <div class="input-box" v-for="(info, i) in editInfo" :key="i">
@@ -10,14 +10,14 @@
                     <input class="value" v-model="info.v" @change="change"/>
                 </div>
             </div>
-            <div class="head-text websites">{{i18n.nav_website}}</div>
+            <div class="head-text websites">{{ t.nav_website }}</div>
             <div class="fields websites">
                 <div class="input-box" v-for="(web, i) in editWebsites" :key="i">
                     <input class="key" v-model="web.k" @change="change"/>
                     <input class="value" v-model="web.v" @change="change"/>
                 </div>
             </div>
-            <div class="button submit" @click="submitBtn">{{i18n.nav_submit}}</div>
+            <div class="button submit" @click="submitBtn">{{ t.nav_submit }}</div>
         </div>
         <div class="spacer"/>
 
@@ -26,16 +26,15 @@
 </template>
 
 <script lang="ts">
-import {Options, Vue} from 'vue-class-component';
-import {Prop} from "vue-property-decorator";
-import {parsePeopleJson, Person} from "@/logic/data";
-import {backendHost, peopleUrl} from "@/logic/config";
-import SubmitPrompt, {CaptchaResponse} from "@/components/SubmitPrompt.vue";
+import { Component, Prop, Vue } from 'vue-facing-decorator';
+import { parsePeopleJson, Person } from "@/logic/data";
+import { backendHost, getLang, info_i18n, peopleUrl, t } from "@/logic/config";
+import SubmitPrompt, { CaptchaResponse } from "@/components/SubmitPrompt.vue";
 import urljoin from "url-join";
-import {fetchText} from "@/logic/helper";
-import {error, info} from "@/logic/utils";
+import { fetchText } from "@/logic/helper";
+import { error, info } from "@/logic/utils";
 import Swal from 'sweetalert2';
-import {i18n, getLang, info_i18n} from "@/logic/config";
+import router from "@/router";
 
 interface KVPair { k: string, v: string }
 
@@ -48,7 +47,7 @@ export function removeEmpty(arr: KVPair[]): void
     }
 }
 
-@Options({components: {SubmitPrompt}})
+@Component({components: {SubmitPrompt}})
 export default class EditInfo extends Vue
 {
     @Prop() userid!: string
@@ -61,7 +60,7 @@ export default class EditInfo extends Vue
 
     submitParams: {[id: string]: string} = null as never
 
-    i18n = i18n[getLang()]
+    t = t
 
     json(): string
     {
@@ -85,7 +84,7 @@ export default class EditInfo extends Vue
                         this.editInfo.push({k: a[0], v: a[1]})
                     else {
                         const targeti18n = info_i18n[getLang()]
-                        let s = "" as string
+                        let s: string
                         switch (a[0]) {
                             case info_i18n['zh_hans'].alias:
                                 s = targeti18n.alias;
@@ -163,10 +162,10 @@ export default class EditInfo extends Vue
         if (json == this.initialJson)
         {
             Swal.fire({
-                title: i18n[getLang()].nav_unable_submit,
+                title: t.nav_unable_submit,
                 text: "(╯‵□′)╯︵┻━┻",
                 icon: "error",
-                confirmButtonText: i18n[getLang()].nav_ok_0,
+                confirmButtonText: t.nav_ok_0,
                 showCloseButton: false
             })
             return
@@ -181,8 +180,8 @@ export default class EditInfo extends Vue
         const params = {...this.submitParams, ...p}
 
         Swal.fire({
-            title: i18n[getLang()].nav_creating_pull_request,
-            text: i18n[getLang()].nav_description_pull_request,
+            title: t.nav_creating_pull_request,
+            text: t.nav_description_pull_request,
             icon: null,
             showConfirmButton: false,
             didOpen: (() => {
@@ -191,23 +190,23 @@ export default class EditInfo extends Vue
                     .then(text => {
                         info(text);
                         Swal.fire({
-                            title: i18n[getLang()].nav_success,
-                            text: i18n[getLang()].nav_success_text,
+                            title: t.nav_success,
+                            text: t.nav_success_text,
                             icon: "success",
                             timer: 5000,
                             timerProgressBar: true,
                             showConfirmButton: true,
-                            confirmButtonText: i18n[getLang()].nav_ok_1
+                            confirmButtonText: t.nav_ok_1
                         }).then((result) => {
                             if ((result.isConfirmed) || (result.dismiss === Swal.DismissReason.timer))
-                                this.$router.push(`/profile/${this.p.id}`);
+                                router.push(`/profile/${this.p.id}`);
                         })
                     })
                     .catch(err => {
                         error(err);
                         Swal.fire({
-                            title: i18n[getLang()].nav_failed,
-                            text: i18n[getLang()].nav_fail_reason + err.message,
+                            title: t.nav_failed,
+                            text: t.nav_fail_reason + err.message,
                             icon: "error",
                             timer: 5000,
                             timerProgressBar: true,

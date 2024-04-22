@@ -5,8 +5,8 @@
 </template>
 
 <script setup lang="ts">
-import {captchaSiteKey} from "@/logic/config";
-import { ref, onMounted } from 'vue'
+import { captchaSiteKey } from "@/logic/config";
+import { onMounted, ref } from 'vue'
 
 declare global {
   interface Window {

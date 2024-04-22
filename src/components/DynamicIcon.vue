@@ -5,12 +5,11 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
-import {Prop} from "vue-property-decorator";
-import {fab} from "@/logic/constants";
-import {Icon} from "@iconify/vue";
+import { Component, Prop, Vue } from 'vue-facing-decorator';
+import { fab } from "@/logic/constants";
+import { Icon } from "@iconify/vue";
 
-@Options({ components: {Icon} })
+@Component({ components: {Icon} })
 export default class DynamicIcon extends Vue {
     @Prop() icon!: string
 

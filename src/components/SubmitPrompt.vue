@@ -1,27 +1,27 @@
 <template>
     <div id="SubmitPrompt" class="fbox-vcenter">
         <div id="prompt">
-            <div id="header">{{i18n.nav_will_submit}}
+            <div id="header">{{ t.nav_will_submit }}
                 <IFasXmark class="clickable" @click="() => $emit('close')"></IFasXmark>
             </div>
 
-            <div class="text">{{i18n.nav_req_name}}
-                <div class="sub">{{i18n.nav_req_anonymous}}</div>
+            <div class="text">{{ t.nav_req_name }}
+                <div class="sub">{{ t.nav_req_anonymous }}</div>
             </div>
             <HyInput class="input first" placeholder="名字" v-model="name"/>
             <HyInput class="input" placeholder="邮箱（可选）" v-model="email"/>
 
-            <div>{{i18n.nav_reCAPTCHA}}</div>
+            <div>{{ t.nav_reCAPTCHA }}</div>
             <RecaptchaV2 @verify="submit"/>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import {Options, Vue} from 'vue-class-component';
+import { Component, Vue } from 'vue-facing-decorator';
 import HyInput from "@/components/HyInput.vue";
 import RecaptchaV2 from "@/components/RecaptchaV2.vue";
-import {i18n, getLang} from "@/logic/config";
+import { t } from "@/logic/config";
 
 
 export interface CaptchaResponse
@@ -32,13 +32,13 @@ export interface CaptchaResponse
 }
 
 
-@Options({components: {RecaptchaV2, HyInput}})
+@Component({components: {RecaptchaV2, HyInput}})
 export default class SubmitPrompt extends Vue
 {
     name = ''
     email = ''
 
-    i18n = i18n[getLang()];
+    t = t;
 
     submit(captcha: string): void
     {

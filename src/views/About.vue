@@ -5,14 +5,14 @@
 </template>
 
 <script lang="ts">
-import {Options, Vue} from 'vue-class-component';
+import { Component, Vue } from 'vue-facing-decorator';
 import aboutHtml from "@/assets/about.md";
 import aboutHtmlHant from "@/assets/about.zh_hant.md";
 import aboutHtmlEn from "@/assets/about.en.md";
 import { getLang } from "@/logic/config";
 import { handleIconFromString } from '@/logic/helper';
 
-@Options({})
+@Component({})
 export default class About extends Vue
 {
     lang = getLang();

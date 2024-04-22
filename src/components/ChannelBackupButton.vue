@@ -6,13 +6,12 @@
 </template>
 
 <script lang="ts">
-import {Options, Vue} from 'vue-class-component';
-import {Prop} from "vue-property-decorator";
+import { Component, Prop, Vue } from 'vue-facing-decorator';
 import urljoin from "url-join";
 
 const kvs = {'telegram': '电报', 'twitter': '推特'}
 
-@Options({components: {}})
+@Component({components: {}})
 export default class ChannelBackupButton extends Vue
 {
     @Prop({default: "telegram"}) platform: string

@@ -11,16 +11,15 @@
 </template>
 
 <script lang="ts">
-import {Options, Vue} from 'vue-class-component';
-import {Prop} from "vue-property-decorator";
-import {backupUrl} from "@/logic/config";
-import {TgBlog} from "tg-blog";
+import { Component, Prop, Vue } from 'vue-facing-decorator';
+import { backupUrl } from "@/logic/config";
+import { TgBlog } from "tg-blog";
 import "tg-blog/dist/style.css"
 import ChannelBackupButton from "@/components/ChannelBackupButton.vue";
 
 const alias = {'tg': 'telegram', 'tw': 'twitter'}
 
-@Options({components: {TgBlog, ChannelBackupButton}})
+@Component({components: {TgBlog, ChannelBackupButton}})
 export default class ChannelBackup extends Vue
 {
     @Prop({required: true}) userid: string

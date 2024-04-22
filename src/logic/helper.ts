@@ -1,5 +1,5 @@
 import moment from 'moment'
-import {getLang} from "@/logic/config";
+import { getLang } from "@/logic/config";
 import { info } from "@/logic/utils";
 import { Icon } from "@/logic/icon";
 

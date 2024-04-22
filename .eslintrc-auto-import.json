@@ -59,6 +59,10 @@
     "PropType": true,
     "Ref": true,
     "VNode": true,
-    "toValue": true
+    "toValue": true,
+    "ExtractDefaultPropTypes": true,
+    "ExtractPropTypes": true,
+    "ExtractPublicPropTypes": true,
+    "WritableComputedRef": true
   }
 }

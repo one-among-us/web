@@ -6,22 +6,20 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
-import { dataHost, getLang, i18n } from '@/logic/config';
+import { Component, Vue } from 'vue-facing-decorator';
+import { dataHost, t } from '@/logic/config';
 import { PersonMeta } from '@/logic/data';
 import urljoin from 'url-join';
-import { info } from '@/logic/utils';
 import { fetchWithLang } from '@/logic/helper';
 import { Icon } from "@iconify/vue";
+import router from "@/router";
 
-@Options({ components: { Icon } })
+@Component({ components: { Icon } })
 export default class RandomPerson extends Vue {
-    lang = getLang();
-    i18n = i18n[getLang()];
+    i18n = t;
     people: PersonMeta[] = null as never as PersonMeta[];
 
     created(): void {
-        info(`Language: ${this.lang}`);
         fetchWithLang(urljoin(dataHost, 'people-list.json'))
             .then(it => it.json())
             .then(it => this.people = it);
@@ -30,7 +28,7 @@ export default class RandomPerson extends Vue {
     rand() {
         if (!this.people) return;
         const p = this.people[Math.floor(this.people.length * Math.random())];
-        this.$router.push(`/profile/${p.id}`);
+        router.push(`/profile/${p.id}`);
     }
 }
 </script>

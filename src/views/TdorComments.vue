@@ -3,10 +3,10 @@
     <!-- Add comment textbox -->
     <transition name="collapse">
       <div id="add-comment" v-show="showInputArea">
-        <textarea id="comment-textarea" v-model="textInput" :placeholder="i18n.nav_comment_placeholder"
+        <textarea id="comment-textarea" v-model="textInput" :placeholder="t.nav_comment_placeholder"
           @input="resizeInput" ref="input" />
         <div id="send-comment-btn" v-if="textInput.length > 0">
-          <span class="char-count unselectable">{{ textInput.length }} {{ i18n.nav_comment_status }}</span>
+          <span class="char-count unselectable">{{ textInput.length }} {{ t.nav_comment_status }}</span>
           <IFasPaperPlane class="icon" @click="btnSend" />
         </div>
         <MarkdownTooltip text-area-id="comment-textarea"></MarkdownTooltip>
@@ -18,19 +18,17 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
-import { Prop } from "vue-property-decorator";
+import { Component, Vue } from 'vue-facing-decorator';
 import { Person } from "@/logic/data";
 import SubmitPrompt, { CaptchaResponse } from "@/components/SubmitPrompt.vue";
 import { fetchText } from "@/logic/helper";
-import { backendHost } from "@/logic/config";
+import { backendHost, t } from "@/logic/config";
 import MarkdownTooltip from "@/components/MarkdownTooltip.vue";
 import { error, info } from "@/logic/utils";
-import { initSpoilers, mdParseInline } from "tg-blog";
+import { initSpoilers } from "tg-blog";
 import Swal from 'sweetalert2';
-import { i18n, getLang } from "@/logic/config";
 
-@Options({ components: { MarkdownTooltip, SubmitPrompt } })
+@Component({ components: { MarkdownTooltip, SubmitPrompt } })
 export default class TdorComments extends Vue {
   declare $refs: {
     input: HTMLTextAreaElement
@@ -41,7 +39,7 @@ export default class TdorComments extends Vue {
 
   showCaptchaPrompt = false
 
-  i18n = i18n[getLang()]
+  t = t
   p = { id: "tdor" } as Person
   showInputArea = true
 
@@ -68,7 +66,7 @@ export default class TdorComments extends Vue {
     info(params)
 
     Swal.fire({
-      title: i18n[getLang()].nav_comment_submit,
+      title: t.nav_comment_submit,
       showConfirmButton: false,
       icon: null,
       didOpen: (() => {
@@ -77,21 +75,21 @@ export default class TdorComments extends Vue {
           .then(() => {
             this.textInput = "";
             Swal.fire({
-              title: i18n[getLang()].nav_success,
-              text: i18n[getLang()].nav_success_text_reply,
+              title: t.nav_success,
+              text: t.nav_success_text_reply,
               icon: 'success',
               timer: 5000,
               timerProgressBar: true,
               showConfirmButton: true,
-              confirmButtonText: i18n[getLang()].nav_ok_1,
+              confirmButtonText: t.nav_ok_1,
               showCloseButton: true
             })
           })
           .catch(err => {
             error(err);
             Swal.fire({
-              title: i18n[getLang()].nav_failed,
-              text: i18n[getLang()].nav_fail_reason + err.message,
+              title: t.nav_failed,
+              text: t.nav_fail_reason + err.message,
               icon: 'error',
               timer: 5000,
               timerProgressBar: true,

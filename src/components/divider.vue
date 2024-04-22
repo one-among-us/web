@@ -6,11 +6,10 @@
 </template>
 
 <script lang="ts">
-import {Options, Vue} from 'vue-class-component';
-import {Prop} from "vue-property-decorator";
-import {transColors} from "@/logic/constants";
+import { Component, Prop, Vue } from 'vue-facing-decorator';
+import { transColors } from "@/logic/constants";
 
-@Options({components: {}})
+@Component({components: {}})
 export default class Divider extends Vue
 {
     @Prop({default: transColors}) colors!: string[]

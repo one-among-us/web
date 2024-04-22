@@ -9,9 +9,9 @@
 </template>
 
 <script lang="ts">
-import {Options, Vue} from 'vue-class-component';
+import { Component, Vue } from 'vue-facing-decorator';
 
-@Options({components: {}})
+@Component({components: {}})
 export default class FourOhFour extends Vue
 {
     mounted()

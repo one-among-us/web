@@ -18,7 +18,7 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20
           cache: 'yarn'
       - run: yarn install
         env:
@@ -39,7 +39,7 @@ jobs:
           path: "data-repo"
 
       - name: Package
-        uses: one-among-us/puppeteer-headful@18.9.2.pre1
+        uses: one-among-us/puppeteer-headful@20
         with:
           args: yarn gen-meta
 

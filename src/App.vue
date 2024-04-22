@@ -7,8 +7,8 @@
 
     <div id="nav" class="fbox-vcenter unselectable">
         <div>
-            <router-link class="router-link" to="/">{{ i18n.nav_home }}</router-link>
-            <router-link class="router-link" to="/about">{{ i18n.nav_contact }}</router-link>
+            <router-link class="router-link" to="/">{{ t.nav_home }}</router-link>
+            <router-link class="router-link" to="/about">{{ t.nav_contact }}</router-link>
         </div>
     </div>
 
@@ -20,19 +20,20 @@
 </template>
 
 <script lang="ts">
-import {Options, Vue} from 'vue-class-component';
+import { Component, Vue } from 'vue-facing-decorator';
 import Divider from "@/components/divider.vue";
 import LangButton from "@/components/LangButton.vue";
-import {info, logPrefixCss} from "@/logic/utils";
-import {transColors} from "@/logic/constants";
-import {getLang, i18n} from './logic/config';
+import { info, logPrefixCss } from "@/logic/utils";
+import { transColors } from "@/logic/constants";
+import { t, getLang } from './logic/config';
 
-@Options({components: {LangButton, Divider}})
+@Component({components: {LangButton, Divider}})
 export default class App extends Vue
 {
-    i18n = i18n[getLang()]
+    $route: any
+    t = t
 
-    beforeCreate(): void 
+    created(): void
     {
         if (!localStorage.getItem('showBtn'))
             localStorage.setItem('showBtn', '1')
