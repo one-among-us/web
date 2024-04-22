@@ -35,6 +35,8 @@ export const supportedLang: Record<Lang, string> = {
  */
 export function getLang(): Lang
 {
+    if (typeof localStorage === 'undefined') return 'en'
+
     // Language preference set, return
     const pref = localStorage.getItem("lang")
     if (pref && (pref == 'zh_hans' || pref == 'zh_hant' || pref =='en')) return pref
