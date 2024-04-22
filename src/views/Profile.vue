@@ -142,23 +142,22 @@ export default class Profile extends Vue
     }
 
     mounted(): void {
+        if (localStorage.getItem('lang') === 'en') return;
         if (this.userid == "MeowBot233") {
-            if (this.lang != "en") {
-                if (!localStorage.getItem("isSeenMeowBot233")) {
-                    localStorage.setItem("isSeenMeowBot233", "找到了喵~")
-                    Swal.fire({
-                        toast: true,
-                        position: "top-end",
-                        title: "找到了喵~",
-                        timer: 5000,
-                        showConfirmButton: false,
-                        showCancelButton: false,
-                        timerProgressBar: true,
-                        iconHtml: `<img style="width: 64px;height: 57px;border: none" src="/cat-face-emoji-2048x1828.png"></img>`,
-                        iconColor: "#00000000"
+            if (!localStorage.getItem("isSeenMeowBot233")) {
+                localStorage.setItem("isSeenMeowBot233", "找到了喵~")
+                Swal.fire({
+                    toast: true,
+                    position: "top-end",
+                    title: "找到了喵~",
+                    timer: 5000,
+                    showConfirmButton: false,
+                    showCancelButton: false,
+                    timerProgressBar: true,
+                    iconHtml: `<img style="width: 64px;height: 57px;border: none" src="/cat-face-emoji-2048x1828.png"></img>`,
+                    iconColor: "#00000000"
                     })
                 }
-            }
         }
         if ((this.userid == "Anilovr") || (this.userid == "noname3031") || (this.userid == "dogesir_")) {
             if (!localStorage.getItem("Betelgeuse"))
