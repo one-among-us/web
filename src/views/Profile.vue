@@ -70,17 +70,19 @@ export default class Profile extends Vue
             .then(it => this.compiledMdxCode = replaceUrlVars(it, this.pid))
 
         this.viewLimit = this.checkViewLimit() === true
-        if (!this.viewLimit) localStorage.setItem("view_limit_time", new Date().toUTCString())
     }
     
     checkViewLimit(): boolean | void {
+        const config = { warningLimit: 10, errorLimit: 20, cooldown: 30 }
+
         const now = new Date()
         const [_time, _entries] = [localStorage.getItem("view_limit_time"), localStorage.getItem("view_limit_entries")]
         const [time, entries] = [new Date(_time), JSON.parse(_entries ?? "[]")]
         const elapsedMin = (now.getTime() - time.getTime()) / 60000
 
         // Initialize
-        if (!_time || !_entries || elapsedMin > 20) {
+        if (!_time || !_entries || elapsedMin > config.cooldown) {
+            localStorage.setItem("view_limit_time", new Date().toUTCString())
             localStorage.setItem("view_limit_entries", JSON.stringify([this.userid]))
             return
         }
@@ -89,22 +91,25 @@ export default class Profile extends Vue
         if (!entries.includes(this.userid)) {
             entries.push(this.userid)
             localStorage.setItem("view_limit_entries", JSON.stringify(entries))
+
+            // When it reaches 20 for the first time, reset timer
+            if (entries.length == config.errorLimit) localStorage.setItem("view_limit_time", new Date().toUTCString())
         }
 
         // Warn when the view count reaches 10
-        if (entries.length >= 10) {
+        if (entries.length >= config.warningLimit) {
             console.log("View limit reached 10")
             Swal.fire({
                 title: t.view_limit.title,
                 text: t.view_limit.warning,
                 icon: 'warning',
-                timer: 30000,
+                timer: 30_000,
                 timerProgressBar: true,
             })
         }
 
         // Hard limit at 20
-        if (entries.length >= 20) {
+        if (entries.length >= config.errorLimit) {
             console.log("View limit reached 20")
             Swal.fire({
                 title: t.view_limit.title,
