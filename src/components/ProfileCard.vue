@@ -39,7 +39,7 @@
                 </li>
             </ul>
             <div id="websites" v-if="p.websites?.length">
-                <span id="websites-text">{{ i18n.nav_website }}</span>
+                <span id="websites-text">{{ t.nav_website }}</span>
                 <a v-for="web of p.websites" :key="web[0]" :href="web[1]">
                     <DynamicIcon :icon="web[0]" />
                 </a>
@@ -51,16 +51,15 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
-import { Prop } from "vue-property-decorator";
-import { backendHost, replaceUrlVars } from "@/logic/config";
+import { Component, Prop, Vue } from 'vue-facing-decorator';
+import { backendHost, replaceUrlVars, t } from "@/logic/config";
 import { abbreviateNumber, getTodayDate } from "@/logic/helper";
 import { Person } from "@/logic/data";
 import { info } from '@/logic/utils';
 import Swal from 'sweetalert2';
-import { getLang, i18n } from '@/logic/config';
+import router from "@/router";
 
-@Options({ components: {} })
+@Component({ components: {} })
 export default class ProfileCard extends Vue {
     @Prop({ required: true }) userid!: string
     @Prop({ required: true }) p!: Person
@@ -71,7 +70,7 @@ export default class ProfileCard extends Vue {
 
     loading = new Set<string>()
 
-    i18n = i18n[getLang()];
+    t = t;
 
     created() {
         this.flowersGiven = localStorage.getItem(`last_flower_given@${this.userid}`) === getTodayDate()
@@ -108,15 +107,15 @@ export default class ProfileCard extends Vue {
 
     edit(): void {
         Swal.fire({
-            title: i18n[getLang()].nav_what_to_edit,
+            title: t.nav_what_to_edit,
             icon: "question",
             showConfirmButton: true,
             showCancelButton: true,
-            confirmButtonText: i18n[getLang()].nav_profile_card,
-            cancelButtonText: i18n[getLang()].nav_introduction
+            confirmButtonText: t.nav_profile_card,
+            cancelButtonText: t.nav_introduction
         }).then((result) => {
             if (result.isConfirmed)
-                this.$router.push(`/edit-info/${this.p.id}`);
+                router.push(`/edit-info/${this.p.id}`);
             else if (result.dismiss === Swal.DismissReason.cancel)
                 open(`https://github.com/one-among-us/data/tree/main/people/${this.userid}/page.md`)
         })

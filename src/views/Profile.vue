@@ -11,21 +11,17 @@
 </template>
 
 <script lang="ts">
-import {Options, Vue} from 'vue-class-component';
-import {Prop} from "vue-property-decorator";
-import {parsePeopleJson, Person} from "@/logic/data";
-import {fetchWithLang} from "@/logic/helper"
-import {peopleUrl, replaceUrlVars, setLang, Lang} from "@/logic/config";
+import { Component, Prop, Vue } from 'vue-facing-decorator';
+import { parsePeopleJson, Person } from "@/logic/data";
+import { fetchWithLang } from "@/logic/helper"
+import { Lang, peopleUrl, replaceUrlVars, setLang, t } from "@/logic/config";
 import MDX from "@/components/MDX.vue";
 import urljoin from "url-join";
 import ProfileComments from "@/views/ProfileComments.vue";
 import ProfileCard from '@/components/ProfileCard.vue';
 import Swal from 'sweetalert2';
-import { i18n, getLang } from '@/logic/config';
 
-const t = i18n[getLang()];
-
-@Options({components: {ProfileCard, ProfileComments, MDX}})
+@Component({components: {ProfileCard, ProfileComments, MDX}})
 export default class Profile extends Vue
 {
     @Prop({required: true}) userid!: string

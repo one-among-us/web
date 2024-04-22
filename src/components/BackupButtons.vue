@@ -5,11 +5,10 @@
 </template>
 
 <script lang="ts">
-import {Options, Vue} from 'vue-class-component';
+import { Component, Prop, Vue } from 'vue-facing-decorator';
 import ChannelBackupButton from "@/components/ChannelBackupButton.vue";
-import {Prop} from "vue-property-decorator";
 
-@Options({components: {ChannelBackupButton}})
+@Component({components: {ChannelBackupButton}})
 export default class BackupButtons extends Vue
 {
     @Prop({required: true}) platforms: string[]

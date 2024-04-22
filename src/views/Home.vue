@@ -38,7 +38,7 @@
 </template>
 
 <script lang="ts">
-import {Options, Vue} from 'vue-class-component';
+import { Component, Ref, Vue } from 'vue-facing-decorator';
 import tdorTop from "@/assets/tdor-top.md";
 import tdorTopHant from "@/assets/tdor-top.zh_hant.md";
 import tdorTopEn from "@/assets/tdor-top.en.md";
@@ -51,16 +51,16 @@ import htmlTopEn from "@/assets/home-top.en.md";
 import htmlBottom from "@/assets/home-bottom.md";
 import htmlBottomHant from "@/assets/home-bottom.zh_hant.md";
 import htmlBottomEn from "@/assets/home-bottom.en.md";
-import {PersonMeta} from "@/logic/data";
-import {dataHost, getLang, replaceUrlVars} from "@/logic/config";
+import { PersonMeta } from "@/logic/data";
+import { dataHost, getLang, replaceUrlVars } from "@/logic/config";
 import urljoin from "url-join";
 import { info } from '@/logic/utils';
-import {fetchWithLang, handleIconFromString} from "@/logic/helper";
-import {Ref} from "vue-property-decorator";
-import {fitText} from "@/logic/dom_utils";
+import { fetchWithLang, handleIconFromString } from "@/logic/helper";
+import { fitText } from "@/logic/dom_utils";
 import TdorComments from "@/views/TdorComments.vue";
+import router from "@/router";
 
-@Options({components: {TdorComments}})
+@Component({components: {TdorComments}})
 export default class Home extends Vue
 {
     clicked = ''
@@ -106,17 +106,13 @@ export default class Home extends Vue
         info(`Language: ${this.lang}`)
         fetchWithLang(urljoin(dataHost, 'people-home-list.json'))
             .then(it => it.text())
-            .then(it => {
-                this.people = JSON.parse(it)
-                // console.log(it)
-                // console.log(this.people)
-            })
+            .then(it => this.people = JSON.parse(it))
     }
 
     switchPage(p: PersonMeta): void
     {
         info(`switchPage(${p.id})`)
-        this.$router.push(`/profile/${p.id}`)
+        router.push(`/profile/${p.id}`)
     }
 
     profileUrl(p: PersonMeta): string

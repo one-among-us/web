@@ -14,8 +14,7 @@
 </template>
 
 <script lang="ts">
-import {Options, Vue} from 'vue-class-component';
-import {Prop, Ref} from "vue-property-decorator";
+import { Component, Prop, Ref, Vue } from 'vue-facing-decorator';
 
 interface TooltipAction {
     name: string
@@ -24,7 +23,7 @@ interface TooltipAction {
     // is: (text: string, start: number, end: number) => boolean
 }
 
-@Options({components: {}})
+@Component({components: {}})
 export default class MarkdownTooltip extends Vue
 {
     actions: TooltipAction[] = [

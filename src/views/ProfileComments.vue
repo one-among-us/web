@@ -1,17 +1,17 @@
 <template>
     <div id="ProfileComments" class="markdown-content">
-        <h1>{{p.id == 'tdor' ? "For Being Out And Proud——2024年跨性别现身日晚会 来信集合" : i18n.nav_comments}}</h1>
+        <h1>{{ p.id == 'tdor' ? "For Being Out And Proud——2024年跨性别现身日晚会 来信集合" : t.nav_comments }}</h1>
 
         <!-- Comments -->
         <div id="comments" v-if="p.comments.length > 0">
             <div class="comment" v-for="c in comments" :key="c.id">
                 <span class="content" v-html="c.content"></span>
-                <span class="from anonymous" v-if="c.anonymous">{{i18n.nav_anonymous}}</span>
+                <span class="from anonymous" v-if="c.anonymous">{{ t.nav_anonymous }}</span>
                 <span class="from" v-else>——{{c.submitter}}</span>
 
                 <!-- Replies -->
                 <div class="replies" v-if="c.replies.length">
-                    <div class="reply-title">{{i18n.nav_comment_in_reply_to}} @{{c.submitter}}</div>
+                    <div class="reply-title">{{ t.nav_comment_in_reply_to }} @{{ c.submitter }}</div>
                     <div class="reply" v-for="(r, idx) in c.replies" :key="idx">
                         <span class="content" v-html="r.content"></span>
                         <span class="from">——{{r.submitter}}</span>
@@ -22,10 +22,10 @@
 
         <!-- Add comment textbox -->
         <div id="add-comment" v-if="p.id != 'tdor'">
-            <textarea id="comment-textarea" v-model="textInput" :placeholder="i18n.nav_comment_placeholder"
+            <textarea id="comment-textarea" v-model="textInput" :placeholder="t.nav_comment_placeholder"
                       @input="resizeInput" ref="input"/>
             <div id="send-comment-btn" v-if="textInput.trim().length > 0">
-                <span class="char-count unselectable">{{textInput.trim().length}} {{i18n.nav_comment_status}}</span>
+                <span class="char-count unselectable">{{ textInput.trim().length }} {{ t.nav_comment_status }}</span>
                 <IFasPaperPlane class="icon" @click="btnSend"/>
             </div>
 
@@ -37,19 +37,17 @@
 </template>
 
 <script lang="ts">
-import {Options, Vue} from 'vue-class-component';
-import {Prop} from "vue-property-decorator";
-import {Person} from "@/logic/data";
-import SubmitPrompt, {CaptchaResponse} from "@/components/SubmitPrompt.vue";
-import {fetchText} from "@/logic/helper";
-import {backendHost} from "@/logic/config";
+import { Component, Prop, Vue } from 'vue-facing-decorator';
+import { Person } from "@/logic/data";
+import SubmitPrompt, { CaptchaResponse } from "@/components/SubmitPrompt.vue";
+import { fetchText } from "@/logic/helper";
+import { backendHost, t } from "@/logic/config";
 import MarkdownTooltip from "@/components/MarkdownTooltip.vue";
-import {error, info} from "@/logic/utils";
-import {initSpoilers, mdParseInline} from "tg-blog";
+import { error, info } from "@/logic/utils";
+import { initSpoilers, mdParseInline } from "tg-blog";
 import Swal from 'sweetalert2';
-import { i18n, getLang } from "@/logic/config";
 
-@Options({components: {MarkdownTooltip, SubmitPrompt}})
+@Component({components: {MarkdownTooltip, SubmitPrompt}})
 export default class ProfileComments extends Vue
 {
     declare $refs: {
@@ -63,7 +61,7 @@ export default class ProfileComments extends Vue
 
     showCaptchaPrompt = false
 
-    i18n = i18n[getLang()]
+    t = t
 
     get comments()
     {
@@ -101,7 +99,7 @@ export default class ProfileComments extends Vue
         info(params)
         
         Swal.fire({
-            title: i18n[getLang()].nav_comment_submit,
+            title: t.nav_comment_submit,
             showConfirmButton: false,
             icon: null,
             didOpen: (() => {
@@ -110,21 +108,21 @@ export default class ProfileComments extends Vue
                     .then(() => {
                         this.textInput = "";
                         Swal.fire({
-                            title: i18n[getLang()].nav_success,
-                            text: i18n[getLang()].nav_success_text_reply,
+                            title: t.nav_success,
+                            text: t.nav_success_text_reply,
                             icon: 'success',
                             timer: 5000,
                             timerProgressBar: true,
                             showConfirmButton: true,
-                            confirmButtonText: i18n[getLang()].nav_ok_1,
+                            confirmButtonText: t.nav_ok_1,
                             showCloseButton: true
                         })
                     })
                     .catch(err => {
                         error(err);
                         Swal.fire({
-                            title: i18n[getLang()].nav_failed,
-                            text: i18n[getLang()].nav_fail_reason + err.message,
+                            title: t.nav_failed,
+                            text: t.nav_fail_reason + err.message,
                             icon: 'error',
                             timer: 5000,
                             timerProgressBar: true,

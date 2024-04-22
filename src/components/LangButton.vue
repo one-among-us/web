@@ -8,12 +8,12 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
-import { getLang, setLang, Lang, supportedLang } from "@/logic/config";
+import { Component, Vue } from 'vue-facing-decorator';
+import { getLang, Lang, setLang, supportedLang } from "@/logic/config";
 import { info } from "@/logic/utils";
 
 
-@Options({ components: {} })
+@Component({ components: {} })
 export default class LangButton extends Vue {
     lang = getLang()
     supportedLang = supportedLang

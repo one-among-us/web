@@ -184,6 +184,8 @@ export const i18n = {
     }
 }
 
+export const t = i18n[getLang()]
+
 export const info_i18n = {
     "en": {
         "alias": "Alias",
