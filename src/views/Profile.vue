@@ -163,6 +163,7 @@ export default class Profile extends Vue
                 if (!localStorage.getItem("birthdayMeowBot233"))
                     localStorage.setItem("birthdayMeowBot233", (now.getFullYear() - 1).toString())
                 if (parseInt(localStorage.getItem("birthdayMeowBot233")) != now.getFullYear()) {
+                    localStorage.setItem("birthdayMeowBot233", now.getFullYear().toString())
                     Swal.fire({
                         icon: null,
                         position: "center",
