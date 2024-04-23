@@ -306,6 +306,27 @@ export default class Profile extends Vue
                 }
             })
         }
+        if (this.userid == "Xu_Yushu") {
+            delayedTask(20000, () => {
+                if ((window.location.pathname == "/profile/Xu_Yushu") || (window.location.pathname == "/profile/Xu_Yushu/")) {
+                    if (!localStorage.getItem("preferredName")) {
+                        localStorage.setItem("preferredName", "we would never known")
+                        Swal.fire({
+                            toast: true,
+                            position: "top-end",
+                            title: "我们仍未知道妳喜欢的名字",
+                            text: "正如我们从未知道那天所看见的花的名字",
+                            timer: 5000,
+                            showConfirmButton: false,
+                            showCancelButton: false,
+                            timerProgressBar: true,
+                            iconHtml: `<img style="width: 64px;height: 64px;border: none" src="/clip.png"></img>`,
+                            iconColor: "#00000000"
+                        })
+                    }
+                }
+            })
+        }
     }
 }
 </script>
