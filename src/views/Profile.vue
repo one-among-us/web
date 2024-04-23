@@ -328,6 +328,40 @@ export default class Profile extends Vue
                 }
             })
         }
+        if ((this.userid == "SevenBird") || (this.userid == "Considerate_cat") || (this.userid == "ttttsuuukikoo_")) {
+            const rhythmKeyword = ["音游", "音遊", "Arc", "舞萌"]
+            const ps = document.getElementsByTagName("p")
+            for (const v of ps) {
+                for (const i of rhythmKeyword) {
+                    if (v.innerHTML.includes(i) || v.innerText.includes(i)) {
+                        v.addEventListener('click', () => {
+                            if (!localStorage.getItem("rhythm"))
+                                localStorage.setItem("rhythm", `["${this.userid}"]`)
+                            const rhythm = JSON.parse(localStorage.getItem("rhythm")) as string[]
+                            if (!rhythm.includes(this.userid)) {
+                                rhythm.push(this.userid)
+                                localStorage.setItem("rhythm", JSON.stringify(rhythm))
+                            }
+                            if (rhythm.includes("SevenBird") && rhythm.includes("Considerate_cat") && rhythm.includes("ttttsuuukikoo_") && (!localStorage.getItem("rhythmShown"))) {
+                                localStorage.setItem("rhythmShown", "AP end")
+                                Swal.fire({
+                                    toast: true,
+                                    position: "top-end",
+                                    title: "希望有个 All Perfect 的结局",
+                                    text: " ~ Darkest Night, I can Found You Here ~ ",
+                                    timer: 5000,
+                                    showConfirmButton: false,
+                                    showCancelButton: false,
+                                    timerProgressBar: true,
+                                    iconHtml: `<img style="width: 64px;height: 64px;border: none" src="/img/musical-score.png"></img>`,
+                                    iconColor: "#00000000"
+                                })
+                            }
+                        }, false)
+                    }
+                }
+            }
+        }
     }
 }
 </script>
