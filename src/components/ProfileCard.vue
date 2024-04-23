@@ -111,7 +111,7 @@ export default class ProfileCard extends Vue {
                 showConfirmButton: false,
                 showCancelButton: false,
                 timerProgressBar: true,
-                iconHtml: `<img style="width: 64px;height: 64px;border: none" src="/lollipop_1f36d.png"></img>`,
+                iconHtml: `<img style="width: 64px;height: 64px;border: none" src="/img/lollipop_1f36d.png"></img>`,
                 iconColor: "#00000000"
             })
         }

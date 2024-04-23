@@ -154,7 +154,7 @@ export default class Profile extends Vue
                     showConfirmButton: false,
                     showCancelButton: false,
                     timerProgressBar: true,
-                    iconHtml: `<img style="width: 64px;height: 57px;border: none" src="/cat-face-emoji-2048x1828.png"></img>`,
+                    iconHtml: `<img style="width: 64px;height: 57px;border: none" src="/img/cat-face-emoji-2048x1828.png"></img>`,
                     iconColor: "#00000000"
                 })
             }
@@ -198,9 +198,9 @@ export default class Profile extends Vue
                         showConfirmButton: false,
                         showCancelButton: false,
                         timerProgressBar: true,
-                        iconHtml: `<img style="width: 64px;height: 64px;border: none" src="/betelgeuse.png"></img>`,
+                        iconHtml: `<img style="width: 64px;height: 64px;border: none" src="/img/betelgeuse.png"></img>`,
                         iconColor: "#00000000",
-                        background: "url(/stardust.jpg)",
+                        background: "url(/img/stardust.jpg)",
                         color: "#f0f8ff"
                     })
                 }
@@ -226,9 +226,9 @@ export default class Profile extends Vue
                         showConfirmButton: false,
                         showCancelButton: false,
                         timerProgressBar: true,
-                        iconHtml: `<img style="width: 64px;height: 47px;border: none" src="/bridge.png"></img>`,
+                        iconHtml: `<img style="width: 64px;height: 47px;border: none" src="/img/bridge.png"></img>`,
                         iconColor: "#00000000",
-                        background: "url(/fog.jpg)"
+                        background: "url(/img/fog.jpg)"
                     })
                 }
             }
@@ -253,7 +253,7 @@ export default class Profile extends Vue
                         showConfirmButton: false,
                         showCancelButton: false,
                         timerProgressBar: true,
-                        iconHtml: `<img style="width: 64px;height: 64px;border: none" src="/ship.png"></img>`,
+                        iconHtml: `<img style="width: 64px;height: 64px;border: none" src="/img/ship.png"></img>`,
                         iconColor: "#00000000",
                         background: "#0b2058ff",
                         color: "#f0f8feff"
@@ -278,7 +278,7 @@ export default class Profile extends Vue
                             showConfirmButton: false,
                             showCancelButton: false,
                             timerProgressBar: true,
-                            iconHtml: `<img style="width: 64px;height: 64px;border: none" src="/lifeline.png"></img>`,
+                            iconHtml: `<img style="width: 64px;height: 64px;border: none" src="/img/lifeline.png"></img>`,
                             iconColor: "#00000000",
                             background: "#DDDDDDFF"
                         })
@@ -299,9 +299,9 @@ export default class Profile extends Vue
                             showConfirmButton: false,
                             showCancelButton: false,
                             timerProgressBar: true,
-                            iconHtml: `<img style="width: 64px;height: 64px;border: none" src="/tumb.png"></img>`,
+                            iconHtml: `<img style="width: 64px;height: 64px;border: none" src="/img/tumb.png"></img>`,
                             iconColor: "#00000000",
-                            background: "url(/flowers.png)"
+                            background: "url(/img/flowers.png)"
                         })
                     }
                 }
@@ -321,7 +321,7 @@ export default class Profile extends Vue
                             showConfirmButton: false,
                             showCancelButton: false,
                             timerProgressBar: true,
-                            iconHtml: `<img style="width: 64px;height: 64px;border: none" src="/clip.png"></img>`,
+                            iconHtml: `<img style="width: 64px;height: 64px;border: none" src="/img/clip.png"></img>`,
                             iconColor: "#00000000"
                         })
                     }
