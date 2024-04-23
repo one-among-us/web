@@ -127,3 +127,12 @@ export function handleIconFromString(html: string): string {
     if (!html.includes('[!')) return html;
     return html.replace(/\[!(\w+)\](?::\s*(.*))?/g, (match, icon) => (Icon[icon as string]));
 }
+
+export function delay(milliseconds: number): Promise<void>{
+    return new Promise(resolve => setTimeout(resolve, milliseconds));
+}
+
+export async function delayedTask(milliseconds: number, task: () => any) {
+    await delay(milliseconds)
+    task()
+}

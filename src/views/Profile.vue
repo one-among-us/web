@@ -13,7 +13,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-facing-decorator';
 import { parsePeopleJson, Person } from "@/logic/data";
-import { fetchWithLang } from "@/logic/helper"
+import { fetchWithLang, delayedTask } from "@/logic/helper"
 import { Lang, peopleUrl, replaceUrlVars, setLang, t } from "@/logic/config";
 import MDX from "@/components/MDX.vue";
 import urljoin from "url-join";
@@ -284,6 +284,27 @@ export default class Profile extends Vue
                     }
                 }, false)
             }
+        }
+        if (this.userid == "shihai4h") {
+            delayedTask(30000, () => {
+                if ((window.location.pathname == "/profile/shihai4h/") || (window.location.pathname == "/profile/shihai4h")) {
+                    if (!localStorage.getItem("funeralFlowers")) {
+                        localStorage.setItem("funeralFlowers", "shihai4h")
+                        Swal.fire({
+                            toast: true,
+                            position: "top-end",
+                            title: "葬花",
+                            timer: 5000,
+                            showConfirmButton: false,
+                            showCancelButton: false,
+                            timerProgressBar: true,
+                            iconHtml: `<img style="width: 64px;height: 64px;border: none" src="/tumb.png"></img>`,
+                            iconColor: "#00000000",
+                            background: "url(/flowers.png)"
+                        })
+                    }
+                }
+            })
         }
     }
 }
