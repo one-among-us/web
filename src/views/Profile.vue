@@ -13,7 +13,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-facing-decorator';
 import { parsePeopleJson, Person } from "@/logic/data";
-import { fetchWithLang, delayedTask } from "@/logic/helper"
+import { fetchWithLang, scheduledTask } from "@/logic/helper"
 import { Lang, peopleUrl, replaceUrlVars, setLang, t } from "@/logic/config";
 import MDX from "@/components/MDX.vue";
 import urljoin from "url-join";
@@ -286,7 +286,7 @@ export default class Profile extends Vue
             }
         }
         if (this.userid == "shihai4h") {
-            delayedTask(30000, () => {
+            scheduledTask(30000, () => {
                 if ((window.location.pathname == "/profile/shihai4h/") || (window.location.pathname == "/profile/shihai4h")) {
                     if (!localStorage.getItem("funeralFlowers")) {
                         localStorage.setItem("funeralFlowers", "shihai4h")
@@ -307,7 +307,7 @@ export default class Profile extends Vue
             })
         }
         if (this.userid == "Xu_Yushu") {
-            delayedTask(20000, () => {
+            scheduledTask(20000, () => {
                 if ((window.location.pathname == "/profile/Xu_Yushu") || (window.location.pathname == "/profile/Xu_Yushu/")) {
                     if (!localStorage.getItem("preferredName")) {
                         localStorage.setItem("preferredName", "we would never known")

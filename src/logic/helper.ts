@@ -132,7 +132,7 @@ export function delay(milliseconds: number): Promise<void>{
     return new Promise(resolve => setTimeout(resolve, milliseconds));
 }
 
-export async function delayedTask(milliseconds: number, task: () => any) {
+export async function scheduledTask(milliseconds: number, task: () => any) {
     await delay(milliseconds)
     task()
 }
