@@ -143,6 +143,8 @@ export default class Profile extends Vue
 
     updated(): void {
         if (localStorage.getItem('lang') === 'en') return;
+        if (!localStorage.getItem('easterEggMode')) return;
+        if (parseInt(localStorage.getItem('easterEggMode')) == 0) return;
         if (this.userid == "MeowBot233") {
             if (!localStorage.getItem("isSeenMeowBot233")) {
                 localStorage.setItem("isSeenMeowBot233", "找到了喵~")
