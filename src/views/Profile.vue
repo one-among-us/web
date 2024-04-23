@@ -156,8 +156,26 @@ export default class Profile extends Vue
                     timerProgressBar: true,
                     iconHtml: `<img style="width: 64px;height: 57px;border: none" src="/cat-face-emoji-2048x1828.png"></img>`,
                     iconColor: "#00000000"
+                })
+            }
+            const now = new Date()
+            if ((now.getDate() == 15) && (now.getMonth() == 3)) {
+                if (!localStorage.getItem("birthdayMeowBot233"))
+                    localStorage.setItem("birthdayMeowBot233", (now.getFullYear() - 1).toString())
+                if (parseInt(localStorage.getItem("birthdayMeowBot233")) != now.getFullYear()) {
+                    Swal.fire({
+                        icon: null,
+                        position: "center",
+                        toast: false,
+                        title: null,
+                        html: "<p style=\"text-align: left\">我依然无数次想起你，生活在充满你的世界里，和你一起找寻生活的希望。</p><p style=\"text-align: left\">我依然无数次想起你的声音和笑容。</p><p style=\"text-align: left\">我依然无数次想着你，想起那时，还有那时，还有努力留住你的温度的那时。</p><p style=\"text-align: left\">我依然深爱着你，如同以前和未来，你爱我那般。</p><p style=\"text-align: left\">我的坊洛猫猫，晚安好梦，明天见。</p><p style=\"text-align: left\">以及，生日快乐，亲爱的，我们一起许个愿吧。</p><p style=\"text-align: right\">——雪絵 澪奈</p>",
+                        timer: 30000,
+                        showConfirmButton: false,
+                        showCancelButton: false,
+                        timerProgressBar: true,
                     })
                 }
+            }
         }
         if ((this.userid == "Anilovr") || (this.userid == "noname3031") || (this.userid == "dogesir_")) {
             if (!localStorage.getItem("Betelgeuse"))
