@@ -284,7 +284,7 @@ export default class Profile extends Vue
                             }
                             if (rhythm.includes("SevenBird") && rhythm.includes("Considerate_cat") && rhythm.includes("ttttsuuukikoo_") && (!localStorage.getItem("rhythmShown"))) {
                                 localStorage.setItem("rhythmShown", "AP end")
-                                toast("希望有个 All Perfect 的结局", " ~ Darkest Night, I can Found You Here ~ ", "musical-score.png", null, 64, 64, null)
+                                toast("希望有个 All Perfect 的结局", " ~ All that I'm left with is your reminiscences ~ ", "musical-score.png", null, 64, 64, null)
                             }
                         }, false)
                     }
