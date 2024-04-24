@@ -13,7 +13,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-facing-decorator';
 import { parsePeopleJson, Person } from "@/logic/data";
-import { fetchWithLang, scheduledTask } from "@/logic/helper"
+import { fetchWithLang, scheduledTask, toast } from "@/logic/helper"
 import { Lang, peopleUrl, replaceUrlVars, setLang, t } from "@/logic/config";
 import MDX from "@/components/MDX.vue";
 import urljoin from "url-join";
@@ -148,17 +148,7 @@ export default class Profile extends Vue
         if (this.userid == "MeowBot233") {
             if (!localStorage.getItem("isSeenMeowBot233")) {
                 localStorage.setItem("isSeenMeowBot233", "找到了喵~")
-                Swal.fire({
-                    toast: true,
-                    position: "top-end",
-                    title: "找到了喵~",
-                    timer: 5000,
-                    showConfirmButton: false,
-                    showCancelButton: false,
-                    timerProgressBar: true,
-                    iconHtml: `<img style="width: 64px;height: 57px;border: none" src="/img/cat-face-emoji-2048x1828.png"></img>`,
-                    iconColor: "#00000000"
-                })
+                toast("找到了喵~", null, "cat-face-emoji-2048x1828.png", null, 64, 57, null)
             }
             const now = new Date()
             if ((now.getDate() == 15) && (now.getMonth() == 3)) {
@@ -191,20 +181,7 @@ export default class Profile extends Vue
                 }
                 if (betelgeuse.includes("Anilovr") && betelgeuse.includes("noname3031") && betelgeuse.includes("dogesir_") && (!localStorage.getItem("BetelgeuseShown"))) {
                     localStorage.setItem("BetelgeuseShown", "R.I.P.")
-                    Swal.fire({
-                        toast: true,
-                        position: "top-end",
-                        title: "参宿四 ~Betelgeuse~",
-                        text: "R.I.P  - Be resilient -",
-                        timer: 5000,
-                        showConfirmButton: false,
-                        showCancelButton: false,
-                        timerProgressBar: true,
-                        iconHtml: `<img style="width: 64px;height: 64px;border: none" src="/img/betelgeuse.png"></img>`,
-                        iconColor: "#00000000",
-                        background: "url(/img/stardust.jpg)",
-                        color: "#f0f8ff"
-                    })
+                    toast("参宿四 ~Betelgeuse~", "R.I.P.  - Be resilient -", "betelgeuse.png", "url(/img/stardust.jpg)", 64, 64, '#f0f8ff')
                 }
             }
         }
@@ -219,19 +196,7 @@ export default class Profile extends Vue
                 }
                 if (ch.includes("xuewulihuameng") && ch.includes("Futajuhuacha") && ch.includes("Xu_Yushu") && ch.includes("Dethelly") && (!localStorage.getItem("ChongQingShown"))) {
                     localStorage.setItem("ChongQingShown", "Fog")
-                    Swal.fire({
-                        toast: true,
-                        position: "top-end",
-                        title: "嘉陵雾稠",
-                        text: "雾, 与投江",
-                        timer: 5000,
-                        showConfirmButton: false,
-                        showCancelButton: false,
-                        timerProgressBar: true,
-                        iconHtml: `<img style="width: 64px;height: 47px;border: none" src="/img/bridge.png"></img>`,
-                        iconColor: "#00000000",
-                        background: "url(/img/fog.jpg)"
-                    })
+                    toast("嘉陵雾稠", "雾, 与投江", "bridge.png", "url(/img/fog.jpg)", 64, 47, null)
                 }
             }
         }
@@ -246,20 +211,7 @@ export default class Profile extends Vue
                 }
                 if (boat.includes("yumao") && boat.includes("Uekawakuyuurei") && boat.includes("MizuharaNagisa") && (!localStorage.getItem("Sea"))) {
                     localStorage.setItem("Sea", "with you")
-                    Swal.fire({
-                        toast: true,
-                        position: "top-end",
-                        title: "船与海",
-                        text: "妳把船往哪开呢?!",
-                        timer: 5000,
-                        showConfirmButton: false,
-                        showCancelButton: false,
-                        timerProgressBar: true,
-                        iconHtml: `<img style="width: 64px;height: 64px;border: none" src="/img/ship.png"></img>`,
-                        iconColor: "#00000000",
-                        background: "#0b2058ff",
-                        color: "#f0f8feff"
-                    })
+                    toast("船与海", "妳把船往哪开呢?!", "ship.png", "#0b2058ff", 64, 64, '#f0f8feff')
                 }
             }
         }
@@ -271,19 +223,7 @@ export default class Profile extends Vue
                     console.log("summary" + e)
                     if (!localStorage.getItem('detailsByYumao')) {
                         localStorage.setItem('detainsByYumao', 'forever.')
-                        Swal.fire({
-                            toast: true,
-                            position: "top-end",
-                            title: "过往苦难",
-                            text: "呐喊却无人知晓",
-                            timer: 5000,
-                            showConfirmButton: false,
-                            showCancelButton: false,
-                            timerProgressBar: true,
-                            iconHtml: `<img style="width: 64px;height: 64px;border: none" src="/img/lifeline.png"></img>`,
-                            iconColor: "#00000000",
-                            background: "#DDDDDDFF"
-                        })
+                        toast("过往苦难", "呐喊却无人知晓", "lifeline.png", "#EEEEEE88", 64, 64, null)
                     }
                 }, false)
             }
@@ -293,18 +233,7 @@ export default class Profile extends Vue
                 if ((window.location.pathname == "/profile/shihai4h/") || (window.location.pathname == "/profile/shihai4h")) {
                     if (!localStorage.getItem("funeralFlowers")) {
                         localStorage.setItem("funeralFlowers", "shihai4h")
-                        Swal.fire({
-                            toast: true,
-                            position: "top-end",
-                            title: "葬花",
-                            timer: 5000,
-                            showConfirmButton: false,
-                            showCancelButton: false,
-                            timerProgressBar: true,
-                            iconHtml: `<img style="width: 64px;height: 64px;border: none" src="/img/tumb.png"></img>`,
-                            iconColor: "#00000000",
-                            background: "url(/img/flowers.png)"
-                        })
+                        toast("葬花", null, "tumb.png", "url(/img/flowers.png)", 64, 64, null)
                     }
                 }
             })
@@ -314,18 +243,7 @@ export default class Profile extends Vue
                 if ((window.location.pathname == "/profile/Xu_Yushu") || (window.location.pathname == "/profile/Xu_Yushu/")) {
                     if (!localStorage.getItem("preferredName")) {
                         localStorage.setItem("preferredName", "we would never known")
-                        Swal.fire({
-                            toast: true,
-                            position: "top-end",
-                            title: "我们仍未知道妳喜欢的名字",
-                            text: "正如我们从未知道那天所看见的花的名字",
-                            timer: 5000,
-                            showConfirmButton: false,
-                            showCancelButton: false,
-                            timerProgressBar: true,
-                            iconHtml: `<img style="width: 64px;height: 64px;border: none" src="/img/clip.png"></img>`,
-                            iconColor: "#00000000"
-                        })
+                        toast("我们仍未知道妳喜欢的名字", "正如我们从未知道那天所看见的花的名字", "clip.png", null, 64, 64, null)
                     }
                 }
             })
@@ -346,18 +264,7 @@ export default class Profile extends Vue
                             }
                             if (rhythm.includes("SevenBird") && rhythm.includes("Considerate_cat") && rhythm.includes("ttttsuuukikoo_") && (!localStorage.getItem("rhythmShown"))) {
                                 localStorage.setItem("rhythmShown", "AP end")
-                                Swal.fire({
-                                    toast: true,
-                                    position: "top-end",
-                                    title: "希望有个 All Perfect 的结局",
-                                    text: " ~ Darkest Night, I can Found You Here ~ ",
-                                    timer: 5000,
-                                    showConfirmButton: false,
-                                    showCancelButton: false,
-                                    timerProgressBar: true,
-                                    iconHtml: `<img style="width: 64px;height: 64px;border: none" src="/img/musical-score.png"></img>`,
-                                    iconColor: "#00000000"
-                                })
+                                toast("希望有个 All Perfect 的结局", " ~ Darkest Night, I can Found You Here ~ ", "musical-score.png", null, 64, 64, null)
                             }
                         }, false)
                     }
