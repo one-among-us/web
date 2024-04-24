@@ -142,6 +142,16 @@ export default class Profile extends Vue
     }
 
     updated(): void {
+        const now = new Date()
+        if ((now.getDate() == 1) && (now.getMonth() == 3) && (parseInt(localStorage.getItem('easterEggMode')) == 0)) {
+            localStorage.setItem("easterEggMode", "1")
+            localStorage.setItem("enabledByApril", "1")
+        }
+        else {
+            if (localStorage.getItem("enabledByApril")) {
+                localStorage.setItem("easterEggMode", "0")
+            }
+        }
         if (localStorage.getItem('lang') === 'en') return;
         if (!localStorage.getItem('easterEggMode')) return;
         if (parseInt(localStorage.getItem('easterEggMode')) == 0) return;
@@ -150,7 +160,6 @@ export default class Profile extends Vue
                 localStorage.setItem("isSeenMeowBot233", "找到了喵~")
                 toast("找到了喵~", "诶? 找什么喵? ", "cat-face-emoji-2048x1828.png", null, 64, 57, null)
             }
-            const now = new Date()
             if ((now.getDate() == 15) && (now.getMonth() == 3)) {
                 if (!localStorage.getItem("birthdayMeowBot233"))
                     localStorage.setItem("birthdayMeowBot233", (now.getFullYear() - 1).toString())
