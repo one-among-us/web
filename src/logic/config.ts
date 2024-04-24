@@ -110,7 +110,8 @@ export const i18n = {
         easter_egg: {
             title: "Easter Egg Mode",
             enabled: " is Enabled",
-            disabled: " is Disabled"
+            disabled: " is Disabled",
+            text: "Try to touch the slice of memories?"
         }
     },
     "zh_hans": {
@@ -153,7 +154,8 @@ export const i18n = {
         easter_egg: {
             title: "彩蛋模式",
             enabled: "已启用",
-            disabled: "已禁用"
+            disabled: "已禁用",
+            text: "试着去触摸那些回忆的碎片吧"
         }
     },
     "zh_hant": {
@@ -196,7 +198,8 @@ export const i18n = {
         easter_egg: {
             title: "彩蛋模式",
             enabled: "已經啓用",
-            disabled: "已經禁用"
+            disabled: "已經禁用",
+            text: "試着去觸摸那些回憶碎片吧"
         }
     }
 }

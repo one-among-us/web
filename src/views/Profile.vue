@@ -148,7 +148,7 @@ export default class Profile extends Vue
         if (this.userid == "MeowBot233") {
             if (!localStorage.getItem("isSeenMeowBot233")) {
                 localStorage.setItem("isSeenMeowBot233", "找到了喵~")
-                toast("找到了喵~", null, "cat-face-emoji-2048x1828.png", null, 64, 57, null)
+                toast("找到了喵~", "诶? 找什么喵? ", "cat-face-emoji-2048x1828.png", null, 64, 57, null)
             }
             const now = new Date()
             if ((now.getDate() == 15) && (now.getMonth() == 3)) {
@@ -196,7 +196,7 @@ export default class Profile extends Vue
                 }
                 if (ch.includes("xuewulihuameng") && ch.includes("Futajuhuacha") && ch.includes("Xu_Yushu") && ch.includes("Dethelly") && (!localStorage.getItem("ChongQingShown"))) {
                     localStorage.setItem("ChongQingShown", "Fog")
-                    toast("嘉陵雾稠", "雾, 与投江", "bridge.png", "url(/img/fog.jpg)", 64, 47, null)
+                    toast("嘉陵雾稠", "雾终将散去, 而我们终将看到彩虹", "bridge.png", "url(/img/fog.jpg)", 64, 47, null)
                 }
             }
         }
@@ -211,7 +211,7 @@ export default class Profile extends Vue
                 }
                 if (boat.includes("yumao") && boat.includes("Uekawakuyuurei") && boat.includes("MizuharaNagisa") && (!localStorage.getItem("Sea"))) {
                     localStorage.setItem("Sea", "with you")
-                    toast("船与海", "妳把船往哪开呢?!", "ship.png", "#0b2058ff", 64, 64, '#f0f8feff')
+                    toast("海色", "拔锚起航, 跨越闪耀泪光的海岸", "ship.png", "#0b2058ff", 64, 64, '#f0f8feff')
                 }
             }
         }
@@ -223,7 +223,7 @@ export default class Profile extends Vue
                     console.log("summary" + e)
                     if (!localStorage.getItem('detailsByYumao')) {
                         localStorage.setItem('detainsByYumao', 'forever.')
-                        toast("过往苦难", "呐喊却无人知晓", "lifeline.png", "#EEEEEE88", 64, 64, null)
+                        toast("往昔苦难", "因为妳而存在, 因为妳而不在, 要在啊......", "lifeline.png", "#EEEEEE88", 64, 64, null)
                     }
                 }, false)
             }
@@ -233,7 +233,7 @@ export default class Profile extends Vue
                 if ((window.location.pathname == "/profile/shihai4h/") || (window.location.pathname == "/profile/shihai4h")) {
                     if (!localStorage.getItem("funeralFlowers")) {
                         localStorage.setItem("funeralFlowers", "shihai4h")
-                        toast("葬花", null, "tumb.png", "url(/img/flowers.png)", 64, 64, null)
+                        toast("葬花", "花谢花飞花满天, 红消香断有谁怜? ", "tumb.png", "url(/img/flowers.png)", 64, 64, null)
                     }
                 }
             })
@@ -243,7 +243,18 @@ export default class Profile extends Vue
                 if ((window.location.pathname == "/profile/Xu_Yushu") || (window.location.pathname == "/profile/Xu_Yushu/")) {
                     if (!localStorage.getItem("preferredName")) {
                         localStorage.setItem("preferredName", "we would never known")
-                        toast("我们仍未知道妳喜欢的名字", "正如我们从未知道那天所看见的花的名字", "clip.png", null, 64, 64, null)
+                        Swal.fire({
+                            toast: true,
+                            position: "top-end",
+                            title: "未闻花名",
+                            html: `<p style="text-align: left">我们仍未知道妳喜欢的名字, <br />正如我们从未知道那天所看见的花的名字</p>`,
+                            iconHtml: `<img style="width: 64px;height: 64px;border: none" src="/img/clip.png"></img>`,
+                            iconColor: "#00000000",
+                            timer: 5000,
+                            showConfirmButton: false,
+                            showCancelButton: false,
+                            timerProgressBar: true
+                        })
                     }
                 }
             })

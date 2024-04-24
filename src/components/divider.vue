@@ -31,6 +31,7 @@ export default class Divider extends Vue
             position: "top-end",
             toast: true,
             title: this.i18n.easter_egg.title + ((parseInt(localStorage.getItem("easterEggMode")) == 0) ? this.i18n.easter_egg.disabled : this.i18n.easter_egg.enabled),
+            text: ((parseInt(localStorage.getItem("easterEggMode")) == 0) ? null : this.i18n.easter_egg.text),
             timer: 5000,
             showConfirmButton: false,
             showCancelButton: false,
