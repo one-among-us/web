@@ -58,6 +58,7 @@ import { Person } from "@/logic/data";
 import { info } from '@/logic/utils';
 import Swal from 'sweetalert2';
 import router from "@/router";
+import { handleFlowerToast } from '@/logic/easterEgg';
 
 @Component({ components: {} })
 export default class ProfileCard extends Vue {
@@ -100,21 +101,7 @@ export default class ProfileCard extends Vue {
             })
             .finally(() => this.loading.delete('flower'))
 
-        if (!localStorage.getItem("hasFlowered")) {
-            localStorage.setItem("hasFlowered", "Meow")
-            Swal.fire({
-                toast: true,
-                position: "top-end",
-                title: "花与秋叶",
-                text: `${this.p.name}收到你的小花啦~`,
-                timer: 5000,
-                showConfirmButton: false,
-                showCancelButton: false,
-                timerProgressBar: true,
-                iconHtml: `<img style="width: 64px;height: 64px;border: none" src="/img/lollipop_1f36d.png"></img>`,
-                iconColor: "#00000000"
-            })
-        }
+        handleFlowerToast(this.p.name)
     }
 
     get flowerText(): string {
