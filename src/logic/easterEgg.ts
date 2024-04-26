@@ -1,5 +1,42 @@
 import Swal from "sweetalert2"
 import { toast, scheduledTask } from "./helper"
+import { t } from "./config"
+
+const registedEggItem = [
+    'hasFlowered', 'isSeenMeowBot233', 'BetelgeuseShown', 'ChongQingShown', 'Sea', 'detailsByYumao', 'funeralFlowers', 'preferredName', 'rhythmShown'
+]
+
+function allShown(): boolean {
+    for (const v of registedEggItem) {
+        if (!localStorage.getItem(v))
+            return false;
+    }
+    return true;
+}
+
+function achieveAll() {
+    scheduledTask(5600, () => {
+        if (allShown()) {
+            localStorage.setItem('allShown', 'wow')
+            Swal.fire({
+                title: t.easter_egg.all,
+                icon: 'success',
+                toast: true,
+                position: 'top-end',
+                timer: 5000,
+                timerProgressBar: true,
+                showCancelButton: false,
+                showConfirmButton: false,
+                showCloseButton: false,
+                showDenyButton: false
+            })
+        }
+        else {
+            if (localStorage.getItem('allShown'))
+                localStorage.removeItem('allShown')
+        }
+    })
+}
 
 export function handleFlowerToast(name: string) {
     if (!localStorage.getItem("hasFlowered")) {
@@ -98,7 +135,7 @@ export function handleEasterEgg(userid: string) {
             v.addEventListener('click', (e) => {
                 console.log("summary" + e)
                 if (!localStorage.getItem('detailsByYumao')) {
-                    localStorage.setItem('detainsByYumao', 'forever.')
+                    localStorage.setItem('detailsByYumao', 'forever.')
                     toast("往昔苦难", "因为妳而存在, 因为妳而不在, 要在啊......", "lifeline.png", "#EEEEEE88", 64, 64, null)
                 }
             }, false)
@@ -158,4 +195,5 @@ export function handleEasterEgg(userid: string) {
             }
         }
     }
+    achieveAll()
 }

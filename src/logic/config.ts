@@ -111,7 +111,8 @@ export const i18n = {
             title: "Easter Egg Mode",
             enabled: " is Enabled",
             disabled: " is Disabled",
-            text: "Try to touch the slice of memories?"
+            text: "Try to touch the slice of memories?",
+            all: "You achieved everything!"
         }
     },
     "zh_hans": {
@@ -155,7 +156,8 @@ export const i18n = {
             title: "彩蛋模式",
             enabled: "已启用",
             disabled: "已禁用",
-            text: "试着去触摸那些回忆的碎片吧"
+            text: "试着去触摸那些回忆的碎片吧",
+            all: "妳达成了所有成就!"
         }
     },
     "zh_hant": {
@@ -199,7 +201,8 @@ export const i18n = {
             title: "彩蛋模式",
             enabled: "已經啓用",
             disabled: "已經禁用",
-            text: "試着去觸摸那些回憶碎片吧"
+            text: "試着去觸摸那些回憶碎片吧",
+            all: "妳達成了所有成就!"
         }
     }
 }
