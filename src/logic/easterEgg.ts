@@ -10,12 +10,12 @@ export function handleFlowerToast(name: string) {
 
 export function handleEasterEgg(userid: string) {
     const now = new Date()
-    if ((now.getDate() == 1) && (now.getMonth() == 3) && (parseInt(localStorage.getItem('easterEggMode')) == 0)) {
+    if ((now.getDate() == 1) && (now.getMonth() == 3) && (parseInt(localStorage.getItem('easterEggMode')) == 0) && (!localStorage.getItem('manualModify'))) {
         localStorage.setItem("easterEggMode", "1")
         localStorage.setItem("enabledByApril", "1")
     }
     else {
-        if (localStorage.getItem("enabledByApril")) {
+        if (localStorage.getItem("enabledByApril") && (!localStorage.getItem('manualModify'))) {
             localStorage.setItem("easterEggMode", "0")
         }
     }

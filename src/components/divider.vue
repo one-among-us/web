@@ -27,6 +27,8 @@ export default class Divider extends Vue
         else 
             localStorage.setItem("easterEggMode", (parseInt(localStorage.getItem("easterEggMode")) == 0) ? "1" : "0")
 
+        localStorage.setItem("manualModify", "qwq")
+
         Swal.fire({
             position: "top-end",
             toast: true,
