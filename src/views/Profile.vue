@@ -13,7 +13,8 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-facing-decorator';
 import { parsePeopleJson, Person } from "@/logic/data";
-import { fetchWithLang } from "@/logic/helper"
+import { fetchWithLang, scheduledTask } from "@/logic/helper";
+import { handleEasterEgg } from '@/logic/easterEgg'
 import { Lang, peopleUrl, replaceUrlVars, setLang, t } from "@/logic/config";
 import MDX from "@/components/MDX.vue";
 import urljoin from "url-join";
@@ -139,6 +140,10 @@ export default class Profile extends Vue
 
             return true
         }
+    }
+
+    updated(): void {
+        scheduledTask(10, () => {handleEasterEgg(this.userid)})
     }
 }
 </script>

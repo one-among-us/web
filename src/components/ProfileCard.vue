@@ -58,6 +58,7 @@ import { Person } from "@/logic/data";
 import { info } from '@/logic/utils';
 import Swal from 'sweetalert2';
 import router from "@/router";
+import { handleFlowerToast } from '@/logic/easterEgg';
 
 @Component({ components: {} })
 export default class ProfileCard extends Vue {
@@ -99,6 +100,8 @@ export default class ProfileCard extends Vue {
                 localStorage.setItem(`last_flower_given@${this.userid}`, getTodayDate())
             })
             .finally(() => this.loading.delete('flower'))
+
+        handleFlowerToast(this.p.name)
     }
 
     get flowerText(): string {

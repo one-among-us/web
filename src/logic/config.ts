@@ -106,6 +106,13 @@ export const i18n = {
             error: "You have read too many pages, please take a short rest before reading more 🥺",
             dom_removed_title: "Sure",
             dom_removed: "Ok I see you removed the DOM element 🥺 I guess you can continue reading now",
+        },
+        easter_egg: {
+            title: "Easter Egg Mode",
+            enabled: " is Enabled",
+            disabled: " is Disabled",
+            text: "Try to touch the slice of memories?",
+            all: "You achieved everything!"
         }
     },
     "zh_hans": {
@@ -144,6 +151,13 @@ export const i18n = {
             error: "读太多啦！页面暂停加载了哦，请休息一下再回来吧~ 🥺",
             dom_removed_title: "盯——",
             dom_removed: "好吧，看来你会编辑网页内容，那就让你继续读吧 🥺 不过也记得照顾好自己哦~",
+        },
+        easter_egg: {
+            title: "彩蛋模式",
+            enabled: "已启用",
+            disabled: "已禁用",
+            text: "试着去触摸那些回忆的碎片吧",
+            all: "妳达成了所有成就!"
         }
     },
     "zh_hant": {
@@ -182,6 +196,13 @@ export const i18n = {
             error: "閱讀太多啦！頁面暫停加載了哦，請休息一下再回來吧~ 🥺",
             dom_removed_title: "盯——",
             dom_removed: "好吧，看來你會編輯網頁內容，那就讓你繼續讀吧 🥺 不過也記得照顧好自己哦~",
+        },
+        easter_egg: {
+            title: "彩蛋模式",
+            enabled: "已經啓用",
+            disabled: "已經禁用",
+            text: "試着去觸摸那些回憶碎片吧",
+            all: "妳達成了所有成就!"
         }
     }
 }

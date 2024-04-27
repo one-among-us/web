@@ -2,6 +2,7 @@ import moment from 'moment'
 import { getLang } from "@/logic/config";
 import { info } from "@/logic/utils";
 import { Icon } from "@/logic/icon";
+import Swal from 'sweetalert2';
 
 /**
  * https://github.com/moh3n9595/js-abbreviation-number
@@ -126,4 +127,30 @@ export async function fetchText(url: string, init?: RequestInitWithParams): Prom
 export function handleIconFromString(html: string): string {
     if (!html.includes('[!')) return html;
     return html.replace(/\[!(\w+)\](?::\s*(.*))?/g, (match, icon) => (Icon[icon as string]));
+}
+
+export function delay(milliseconds: number): Promise<void>{
+    return new Promise(resolve => setTimeout(resolve, milliseconds));
+}
+
+export async function scheduledTask(milliseconds: number, task: () => any) {
+    await delay(milliseconds)
+    task()
+}
+
+export function toast(title: string, text: string, img: string, background: string, width: number, height: number, color: string) {
+    Swal.fire({
+        toast: true,
+        position: "top-end",
+        title: title,
+        text: text,
+        iconHtml: `<img style="width: ${width}px;height: ${height}px;border: none" src="/img/${img}"></img>`,
+        iconColor: "#00000000",
+        background: background,
+        timer: 5000,
+        showConfirmButton: false,
+        showCancelButton: false,
+        timerProgressBar: true,
+        color: color
+    })
 }
