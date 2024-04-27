@@ -16,7 +16,7 @@ function allShown(): boolean {
 
 function achieveAll() {
     scheduledTask(5600, () => {
-        if (allShown()) {
+        if (allShown() && (!localStorage.getItem('allShown'))) {
             localStorage.setItem('allShown', 'wow')
             Swal.fire({
                 title: t.easter_egg.all,
@@ -46,6 +46,11 @@ export function handleFlowerToast(name: string) {
 }
 
 export function handleEasterEgg(userid: string) {
+    const swal2 = document.getElementsByTagName('div')
+    for (const v of swal2) {
+        if (v.classList.contains('swal2-container'))
+            return;
+    }
     const now = new Date()
     if ((now.getDate() == 1) && (now.getMonth() == 3) && (parseInt(localStorage.getItem('easterEggMode')) == 0) && (!localStorage.getItem('manualModify'))) {
         localStorage.setItem("easterEggMode", "1")

@@ -121,6 +121,7 @@ export default class Profile extends Vue
                 changes.forEach((change) => {
                     // Check if the removed node is the swal2 element
                     if (change.removedNodes.length == 0) return
+                    if (!(change.removedNodes[0] as HTMLElement).classList) return
                     if (!(change.removedNodes[0] as HTMLElement).classList.contains("swal2-container")) return
 
                     observer.disconnect()
@@ -143,7 +144,7 @@ export default class Profile extends Vue
     }
 
     updated(): void {
-        scheduledTask(10, () => {handleEasterEgg(this.userid)})
+        scheduledTask(250, () => {handleEasterEgg(this.userid)})
     }
 }
 </script>
