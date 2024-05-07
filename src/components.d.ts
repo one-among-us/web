@@ -27,6 +27,7 @@ declare module 'vue' {
     IFasStrikethrough: typeof import('~icons/fa6-solid/strikethrough')['default']
     IFasXmark: typeof import('~icons/fa6-solid/xmark')['default']
     LangButton: typeof import('./components/LangButton.vue')['default']
+    Loading: typeof import('./components/Loading.vue')['default']
     MarkdownTooltip: typeof import('./components/MarkdownTooltip.vue')['default']
     MDX: typeof import('./components/MDX.vue')['default']
     PhotoScroll: typeof import('./components/PhotoScroll.vue')['default']
