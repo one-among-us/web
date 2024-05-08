@@ -113,6 +113,15 @@ export const i18n = {
             disabled: " is Disabled",
             text: "Try to touch the slice of memories?",
             all: "You achieved everything!"
+        },
+        loading: {
+            loading: "Loading...",
+            easter: [
+                "Loading traces of our friends...",
+                "Lollipops are being restocked...",
+                "Loading stories...",
+                "Looking back on the past..."
+            ]
         }
     },
     "zh_hans": {
@@ -158,6 +167,15 @@ export const i18n = {
             disabled: "已禁用",
             text: "试着去触摸那些回忆的碎片吧",
             all: "妳达成了所有成就!"
+        },
+        loading: {
+            loading: "条目加载中...",
+            easter: [
+                "正在寻找朋友们的痕迹……",
+                "正在补货棒棒糖……",
+                "正在加载故事……",
+                "正在回溯过往的时光……"
+            ]
         }
     },
     "zh_hant": {
@@ -203,6 +221,15 @@ export const i18n = {
             disabled: "已經禁用",
             text: "試着去觸摸那些回憶碎片吧",
             all: "妳達成了所有成就!"
+        },
+        loading: {
+            loading: "條目裝載中...",
+            easter: [
+                "正在找尋朋友們的痕跡...",
+                "正在補貨棒棒糖...",
+                "正在裝載故事...",
+                "正在回溯過去的時日..."
+            ]
         }
     }
 }
