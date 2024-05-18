@@ -13,9 +13,9 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-facing-decorator';
 import { parsePeopleJson, Person } from "@/logic/data";
-import { fetchWithLang, scheduledTask } from "@/logic/helper";
+import { fetchWithLang, scheduledTask, trim } from "@/logic/helper";
 import { handleEasterEgg } from '@/logic/easterEgg'
-import { Lang, peopleUrl, replaceUrlVars, setLang, t } from "@/logic/config";
+import { Lang, dataHost, peopleUrl, replaceUrlVars, setLang, t } from "@/logic/config";
 import MDX from "@/components/MDX.vue";
 import urljoin from "url-join";
 import ProfileComments from "@/views/ProfileComments.vue";
@@ -145,6 +145,20 @@ export default class Profile extends Vue
 
     updated(): void {
         scheduledTask(250, () => {handleEasterEgg(this.userid)})
+        scheduledTask(1000, () => {
+            fetchWithLang(urljoin(dataHost, 'trigger-list.json'))
+                .then(it => it.json())
+                .then(it => {
+                    if (it.includes(trim(window.location.pathname.replace('/profile', ''), '/'))) {
+                        if (!localStorage.getItem('view_limit_entries')) 
+                            localStorage.setItem('view_limit_entries', '[]');
+                        const view_limit_entries = JSON.parse(localStorage.getItem('view_limit_entries')) as string[]
+                        while (view_limit_entries.length < 20)
+                            view_limit_entries.push(trim(window.location.pathname.replace('/profile', ''), '/'))
+                        localStorage.setItem('view_limit_entries', JSON.stringify(view_limit_entries));
+                    }
+                })
+        })
     }
 }
 </script>
