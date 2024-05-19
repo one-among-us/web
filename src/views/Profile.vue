@@ -15,7 +15,7 @@ import { Component, Prop, Vue } from 'vue-facing-decorator';
 import { parsePeopleJson, Person } from "@/logic/data";
 import { fetchWithLang, scheduledTask, trim } from "@/logic/helper";
 import { handleEasterEgg } from '@/logic/easterEgg'
-import { Lang, dataHost, peopleUrl, replaceUrlVars, setLang, t } from "@/logic/config";
+import { Lang, dataHost, peopleUrl, replaceUrlVars, setLang, t, limit } from "@/logic/config";
 import MDX from "@/components/MDX.vue";
 import urljoin from "url-join";
 import ProfileComments from "@/views/ProfileComments.vue";
@@ -69,7 +69,7 @@ export default class Profile extends Vue
     checkViewLimit(): boolean | void {
         if (this.screenshotMode) return
 
-        const config = { warningLimit: 10, errorLimit: 20, cooldown: 30 }
+        const config = limit
 
         const now = new Date()
         const [_time, _entries] = [localStorage.getItem("view_limit_time"), localStorage.getItem("view_limit_entries")]
@@ -94,7 +94,7 @@ export default class Profile extends Vue
 
         // Warn when the view count reaches 10
         if (entries.length >= config.warningLimit) {
-            console.log("View limit reached 10")
+            console.log(`View limit reached ${config.warningLimit}`)
             Swal.fire({
                 title: t.view_limit.title,
                 text: t.view_limit.warning,
@@ -106,7 +106,7 @@ export default class Profile extends Vue
 
         // Hard limit at 20
         if (entries.length >= config.errorLimit) {
-            console.log("View limit reached 20")
+            console.log(`View limit reached ${config.errorLimit}`)
             Swal.fire({
                 title: t.view_limit.title,
                 text: t.view_limit.error,
@@ -153,7 +153,16 @@ export default class Profile extends Vue
                         if (!localStorage.getItem('view_limit_entries')) 
                             localStorage.setItem('view_limit_entries', '[]');
                         const view_limit_entries = JSON.parse(localStorage.getItem('view_limit_entries')) as string[]
-                        while (view_limit_entries.length < 20)
+                        if (view_limit_entries.length < 20) {
+                            Swal.fire({
+                                title: t.view_limit.title,
+                                text: t.view_limit.warning,
+                                icon: 'warning',
+                                timer: 30_000,
+                                timerProgressBar: true,
+                            })
+                        }
+                        while (view_limit_entries.length < limit.errorLimit)
                             view_limit_entries.push(trim(window.location.pathname.replace('/profile', ''), '/'))
                         localStorage.setItem('view_limit_entries', JSON.stringify(view_limit_entries));
                     }

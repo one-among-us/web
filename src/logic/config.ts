@@ -69,6 +69,8 @@ export function setLang(name: Lang)
     localStorage.setItem('lang', name)
 }
 
+export const limit = { warningLimit: 10, errorLimit: 20, cooldown: 30 }
+
 export const i18n = {
     "en": {
         "nav_home": "Home",
