@@ -176,10 +176,14 @@ export default class ProfileCard extends Vue {
 
 .switchButton
     position: absolute
-    width: 16px
-    height: 16px
+    width: 24px
+    height: 24px
     bottom: 20px
     right: 20px
+
+.switchButton:hover
+    transform: translate(-1px -1px)
+    filter: drop-shadow(2px 2px 0.75px rgba(166, 134, 89, 0.32))
 
 #info
     width: 100%
