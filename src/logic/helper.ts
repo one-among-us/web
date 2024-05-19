@@ -124,6 +124,13 @@ export async function fetchText(url: string, init?: RequestInitWithParams): Prom
     return text
 }
 
+export function getResponseSync(url: string): string {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', url, false);
+    xhr.send();
+    return xhr.responseText;
+}
+
 export function handleIconFromString(html: string): string {
     if (!html.includes('[!')) return html;
     return html.replace(/\[!(\w+)\](?::\s*(.*))?/g, (match, icon) => (Icon[icon as string]));

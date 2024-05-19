@@ -46,14 +46,18 @@
             </div>
         </div>
 
+        <a class="switchButton" v-if="canSwitch()" v-bind:href="getTarget()" draggable="false">
+            <SwitchButton />
+        </a>
+
         <img class="watermark" draggable="false" src="/favicon-large.png" alt="" />
     </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-facing-decorator';
-import { backendHost, replaceUrlVars, t } from "@/logic/config";
-import { abbreviateNumber, getTodayDate } from "@/logic/helper";
+import { backendHost, dataHost, replaceUrlVars, t } from "@/logic/config";
+import { abbreviateNumber, getTodayDate, getResponseSync } from "@/logic/helper";
 import { Person } from "@/logic/data";
 import { info } from '@/logic/utils';
 import Swal from 'sweetalert2';
@@ -127,6 +131,24 @@ export default class ProfileCard extends Vue {
     get profileUrl(): string {
         return replaceUrlVars(this.p.profileUrl, this.userid)
     }
+
+    canSwitch(): boolean {
+        const pairs = JSON.parse(getResponseSync(dataHost + '/switch-pair.json')) as [string, string][];
+        for (const v of pairs) {
+            if (v[0] == this.userid)
+                return true;
+        }
+        return false;
+    }
+
+    getTarget() {
+        const pairs = JSON.parse(getResponseSync(dataHost + '/switch-pair.json')) as [string, string][];
+        for (const v of pairs) {
+            if (v[0] == this.userid) {
+                return `/profile/${v[1]}`;
+            }
+        }
+    }
 }
 </script>
 
@@ -151,6 +173,13 @@ export default class ProfileCard extends Vue {
 
     img.watermark
         height: 250px
+
+.switchButton
+    position: absolute
+    width: 16px
+    height: 16px
+    bottom: 20px
+    right: 20px
 
 #info
     width: 100%
