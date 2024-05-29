@@ -121,7 +121,7 @@ export function handleEasterEgg(userid: string) {
             }
         }
     }
-    if ((userid == "yumao") || (userid == "Uekawakuyuurei") || (userid == "MizuharaNagisa")) {
+    if ((userid == "zhangyubaka") || (userid == "Uekawakuyuurei") || (userid == "MizuharaNagisa")) {
         if (!localStorage.getItem("Boat"))
             localStorage.setItem("Boat", `["${userid}"]`)
         else {
@@ -130,13 +130,13 @@ export function handleEasterEgg(userid: string) {
                 boat.push(userid)
                 localStorage.setItem("Boat", JSON.stringify(boat))
             }
-            if (boat.includes("yumao") && boat.includes("Uekawakuyuurei") && boat.includes("MizuharaNagisa") && (!localStorage.getItem("Sea"))) {
+            if (boat.includes("zhangyubaka") && boat.includes("Uekawakuyuurei") && boat.includes("MizuharaNagisa") && (!localStorage.getItem("Sea"))) {
                 localStorage.setItem("Sea", "with you")
                 toast("海色", "拔锚起航, 跨越闪耀泪光的海岸", "ship.png", "#0b2058ff", 64, 64, '#f0f8feff')
             }
         }
     }
-    if ((userid == "yumao")) {
+    if ((userid == "zhangyubaka")) {
         const summaries = document.getElementsByTagName("summary")
         for (const v of summaries) {
             console.log(v)
