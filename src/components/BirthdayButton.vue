@@ -27,15 +27,22 @@ export default class RandomPerson extends Vue {
             .then(it => it.json())
             .then(it => {
                 this.birth = it
+                const ids = [] as string[]
+                const names = [] as string[]
                 for (const v of it) {
                     const d = new Date(v[1]);
                     const now = new Date();
                     if ((d.getDate() == now.getDate()) && (d.getMonth() == now.getMonth())) {
                         this.shown = true
-                        this.id = v[0];
-                        const p = JSON.parse(getResponseSync(urljoin(peopleUrl(this.id), (getLang() == 'zh_hans' ? 'info.json' : `info.${getLang()}.json`)))) as Person
-                        this.name = p.name
+                        ids.push(v[0])
+                        const p = JSON.parse(getResponseSync(urljoin(peopleUrl(v[0]), (getLang() == 'zh_hans' ? 'info.json' : `info.${getLang()}.json`)))) as Person
+                        names.push(p.name)
                     }
+                    
+                }
+                if (this.shown) {
+                    this.id = ids[(Math.random() * ids.length) | 0]
+                    this.name = names[(Math.random() * names.length) | 0]
                 }
             });
     }
