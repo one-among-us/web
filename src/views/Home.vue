@@ -12,7 +12,8 @@
 
         <div class="introduction markdown-content" v-html="htmlTop" />
 
-        <RandomPerson />
+        <RandomPerson class="randomP"/>
+        <BirthdayButton class="randomP" />
 
         <Loading v-if="isLoading" />
 
@@ -134,6 +135,10 @@ export default class Home extends Vue
     text-align: justify
     text-justify: inter-word
     margin: 10px min(5vw, 40px)
+
+.randomP
+    margin: auto 10px
+    display: inline-flex
 
 #profiles
     margin-top: 20px

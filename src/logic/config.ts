@@ -124,7 +124,8 @@ export const i18n = {
                 "Loading stories...",
                 "Looking back on the past..."
             ]
-        }
+        },
+        birthday: "Today is {0}'s birthday!"
     },
     "zh_hans": {
         "nav_home": "首页",
@@ -178,7 +179,8 @@ export const i18n = {
                 "正在加载故事……",
                 "正在回溯过往的时光……"
             ]
-        }
+        },
+        birthday: "今天是{0}的生日"
     },
     "zh_hant": {
         "nav_home": "首頁",
@@ -232,7 +234,8 @@ export const i18n = {
                 "正在裝載故事...",
                 "正在回溯過去的時日..."
             ]
-        }
+        },
+        birthday: "今日是{0}的誕生日"
     }
 }
 
@@ -261,3 +264,5 @@ export const info_i18n = {
         "age": "年齡",
     }
 }
+
+export const f = info_i18n[getLang()];
