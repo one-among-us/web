@@ -47,7 +47,7 @@
             </div>
         </div>
 
-        <a class="switchButton" v-if="canSwitch()" v-bind:href="getTarget()" draggable="false">
+        <a class="switchButton" v-if="canSwitch" v-bind:href="target" draggable="false">
             <SwitchButton />
         </a>
 
@@ -58,7 +58,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-facing-decorator';
 import { backendHost, dataHost, replaceUrlVars, t } from "@/logic/config";
-import { abbreviateNumber, getTodayDate, getResponseSync } from "@/logic/helper";
+import { abbreviateNumber, getTodayDate } from "@/logic/helper";
 import { Person } from "@/logic/data";
 import { info } from '@/logic/utils';
 import { Icon } from '@iconify/vue';
@@ -76,6 +76,8 @@ export default class ProfileCard extends Vue {
     flowers = 0
     flowersGiven = false
     isBirthday = false
+    canSwitch = false
+    target = '.'
 
     loading = new Set<string>()
 
@@ -105,6 +107,18 @@ export default class ProfileCard extends Vue {
             .then(it => {
                 info(`Flowers: ${it}`)
                 this.flowers = parseInt(it)
+            })
+
+        fetch(urljoin(dataHost, 'switch-pair.json'))
+            .then(it => it.json())
+            .then(it => {
+                const pairs = it as [string, string][]
+                for (const v of pairs) {
+                    if (v[0] == this.userid) {
+                        this.canSwitch = true
+                        this.target = `/profile/${v[1]}`
+                    }
+                }
             })
     }
 
@@ -150,24 +164,6 @@ export default class ProfileCard extends Vue {
 
     get profileUrl(): string {
         return replaceUrlVars(this.p.profileUrl, this.userid)
-    }
-
-    canSwitch(): boolean {
-        const pairs = JSON.parse(getResponseSync(dataHost + '/switch-pair.json')) as [string, string][];
-        for (const v of pairs) {
-            if (v[0] == this.userid)
-                return true;
-        }
-        return false;
-    }
-
-    getTarget() {
-        const pairs = JSON.parse(getResponseSync(dataHost + '/switch-pair.json')) as [string, string][];
-        for (const v of pairs) {
-            if (v[0] == this.userid) {
-                return `/profile/${v[1]}`;
-            }
-        }
     }
 }
 </script>
