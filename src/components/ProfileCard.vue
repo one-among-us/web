@@ -64,7 +64,7 @@ import { info } from '@/logic/utils';
 import { Icon } from '@iconify/vue';
 import Swal from 'sweetalert2';
 import router from "@/router";
-import { handleFlowerToast } from '@/logic/easterEgg';
+import { handleFlowerToast, handleBirthdayToast } from '@/logic/easterEgg';
 import urljoin from 'url-join';
 
 @Component({ components: { Icon } })
@@ -125,6 +125,7 @@ export default class ProfileCard extends Vue {
             .finally(() => this.loading.delete('flower'))
 
         handleFlowerToast(this.p.name)
+        if (this.isBirthday) handleBirthdayToast(this.p.name)
     }
 
     get flowerText(): string {

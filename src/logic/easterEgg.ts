@@ -48,6 +48,12 @@ export function handleFlowerToast(name: string) {
     }
 }
 
+export function handleBirthdayToast(name: string) {
+    if (!localStorage.getItem('easterEggMode')) return;
+    if (parseInt(localStorage.getItem('easterEggMode')) == 0) return;
+    toast(t.birthday.happy, t.birthday.birthday.replace('{0}', name), "cake.png", null, 64, 64, null)
+}
+
 export function handleEasterEgg(userid: string) {
     const swal2 = document.getElementsByTagName('div')
     for (const v of swal2) {

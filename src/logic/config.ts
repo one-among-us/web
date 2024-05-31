@@ -125,7 +125,10 @@ export const i18n = {
                 "Looking back on the past..."
             ]
         },
-        birthday: "Today is {0}'s birthday!"
+        birthday: {
+            birthday: "Today is {0}'s birthday!",
+            happy: "Happy Birthday!"
+        }
     },
     "zh_hans": {
         "nav_home": "首页",
@@ -180,7 +183,10 @@ export const i18n = {
                 "正在回溯过往的时光……"
             ]
         },
-        birthday: "今天是{0}的生日"
+        birthday: {
+            birthday: "今天是{0}的生日",
+            happy: "生日快乐"
+        }
     },
     "zh_hant": {
         "nav_home": "首頁",
@@ -235,7 +241,10 @@ export const i18n = {
                 "正在回溯過去的時日..."
             ]
         },
-        birthday: "今日是{0}的誕生日"
+        birthday: {
+            birthday: "今日是{0}的誕生日",
+            happy: "誕生日快樂!"
+        }
     }
 }
 

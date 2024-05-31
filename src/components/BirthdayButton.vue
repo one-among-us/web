@@ -1,7 +1,7 @@
 <template>
     <button class="random clickable hy-button" v-on:click="goBirth" v-if="shown">
         <Icon class="iconR" icon="tabler:candy" />
-        <span class="textR">{{ t.birthday.replace('{0}', name) }}</span>
+        <span class="textR">{{ t.birthday.birthday.replace('{0}', name) }}</span>
     </button>
 </template>
 
