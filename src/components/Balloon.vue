@@ -28,7 +28,7 @@ export default class Balloon extends Vue {
         document.getElementById(this.db).style.bottom = randint(balloons.min, balloons.max).toString() + 'px';
 
         scheduledTask(10000, () => {
-            document.getElementById(this.db).remove()
+            document.getElementById(this.db)?.remove()
         })
     }
 }
