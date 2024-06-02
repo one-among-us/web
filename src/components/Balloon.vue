@@ -8,6 +8,7 @@
 import { randint, scheduledTask } from '@/logic/helper';
 import { Component, Vue } from 'vue-facing-decorator';
 import { balloons } from '@/logic/config';
+import { isEaster } from '@/logic/easterEgg'
 
 @Component({ components: {} })
 export default class Balloon extends Vue {
@@ -17,7 +18,7 @@ export default class Balloon extends Vue {
 
     created() {
         this.db = 'balloon-' + randint(0, 2147483648).toString();
-        this.sourceImg = `/img/balloons/balloon-${randint(0, 6)}.png`;
+        this.sourceImg = (isEaster() && (Math.random() < 0.65)) ? '/img/balloons/balloon-p.png' : `/img/balloons/balloon-${randint(0, 6)}.png`;
     }
 
     mounted() {

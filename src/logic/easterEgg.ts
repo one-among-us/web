@@ -6,6 +6,12 @@ const registedEggItem = [
     'hasFlowered', 'isSeenMeowBot233', 'BetelgeuseShown', 'ChongQingShown', 'Sea', 'detailsByYumao', 'funeralFlowers', 'preferredName', 'rhythmShown'
 ]
 
+export function isEaster(): boolean {
+    if (!localStorage.getItem('easterEggMode')) return false;
+    if (parseInt(localStorage.getItem('easterEggMode')) == 0) return false;
+    return true;
+}
+
 function allShown(): boolean {
     for (const v of registedEggItem) {
         if (!localStorage.getItem(v))
