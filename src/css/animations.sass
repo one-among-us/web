@@ -49,3 +49,12 @@
     transform: translateX(-100%)
   100%
     transform: translateX(0)
+
+@keyframes fly-to-top
+  0%
+    transform: translateY(0)
+  100%
+    transform: translateY(calc(-100vh - 1000px))
+
+.fly-to-top
+  animation: fly-to-top 2s linear

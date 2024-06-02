@@ -70,6 +70,7 @@ export function setLang(name: Lang)
 }
 
 export const limit = { warningLimit: 10, errorLimit: 20, cooldown: 30 }
+export const balloons = { count: 10, min: -1100, max: -100, width: 900 }
 
 export const i18n = {
     "en": {
