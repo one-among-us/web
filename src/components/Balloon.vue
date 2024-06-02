@@ -17,13 +17,13 @@ export default class Balloon extends Vue {
 
     created() {
         this.db = 'balloon-' + randint(0, 2147483648).toString();
-        //this.sourceImg = '';
+        this.sourceImg = `/img/balloons/balloon-${randint(0, 6)}.png`;
     }
 
     mounted() {
-        let left = Math.random() * window.innerWidth;
+        let left = Math.random() * (window.innerWidth - 100);
         if (window.innerWidth > balloons.width)
-            left = Math.random() * balloons.width + (window.innerWidth - balloons.width) / 2;
+            left = Math.random() * (balloons.width - 100) + (window.innerWidth - balloons.width) / 2;
         document.getElementById(this.db).style.left = left.toString() + 'px';
         document.getElementById(this.db).style.bottom = randint(balloons.min, balloons.max).toString() + 'px';
     }
