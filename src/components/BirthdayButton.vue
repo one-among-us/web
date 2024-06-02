@@ -15,7 +15,7 @@ import { Icon } from '@iconify/vue';
 import router from '@/router';
 
 @Component({ components: { Icon } })
-export default class RandomPerson extends Vue {
+export default class BirthdayButton extends Vue {
     t = t;
     birth: [string, string][] = null as never as [string, string][];
     shown = false;

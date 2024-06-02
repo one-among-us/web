@@ -63,9 +63,11 @@ import { fetchWithLang, handleIconFromString } from "@/logic/helper";
 import { fitText } from "@/logic/dom_utils";
 import TdorComments from "@/views/TdorComments.vue";
 import Loading from '@/components/Loading.vue';
+import RandomPerson from '@/components/RandomPerson.vue';
+import BirthdayButton from '@/components/BirthdayButton.vue'
 import router from "@/router";
 
-@Component({components: {TdorComments, Loading}})
+@Component({components: {TdorComments, Loading, RandomPerson, BirthdayButton}})
 export default class Home extends Vue
 {
     clicked = ''
