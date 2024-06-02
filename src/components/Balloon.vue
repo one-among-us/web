@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { randint } from '@/logic/helper';
+import { randint, scheduledTask } from '@/logic/helper';
 import { Component, Vue } from 'vue-facing-decorator';
 import { balloons } from '@/logic/config';
 
@@ -26,6 +26,10 @@ export default class Balloon extends Vue {
             left = Math.random() * (balloons.width - 100) + (window.innerWidth - balloons.width) / 2;
         document.getElementById(this.db).style.left = left.toString() + 'px';
         document.getElementById(this.db).style.bottom = randint(balloons.min, balloons.max).toString() + 'px';
+
+        scheduledTask(10000, () => {
+            document.getElementById(this.db).remove()
+        })
     }
 }
 </script>
