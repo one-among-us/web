@@ -1,12 +1,14 @@
 name: Vite Build
 
 on:
-#  push:
-#    branches: [main]
+  pull_request:
+    types:
+      - closed
   workflow_dispatch:
 
 jobs:
   build:
+    if: github.event.pull_request.merged == true
     name: Build main
     runs-on: ubuntu-latest
 
