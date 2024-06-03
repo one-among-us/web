@@ -139,7 +139,7 @@ export default class Home extends Vue
     margin: 10px min(5vw, 40px)
 
 .randomP
-    margin: auto 10px
+    margin: 10px 10px
     display: inline-flex
 
 #profiles
