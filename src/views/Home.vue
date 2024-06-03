@@ -12,7 +12,8 @@
 
         <div class="introduction markdown-content" v-html="htmlTop" />
 
-        <RandomPerson />
+        <RandomPerson class="randomP"/>
+        <BirthdayButton class="randomP" />
 
         <Loading v-if="isLoading" />
 
@@ -62,9 +63,11 @@ import { fetchWithLang, handleIconFromString } from "@/logic/helper";
 import { fitText } from "@/logic/dom_utils";
 import TdorComments from "@/views/TdorComments.vue";
 import Loading from '@/components/Loading.vue';
+import RandomPerson from '@/components/RandomPerson.vue';
+import BirthdayButton from '@/components/BirthdayButton.vue'
 import router from "@/router";
 
-@Component({components: {TdorComments, Loading}})
+@Component({components: {TdorComments, Loading, RandomPerson, BirthdayButton}})
 export default class Home extends Vue
 {
     clicked = ''
@@ -134,6 +137,10 @@ export default class Home extends Vue
     text-align: justify
     text-justify: inter-word
     margin: 10px min(5vw, 40px)
+
+.randomP
+    margin: auto 10px
+    display: inline-flex
 
 #profiles
     margin-top: 20px

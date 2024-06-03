@@ -4,6 +4,7 @@
             <ProfileCard class="profile-card" :userid="pid" :p="p" v-if="pid != 'tdor'" :screenshot-mode="screenshotMode" />
 
             <MDX class="content" :code="compiledMdxCode" v-if="pid != 'tdor'"/>
+            <Balloon v-for="(n, i) in isBirthday" :key="i"/>
 
             <ProfileComments class="comments" :p="p" v-if="p.comments && !screenshotMode"/>
         </div>
@@ -13,16 +14,17 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-facing-decorator';
 import { parsePeopleJson, Person } from "@/logic/data";
-import { fetchWithLang, scheduledTask, trim } from "@/logic/helper";
+import { fetchWithLang, randint, scheduledTask, trim } from "@/logic/helper";
 import { handleEasterEgg } from '@/logic/easterEgg'
-import { Lang, dataHost, peopleUrl, replaceUrlVars, setLang, t, limit } from "@/logic/config";
+import { Lang, dataHost, peopleUrl, replaceUrlVars, setLang, t, limit, balloons } from "@/logic/config";
 import MDX from "@/components/MDX.vue";
 import urljoin from "url-join";
+import Balloon from '@/components/Balloon.vue';
 import ProfileComments from "@/views/ProfileComments.vue";
 import ProfileCard from '@/components/ProfileCard.vue';
 import Swal from 'sweetalert2';
 
-@Component({components: {ProfileCard, ProfileComments, MDX}})
+@Component({components: {ProfileCard, ProfileComments, MDX, Balloon}})
 export default class Profile extends Vue
 {
     @Prop({required: true}) userid!: string
@@ -34,6 +36,7 @@ export default class Profile extends Vue
 
     p?: Person = null
     compiledMdxCode = ''
+    isBirthday = [] as number[]
 
     created(): void
     {
@@ -53,6 +56,23 @@ export default class Profile extends Vue
             .then(it => {
                 this.p = parsePeopleJson(it)
                 if (this.pid == 'tdor') this.p.id = 'tdor'
+            })
+
+        fetch(urljoin(dataHost, 'birthday-list.json'))
+            .then(it => it.json())
+            .then(it => {
+                it = (it as [string, string][])
+                for (const v of it) {
+                    if (v[0] == this.userid) {
+                        const d = new Date(v[1]);
+                        const now = new Date();
+                        if ((now.getDate() == d.getDate()) && (now.getMonth() == d.getMonth())) {
+                            for (let i = 0; i < balloons.count; ++i) {
+                                this.isBirthday.push(randint(0, 2147483648))
+                            }
+                        }
+                    }
+                }
             })
 
         if (this.pid == 'tdor') return

@@ -49,3 +49,12 @@
     transform: translateX(-100%)
   100%
     transform: translateX(0)
+
+@keyframes fly-to-top
+  0%
+    transform: translateY(0)
+  100%
+    transform: translateY(calc(-100vh - 1500px))
+
+.fly-to-top
+  animation: fly-to-top 3.5s cubic-bezier(.39, .575, .565, 1.000)

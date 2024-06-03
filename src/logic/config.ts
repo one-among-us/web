@@ -70,6 +70,7 @@ export function setLang(name: Lang)
 }
 
 export const limit = { warningLimit: 10, errorLimit: 20, cooldown: 30 }
+export const balloons = { count: 40, min: -1100, max: -100, width: 900 }
 
 export const i18n = {
     "en": {
@@ -124,6 +125,10 @@ export const i18n = {
                 "Loading stories...",
                 "Looking back on the past..."
             ]
+        },
+        birthday: {
+            birthday: "Today is {0}'s birthday!",
+            happy: "Happy Birthday!"
         }
     },
     "zh_hans": {
@@ -178,6 +183,10 @@ export const i18n = {
                 "正在加载故事……",
                 "正在回溯过往的时光……"
             ]
+        },
+        birthday: {
+            birthday: "今天是{0}的生日",
+            happy: "生日快乐"
         }
     },
     "zh_hant": {
@@ -232,6 +241,10 @@ export const i18n = {
                 "正在裝載故事...",
                 "正在回溯過去的時日..."
             ]
+        },
+        birthday: {
+            birthday: "今日是{0}的誕生日",
+            happy: "誕生日快樂!"
         }
     }
 }
@@ -261,3 +274,5 @@ export const info_i18n = {
         "age": "年齡",
     }
 }
+
+export const f = info_i18n[getLang()];

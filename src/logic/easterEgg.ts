@@ -6,6 +6,12 @@ const registedEggItem = [
     'hasFlowered', 'isSeenMeowBot233', 'BetelgeuseShown', 'ChongQingShown', 'Sea', 'detailsByYumao', 'funeralFlowers', 'preferredName', 'rhythmShown'
 ]
 
+export function isEaster(): boolean {
+    if (!localStorage.getItem('easterEggMode')) return false;
+    if (parseInt(localStorage.getItem('easterEggMode')) == 0) return false;
+    return true;
+}
+
 function allShown(): boolean {
     for (const v of registedEggItem) {
         if (!localStorage.getItem(v))
@@ -46,6 +52,12 @@ export function handleFlowerToast(name: string) {
         localStorage.setItem("hasFlowered", "Meow")
         toast("花与秋叶", `${name}收到你的小花啦~`, "lollipop_1f36d.png", null, 64, 64, null)
     }
+}
+
+export function handleBirthdayToast(name: string) {
+    if (!localStorage.getItem('easterEggMode')) return;
+    if (parseInt(localStorage.getItem('easterEggMode')) == 0) return;
+    toast(t.birthday.happy, t.birthday.birthday.replace('{0}', name), "cake.png", null, 64, 64, null)
 }
 
 export function handleEasterEgg(userid: string) {
