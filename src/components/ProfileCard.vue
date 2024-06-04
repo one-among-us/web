@@ -345,6 +345,9 @@ export default class ProfileCard extends Vue {
             // Wrap text
             .value
                 word-break: break-all
+        
+        #fields
+            max-width: calc(100% - 15px)
 
     #left
         flex-direction: row
@@ -390,7 +393,7 @@ export default class ProfileCard extends Vue {
 
         // Leave space for the profile pic
         #name-box, #fields > li:first-child
-            max-width: calc(100% - 60px)
+            max-width: calc(90% - 50px)
 
     #left
         img
