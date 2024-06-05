@@ -47,7 +47,7 @@
             </div>
         </div>
 
-        <a class="switchButton" v-if="canSwitch" v-bind:href="target" draggable="false">
+        <a class="switchButton" v-if="canSwitch" v-bind:href="target" v-on:click="switchWarn()" draggable="false">
             <SwitchButton />
         </a>
 
@@ -58,7 +58,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-facing-decorator';
 import { backendHost, dataHost, replaceUrlVars, t } from "@/logic/config";
-import { abbreviateNumber, getTodayDate } from "@/logic/helper";
+import { abbreviateNumber, getResponseSync, getTodayDate } from "@/logic/helper";
 import { Person } from "@/logic/data";
 import { info } from '@/logic/utils';
 import { Icon } from '@iconify/vue';
@@ -78,6 +78,8 @@ export default class ProfileCard extends Vue {
     isBirthday = false
     canSwitch = false
     target = '.'
+    sourceTarget = '.'
+    inWarning = false
 
     loading = new Set<string>()
 
@@ -117,6 +119,13 @@ export default class ProfileCard extends Vue {
                     if (v[0] == this.userid) {
                         this.canSwitch = true
                         this.target = `/profile/${v[1]}`
+                        this.sourceTarget = this.target
+                        const r = getResponseSync(urljoin(dataHost, 'trigger-list.json'));
+                        const l = JSON.parse(r) as string[];
+                        if (l.includes(v[1])) {
+                            this.target = null;
+                            this.inWarning = true;
+                        }
                     }
                 }
             })
@@ -144,6 +153,26 @@ export default class ProfileCard extends Vue {
 
     get flowerText(): string {
         return abbreviateNumber(this.flowers)
+    }
+
+    switchWarn() {
+        if (!this.inWarning) return;
+        Swal.fire({
+            title: this.t.switch_warning.title,
+            text: this.t.switch_warning.text,
+            icon: 'warning',
+            showCancelButton: false,
+            showCloseButton: false,
+            showConfirmButton: true,
+            allowOutsideClick() { return false },
+            timer: 300000,
+            timerProgressBar: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.target = this.sourceTarget;
+                this.inWarning = false;
+            }
+        })
     }
 
     edit(): void {
