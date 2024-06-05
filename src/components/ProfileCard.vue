@@ -166,7 +166,8 @@ export default class ProfileCard extends Vue {
             showConfirmButton: true,
             allowOutsideClick() { return false },
             timer: 300000,
-            timerProgressBar: true
+            timerProgressBar: true,
+            iconColor: '#d20f39'
         }).then((result) => {
             if (result.isConfirmed) {
                 this.target = this.sourceTarget;
