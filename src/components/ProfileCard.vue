@@ -167,7 +167,9 @@ export default class ProfileCard extends Vue {
             allowOutsideClick() { return false },
             timer: 300000,
             timerProgressBar: true,
-            iconColor: '#d20f39'
+            iconColor: '#d20f39',
+            allowEscapeKey() { return false; },
+            allowEnterKey() { return false; }
         }).then((result) => {
             if (result.isConfirmed) {
                 this.target = this.sourceTarget;
