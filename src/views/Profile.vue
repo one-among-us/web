@@ -166,7 +166,7 @@ export default class Profile extends Vue
     updated(): void {
         scheduledTask(250, () => {handleEasterEgg(this.userid)})
         scheduledTask(1000, () => {
-            fetchWithLang(urljoin(dataHost, 'trigger-list.json'))
+            fetch(urljoin(dataHost, 'trigger-list.json'))
                 .then(it => it.json())
                 .then(it => {
                     if (it.includes(trim(window.location.pathname.replace('/profile', ''), '/'))) {
