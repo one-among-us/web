@@ -133,7 +133,9 @@ export default class Profile extends Vue
                 icon: 'error',
                 showConfirmButton: false,
                 allowOutsideClick() { return false },
-                customClass: 'view-limit-alert'
+                customClass: 'view-limit-alert',
+                allowEscapeKey() { return false; },
+                allowEnterKey() { return false; }
             })
 
             // Easter egg: Watch when the user removes the DOM element in devtools
