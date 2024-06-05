@@ -406,6 +406,13 @@ export default class ProfileCard extends Vue {
         margin-left: 32px
         margin-right: 32px
 
+    .switchButton
+        position: absolute
+        left: 5px
+        top: 30px
+        width: 20px
+        height: 20px
+
 // Even smaller screen
 @media screen and (max-width: 400px)
     #profile-page
