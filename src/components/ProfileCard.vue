@@ -365,7 +365,6 @@ div:has(.view-limit-alert)
 
 // Phone layout: left becomes top and right becomes bottom
 @media screen and (max-width: 570px)
-
     #info
         flex-direction: column
 
@@ -411,6 +410,9 @@ div:has(.view-limit-alert)
 
         .spacer
             display: none
+        
+        .button-container.edit
+            display: none !important
 
     #right
         margin-left: 32px
