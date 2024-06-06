@@ -41,9 +41,11 @@
             </ul>
             <div id="websites" v-if="p.websites?.length">
                 <span id="websites-text">{{ t.nav_website }}</span>
-                <a v-for="web of p.websites" :key="web[0]" :href="web[1]">
-                    <DynamicIcon :icon="web[0]" />
-                </a>
+                <span id="websites-container">
+                    <a v-for="web of p.websites" :key="web[0]" :href="web[1]">
+                        <DynamicIcon :icon="web[0]" />
+                    </a>
+                </span>
             </div>
         </div>
 
@@ -312,11 +314,21 @@ div:has(.view-limit-alert)
 
         #websites-text
             font-weight: bold
-        a
-            color: $color-text-main
-            text-decoration: none
-            display: inline-flex
-            align-items: center
+            min-width: 40px
+        
+        #websites-container
+            display: flex
+            gap: 10px
+            flex-direction: row
+            align-items: flex-start
+            align-content: flex-start
+            flex-wrap: wrap
+            
+            a
+                color: $color-text-main
+                text-decoration: none
+                display: inline-flex
+                align-items: center
 
 #left
     margin-left: min(5vw, 60px)
@@ -411,12 +423,16 @@ div:has(.view-limit-alert)
         .spacer
             display: none
         
-        .button-container.edit
-            display: none !important
 
     #right
         margin-left: 32px
         margin-right: 32px
+
+        #websites
+            max-width: calc( 100% - 100px )
+
+            #websites-container
+                max-width: calc(100% - 1em)
 
     .switchButton
         position: absolute
