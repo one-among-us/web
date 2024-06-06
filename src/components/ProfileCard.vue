@@ -169,7 +169,8 @@ export default class ProfileCard extends Vue {
             timerProgressBar: true,
             iconColor: '#d20f39',
             allowEscapeKey() { return false; },
-            allowEnterKey() { return false; }
+            allowEnterKey() { return false; },
+            customClass: 'view-limit-alert'
         }).then((result) => {
             if (result.isConfirmed) {
                 this.target = this.sourceTarget;
@@ -203,6 +204,9 @@ export default class ProfileCard extends Vue {
 <style lang="sass" scoped>
 @import "../css/colors"
 @import "@/css/global"
+
+div:has(.view-limit-alert)
+    backdrop-filter: blur(10px)
 
 // Screenshot mode
 .screenshot #info
