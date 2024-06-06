@@ -368,15 +368,20 @@ export default class ProfileCard extends Vue {
         // Leave space for the profile pic
         #name-box, #fields > li:first-child
            max-width: calc(100% - 100px)
+           overflow: hidden
+           text-justify: inter-word
 
         // Hide li dots
         #fields li
             list-style-type: none
             margin-left: 0
+            overflow: hidden
+            text-justify: inter-word
 
             // Wrap text
             .value
-                word-break: break-all
+                //word-break: break-all
+                text-justify: inter-word
         
         #fields
             max-width: calc(100% - 15px)
@@ -433,6 +438,8 @@ export default class ProfileCard extends Vue {
         // Leave space for the profile pic
         #name-box, #fields > li:first-child
             max-width: calc(90% - 50px)
+            overflow: hidden
+            text-justify: inter-word
 
     #left
         img
