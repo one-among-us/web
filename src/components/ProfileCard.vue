@@ -385,6 +385,7 @@ export default class ProfileCard extends Vue {
         
         #fields
             max-width: calc(100% - 15px)
+            text-indent: 3em hanging
 
     #left
         flex-direction: row
