@@ -385,7 +385,7 @@ export default class ProfileCard extends Vue {
         
         #fields
             max-width: calc(100% - 15px)
-            text-indent: 3em hanging
+            text-indent: 3.25em hanging
 
     #left
         flex-direction: row
@@ -415,9 +415,7 @@ export default class ProfileCard extends Vue {
     .switchButton
         position: absolute
         left: 5px
-        top: 30px
-        width: 20px
-        height: 20px
+        top: 32px
 
 // Even smaller screen
 @media screen and (max-width: 400px)

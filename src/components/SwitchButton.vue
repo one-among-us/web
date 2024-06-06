@@ -1,5 +1,5 @@
 <template>
-    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" class="switching" viewBox="0 0 24 24">
         <g
             fill="none"
             stroke="rgba(166, 134, 89, 0.84)"
@@ -20,4 +20,18 @@ import { Component, Vue } from 'vue-facing-decorator';
 export default class SwitchButton extends Vue {}
 </script>
 
-<style lang="scss"></style>
+<style lang="sass">
+.switching
+    width: 24px
+    height: 24px
+
+@media screen and (max-width: 570px)
+    .switching
+        width: 20px
+        height: 20px
+
+@media screen and (max-width: 400px)
+    .switching
+        width: 16px
+        height: 16px
+</style>
