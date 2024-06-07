@@ -41,9 +41,11 @@
             </ul>
             <div id="websites" v-if="p.websites?.length">
                 <span id="websites-text">{{ t.nav_website }}</span>
-                <a v-for="web of p.websites" :key="web[0]" :href="web[1]">
-                    <DynamicIcon :icon="web[0]" />
-                </a>
+                <span id="websites-container">
+                    <a v-for="web of p.websites" :key="web[0]" :href="web[1]">
+                        <DynamicIcon :icon="web[0]" />
+                    </a>
+                </span>
             </div>
         </div>
 
@@ -169,7 +171,8 @@ export default class ProfileCard extends Vue {
             timerProgressBar: true,
             iconColor: '#d20f39',
             allowEscapeKey() { return false; },
-            allowEnterKey() { return false; }
+            allowEnterKey() { return false; },
+            customClass: 'view-limit-alert'
         }).then((result) => {
             if (result.isConfirmed) {
                 this.target = this.sourceTarget;
@@ -203,6 +206,9 @@ export default class ProfileCard extends Vue {
 <style lang="sass" scoped>
 @import "../css/colors"
 @import "@/css/global"
+
+div:has(.view-limit-alert)
+    backdrop-filter: blur(10px)
 
 // Screenshot mode
 .screenshot #info
@@ -308,11 +314,21 @@ export default class ProfileCard extends Vue {
 
         #websites-text
             font-weight: bold
-        a
-            color: $color-text-main
-            text-decoration: none
-            display: inline-flex
-            align-items: center
+            min-width: 40px
+        
+        #websites-container
+            display: flex
+            gap: 10px
+            flex-direction: row
+            align-items: flex-start
+            align-content: flex-start
+            flex-wrap: wrap
+            
+            a
+                color: $color-text-main
+                text-decoration: none
+                display: inline-flex
+                align-items: center
 
 #left
     margin-left: min(5vw, 60px)
@@ -361,25 +377,30 @@ export default class ProfileCard extends Vue {
 
 // Phone layout: left becomes top and right becomes bottom
 @media screen and (max-width: 570px)
-
     #info
         flex-direction: column
 
         // Leave space for the profile pic
         #name-box, #fields > li:first-child
            max-width: calc(100% - 100px)
+           overflow: hidden
+           text-justify: inter-word
 
         // Hide li dots
         #fields li
             list-style-type: none
             margin-left: 0
+            overflow: hidden
+            text-justify: inter-word
 
             // Wrap text
             .value
-                word-break: break-all
+                //word-break: break-all
+                text-justify: inter-word
         
         #fields
             max-width: calc(100% - 15px)
+            text-indent: 3.25em hanging
 
     #left
         flex-direction: row
@@ -401,17 +422,22 @@ export default class ProfileCard extends Vue {
 
         .spacer
             display: none
+        
 
     #right
         margin-left: 32px
         margin-right: 32px
 
+        #websites
+            max-width: calc( 100% - 100px )
+
+            #websites-container
+                max-width: calc(100% - 1em)
+
     .switchButton
         position: absolute
         left: 5px
-        top: 30px
-        width: 20px
-        height: 20px
+        top: 32px
 
 // Even smaller screen
 @media screen and (max-width: 400px)
@@ -433,6 +459,8 @@ export default class ProfileCard extends Vue {
         // Leave space for the profile pic
         #name-box, #fields > li:first-child
             max-width: calc(90% - 50px)
+            overflow: hidden
+            text-justify: inter-word
 
     #left
         img
