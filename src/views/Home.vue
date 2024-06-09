@@ -12,9 +12,10 @@
 
         <div class="introduction markdown-content" v-html="htmlTop" />
 
-        <RandomPerson class="randomP"/>
-        <BirthdayButton class="randomP" />
-
+        <div class=randomButtons>
+            <RandomPerson class="randomP"/>
+            <BirthdayButton class="randomP" v-for="i of birthdayList" :key="i[0]" :id="i[0]" :name="i[1]" />
+        </div> 
         <Loading v-if="isLoading" />
 
         <div id="profiles" class="unselectable" v-if="people">
@@ -55,11 +56,11 @@ import htmlTopEn from "@/assets/home-top.en.md";
 import htmlBottom from "@/assets/home-bottom.md";
 import htmlBottomHant from "@/assets/home-bottom.zh_hant.md";
 import htmlBottomEn from "@/assets/home-bottom.en.md";
-import { PersonMeta } from "@/logic/data";
-import { dataHost, getLang, replaceUrlVars } from "@/logic/config";
+import { PersonMeta, Person } from "@/logic/data";
+import { dataHost, getLang, replaceUrlVars, peopleUrl } from "@/logic/config";
 import urljoin from "url-join";
 import { info } from '@/logic/utils';
-import { fetchWithLang, handleIconFromString } from "@/logic/helper";
+import { fetchWithLang, handleIconFromString, getResponseSync } from "@/logic/helper";
 import { fitText } from "@/logic/dom_utils";
 import TdorComments from "@/views/TdorComments.vue";
 import Loading from '@/components/Loading.vue';
@@ -81,6 +82,8 @@ export default class Home extends Vue
     htmlBottom = handleIconFromString(this.lang === 'zh_hans' ? htmlBottom : (this.lang === 'zh_hant' ? htmlBottomHant : htmlBottomEn));
 
     people: PersonMeta[] = null as never as PersonMeta[]
+
+    birthdayList = [] as [string, string][]
 
     @Ref() bookmarkTexts: HTMLDivElement[]
     @Ref() bookmark: HTMLDivElement[]
@@ -115,6 +118,20 @@ export default class Home extends Vue
         fetchWithLang(urljoin(dataHost, 'people-home-list.json'))
             .then(it => it.text())
             .then(it => this.people = JSON.parse(it))
+        
+        fetch(urljoin(dataHost, 'birthday-list.json'))
+            .then(it => it.json())
+            .then(it => {
+                for (const v of it) {
+                    const d = new Date(v[1]);
+                    const now = new Date();
+                    if (d.getDate() == now.getDate() && d.getMonth() == now.getMonth()) {
+                        const p = JSON.parse(getResponseSync(urljoin(peopleUrl(v[0]), getLang() == 'zh_hans' ? 'info.json' : `info.${getLang()}.json`))) as Person;
+                        this.birthdayList.push([v[0], p.name])
+                    }
+                }
+                console.log(this.birthdayList)
+            });
     }
 
     switchPage(p: PersonMeta): void
@@ -138,8 +155,18 @@ export default class Home extends Vue
     text-justify: inter-word
     margin: 10px min(5vw, 40px)
 
+.randomButtons
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+    justify-content: center
+    justify-items: center
+    width: 90%
+    gap: 20px
+    margin: auto
+
 .randomP
-    margin: 10px 10px
+    margin: 10px 0px
     display: inline-flex
 
 #profiles
