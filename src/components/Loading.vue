@@ -127,4 +127,15 @@ export default class Loading extends Vue {
     text-align: center;
     color: rgba(166, 134, 89, 0.84);
 }
+
+@media (prefers-color-scheme: dark) {
+    .loadingMessage {
+        color: rgba(255, 235, 194, 0.84)
+    }
+
+    .path {
+        color: hsl(20, 71%, 80%);
+        stroke: hsl(20, 71%, 80%)
+    }
+}
 </style>
