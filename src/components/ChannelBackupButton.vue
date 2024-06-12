@@ -61,4 +61,13 @@ export default class ChannelBackupButton extends Vue
 
 .button.anim:hover
     box-shadow: 0 10px 10px -5px rgba(166, 134, 89, 0.3)
+
+@media (prefers-color-scheme: dark)
+    .backup
+        background: $color-bg-dark-6
+        color: $color-text-dark-main
+
+        .icon
+            background-color: rgb(89 64 20)
+            text-shadow: rgba(255, 255, 255, 0.125) 0 5px 6px
 </style>
