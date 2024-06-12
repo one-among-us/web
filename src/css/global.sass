@@ -4,7 +4,8 @@
 // Container width (This is normally 50vw,
 //   but when it's smaller than 900px, use 100vw - 50px, because 50px is the margin)
 $app-width: max(50vw, min(900px, 100vw - 50px))
-$c-highlight: #ff7878
+$c-highlight: rgb(255, 120, 120)
+$c-highlight-dark: rgba(255, 120, 120, 0.25)
 
 // Highlight color
 .color-highlight
@@ -180,3 +181,10 @@ button
 svg.icon
   @extend .clickable
   height: 1em
+
+@media (prefers-color-scheme: dark)
+  .color-hightlight
+    color: $c-highlight-dark
+
+  .hy-button
+    background: $color-bg-dark-6
