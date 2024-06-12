@@ -263,13 +263,14 @@ export default class EditInfo extends Vue
             padding: 4px 8px
             color: $color-text-main
             text-align: center
+            outline: none
 
         input.key
             margin-right: 10px
             font-weight: bold
 
         input:focus-visible
-            outline-color: $color-text-light
+            outline: solid $color-text-light
 
     .button.submit
         margin-top: 30px
@@ -309,4 +310,22 @@ export default class EditInfo extends Vue
             border-bottom: 1px solid #ff7878
             border-top-left-radius: 0
             border-top-right-radius: 0
+
+@media (prefers-color-scheme: dark)
+    #EditInfo
+        background: $color-bg-dark-5
+
+        #id
+            color: $color-text-dark-light
+        
+        .input-box
+            input
+                color: $color-text-dark-main
+                background-color: $color-bg-dark-6
+            
+            input:focus-visible
+                outline: solid $color-text-dark-light
+
+        .button.submit
+            background-color: $color-bg-dark-6
 </style>
