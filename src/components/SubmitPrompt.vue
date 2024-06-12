@@ -50,6 +50,7 @@ export default class SubmitPrompt extends Vue
 
 <style lang="sass" scoped>
 @import src/css/global
+@import src/css/colors
 
 #SubmitPrompt
     // Cover entire page
@@ -94,4 +95,7 @@ export default class SubmitPrompt extends Vue
         font-size: small
         color: $color-text-light
 
+@media (prefers-color-scheme: dark)
+    #prompt
+        background: $color-bg-dark-5
 </style>
