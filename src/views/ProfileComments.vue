@@ -262,4 +262,20 @@ export default class ProfileComments extends Vue
             font-size: 10px
             color: $color-text-light
             margin-right: 5px
+    
+@media (prefers-color-scheme: dark)
+    .comment
+        .replies
+            .reply-title
+                color: $color-text-dark-light !important
+            
+            background: $color-bg-dark-5 !important
+    
+    #add-comment
+        textarea
+            background: rgba(255, 255, 255, 0.05) !important
+            color: $color-text-dark-main !important
+
+        textarea:placeholder
+            color: $color-text-dark-light !important
 </style>
