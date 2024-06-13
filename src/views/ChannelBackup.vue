@@ -1,18 +1,18 @@
 <template>
     <div>
         <TgBlog id="profile-page" :posts-url="postsUrl" :posts-data="postsData" v-if="postsUrl">
-            <ChannelBackupButton class="heading" text="返回" icon="icon-back"
+            <ChannelBackupButton class="heading" :text="t.backup.back" icon="icon-back"
                                  :url="`/profile/${userid}`" />
         </TgBlog>
         <div v-if="error">
-            加载页面错误... 请重试
+            {{ t.backup.error }}
         </div>
     </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-facing-decorator';
-import { backupUrl } from "@/logic/config";
+import { backupUrl, t } from "@/logic/config";
 import { TgBlog } from "tg-blog";
 import "tg-blog/dist/style.css"
 import ChannelBackupButton from "@/components/ChannelBackupButton.vue";
@@ -28,6 +28,8 @@ export default class ChannelBackup extends Vue
     postsUrl: string = null
     postsData: string = null
     error: string = null
+
+    t = t
 
     get computedBackup() { return this.backup in alias ? alias[this.backup] : this.backup }
 

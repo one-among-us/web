@@ -133,6 +133,11 @@ export const i18n = {
         switch_warning: {
             title: "Trigger Warning",
             text: "The entry to be switched has a strong trauma triggering factor. Please prioritize your mental state."
+        },
+        backup: {
+            error: "Error in load page",
+            back: "back",
+            view: "View backup of {0}"
         }
     },
     "zh_hans": {
@@ -195,6 +200,11 @@ export const i18n = {
         switch_warning: {
             title: "创伤触发要素警告",
             text: "将要切换的条目有极强的创伤触发要素. 请优先保证自己精神状态. "
+        },
+        backup: {
+            error: "加载页面错误... 请重试",
+            back: "返回",
+            view: "查看 {0} 备份"
         }
     },
     "zh_hant": {
@@ -257,6 +267,11 @@ export const i18n = {
         switch_warning: {
             title: "創傷觸發要素警告",
             text: "將要切換的條目具有極強的創傷觸發性. 請優先保證自己的精神狀態"
+        },
+        backup: {
+            error: "加載頁面時出錯... 請重新嘗試",
+            back: "返回",
+            view: "視察 {0} 備份"
         }
     }
 }
