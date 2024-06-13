@@ -1,158 +1,158 @@
 <template>
-  <div id="TdorComments" class="introduction">
-    <!-- Add comment textbox -->
-    <transition name="collapse">
-      <div id="add-comment" v-show="showInputArea">
+    <div id="TdorComments" class="introduction">
+        <!-- Add comment textbox -->
+        <transition name="collapse">
+            <div id="add-comment" v-show="showInputArea">
         <textarea id="comment-textarea" v-model="textInput" :placeholder="t.nav_comment_placeholder"
-          @input="resizeInput" ref="input" />
-        <div id="send-comment-btn" v-if="textInput.length > 0">
-          <span class="char-count unselectable">{{ textInput.length }} {{ t.nav_comment_status }}</span>
-          <IFasPaperPlane class="icon" @click="btnSend" />
-        </div>
-        <MarkdownTooltip text-area-id="comment-textarea"></MarkdownTooltip>
-      </div>
-    </transition>
+                  @input="resizeInput" ref="input"/>
+                <div id="send-comment-btn" v-if="textInput.length > 0">
+                    <span class="char-count unselectable">{{ textInput.length }} {{ t.nav_comment_status }}</span>
+                    <IFasPaperPlane class="icon" @click="btnSend"/>
+                </div>
+                <MarkdownTooltip text-area-id="comment-textarea"></MarkdownTooltip>
+            </div>
+        </transition>
 
-    <SubmitPrompt v-if="showCaptchaPrompt" @submit="submitRequest" @close="showCaptchaPrompt = false" />
-  </div>
+        <SubmitPrompt v-if="showCaptchaPrompt" @submit="submitRequest" @close="showCaptchaPrompt = false"/>
+    </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-facing-decorator';
-import { Person } from "@/logic/data";
-import SubmitPrompt, { CaptchaResponse } from "@/components/SubmitPrompt.vue";
-import { fetchText } from "@/logic/helper";
-import { backendHost, t } from "@/logic/config";
+import {Component, Vue} from 'vue-facing-decorator';
+import {Person} from "@/logic/data";
+import SubmitPrompt, {CaptchaResponse} from "@/components/SubmitPrompt.vue";
+import {fetchText} from "@/logic/helper";
+import {backendHost, t} from "@/logic/config";
 import MarkdownTooltip from "@/components/MarkdownTooltip.vue";
-import { error, info } from "@/logic/utils";
-import { initSpoilers } from "tg-blog";
+import {error, info} from "@/logic/utils";
+import {initSpoilers} from "tg-blog";
 import Swal from 'sweetalert2';
 
-@Component({ components: { MarkdownTooltip, SubmitPrompt } })
+@Component({components: {MarkdownTooltip, SubmitPrompt}})
 export default class TdorComments extends Vue {
-  declare $refs: {
-    input: HTMLTextAreaElement
-  }
+    declare $refs: {
+        input: HTMLTextAreaElement
+    }
 
-  private textInputCache = ""
-  private textInputKey: string
+    private textInputCache = ""
+    private textInputKey: string
 
-  showCaptchaPrompt = false
+    showCaptchaPrompt = false
 
-  t = t
-  p = { id: "tdor" } as Person
-  showInputArea = true
+    t = t
+    p = {id: "tdor"} as Person
+    showInputArea = true
 
-  /**
-   * Send button
-   */
-  btnSend() {
-    // Show submit prompt
-    this.showCaptchaPrompt = true
-  }
+    /**
+     * Send button
+     */
+    btnSend() {
+        // Show submit prompt
+        this.showCaptchaPrompt = true
+    }
 
-  alterTextArea() {
-    // Show Input area
-    this.showInputArea = !this.showInputArea
-  }
+    alterTextArea() {
+        // Show Input area
+        this.showInputArea = !this.showInputArea
+    }
 
-  /**
-   * Submit comment request
-   */
-  submitRequest(p: CaptchaResponse) {
-    this.showCaptchaPrompt = false
+    /**
+     * Submit comment request
+     */
+    submitRequest(p: CaptchaResponse) {
+        this.showCaptchaPrompt = false
 
-    const params = { id: this.p.id, content: this.textInput, ...p }
-    info(params)
+        const params = {id: this.p.id, content: this.textInput, ...p}
+        info(params)
 
-    Swal.fire({
-      title: t.nav_comment_submit,
-      showConfirmButton: false,
-      icon: null,
-      didOpen: (() => {
-        Swal.showLoading(null);
-        fetchText(backendHost + '/comment/add', { method: 'POST', params })
-          .then(() => {
-            this.textInput = "";
-            Swal.fire({
-              title: t.nav_success,
-              text: t.nav_success_text_reply,
-              icon: 'success',
-              timer: 5000,
-              timerProgressBar: true,
-              showConfirmButton: true,
-              confirmButtonText: t.nav_ok_1,
-              showCloseButton: true
+        Swal.fire({
+            title: t.nav_comment_submit,
+            showConfirmButton: false,
+            icon: null,
+            didOpen: (() => {
+                Swal.showLoading(null);
+                fetchText(backendHost + '/comment/add', {method: 'POST', params})
+                    .then(() => {
+                        this.textInput = "";
+                        Swal.fire({
+                            title: t.nav_success,
+                            text: t.nav_success_text_reply,
+                            icon: 'success',
+                            timer: 5000,
+                            timerProgressBar: true,
+                            showConfirmButton: true,
+                            confirmButtonText: t.nav_ok_1,
+                            showCloseButton: true
+                        })
+                    })
+                    .catch(err => {
+                        error(err);
+                        Swal.fire({
+                            title: t.nav_failed,
+                            text: t.nav_fail_reason + err.message,
+                            icon: 'error',
+                            timer: 5000,
+                            timerProgressBar: true,
+                            showConfirmButton: false,
+                            showCloseButton: false
+                        })
+                    })
             })
-          })
-          .catch(err => {
-            error(err);
-            Swal.fire({
-              title: t.nav_failed,
-              text: t.nav_fail_reason + err.message,
-              icon: 'error',
-              timer: 5000,
-              timerProgressBar: true,
-              showConfirmButton: false,
-              showCloseButton: false
-            })
-          })
-      })
-    })
-  }
+        })
+    }
 
-  /**
-   * Load saved textinput from localStorage
-   */
-  created() {
-    this.textInputKey = `draft-${this.p.id}`
-    this.textInputCache = localStorage.getItem(this.textInputKey) ?? ""
-  }
+    /**
+     * Load saved textinput from localStorage
+     */
+    created() {
+        this.textInputKey = `draft-${this.p.id}`
+        this.textInputCache = localStorage.getItem(this.textInputKey) ?? ""
+    }
 
-  /**
-   * Get cached textinput
-   */
-  get textInput() {
-    return this.textInputCache
-  }
+    /**
+     * Get cached textinput
+     */
+    get textInput() {
+        return this.textInputCache
+    }
 
-  /**
-   * Set text and save localstorage
-   * @param s
-   */
-  set textInput(s: string) {
-    this.textInputCache = s
-    localStorage.setItem(this.textInputKey, s)
-  }
+    /**
+     * Set text and save localstorage
+     * @param s
+     */
+    set textInput(s: string) {
+        this.textInputCache = s
+        localStorage.setItem(this.textInputKey, s)
+    }
 
-  mounted() {
-    // Set initial size
-    this.resizeInput()
+    mounted() {
+        // Set initial size
+        this.resizeInput()
 
-    // Init spoilers
-    initSpoilers()
-  }
+        // Init spoilers
+        initSpoilers()
+    }
 
-  /**
-   * Auto resize
-   */
-  resizeInput() {
-    const el = this.$refs.input
-    el.style.height = "auto"
-    el.style.height = `${el.scrollHeight + 18}px`
-  }
+    /**
+     * Auto resize
+     */
+    resizeInput() {
+        const el = this.$refs.input
+        el.style.height = "auto"
+        el.style.height = `${el.scrollHeight + 18}px`
+    }
 }
 </script>
 
 <style lang="sass">
-  @import src/css/global
-  @import src/css/colors
+@import src/css/global
+@import src/css/colors
 
-  .divp
+.divp
     margin: 0.65em 0
     line-height: 1.6
 
-  .comment
+.comment
     @extend .divp
 
     .from
@@ -179,7 +179,7 @@ export default class TdorComments extends Vue {
             margin-top: 0.5em
 
 
-  #add-comment
+#add-comment
     margin: 20px auto 50px
 
     textarea
@@ -201,7 +201,7 @@ export default class TdorComments extends Vue {
 
     textarea:focus-visible
         outline: 1px solid $color-text-light
-        //outline: none
+    //outline: none
 
     textarea::placeholder
         color: $color-text-light
@@ -223,38 +223,64 @@ export default class TdorComments extends Vue {
             color: $color-text-light
             margin-right: 5px
 
-  .btn
-      display: flexbox
-      background: $color-bg-6
-      border-radius: 20px
-      border-style: solid
-      border-width: 1px
-      border-color: $color-text-light
-      padding: 10px
-      width: fit-content
-      gap: 8px
-      align-items: center
-      color: $color-text-main
+.btn
+    display: flexbox
+    background: $color-bg-6
+    border-radius: 20px
+    border-style: solid
+    border-width: 1px
+    border-color: $color-text-light
+    padding: 10px
+    width: fit-content
+    gap: 8px
+    align-items: center
+    color: $color-text-main
 
-      filter: drop-shadow(0 2px 3px rgba(188 140 68 / 0.2))
+    filter: drop-shadow(0 2px 3px rgba(188 140 68 / 0.2))
 
-      .iconR
-          font-size: 2em
-          color: rgba(188 140 60 / 0.5)
-          background: transparent
-          font-family: 'Hua', '851', 'STXINGKA', Avenir, Helvetica, Arial, sans-serif
-          display: inline-block
+    .iconR
+        font-size: 2em
+        color: rgba(188 140 60 / 0.5)
+        background: transparent
+        font-family: 'Hua', '851', 'STXINGKA', Avenir, Helvetica, Arial, sans-serif
+        display: inline-block
 
-      .textR
-          font-size: 1.65em
-          margin-left: 10px
-          font-family: '851'
-          vertical-align: middle
-          display: inline-block
-          padding-bottom: 0.6rem
+    .textR
+        font-size: 1.65em
+        margin-left: 10px
+        font-family: '851'
+        vertical-align: middle
+        display: inline-block
+        padding-bottom: 0.6rem
 
-  .shadow:hover
-      box-shadow: 15px 15px 15px -5px rgba(166 134 89 / 0.3)
-      border-color: $color-text-special
+.shadow:hover
+    box-shadow: 15px 15px 15px -5px rgba(166 134 89 / 0.3)
+    border-color: $color-text-special
 
+@media (prefers-color-scheme: dark)
+    .comment
+        .from
+            color: $color-text-dark-light
+
+        .from.anonymous
+            color: darken($color-text-dark-light, 20%)
+
+        .replies
+            .reply-title
+                color: $color-text-dark-light !important
+
+            background: $color-bg-dark-5 !important
+
+    #add-comment
+        textarea
+            background: rgba(255, 255, 255, 0.05) !important
+            color: $color-text-dark-main !important
+
+        #send-comment-btn
+            color: $color-text-dark-special
+
+    .btn
+        background: $color-bg-dark-6
+        border-color: $color-text-dark-light
+        color: $color-text-dark-main
 </style>
