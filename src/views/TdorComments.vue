@@ -279,6 +279,9 @@ export default class TdorComments extends Vue {
         #send-comment-btn
             color: $color-text-dark-special
 
+            .char-count
+                color: $color-text-dark-main
+
     .btn
         background: $color-bg-dark-6
         border-color: $color-text-dark-light
