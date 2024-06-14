@@ -204,7 +204,7 @@ export const i18n = {
         backup: {
             error: "加载页面错误... 请重试",
             back: "返回",
-            view: "查看 {0} 备份"
+            view: "查看{0}备份"
         }
     },
     "zh_hant": {
@@ -271,7 +271,7 @@ export const i18n = {
         backup: {
             error: "加載頁面時出錯... 請重新嘗試",
             back: "返回",
-            view: "視察 {0} 備份"
+            view: "視察{0}備份"
         }
     }
 }
