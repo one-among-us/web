@@ -63,7 +63,7 @@ export default class Loading extends Vue {
     }
     to {
         -ms-transform: rotate(360deg);
-        -moz-transform: rotate(360de);
+        -moz-transform: rotate(360deg);
         -webkit-transform: rotate(360deg);
         -o-transform: rotate(360deg);
         transform: rotate(360deg);
