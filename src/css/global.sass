@@ -188,3 +188,17 @@ svg.icon
 
   .hy-button
     background: $color-bg-dark-6
+
+  .spoiler
+    background-color: transparent
+    filter: blur(6px) drop-shadow(1px 1px 5px $color-text-dark-special)
+
+    span
+      opacity: 1
+
+  .spoiler.spoiler-visible
+    background-color: transparent
+    filter: none
+
+    span
+      opacity: 1

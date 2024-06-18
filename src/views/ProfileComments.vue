@@ -200,7 +200,8 @@ export default class ProfileComments extends Vue
         margin-left: 10px
 
     .from.anonymous
-        color: lighten($color-text-light, 20%)
+        color: $color-text-light
+        opacity: 0.75
 
     .replies
         .reply-title
@@ -265,6 +266,14 @@ export default class ProfileComments extends Vue
     
 @media (prefers-color-scheme: dark)
     .comment
+        .from
+            color: $color-text-dark-light !important
+            margin-left: 10px
+
+        .from.anonymous
+            color: $color-text-dark-light !important
+            opacity: 0.5 !important
+
         .replies
             .reply-title
                 color: $color-text-dark-light !important

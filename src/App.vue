@@ -86,7 +86,7 @@ export default class App extends Vue
 
 @media (prefers-color-scheme: dark)
     body
-        background: rgb(27, 27, 32)
+        background: #181825
     
     #app
         color: $color-text-dark-main
