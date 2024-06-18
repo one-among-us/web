@@ -38,7 +38,9 @@
     border-radius: 5px
   
   hr
-    border: 0.5px solid $color-text-special
+    border-style: solid
+    border-width: 1px
+    border-image: repeating-linear-gradient(45deg, #e94880, #e94880 10px, #f5aac5 10px, #f5aac5 20px) 1
 
 @media (prefers-color-scheme: dark)
   .markdown-content
@@ -47,3 +49,8 @@
 
     h1, h2
       border-bottom: 1px solid $color-text-dark-special
+
+    hr
+      border-style: solid
+      border-width: 1px
+      border-image: repeating-linear-gradient(45deg, #aed6fa, #aed6fa 10px, #ddeffc 10px, #ddeffc 20px) 1
