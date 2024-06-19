@@ -17,6 +17,11 @@ $font-en: "Source Sans 3", $font;
     src: url("/fonts/STXINGKA.woff2") format('woff2');
 }
 
+@font-face {
+    font-family: 'katex-math';
+    src: url("/fonts/NotoSansMath-Regular.woff2") format('woff2');
+}
+
 .font-custom {
     font-family: 'Hua', 'STXINGKA', $font;
     line-height: 1.3rem;
