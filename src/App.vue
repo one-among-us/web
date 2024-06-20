@@ -83,6 +83,13 @@ export default class App extends Vue
 
     &[data-lang="en"]
         font-family: $font-en
+
+@media (prefers-color-scheme: dark)
+    body
+        background: #181825
+    
+    #app
+        color: $color-text-dark-main
 </style>
 
 <!-- Scoped Style -->
@@ -122,4 +129,23 @@ export default class App extends Vue
 .router-link
     position: relative
     z-index: 100
+
+@media (prefers-color-scheme: dark)
+    #title
+        background-color: $color-bg-dark-5
+
+        #title-sub
+            color: $color-text-dark-light
+        
+    #nav
+        background-color: $color-bg-dark-6
+
+        a
+            color: $color-text-dark-main
+
+            &.router-link-exact-active
+                color: $color-text-dark-special
+
+    #router
+        background-color: $color-bg-dark-4
 </style>

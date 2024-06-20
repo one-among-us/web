@@ -249,4 +249,13 @@ export default class Home extends Vue
             $len: 30vw
             height: $len
             width: $len
+
+@media (prefers-color-scheme: dark)
+    .back, .front
+        border: 10px solid rgba(27, 27, 32, 0.8964) !important
+        outline: 2px solid $color-text-dark-main !important
+    
+    .bookmark
+        border: 40px solid rgba(255, 189, 202, 0.25) !important
+        border-bottom: 10px solid transparent !important
 </style>

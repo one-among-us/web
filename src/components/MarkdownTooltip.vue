@@ -189,4 +189,13 @@ export default class MarkdownTooltip extends Vue
         padding-left: 3px
         padding-right: 8px
 
+@media (prefers-color-scheme: dark)
+    #MarkdownTooltip
+        background: #fffcff30
+        color: $color-text-dark-light
+        filter: drop-shadow(0 2px 5px rgba(166, 134, 89, 0.42))
+
+        .icon-wrapper:hover
+            background: $color-bg-dark-5
+
 </style>

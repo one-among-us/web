@@ -7,9 +7,14 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-facing-decorator';
+import { t, getLang } from '@/logic/config';
 import urljoin from "url-join";
 
-const kvs = {'telegram': '电报', 'twitter': '推特'}
+const kvs = {
+    zh_hans: {'telegram': '电报', 'twitter': '推特'},
+    zh_hant: {'telegram': '電報', 'twitter': '推特'},
+    en: {'telegram': 'telegram', 'twitter': 'twitter'}
+}
 
 @Component({components: {}})
 export default class ChannelBackupButton extends Vue
@@ -18,6 +23,8 @@ export default class ChannelBackupButton extends Vue
     @Prop() icon: string
     @Prop() url: string
     @Prop() text: string
+
+    kvs = kvs[getLang()]
 
     get computedUrl()
     {
@@ -28,7 +35,7 @@ export default class ChannelBackupButton extends Vue
     get computedText()
     {
         if (this.text) return this.text
-        return '查看' + (kvs[this.platform] ?? ` ${this.platform} `) + '备份'
+        return t.backup.view.replace('{0}', this.kvs[this.platform] ?? ` ${this.platform} `)
     }
 }
 </script>
@@ -61,4 +68,13 @@ export default class ChannelBackupButton extends Vue
 
 .button.anim:hover
     box-shadow: 0 10px 10px -5px rgba(166, 134, 89, 0.3)
+
+@media (prefers-color-scheme: dark)
+    .backup
+        background: $color-bg-dark-6
+        color: $color-text-dark-main
+
+        .icon
+            background-color: rgb(89 64 20)
+            text-shadow: rgba(255, 255, 255, 0.125) 0 5px 6px
 </style>

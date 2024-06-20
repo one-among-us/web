@@ -485,4 +485,21 @@ div:has(.view-limit-alert)
                 width: 30px
                 height: 30px
 
+@media (prefers-color-scheme: dark)
+    #info
+        background-color: $color-bg-dark-6
+    
+    #right
+        #hr
+            color: $color-text-dark-main
+        
+        #websites
+            #websites-container
+                a
+                    color: $color-text-dark-main
+
+    #left
+        #buttons
+            .button
+                background: $color-bg-dark-5
 </style>
