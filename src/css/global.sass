@@ -1,5 +1,6 @@
 @import colors
 @import fonts/font-custom
+@import node_modules/katex/dist/katex.css
 
 // Container width (This is normally 50vw,
 //   but when it's smaller than 900px, use 100vw - 50px, because 50px is the margin)
@@ -182,11 +183,8 @@ svg.icon
   @extend .clickable
   height: 1em
 
-.katex
-  font-family: 'katex-math' !important
-
-  .katex-html
-    display: none
+.katex-html
+  display: none
 
 @media (prefers-color-scheme: dark)
   .color-hightlight
