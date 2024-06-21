@@ -40,5 +40,6 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     SubmitPrompt: typeof import('./components/SubmitPrompt.vue')['default']
     SwitchButton: typeof import('./components/SwitchButton.vue')['default']
+    ThemeButton: typeof import('./components/ThemeButton.vue')['default']
   }
 }

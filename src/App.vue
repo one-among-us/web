@@ -20,6 +20,7 @@
 </template>
 
 <script lang="ts">
+import {applyTheme} from "@/logic/theme";
 import { Component, Vue } from 'vue-facing-decorator';
 import Divider from "@/components/divider.vue";
 import LangButton from "@/components/LangButton.vue";
@@ -52,6 +53,7 @@ export default class App extends Vue
         )
 
         document.getElementById("app").dataset.lang = getLang()
+        applyTheme()
     }
 }
 </script>

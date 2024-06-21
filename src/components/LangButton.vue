@@ -1,5 +1,6 @@
 <template>
     <div class="lang-btns" v-if="showBtn">
+        <ThemeButton />
         <div class="clickable hy-button" 
             @click="() => click(l)" v-for="l in targets" :key="l">
             {{ supportedLang[l] }}
@@ -11,9 +12,10 @@
 import { Component, Vue } from 'vue-facing-decorator';
 import { getLang, Lang, setLang, supportedLang } from "@/logic/config";
 import { info } from "@/logic/utils";
+import ThemeButton from "@/components/ThemeButton.vue";
 
 
-@Component({ components: {} })
+@Component({ components: {ThemeButton} })
 export default class LangButton extends Vue {
     lang = getLang()
     supportedLang = supportedLang
