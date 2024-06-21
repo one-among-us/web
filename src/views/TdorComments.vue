@@ -257,7 +257,7 @@ export default class TdorComments extends Vue {
     box-shadow: 15px 15px 15px -5px rgba(166 134 89 / 0.3)
     border-color: $color-text-special
 
-@media (prefers-color-scheme: dark)
+[data-theme="dark"]
     .comment
         .from
             color: $color-text-dark-light

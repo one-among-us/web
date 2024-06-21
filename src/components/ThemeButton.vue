@@ -1,0 +1,50 @@
+<template>
+    <div class="clickable hy-button theme-button" :key="theme" v-on:click="changeTheme()">
+        <Icon class="iconR" icon="mynaui:sun" v-if="theme != 'dark'" />
+        <Icon class="iconR" icon="mynaui:moon" v-else />
+    </div>
+</template>
+
+<script lang="ts">
+import {applyTheme, getTheme, setTheme} from "@/logic/theme";
+import {Vue, Component} from 'vue-facing-decorator';
+import {Icon} from '@iconify/vue';
+
+@Component({components: {Icon}})
+export default class ThemeButton extends Vue {
+    theme = getTheme()
+
+    changeTheme(): void {
+        if (this.theme == 'dark') {
+            setTheme('light')
+        } else {
+            setTheme('dark')
+        }
+        applyTheme()
+        this.theme = getTheme()
+    }
+}
+</script>
+
+<style lang="sass">
+@import "../css/colors"
+@import "../css/global"
+
+.theme-button
+    padding: 10px
+    width: 25px
+    height: 25px
+    border-radius: 9008px
+    border-color: $color-text-main
+    border-width: 1px
+    border-style: solid
+
+    .iconR
+        width: 20px
+        height: 20px
+        color: $color-text-main
+
+[data-theme="dark"]
+    .iconR
+        color: $color-text-dark-main
+</style>

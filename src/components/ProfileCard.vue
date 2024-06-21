@@ -485,7 +485,7 @@ div:has(.view-limit-alert)
                 width: 30px
                 height: 30px
 
-@media (prefers-color-scheme: dark)
+[data-theme="dark"]
     #info
         background-color: $color-bg-dark-6
     

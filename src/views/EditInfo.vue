@@ -311,7 +311,7 @@ export default class EditInfo extends Vue
             border-top-left-radius: 0
             border-top-right-radius: 0
 
-@media (prefers-color-scheme: dark)
+[data-theme="dark"]
     #EditInfo
         background: $color-bg-dark-5
 

@@ -128,7 +128,7 @@ export default class Loading extends Vue {
     color: rgba(166, 134, 89, 0.84);
 }
 
-@media (prefers-color-scheme: dark) {
+[data-theme="dark"] {
     .loadingMessage {
         color: rgba(255, 235, 194, 0.84)
     }

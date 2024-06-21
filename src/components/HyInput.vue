@@ -111,7 +111,7 @@ input:focus~.hy-input-placeholder, .has-text .hy-input-placeholder
 .has-text .hy-input-placeholder
     transform: translate(-10px,-80%)
 
-@media (prefers-color-scheme: dark)
+[data-theme="dark"]
     input
         background-color: hsl(35, 77%, 12%)
         color: #cdd6f4
