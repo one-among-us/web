@@ -84,7 +84,7 @@ export default class App extends Vue
     &[data-lang="en"]
         font-family: $font-en
 
-@media (prefers-color-scheme: dark)
+[data-theme="dark"]
     body
         background: #181825
     
@@ -130,7 +130,7 @@ export default class App extends Vue
     position: relative
     z-index: 100
 
-@media (prefers-color-scheme: dark)
+[data-theme="dark"]
     #title
         background-color: $color-bg-dark-5
 

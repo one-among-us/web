@@ -189,7 +189,7 @@ export default class MarkdownTooltip extends Vue
         padding-left: 3px
         padding-right: 8px
 
-@media (prefers-color-scheme: dark)
+[data-theme="dark"]
     #MarkdownTooltip
         background: #fffcff30
         color: $color-text-dark-light

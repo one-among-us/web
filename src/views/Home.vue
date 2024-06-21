@@ -250,7 +250,7 @@ export default class Home extends Vue
             height: $len
             width: $len
 
-@media (prefers-color-scheme: dark)
+[data-theme="dark"]
     .back, .front
         border: 10px solid rgba(27, 27, 32, 0.8964) !important
         outline: 2px solid $color-text-dark-main !important

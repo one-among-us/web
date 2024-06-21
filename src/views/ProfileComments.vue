@@ -264,7 +264,7 @@ export default class ProfileComments extends Vue
             color: $color-text-light
             margin-right: 5px
     
-@media (prefers-color-scheme: dark)
+[data-theme="dark"]
     .comment
         .from
             color: $color-text-dark-light !important

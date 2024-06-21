@@ -95,7 +95,7 @@ export default class SubmitPrompt extends Vue
         font-size: small
         color: $color-text-light
 
-@media (prefers-color-scheme: dark)
+[data-theme="dark"]
     #prompt
         background: $color-bg-dark-5
 </style>
