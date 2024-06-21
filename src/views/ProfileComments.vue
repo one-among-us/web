@@ -70,10 +70,10 @@ export default class ProfileComments extends Vue
             content: mdParseInline(c.content.replaceAll("\n", "<br />")),
             replies: c.replies
                 ? c.replies.map(r => {
-                return {
-                    ...r,
-                    content: mdParseInline(r.content.replaceAll("\n", "<br />")),
-                }
+                    return {
+                        ...r,
+                        content: mdParseInline(r.content.replaceAll("\n", "<br />")),
+                    }
                 })
                 :[]
         }})
@@ -97,7 +97,7 @@ export default class ProfileComments extends Vue
 
         const params = {id: this.p.id, content: this.textInput, ...p}
         info(params)
-        
+
         Swal.fire({
             title: t.nav_comment_submit,
             showConfirmButton: false,
@@ -222,7 +222,7 @@ export default class ProfileComments extends Vue
 
 #add-comment
     margin-top: 20px
-    margin-bottom: 50px
+    margin-bottom: 125px
 
     textarea
         font-family: $font
@@ -242,7 +242,7 @@ export default class ProfileComments extends Vue
 
     textarea:focus-visible
         outline: 1px solid $color-text-light
-        //outline: none
+    //outline: none
 
     textarea::placeholder
         color: $color-text-light
@@ -263,7 +263,7 @@ export default class ProfileComments extends Vue
             font-size: 10px
             color: $color-text-light
             margin-right: 5px
-    
+
 [data-theme="dark"]
     .comment
         .from
@@ -277,9 +277,9 @@ export default class ProfileComments extends Vue
         .replies
             .reply-title
                 color: $color-text-dark-light !important
-            
+
             background: $color-bg-dark-5 !important
-    
+
     #add-comment
         textarea
             background: rgba(255, 255, 255, 0.05) !important
