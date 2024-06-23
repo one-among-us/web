@@ -25,7 +25,7 @@
             <textarea id="comment-textarea" v-model="textInput" :placeholder="t.nav_comment_placeholder"
                       @input="resizeInput" ref="input"/>
             <div id="send-comment-btn" v-if="textInput.trim().length > 0">
-                <span class="char-count unselectable">{{ textInput.trim().length }} {{ t.nav_comment_status }}</span>
+                <span class="char-count unselectable">{{ trim(textInput.trim(), '\n').length }} {{ t.nav_comment_status }}</span>
                 <IFasPaperPlane class="icon" @click="btnSend"/>
             </div>
 
@@ -40,7 +40,7 @@
 import { Component, Prop, Vue } from 'vue-facing-decorator';
 import { Person } from "@/logic/data";
 import SubmitPrompt, { CaptchaResponse } from "@/components/SubmitPrompt.vue";
-import { fetchText } from "@/logic/helper";
+import { fetchText, trim } from "@/logic/helper";
 import { backendHost, t } from "@/logic/config";
 import MarkdownTooltip from "@/components/MarkdownTooltip.vue";
 import { error, info } from "@/logic/utils";
@@ -62,6 +62,8 @@ export default class ProfileComments extends Vue
     showCaptchaPrompt = false
 
     t = t
+
+    trim = trim
 
     get comments()
     {
@@ -117,6 +119,7 @@ export default class ProfileComments extends Vue
                             confirmButtonText: t.nav_ok_1,
                             showCloseButton: true
                         })
+                        this.resizeInput()
                     })
                     .catch(err => {
                         error(err);
@@ -129,6 +132,7 @@ export default class ProfileComments extends Vue
                             showConfirmButton: false,
                             showCloseButton: false
                         })
+                        this.resizeInput()
                     })
             })
         })
@@ -148,7 +152,7 @@ export default class ProfileComments extends Vue
      */
     get textInput()
     {
-        return this.textInputCache
+        return trim(this.textInputCache.trim(), '\n')
     }
 
     /**
