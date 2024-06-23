@@ -45,7 +45,7 @@ export default class BirthdayButton extends Vue {
     font-size: 1rem
     font-family: 'Hua', $font
 
-@media (prefers-color-scheme: dark)
+[data-theme="dark"]
     .random
         color: $color-text-dark-main
         background-color: $color-bg-dark-6

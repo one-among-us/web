@@ -502,4 +502,5 @@ div:has(.view-limit-alert)
         #buttons
             .button
                 background: $color-bg-dark-5
+                border: 2px solid $color-text-dark-main
 </style>
