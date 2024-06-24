@@ -1,5 +1,5 @@
 <template>
-    <div class="balloon fly-to-top" v-bind:id="db">
+    <div class="balloon fly-to-top" v-bind:id="db" v-on:mouseover="mouseover()">
         <img v-bind:src="sourceImg" class="balloonImg" v-bind:style="styles" />
     </div>
 </template>
@@ -28,13 +28,13 @@ export default class Balloon extends Vue {
         document.getElementById(this.db).style.left = left.toString() + 'px';
         document.getElementById(this.db).style.bottom = randint(balloons.min, balloons.max).toString() + 'px';
 
-        document.getElementById(this.db).addEventListener('mouseover', (e) => {
-            document.getElementById(this.db).remove()
-        })
-
         scheduledTask(10000, () => {
             document.getElementById(this.db)?.remove()
         })
+    }
+
+    mouseover() {
+        document.getElementById(this.db).remove()
     }
 }
 </script>
