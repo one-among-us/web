@@ -1,7 +1,7 @@
+import {getLang} from "@/logic/config";
+import {Icon} from "@/logic/icon";
+import {info} from "@/logic/utils";
 import moment from 'moment'
-import { getLang } from "@/logic/config";
-import { info } from "@/logic/utils";
-import { Icon } from "@/logic/icon";
 import Swal from 'sweetalert2';
 
 /**
@@ -48,24 +48,20 @@ export function abbreviateNumber(
 /**
  * Get date in YYYY-MM-DD
  */
-export function getTodayDate(): string
-{
+export function getTodayDate(): string {
     return moment().format('YYYY-MM-DD')
 }
 
-export function randint(min: number, max: number): number
-{
+export function randint(min: number, max: number): number {
     return Math.floor(rand(min, max))
 }
 
-export function rand(min: number, max: number): number
-{
+export function rand(min: number, max: number): number {
     return Math.random() * (max - min + 1) + min
 }
 
-interface RequestInitWithParams extends RequestInit
-{
-    params?: {[index: string]: string}
+interface RequestInitWithParams extends RequestInit {
+    params?: { [index: string]: string }
 }
 
 /**
@@ -74,28 +70,27 @@ interface RequestInitWithParams extends RequestInit
  * @param input Fetch url input
  * @param callback Callback for modification
  */
-export function reconstructUrl(input: URL | RequestInfo, callback: (URL) => URL | void): RequestInfo | URL
-{
+export function reconstructUrl(input: URL | RequestInfo, callback: (URL) => URL | void): RequestInfo | URL {
     let u = new URL((input instanceof Request) ? input.url : input);
     const result = callback(u)
     if (result) u = result
-    if (input instanceof Request) return {url: u, ...input}
+    if (input instanceof Request) return { url: u, ...input }
     return u
 }
 
 /**
  * Fetch with url parameters
  */
-export function fetchWithParams(input: URL | RequestInfo, init?: RequestInitWithParams): Promise<Response>
-{
-    return fetch(reconstructUrl(input, u => { u.search = new URLSearchParams(init?.params ?? {}).toString() }), init)
+export function fetchWithParams(input: URL | RequestInfo, init?: RequestInitWithParams): Promise<Response> {
+    return fetch(reconstructUrl(input, u => {
+        u.search = new URLSearchParams(init?.params ?? {}).toString()
+    }), init)
 }
 
 /**
  * Fetch with langauge
  */
-export function fetchWithLang(input: RequestInfo, init?: RequestInitWithParams): Promise<Response>
-{
+export function fetchWithLang(input: RequestInfo, init?: RequestInitWithParams): Promise<Response> {
     const lang = getLang()
     if (lang == 'zh_hans') return fetchWithParams(input, init)
 
@@ -116,8 +111,7 @@ export function fetchWithLang(input: RequestInfo, init?: RequestInitWithParams):
 /**
  * Fetch but handles errors better
  */
-export async function fetchText(url: string, init?: RequestInitWithParams): Promise<string>
-{
+export async function fetchText(url: string, init?: RequestInitWithParams): Promise<string> {
     const response = await fetchWithParams(url, init)
     const text = await response.text()
     if (!response.ok) throw new Error(text)
@@ -136,7 +130,7 @@ export function handleIconFromString(html: string): string {
     return html.replace(/\[!(\w+)\](?::\s*(.*))?/g, (match, icon) => (Icon[icon as string]));
 }
 
-export function delay(milliseconds: number): Promise<void>{
+export function delay(milliseconds: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, milliseconds));
 }
 
@@ -165,13 +159,54 @@ export function toast(title: string, text: string, img: string, background: stri
 export function trim(str: string, ch: string) {
     let start = 0
     let end = str.length
-  
+
     while (start < end && str[start] === ch)
-      ++start;
-  
+        ++start;
+
     while (end > start && str[end - 1] === ch)
-      --end;
-  
+        --end;
+
     return (start > 0 || end < str.length) ? str.substring(start, end) : str;
-  }
-  
+}
+
+export function shuffle(array: Array<any>): any[] {
+    let currentIndex = array.length
+    const arr = array.slice()
+
+    while (currentIndex > 0) {
+        const randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        [arr[currentIndex], arr[randomIndex]] = [arr[randomIndex], arr[currentIndex]];
+    }
+
+    return arr;
+}
+
+export function gaussian(): number {
+    let u = 0, v = 0;
+    while (u === 0) u = Math.random(); //Converting [0,1) to (0,1)
+    while (v === 0) v = Math.random();
+    let num = Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+    num = num / 10.0 + 0.5; // Translate to 0 -> 1
+    if (num > 1 || num < 0) return gaussian() // resample between 0 and 1
+    return num
+}
+
+export function gaussian_bm(min, max, skew) {
+    let u = 0, v = 0;
+    while (u === 0) u = Math.random() //Converting [0,1) to (0,1)
+    while (v === 0) v = Math.random()
+    let num = Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v)
+
+    num = num / 10.0 + 0.5 // Translate to 0 -> 1
+    if (num > 1 || num < 0)
+        num = gaussian_bm(min, max, skew) // resample between 0 and 1 if out of range
+
+    else {
+        num = Math.pow(num, skew) // Skew
+        num *= max - min // Stretch to fill range
+        num += min // offset to min
+    }
+    return num
+}
