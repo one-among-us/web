@@ -19,7 +19,7 @@
         <Loading v-if="isLoading" />
 
         <div id="profiles" class="unselectable" v-if="people">
-            <div class="profile" v-for="(p, i) in people" :key="i">
+            <div class="profile" v-for="(p, i) in ((isEaster() && gaussian() < 0.40) ? shuffle(people) : people)" :key="i">
                 <div class="back"/>
                 <a :href="`/profile/${p.id}`" @click.exact.prevent.stop="() => false">
                     <transition name="fade" @after-leave="() => switchPage(p)">
@@ -43,6 +43,7 @@
 </template>
 
 <script lang="ts">
+import {isEaster} from "@/logic/easterEgg";
 import { Component, Ref, Vue } from 'vue-facing-decorator';
 import tdorTop from "@/assets/tdor-top.md";
 import tdorTopHant from "@/assets/tdor-top.zh_hant.md";
@@ -60,7 +61,7 @@ import { PersonMeta, Person } from "@/logic/data";
 import { dataHost, getLang, replaceUrlVars, peopleUrl } from "@/logic/config";
 import urljoin from "url-join";
 import { info } from '@/logic/utils';
-import { fetchWithLang, handleIconFromString, getResponseSync } from "@/logic/helper";
+import {fetchWithLang, handleIconFromString, getResponseSync, shuffle, gaussian} from "@/logic/helper";
 import { fitText } from "@/logic/dom_utils";
 import TdorComments from "@/views/TdorComments.vue";
 import Loading from '@/components/Loading.vue';
@@ -68,7 +69,7 @@ import RandomPerson from '@/components/RandomPerson.vue';
 import BirthdayButton from '@/components/BirthdayButton.vue'
 import router from "@/router";
 
-@Component({components: {TdorComments, Loading, RandomPerson, BirthdayButton}})
+@Component({ components: {TdorComments, Loading, RandomPerson, BirthdayButton}})
 export default class Home extends Vue
 {
     clicked = ''
@@ -87,6 +88,10 @@ export default class Home extends Vue
 
     @Ref() bookmarkTexts: HTMLDivElement[]
     @Ref() bookmark: HTMLDivElement[]
+
+    shuffle = shuffle
+    isEaster = isEaster
+    gaussian = gaussian
 
     isDeadlinePassed(): boolean {
         // const deadlineDate = new Date(2024, 2, 27, 16, 0); // March 27, 2024, 16:00 (UTC); Wrong! not UTC!
