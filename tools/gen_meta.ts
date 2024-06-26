@@ -155,9 +155,9 @@ async function genMeta()
   console.log("> Meta generated.")
 
   // Optimize font
-  console.log("Optimizing font...")
-  await optimize_font(dist.join('fonts/FZSJ-HUAZCMWWKQ.woff2'), Array.from(characters).join(''), dist)
-  console.log("> Font optimized.")
+  // console.log("Optimizing font...")
+  // await optimize_font(dist.join('fonts/FZSJ-HUAZCMWWKQ.woff2'), Array.from(characters).join(''), dist)
+  // console.log("> Font optimized.")
 
   // Take screenshots
   console.log("Generating meta images by taking screenshots...")
