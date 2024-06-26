@@ -19,7 +19,7 @@
         <Loading v-if="isLoading" />
 
         <div id="profiles" class="unselectable" v-if="people">
-            <div class="profile" v-for="(p, i) in ((isEaster() && gaussian() < 0.40) ? shuffle(people) : people)" :key="i">
+            <div class="profile" v-for="(p, i) in people" :key="i">
                 <div class="back"/>
                 <a :href="`/profile/${p.id}`" @click.exact.prevent.stop="() => false">
                     <transition name="fade" @after-leave="() => switchPage(p)">
@@ -89,10 +89,6 @@ export default class Home extends Vue
     @Ref() bookmarkTexts: HTMLDivElement[]
     @Ref() bookmark: HTMLDivElement[]
 
-    shuffle = shuffle
-    isEaster = isEaster
-    gaussian = gaussian
-
     isDeadlinePassed(): boolean {
         // const deadlineDate = new Date(2024, 2, 27, 16, 0); // March 27, 2024, 16:00 (UTC); Wrong! not UTC!
         // const now = new Date();
@@ -122,7 +118,7 @@ export default class Home extends Vue
         info(`Language: ${this.lang}`)
         fetchWithLang(urljoin(dataHost, 'people-home-list.json'))
             .then(it => it.text())
-            .then(it => this.people = JSON.parse(it))
+            .then(it => this.people = (isEaster() && (gaussian() < 0.40)) ? shuffle(JSON.parse(it)) : JSON.parse(it))
         
         fetch(urljoin(dataHost, 'birthday-list.json'))
             .then(it => it.json())
