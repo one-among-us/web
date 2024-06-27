@@ -64,6 +64,7 @@ import {fitText} from "@/logic/dom_utils";
 import {isEaster} from "@/logic/easterEgg";
 import {fetchWithLang, gaussian, getResponseSync, handleIconFromString, shuffle} from "@/logic/helper";
 import {info} from '@/logic/utils';
+import {viaBalloon} from "@/logic/viaFetch";
 import router from "@/router";
 import TdorComments from "@/views/TdorComments.vue";
 import urljoin from "url-join";
@@ -128,6 +129,7 @@ export default class Home extends Vue {
                     }
                 }
                 console.log(this.birthdayList)
+                if (this.birthdayList.length) viaBalloon()
             });
     }
 

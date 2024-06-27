@@ -49,6 +49,7 @@ export default class Balloon extends Vue {
     width: 100px
     height: 100px
     overflow: hidden
+    opacity: 0.75
 
 .balloonImg
     width: 100px
