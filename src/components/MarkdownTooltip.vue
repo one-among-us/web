@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Ref, Vue } from 'vue-facing-decorator';
+import {Component, Prop, Ref, Vue} from 'vue-facing-decorator';
 
 interface TooltipAction {
     name: string
@@ -23,34 +23,31 @@ interface TooltipAction {
     // is: (text: string, start: number, end: number) => boolean
 }
 
-@Component({components: {}})
-export default class MarkdownTooltip extends Vue
-{
+@Component({ components: {} })
+export default class MarkdownTooltip extends Vue {
     actions: TooltipAction[] = [
-        {name: '加粗',   icon: 'bold',          md: '**'},
-        {name: '斜体',   icon: 'italic',        md: '__'},
+        { name: '加粗', icon: 'bold', md: '**' },
+        { name: '斜体', icon: 'italic', md: '__' },
         // {name: '下划线', icon: 'fa-solid fa-underline',     md: '--'},
-        {name: '划掉',   icon: 'strikethrough', md: '~~'},
-        {name: '代码',   icon: 'code',          md: '`'},
-        {name: '黑幕',   icon: 'spoiler',       md: '||'},
+        { name: '划掉', icon: 'strikethrough', md: '~~' },
+        { name: '代码', icon: 'code', md: '`' },
+        { name: '黑幕', icon: 'spoiler', md: '||' },
     ]
 
     @Ref() el!: HTMLElement
-    @Prop({default: null}) initialPos?: {x: number, y: number}
+    @Prop({ default: null }) initialPos?: { x: number, y: number }
 
     @Prop() textAreaId!: string
     textAreaEl: HTMLTextAreaElement
-    selectedArea?: {start: number, end: number} = null
+    selectedArea?: { start: number, end: number } = null
 
-    mounted()
-    {
+    mounted() {
         // Get text area element
         this.textAreaEl = document.getElementById(this.textAreaId) as HTMLTextAreaElement
         document.addEventListener('selectionchange', this.documentSelectionChange)
     }
 
-    unmounted()
-    {
+    unmounted() {
         document.removeEventListener('selectionchange', this.documentSelectionChange)
     }
 
@@ -62,8 +59,7 @@ export default class MarkdownTooltip extends Vue
      * text, the mousedown event is called even though the text isn't deselected. So, we have to
      * listen to selection change event for the entire document instead.
      */
-    documentSelectionChange(ev: UIEvent)
-    {
+    documentSelectionChange(ev: UIEvent) {
         console.log("Document selection change", ev)
         const active = document.activeElement
         const tel = this.textAreaEl
@@ -74,14 +70,13 @@ export default class MarkdownTooltip extends Vue
         // Selection is empty
         if (tel.selectionStart == tel.selectionEnd) return this.close()
 
-        this.selectedArea = {start: tel.selectionStart, end: tel.selectionEnd}
+        this.selectedArea = { start: tel.selectionStart, end: tel.selectionEnd }
         this.el.classList.add('show')
     }
 
-    apply(e: UIEvent, act: TooltipAction)
-    {
+    apply(e: UIEvent, act: TooltipAction) {
         e.preventDefault()
-        let {start, end} = this.selectedArea
+        let { start, end } = this.selectedArea
         const txt = this.textAreaEl.value
         const sel = txt.substring(start, end)
 
@@ -96,18 +91,16 @@ export default class MarkdownTooltip extends Vue
         // Update selection range
         start += act.md.length
         end += act.md.length
-        this.selectedArea = {start, end}
+        this.selectedArea = { start, end }
         this.textAreaEl.setSelectionRange(start, end)
     }
 
-    close()
-    {
+    close() {
         this.selectedArea = null
         this.el.classList.remove('show')
     }
 
-    setPos(x: number, y: number): void
-    {
+    setPos(x: number, y: number): void {
         this.el.style.left = x + 'px'
         this.el.style.top = y + 'px'
     }
@@ -115,27 +108,29 @@ export default class MarkdownTooltip extends Vue
     /**
      * Window dragging
      */
-    windowDrag(e: MouseEvent): void
-    {
+    windowDrag(e: MouseEvent): void {
         // Only drag if it's dragging the root element, or the dragged element has 'drag' class
-        function hasDrag(el: HTMLElement)
-        {
+        function hasDrag(el: HTMLElement) {
             if (el.classList.contains('drag')) return true
             if (!el.parentElement) return false
             return hasDrag(el.parentElement)
         }
+
         if (!(e.target == this.el || hasDrag(e.target as HTMLElement))) return
 
         e.preventDefault()
         let lastX = e.clientX, lastY = e.clientY
-        const mousemove = (e: MouseEvent) =>
-        {
+        const mousemove = (e: MouseEvent) => {
             const dx = lastX - e.clientX, dy = lastY - e.clientY
-            lastX = e.clientX; lastY = e.clientY
+            lastX = e.clientX;
+            lastY = e.clientY
             this.setPos(this.el.offsetLeft - dx, this.el.offsetTop - dy)
         }
         console.log(lastX, lastY)
-        const mouseup = () => {document.removeEventListener('mouseup', mouseup); document.removeEventListener('mousemove', mousemove)}
+        const mouseup = () => {
+            document.removeEventListener('mouseup', mouseup);
+            document.removeEventListener('mousemove', mousemove)
+        }
         document.addEventListener('mouseup', mouseup)
         document.addEventListener('mousemove', mousemove)
     }

@@ -1,22 +1,22 @@
 <template>
     <button class="random clickable hy-button" v-on:click="goBirth">
-        <Icon class="iconR" icon="tabler:candy" />
+        <Icon class="iconR" icon="tabler:candy"/>
         <span class="textR">{{ t.birthday.birthday.replace('{0}', name) }}</span>
     </button>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-facing-decorator';
-import { t } from '@/logic/config';
-import { Icon } from '@iconify/vue';
+import {t} from '@/logic/config';
 import router from '@/router';
+import {Icon} from '@iconify/vue';
+import {Component, Prop, Vue} from 'vue-facing-decorator';
 
 @Component({ components: { Icon } })
 export default class BirthdayButton extends Vue {
     t = t;
     birth: [string, string][] = null as never as [string, string][];
-    @Prop({required: true}) id: string;
-    @Prop({required: true}) name: string;
+    @Prop({ required: true }) id: string;
+    @Prop({ required: true }) name: string;
 
     goBirth() {
         router.push(`/profile/${this.id}`);

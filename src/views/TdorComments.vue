@@ -18,17 +18,17 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue} from 'vue-facing-decorator';
-import {Person} from "@/logic/data";
-import SubmitPrompt, {CaptchaResponse} from "@/components/SubmitPrompt.vue";
-import {fetchText} from "@/logic/helper";
-import {backendHost, t} from "@/logic/config";
 import MarkdownTooltip from "@/components/MarkdownTooltip.vue";
+import SubmitPrompt, {CaptchaResponse} from "@/components/SubmitPrompt.vue";
+import {backendHost, t} from "@/logic/config";
+import {Person} from "@/logic/data";
+import {fetchText} from "@/logic/helper";
 import {error, info} from "@/logic/utils";
-import {initSpoilers} from "tg-blog";
 import Swal from 'sweetalert2';
+import {initSpoilers} from "tg-blog";
+import {Component, Vue} from 'vue-facing-decorator';
 
-@Component({components: {MarkdownTooltip, SubmitPrompt}})
+@Component({ components: { MarkdownTooltip, SubmitPrompt } })
 export default class TdorComments extends Vue {
     declare $refs: {
         input: HTMLTextAreaElement
@@ -40,7 +40,7 @@ export default class TdorComments extends Vue {
     showCaptchaPrompt = false
 
     t = t
-    p = {id: "tdor"} as Person
+    p = { id: "tdor" } as Person
     showInputArea = true
 
     /**
@@ -62,7 +62,7 @@ export default class TdorComments extends Vue {
     submitRequest(p: CaptchaResponse) {
         this.showCaptchaPrompt = false
 
-        const params = {id: this.p.id, content: this.textInput, ...p}
+        const params = { id: this.p.id, content: this.textInput, ...p }
         info(params)
 
         Swal.fire({
@@ -71,7 +71,7 @@ export default class TdorComments extends Vue {
             icon: null,
             didOpen: (() => {
                 Swal.showLoading(null);
-                fetchText(backendHost + '/comment/add', {method: 'POST', params})
+                fetchText(backendHost + '/comment/add', { method: 'POST', params })
                     .then(() => {
                         this.textInput = "";
                         Swal.fire({

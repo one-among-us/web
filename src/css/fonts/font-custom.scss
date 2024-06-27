@@ -1,4 +1,3 @@
-
 @import 'lxgw-wenkai-webfont/lxgwwenkai-regular.css';
 @import 'source/source';
 
@@ -7,22 +6,22 @@ $font: "LXGW Wenkai", --apple-system, Avenir, "PingFang SC", "Hiragino Sans GB",
 $font-en: "Source Sans 3", $font;
 
 @font-face {
-    font-family: 'Hua';
-    src: url("/fonts/FZSJ-HUAZCMWWKQ.woff2") format('woff2'),
-        url("/fonts/FZSJ-HUAZCMWWKQ.woff") format('woff');
+  font-family: 'Hua';
+  src: url("/fonts/FZSJ-HUAZCMWWKQ.woff2") format('woff2'),
+  url("/fonts/FZSJ-HUAZCMWWKQ.woff") format('woff');
 }
 
 @font-face {
-    font-family: 'STXINGKA';
-    src: url("/fonts/STXINGKA.woff2") format('woff2');
+  font-family: 'STXINGKA';
+  src: url("/fonts/STXINGKA.woff2") format('woff2');
 }
 
 @font-face {
-    font-family: 'katex-math';
-    src: url("/fonts/NotoSansMath-Regular.woff2") format('woff2');
+  font-family: 'katex-math';
+  src: url("/fonts/NotoSansMath-Regular.woff2") format('woff2');
 }
 
 .font-custom {
-    font-family: 'Hua', 'STXINGKA', $font;
-    line-height: 1.3rem;
+  font-family: 'Hua', 'STXINGKA', $font;
+  line-height: 1.3rem;
 }

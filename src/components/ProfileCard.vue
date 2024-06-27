@@ -3,28 +3,28 @@
         <!-- Horizontal Alignment of profile pic and the rest -->
         <div id="left" class="fbox-v">
             <img :src="profileUrl" draggable="false" alt="profile">
-            <div class="spacer" />
+            <div class="spacer"/>
             <div id="buttons" v-if="!screenshotMode">
                 <div class="button-container">
                     <el-tooltip content="献花" :show-after="1000" :disabled="flowersGiven || loading.has('flower')">
                         <div class="button anim fbox-vcenter" @click="flower"
-                            :class="(flowersGiven || loading.has('flower')) ? 'disabled' : ''">
-                            <IEpCheck v-if="flowersGiven" />
-                            <Icon class="iconR" icon="line-md:cake" v-else-if="isBirthday && !loading.has('flower')" />
-                            <IEpLollipop v-else-if="!loading.has('flower')" />
-                            <IEpLoading v-else />
+                             :class="(flowersGiven || loading.has('flower')) ? 'disabled' : ''">
+                            <IEpCheck v-if="flowersGiven"/>
+                            <Icon class="iconR" icon="line-md:cake" v-else-if="isBirthday && !loading.has('flower')"/>
+                            <IEpLollipop v-else-if="!loading.has('flower')"/>
+                            <IEpLoading v-else/>
                         </div>
                     </el-tooltip>
                     <div class="text-under-button">{{ flowerText }}</div>
                 </div>
                 <div class="button-container edit">
                     <div class="button anim fbox-vcenter" @click="edit">
-                        <IEpEdit />
+                        <IEpEdit/>
                     </div>
                     <div class="text-under-button">Edit</div>
                 </div>
             </div>
-            <div class="spacer-bottom f-grow1" />
+            <div class="spacer-bottom f-grow1"/>
         </div>
         <!-- Vertical Alignment of info section -->
         <div id="right">
@@ -32,7 +32,7 @@
                 <span id="name-text">{{ p.name }}</span>
                 <span id="id">@{{ p.id }}</span>
             </div>
-            <div id="hr" />
+            <div id="hr"/>
             <ul id="fields" class="f-grow1">
                 <li v-for="info of p.info" :key="info[0]">
                     <span class="key">{{ info[0] }}：</span>
@@ -43,31 +43,31 @@
                 <span id="websites-text">{{ t.nav_website }}</span>
                 <span id="websites-container">
                     <a v-for="web of p.websites" :key="web[0]" :href="web[1]">
-                        <DynamicIcon :icon="web[0]" />
+                        <DynamicIcon :icon="web[0]"/>
                     </a>
                 </span>
             </div>
         </div>
 
         <a class="switchButton" v-if="canSwitch" v-bind:href="target" v-on:click="switchWarn()" draggable="false">
-            <SwitchButton />
+            <SwitchButton/>
         </a>
 
-        <img class="watermark" draggable="false" src="/favicon-large.png" alt="" />
+        <img class="watermark" draggable="false" src="/favicon-large.png" alt=""/>
     </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-facing-decorator';
-import { backendHost, dataHost, replaceUrlVars, t } from "@/logic/config";
-import { abbreviateNumber, getResponseSync, getTodayDate } from "@/logic/helper";
-import { Person } from "@/logic/data";
-import { info } from '@/logic/utils';
-import { Icon } from '@iconify/vue';
-import Swal from 'sweetalert2';
+import {backendHost, dataHost, replaceUrlVars, t} from "@/logic/config";
+import {Person} from "@/logic/data";
+import {handleBirthdayToast, handleFlowerToast} from '@/logic/easterEgg';
+import {abbreviateNumber, getResponseSync, getTodayDate} from "@/logic/helper";
+import {info} from '@/logic/utils';
 import router from "@/router";
-import { handleFlowerToast, handleBirthdayToast } from '@/logic/easterEgg';
+import {Icon} from '@iconify/vue';
+import Swal from 'sweetalert2';
 import urljoin from 'url-join';
+import {Component, Prop, Vue} from 'vue-facing-decorator';
 
 @Component({ components: { Icon } })
 export default class ProfileCard extends Vue {
@@ -166,12 +166,18 @@ export default class ProfileCard extends Vue {
             showCancelButton: false,
             showCloseButton: false,
             showConfirmButton: true,
-            allowOutsideClick() { return false },
+            allowOutsideClick() {
+                return false
+            },
             timer: 300000,
             timerProgressBar: true,
             iconColor: '#d20f39',
-            allowEscapeKey() { return false; },
-            allowEnterKey() { return false; },
+            allowEscapeKey() {
+                return false;
+            },
+            allowEnterKey() {
+                return false;
+            },
             customClass: 'view-limit-alert'
         }).then((result) => {
             if (result.isConfirmed) {
@@ -253,6 +259,7 @@ div:has(.view-limit-alert)
 
     // Watermark
     position: relative
+
     img.watermark
         position: absolute
         z-index: 1
@@ -315,7 +322,7 @@ div:has(.view-limit-alert)
         #websites-text
             font-weight: bold
             min-width: 40px
-        
+
         #websites-container
             display: flex
             gap: 10px
@@ -323,7 +330,7 @@ div:has(.view-limit-alert)
             align-items: flex-start
             align-content: flex-start
             flex-wrap: wrap
-            
+
             a
                 color: $color-text-main
                 text-decoration: none
@@ -382,9 +389,9 @@ div:has(.view-limit-alert)
 
         // Leave space for the profile pic
         #name-box, #fields > li:first-child
-           max-width: calc(100% - 100px)
-           overflow: hidden
-           text-justify: inter-word
+            max-width: calc(100% - 100px)
+            overflow: hidden
+            text-justify: inter-word
 
         // Hide li dots
         #fields li
@@ -397,7 +404,7 @@ div:has(.view-limit-alert)
             .value
                 //word-break: break-all
                 text-justify: inter-word
-        
+
         #fields
             max-width: calc(100% - 15px)
             text-indent: 3.25em hanging
@@ -422,14 +429,14 @@ div:has(.view-limit-alert)
 
         .spacer
             display: none
-        
+
 
     #right
         margin-left: 32px
         margin-right: 32px
 
         #websites
-            max-width: calc( 100% - 100px )
+            max-width: calc(100% - 100px)
 
             #websites-container
                 max-width: calc(100% - 1em)
@@ -488,11 +495,11 @@ div:has(.view-limit-alert)
 [data-theme="dark"]
     #info
         background-color: $color-bg-dark-6
-    
+
     #right
         #hr
             color: $color-text-dark-main
-        
+
         #websites
             #websites-container
                 a

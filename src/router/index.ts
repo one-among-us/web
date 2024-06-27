@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router'
 
 /**
  * NOTICE: WHEN YOU CHANGE ROUTES, PLEASE ALSO CHANGE tools/gen_meta.ts

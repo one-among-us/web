@@ -1,17 +1,16 @@
 <template>
     <div id="BackupButtons">
-        <ChannelBackupButton v-for="p in platforms" :key="p" :platform="p" />
+        <ChannelBackupButton v-for="p in platforms" :key="p" :platform="p"/>
     </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-facing-decorator';
 import ChannelBackupButton from "@/components/ChannelBackupButton.vue";
+import {Component, Prop, Vue} from 'vue-facing-decorator';
 
-@Component({components: {ChannelBackupButton}})
-export default class BackupButtons extends Vue
-{
-    @Prop({required: true}) platforms: string[]
+@Component({ components: { ChannelBackupButton } })
+export default class BackupButtons extends Vue {
+    @Prop({ required: true }) platforms: string[]
 }
 </script>
 

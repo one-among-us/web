@@ -15,9 +15,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-facing-decorator';
-import { rand } from "@/logic/helper";
-import { ImageViewer } from "tg-blog";
+import {rand} from "@/logic/helper";
+import {ImageViewer} from "tg-blog";
+import {Component, Prop, Vue} from 'vue-facing-decorator';
 import "tg-blog/dist/style.css"
 
 export interface ViewedImage {

@@ -3,7 +3,7 @@
         <div class="spacer"/>
         <div id="EditInfo" v-if="p">
             <div class="head-text info">{{ t.nav_profile_card }}</div>
-            <div id="id">@{{userid}}</div>
+            <div id="id">@{{ userid }}</div>
             <div class="fields info">
                 <div class="input-box" v-for="(info, i) in editInfo" :key="i">
                     <input class="key" v-model="info.k" @change="change"/>
@@ -26,20 +26,22 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-facing-decorator';
-import { parsePeopleJson, Person } from "@/logic/data";
-import { backendHost, getLang, info_i18n, peopleUrl, t } from "@/logic/config";
-import SubmitPrompt, { CaptchaResponse } from "@/components/SubmitPrompt.vue";
-import urljoin from "url-join";
-import { fetchText } from "@/logic/helper";
-import { error, info } from "@/logic/utils";
-import Swal from 'sweetalert2';
+import SubmitPrompt, {CaptchaResponse} from "@/components/SubmitPrompt.vue";
+import {backendHost, getLang, info_i18n, peopleUrl, t} from "@/logic/config";
+import {parsePeopleJson, Person} from "@/logic/data";
+import {fetchText} from "@/logic/helper";
+import {error, info} from "@/logic/utils";
 import router from "@/router";
+import Swal from 'sweetalert2';
+import urljoin from "url-join";
+import {Component, Prop, Vue} from 'vue-facing-decorator';
 
-interface KVPair { k: string, v: string }
+interface KVPair {
+    k: string,
+    v: string
+}
 
-export function removeEmpty(arr: KVPair[]): void
-{
+export function removeEmpty(arr: KVPair[]): void {
     let i = 0;
     while (i < arr.length) {
         if (!arr[i].k && !arr[i].v) arr.splice(i, 1)
@@ -47,9 +49,8 @@ export function removeEmpty(arr: KVPair[]): void
     }
 }
 
-@Component({components: {SubmitPrompt}})
-export default class EditInfo extends Vue
-{
+@Component({ components: { SubmitPrompt } })
+export default class EditInfo extends Vue {
     @Prop() userid!: string
     p: Person = null as never as Person
 
@@ -58,20 +59,18 @@ export default class EditInfo extends Vue
     editInfo: KVPair[] = []
     editWebsites: KVPair[] = []
 
-    submitParams: {[id: string]: string} = null as never
+    submitParams: { [id: string]: string } = null as never
 
     t = t
 
-    json(): string
-    {
+    json(): string {
         return JSON.stringify({
             info: Object.fromEntries(this.p.info),
             websites: Object.fromEntries(this.p.websites)
         }, null, 2)
     }
 
-    created(): void
-    {
+    created(): void {
         // TODO: Handle errors
         // Get data from server
         fetch(urljoin(peopleUrl(this.userid), `info.json`))
@@ -81,7 +80,7 @@ export default class EditInfo extends Vue
                 this.initialJson = this.json()
                 this.p.info.forEach((a) => {
                     if (getLang() === 'zh_hans')
-                        this.editInfo.push({k: a[0], v: a[1]})
+                        this.editInfo.push({ k: a[0], v: a[1] })
                     else {
                         const targeti18n = info_i18n[getLang()]
                         let s: string
@@ -105,36 +104,33 @@ export default class EditInfo extends Vue
                                 s = a[0];
                                 break;
                         }
-                        this.editInfo.push({k: s, v: a[1]});
+                        this.editInfo.push({ k: s, v: a[1] });
                     }
                 })
-                this.p.websites.forEach((a) => this.editWebsites.push({k: a[0], v: a[1]}))
+                this.p.websites.forEach((a) => this.editWebsites.push({ k: a[0], v: a[1] }))
                 this.change()
             })
     }
 
-    change(): void
-    {
-        for (const list of [this.editInfo, this.editWebsites])
-        {
+    change(): void {
+        for (const list of [this.editInfo, this.editWebsites]) {
             // Remove redundant last entries
             if (list.filter(it => !it.k && !it.v).length > 1)
                 removeEmpty(list)
 
             // Add empty
             if (list.filter(it => !it.k && !it.v).length == 0)
-                list.push({k: '', v: ''})
+                list.push({ k: '', v: '' })
         }
     }
 
-    submitBtn(): void
-    {
+    submitBtn(): void {
         removeEmpty(this.editInfo)
         removeEmpty(this.editWebsites)
         this.p.info = this.editInfo.map(it => [it.k, it.v])
-        this.p.websites= this.editWebsites.map(it => [it.k, it.v])
+        this.p.websites = this.editWebsites.map(it => [it.k, it.v])
         this.p.info.forEach((e, i) => {
-            switch(e[0]) {
+            switch (e[0]) {
                 case info_i18n[getLang()].age:
                     (this.p.info[i])[0] = info_i18n['zh_hans'].age;
                     break;
@@ -159,8 +155,7 @@ export default class EditInfo extends Vue
         this.change()
 
         // Didn't change anything
-        if (json == this.initialJson)
-        {
+        if (json == this.initialJson) {
             Swal.fire({
                 title: t.nav_unable_submit,
                 text: "(╯‵□′)╯︵┻━┻",
@@ -172,12 +167,11 @@ export default class EditInfo extends Vue
         }
 
         // Show submit prompt
-        this.submitParams = {id: this.p.id, content: json}
+        this.submitParams = { id: this.p.id, content: json }
     }
 
-    submitRequest(p: CaptchaResponse): void
-    {
-        const params = {...this.submitParams, ...p}
+    submitRequest(p: CaptchaResponse): void {
+        const params = { ...this.submitParams, ...p }
 
         Swal.fire({
             title: t.nav_creating_pull_request,
@@ -186,7 +180,7 @@ export default class EditInfo extends Vue
             showConfirmButton: false,
             didOpen: (() => {
                 Swal.showLoading(null);
-                fetchText(backendHost + '/edit/info', {method: 'POST', params})
+                fetchText(backendHost + '/edit/info', { method: 'POST', params })
                     .then(text => {
                         info(text);
                         Swal.fire({
@@ -215,7 +209,7 @@ export default class EditInfo extends Vue
                     })
             })
         })
-        
+
         this.submitParams = null
     }
 }
@@ -317,12 +311,12 @@ export default class EditInfo extends Vue
 
         #id
             color: $color-text-dark-light
-        
+
         .input-box
             input
                 color: $color-text-dark-main
                 background-color: $color-bg-dark-6
-            
+
             input:focus-visible
                 outline: solid $color-text-dark-light
 

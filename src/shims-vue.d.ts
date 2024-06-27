@@ -3,13 +3,12 @@
 /* eslint-disable */
 
 declare module '*.vue' {
-  import type { DefineComponent } from 'vue'
-  const component: DefineComponent<{}, {}, any>
+    import type {DefineComponent} from 'vue'
+    const component: DefineComponent<{}, {}, any>
     export default component
 }
 
-declare module '*.md'
-{
+declare module '*.md' {
     const html: string;
     export default html;
 }

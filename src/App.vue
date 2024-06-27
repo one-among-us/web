@@ -20,28 +20,25 @@
 </template>
 
 <script lang="ts">
-import {applyTheme} from "@/logic/theme";
-import { Component, Vue } from 'vue-facing-decorator';
 import Divider from "@/components/divider.vue";
 import LangButton from "@/components/LangButton.vue";
-import { info, logPrefixCss } from "@/logic/utils";
-import { transColors } from "@/logic/constants";
-import { t, getLang } from './logic/config';
+import {transColors} from "@/logic/constants";
+import {applyTheme} from "@/logic/theme";
+import {info, logPrefixCss} from "@/logic/utils";
+import {Component, Vue} from 'vue-facing-decorator';
+import {getLang, t} from './logic/config';
 
-@Component({components: {LangButton, Divider}})
-export default class App extends Vue
-{
+@Component({ components: { LangButton, Divider } })
+export default class App extends Vue {
     $route: any
     t = t
 
-    created(): void
-    {
+    created(): void {
         if (!localStorage.getItem('showBtn'))
             localStorage.setItem('showBtn', '1')
     }
 
-    mounted()
-    {
+    mounted() {
         info(`One Among Us - Web Frontend loaded`)
         console.log(`%c %c %c %c %c `,
             ...transColors.map(c => `background: ${c}; padding: 40px 20px;`)
@@ -92,7 +89,7 @@ export default class App extends Vue
 [data-theme="dark"]
     body
         background: #181825
-    
+
     #app
         color: $color-text-dark-main
 </style>
@@ -116,6 +113,7 @@ export default class App extends Vue
 #nav
     background-color: $color-bg-6
     min-height: 40px
+
     a
         text-decoration: none
         margin: 15px
@@ -141,7 +139,7 @@ export default class App extends Vue
 
         #title-sub
             color: $color-text-dark-light
-        
+
     #nav
         background-color: $color-bg-dark-6
 

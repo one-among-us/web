@@ -1,6 +1,6 @@
 import Swal from "sweetalert2"
-import { toast, scheduledTask } from "./helper"
-import { t } from "./config"
+import {t} from "./config"
+import {scheduledTask, toast} from "./helper"
 
 const registedEggItem = [
     'hasFlowered', 'isSeenMeowBot233', 'BetelgeuseShown', 'ChongQingShown', 'Sea', 'detailsByYumao', 'funeralFlowers', 'preferredName', 'rhythmShown'
@@ -36,8 +36,7 @@ function achieveAll() {
                 showCloseButton: false,
                 showDenyButton: false
             })
-        }
-        else {
+        } else {
             if (localStorage.getItem('allShown'))
                 localStorage.removeItem('allShown')
         }
@@ -70,8 +69,7 @@ export function handleEasterEgg(userid: string) {
     if ((now.getDate() == 1) && (now.getMonth() == 3) && (parseInt(localStorage.getItem('easterEggMode')) == 0) && (!localStorage.getItem('manualModify'))) {
         localStorage.setItem("easterEggMode", "1")
         localStorage.setItem("enabledByApril", "1")
-    }
-    else {
+    } else {
         if (localStorage.getItem("enabledByApril") && (!localStorage.getItem('manualModify'))) {
             localStorage.setItem("easterEggMode", "0")
         }

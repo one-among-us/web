@@ -1,14 +1,14 @@
 <template>
     <div class="balloon fly-to-top" v-bind:id="db" v-on:mouseover="mouseover()">
-        <img v-bind:src="sourceImg" class="balloonImg" v-bind:style="styles" />
+        <img v-bind:src="sourceImg" class="balloonImg" v-bind:style="styles"/>
     </div>
 </template>
 
 <script lang="ts">
-import { randint, scheduledTask } from '@/logic/helper';
-import { Component, Vue } from 'vue-facing-decorator';
-import { balloons } from '@/logic/config';
-import { isEaster } from '@/logic/easterEgg'
+import {balloons} from '@/logic/config';
+import {isEaster} from '@/logic/easterEgg'
+import {randint, scheduledTask} from '@/logic/helper';
+import {Component, Vue} from 'vue-facing-decorator';
 
 @Component({ components: {} })
 export default class Balloon extends Vue {

@@ -18,31 +18,28 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-facing-decorator';
 import HyInput from "@/components/HyInput.vue";
 import RecaptchaV2 from "@/components/RecaptchaV2.vue";
-import { t } from "@/logic/config";
+import {t} from "@/logic/config";
+import {Component, Vue} from 'vue-facing-decorator';
 
 
-export interface CaptchaResponse
-{
+export interface CaptchaResponse {
     captcha: string
     name: string
     email: string
 }
 
 
-@Component({components: {RecaptchaV2, HyInput}})
-export default class SubmitPrompt extends Vue
-{
+@Component({ components: { RecaptchaV2, HyInput } })
+export default class SubmitPrompt extends Vue {
     name = ''
     email = ''
 
     t = t;
 
-    submit(captcha: string): void
-    {
-        this.$emit('submit', {captcha, name: this.name, email: this.email})
+    submit(captcha: string): void {
+        this.$emit('submit', { captcha, name: this.name, email: this.email })
         this.$emit('close')
     }
 }
@@ -60,7 +57,7 @@ export default class SubmitPrompt extends Vue
     bottom: 0
     left: 0
     height: 100%
-    background: rgba(0,0,0,.5)
+    background: rgba(0, 0, 0, .5)
     z-index: 1000
 
     text-align: center
@@ -84,6 +81,7 @@ export default class SubmitPrompt extends Vue
 #header
     display: flex
     font-weight: bold
+
     svg
         margin-left: auto
 

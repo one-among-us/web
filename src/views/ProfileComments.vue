@@ -7,14 +7,14 @@
             <div class="comment" v-for="c in comments" :key="c.id">
                 <span class="content" v-html="c.content"></span>
                 <span class="from anonymous" v-if="c.anonymous">{{ t.nav_anonymous }}</span>
-                <span class="from" v-else>——{{c.submitter}}</span>
+                <span class="from" v-else>——{{ c.submitter }}</span>
 
                 <!-- Replies -->
                 <div class="replies" v-if="c.replies.length">
                     <div class="reply-title">{{ t.nav_comment_in_reply_to }} @{{ c.submitter }}</div>
                     <div class="reply" v-for="(r, idx) in c.replies" :key="idx">
                         <span class="content" v-html="r.content"></span>
-                        <span class="from">——{{r.submitter}}</span>
+                        <span class="from">——{{ r.submitter }}</span>
                     </div>
                 </div>
             </div>
@@ -25,7 +25,9 @@
             <textarea id="comment-textarea" v-model="textInput" :placeholder="t.nav_comment_placeholder"
                       @input="resizeInput" ref="input"/>
             <div id="send-comment-btn" v-if="textInput.trim().length > 0">
-                <span class="char-count unselectable">{{ trim(textInput.trim(), '\n').length }} {{ t.nav_comment_status }}</span>
+                <span class="char-count unselectable">{{ trim(textInput.trim(), '\n').length }} {{
+                        t.nav_comment_status
+                    }}</span>
                 <IFasPaperPlane class="icon" @click="btnSend"/>
             </div>
 
@@ -37,19 +39,18 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-facing-decorator';
-import { Person } from "@/logic/data";
-import SubmitPrompt, { CaptchaResponse } from "@/components/SubmitPrompt.vue";
-import { fetchText, trim } from "@/logic/helper";
-import { backendHost, t } from "@/logic/config";
 import MarkdownTooltip from "@/components/MarkdownTooltip.vue";
-import { error, info } from "@/logic/utils";
-import { initSpoilers, mdParseInline } from "tg-blog";
+import SubmitPrompt, {CaptchaResponse} from "@/components/SubmitPrompt.vue";
+import {backendHost, t} from "@/logic/config";
+import {Person} from "@/logic/data";
+import {fetchText, trim} from "@/logic/helper";
+import {error, info} from "@/logic/utils";
 import Swal from 'sweetalert2';
+import {initSpoilers, mdParseInline} from "tg-blog";
+import {Component, Prop, Vue} from 'vue-facing-decorator';
 
-@Component({components: {MarkdownTooltip, SubmitPrompt}})
-export default class ProfileComments extends Vue
-{
+@Component({ components: { MarkdownTooltip, SubmitPrompt } })
+export default class ProfileComments extends Vue {
     declare $refs: {
         input: HTMLTextAreaElement
     }
@@ -65,27 +66,28 @@ export default class ProfileComments extends Vue
 
     trim = trim
 
-    get comments()
-    {
-        return this.p.comments.map(c => {return {...c,
-            anonymous: c.submitter === "Anonymous",
-            content: mdParseInline(c.content.replaceAll("\n", "<br />")),
-            replies: c.replies
-                ? c.replies.map(r => {
-                    return {
-                        ...r,
-                        content: mdParseInline(r.content.replaceAll("\n", "<br />")),
-                    }
-                })
-                :[]
-        }})
+    get comments() {
+        return this.p.comments.map(c => {
+            return {
+                ...c,
+                anonymous: c.submitter === "Anonymous",
+                content: mdParseInline(c.content.replaceAll("\n", "<br />")),
+                replies: c.replies
+                    ? c.replies.map(r => {
+                        return {
+                            ...r,
+                            content: mdParseInline(r.content.replaceAll("\n", "<br />")),
+                        }
+                    })
+                    : []
+            }
+        })
     }
 
     /**
      * Send button
      */
-    btnSend()
-    {
+    btnSend() {
         // Show submit prompt
         this.showCaptchaPrompt = true
     }
@@ -93,11 +95,10 @@ export default class ProfileComments extends Vue
     /**
      * Submit comment request
      */
-    submitRequest(p: CaptchaResponse)
-    {
+    submitRequest(p: CaptchaResponse) {
         this.showCaptchaPrompt = false
 
-        const params = {id: this.p.id, content: this.textInput, ...p}
+        const params = { id: this.p.id, content: this.textInput, ...p }
         info(params)
 
         Swal.fire({
@@ -106,7 +107,7 @@ export default class ProfileComments extends Vue
             icon: null,
             didOpen: (() => {
                 Swal.showLoading(null);
-                fetchText(backendHost + '/comment/add', {method: 'POST', params})
+                fetchText(backendHost + '/comment/add', { method: 'POST', params })
                     .then(() => {
                         this.textInput = "";
                         Swal.fire({
@@ -141,8 +142,7 @@ export default class ProfileComments extends Vue
     /**
      * Load saved textinput from localStorage
      */
-    created()
-    {
+    created() {
         this.textInputKey = `draft-${this.p.id}`
         this.textInputCache = localStorage.getItem(this.textInputKey) ?? ""
     }
@@ -150,8 +150,7 @@ export default class ProfileComments extends Vue
     /**
      * Get cached textinput
      */
-    get textInput()
-    {
+    get textInput() {
         return trim(this.textInputCache.trim(), '\n')
     }
 
@@ -159,14 +158,12 @@ export default class ProfileComments extends Vue
      * Set text and save localstorage
      * @param s
      */
-    set textInput(s: string)
-    {
+    set textInput(s: string) {
         this.textInputCache = s
         localStorage.setItem(this.textInputKey, s)
     }
 
-    mounted()
-    {
+    mounted() {
         // Set initial size
         this.resizeInput()
 
@@ -177,8 +174,7 @@ export default class ProfileComments extends Vue
     /**
      * Auto resize
      */
-    resizeInput()
-    {
+    resizeInput() {
         const el = this.$refs.input
         if (!el) return
         el.style.height = "auto"

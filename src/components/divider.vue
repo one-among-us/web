@@ -7,24 +7,22 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-facing-decorator';
-import { transColors } from "@/logic/constants";
+import {getLang, i18n} from '@/logic/config';
+import {transColors} from "@/logic/constants";
 import Swal from 'sweetalert2';
-import { i18n } from '@/logic/config';
-import { getLang } from '@/logic/config';
+import {Component, Prop, Vue} from 'vue-facing-decorator';
 
-@Component({components: {}})
-export default class Divider extends Vue
-{
-    @Prop({default: transColors}) colors!: string[]
-    @Prop({default: '2px'})       height!: string
+@Component({ components: {} })
+export default class Divider extends Vue {
+    @Prop({ default: transColors }) colors!: string[]
+    @Prop({ default: '2px' }) height!: string
 
     i18n = i18n[getLang()]
 
     switchEasterEgg() {
-        if (!localStorage.getItem("easterEggMode")) 
+        if (!localStorage.getItem("easterEggMode"))
             localStorage.setItem("easterEggMode", "1")
-        else 
+        else
             localStorage.setItem("easterEggMode", (parseInt(localStorage.getItem("easterEggMode")) == 0) ? "1" : "0")
 
         localStorage.setItem("manualModify", "qwq")

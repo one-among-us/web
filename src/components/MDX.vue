@@ -1,11 +1,10 @@
-
 <script lang="tsx">
-import * as Vue from 'vue';
-import { computed, defineComponent } from 'vue';
-import PhotoScroll from './PhotoScroll.vue';
-import ChannelBackupButton from "@/components/ChannelBackupButton.vue";
 import BackupButtons from "@/components/BackupButtons.vue";
+import ChannelBackupButton from "@/components/ChannelBackupButton.vue";
 import DynamicIcon from "@/components/DynamicIcon.vue";
+import * as Vue from 'vue';
+import {computed, defineComponent} from 'vue';
+import PhotoScroll from './PhotoScroll.vue';
 
 export default defineComponent({
     name: "MDX",
@@ -31,7 +30,7 @@ export default defineComponent({
         });
 
         return () => (
-            <div class="markdown-content" style={props.margins ? {margin: '10px min(4vw, 40px)'} : {}}>
+            <div class="markdown-content" style={props.margins ? { margin: '10px min(4vw, 40px)' } : {}}>
                 {
                     renderFunction.value?.({
                         components: {

@@ -22,12 +22,12 @@
             stroke-linecap="round"
         ></circle>
     </svg>
-    <div v-text="getText()" class="loadingMessage" />
+    <div v-text="getText()" class="loadingMessage"/>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-facing-decorator';
-import { t } from '@/logic/config';
+import {t} from '@/logic/config';
+import {Component, Vue} from 'vue-facing-decorator';
 
 @Component({})
 export default class Loading extends Vue {
@@ -40,7 +40,8 @@ export default class Loading extends Vue {
 </script>
 
 <style lang="scss">
-@-webkit-keyframes rotating /* Safari and Chrome */ {
+@-webkit-keyframes rotating /* Safari and Chrome */
+{
     from {
         -webkit-transform: rotate(0deg);
         -o-transform: rotate(0deg);
