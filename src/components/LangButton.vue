@@ -121,6 +121,6 @@ export default class LangButton extends Vue {
 
 .list-enter-from, .list-leave-to
     transition: all .25s cubic-bezier(0.45, 0.65, 0.875, 0.80)
-    transform: translateY(269px)
+    transform: translateX(269px)
     opacity: 0.65
 </style>
