@@ -1,18 +1,21 @@
 <script lang="ts">
+import {scheduledTask} from "@/logic/helper";
 import {Vue, Component} from 'vue-facing-decorator';
 import {Icon} from '@iconify/vue';
 
 @Component({components: {Icon}})
 export default class ScrollButton extends Vue {
     scroll() {
+        document.documentElement.style.scrollBehavior = 'smooth';
         window.scrollTo(0, 0);
+        scheduledTask(50, () => document.documentElement.style.scrollBehavior = null);
     }
 }
 </script>
 
 <template>
     <div class="clickable hy-button scrollButton" v-on:click="scroll()">
-        <Icon class="icon" icon="ion:arrow-up-outline" />
+        <Icon class="icon" icon="mynaui:arrow-up" />
     </div>
 </template>
 

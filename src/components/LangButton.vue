@@ -1,12 +1,14 @@
 <template>
-    <div class="func-buttons" v-if="showBtn" >
-        <ScrollButton />
-        <ThemeButton/>
-    </div>
     <div class="lang-btns" v-if="showBtn">
-        <div class="clickable hy-button"
-             @click="() => click(l)" v-for="l in targets" :key="l">
-            {{ supportedLang[l] }}
+        <div class="func-buttons" v-if="showBtn" >
+            <ScrollButton />
+            <ThemeButton/>
+        </div>
+        <div class="lang-buttons" >
+            <div class="clickable hy-button"
+                 @click="() => click(l)" v-for="l in targets" :key="l">
+                {{ supportedLang[l] }}
+            </div>
         </div>
     </div>
 </template>
@@ -48,28 +50,32 @@ export default class LangButton extends Vue {
     bottom: 20px
     z-index: 50
     display: flex
-    flex-direction: column
+    flex-direction: row
 
-    div
-        // Make it a circle
-        padding: 10px
-        width: 25px
-        height: 25px
-        border-radius: 56562px
-        border: 1px solid $color-text-main
+    .lang-buttons
+        display: flex
+        flex-direction: column
+        justify-items: end
+        justify-content: end
 
-.func-buttons
-    position: fixed
-    left: 20px
-    bottom: 20px
-    z-index: 50
-    display: flex
-    flex-direction: column
+        div
+            // Make it a circle
+            padding: 10px
+            width: 25px
+            height: 25px
+            border-radius: 56562px
+            border: 1px solid $color-text-main
 
-    div
-        padding: 10px
-        width: 25px
-        height: 25px
-        border-radius: 56562px
-        border: 1px solid $color-text-main
+    .func-buttons
+        display: flex
+        flex-direction: column-reverse
+
+        div
+            padding: 10px
+            width: 25px
+            height: 25px
+            border-radius: 56562px
+            border: 1px solid $color-text-main
+
+
 </style>
