@@ -1,30 +1,28 @@
 <template>
-    <div class="lang-btns" v-if="showBtn">
-        <transition-group tag="div" name="list">
-            <div class="func-buttons" v-bind:id="funcId">
-                <ScrollButton/>
-                <ThemeButton/>
+    <transition-group class="lang-btns" tag="div" name="list">
+        <div class="func-buttons">
+            <ScrollButton :title="t.button.top"/>
+            <ThemeButton/>
+        </div>
+        <div class="clickable hy-button switch-langs" v-on:click="showLang()" :title="t.button.language">
+            <Icon class="icon" icon="fluent-mdl2:locale-language"/>
+        </div>
+        <div class="lang-buttons" v-show="isShowLang" :key="+isShowLang"
+             v-on:mouseleave="unshowLang()"
+        >
+            <div class="clickable hy-button"
+                 @click="() => click(l)" v-for="l in targets" :key="l">
+                {{ supportedLang[l] }}
             </div>
-            <div class="clickable hy-button switch-langs" v-on:click="showLang()">
-                <Icon class="icon" icon="fluent-mdl2:locale-language"/>
-            </div>
-            <div class="lang-buttons" v-show="isShowLang" :key="+isShowLang"
-                 v-on:mouseleave="unshowLang()"
-            >
-                <div class="clickable hy-button"
-                     @click="() => click(l)" v-for="l in targets" :key="l">
-                    {{ supportedLang[l] }}
-                </div>
-            </div>
-        </transition-group>
-    </div>
+        </div>
+    </transition-group>
 </template>
 
 <script lang="ts">
 import ScrollButton from "@/components/ScrollButton.vue";
 import ThemeButton from "@/components/ThemeButton.vue";
-import {getLang, Lang, setLang, supportedLang} from "@/logic/config";
-import {randint, scheduledTask} from "@/logic/helper";
+import {getLang, Lang, setLang, supportedLang, t} from "@/logic/config";
+import {scheduledTask} from "@/logic/helper";
 import {info} from "@/logic/utils";
 import {Icon} from "@iconify/vue";
 import {Component, Vue} from 'vue-facing-decorator';
@@ -36,7 +34,7 @@ export default class LangButton extends Vue {
     supportedLang = supportedLang
     showBtn = localStorage.getItem('showBtn')
     isShowLang: boolean;
-    funcId = 'func-lang-button-' + randint(0, 2147483647);
+    t = t
 
     created() {
         this.isShowLang = false;
@@ -116,11 +114,14 @@ export default class LangButton extends Vue {
             border-radius: 56562px
             border: 1px solid $color-text-main
 
-.list-enter-active, .list-leave-active
-    transition: all 0.5s ease-in-out
+.list-enter-active
+    transition: all .5s cubic-bezier(0.68, -0.60, 0.32, 1.60)
+
+.list-leave-active
+    transition: all .5s cubic-bezier(0.68, -0.60, 0.32, 1.60)
+    position: absolute
 
 .list-enter-from, .list-leave-to
-    transition: all .25s cubic-bezier(0.45, 0.65, 0.875, 0.80)
+    transition: all .25s cubic-bezier(0.68, -0.60, 0.32, 1.60)
     transform: translateX(269px)
-    opacity: 0.65
 </style>
