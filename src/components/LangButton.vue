@@ -1,6 +1,6 @@
 <template>
     <div class="lang-btns" v-if="showBtn">
-        <transition-group tag="div">
+        <transition-group tag="div" name="list">
             <div class="func-buttons" v-bind:id="funcId">
                 <ScrollButton/>
                 <ThemeButton/>
@@ -8,7 +8,7 @@
             <div class="clickable hy-button switch-langs" v-on:click="showLang()" v-if="!isShowLang" :key="+isShowLang">
                 <Icon class="icon" icon="fluent-mdl2:locale-language"/>
             </div>
-            <div class="lang-buttons" v-if="isShowLang" :key="+isShowLang"
+            <div class="lang-buttons" v-show="isShowLang" :key="+isShowLang"
                  v-on:mouseleave="unshowLang()"
             >
                 <div class="clickable hy-button"
@@ -54,7 +54,7 @@ export default class LangButton extends Vue {
     }
 
     showLang() {
-        this.isShowLang = true;
+        this.isShowLang = !this.isShowLang;
     }
 
     unshowLang() {
@@ -65,7 +65,7 @@ export default class LangButton extends Vue {
 }
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass">
 @import "../css/colors"
 @import "../css/animations"
 
@@ -116,4 +116,11 @@ export default class LangButton extends Vue {
             border-radius: 56562px
             border: 1px solid $color-text-main
 
+.list-enter-active, .list-leave-active
+    transition: all 0.5s ease-in-out
+
+.list-enter-from, .list-leave-to
+    transition: all .25s cubic-bezier(0.45, 0.65, 0.875, 0.80)
+    transform: translateY(269px)
+    opacity: 0.65
 </style>
