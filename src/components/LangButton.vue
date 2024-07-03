@@ -1,15 +1,22 @@
 <template>
     <div class="lang-btns" v-if="showBtn">
-        <div class="func-buttons" v-if="showBtn" >
-            <ScrollButton />
-            <ThemeButton/>
-        </div>
-        <div class="lang-buttons" >
-            <div class="clickable hy-button"
-                 @click="() => click(l)" v-for="l in targets" :key="l">
-                {{ supportedLang[l] }}
+        <transition-group tag="div">
+            <div class="func-buttons" v-bind:id="funcId">
+                <ScrollButton/>
+                <ThemeButton/>
             </div>
-        </div>
+            <div class="clickable hy-button switch-langs" v-on:click="showLang()" v-if="!isShowLang" :key="+isShowLang">
+                <Icon class="icon" icon="fluent-mdl2:locale-language"/>
+            </div>
+            <div class="lang-buttons" v-if="isShowLang" :key="+isShowLang"
+                 v-on:mouseleave="unshowLang()"
+            >
+                <div class="clickable hy-button"
+                     @click="() => click(l)" v-for="l in targets" :key="l">
+                    {{ supportedLang[l] }}
+                </div>
+            </div>
+        </transition-group>
     </div>
 </template>
 
@@ -17,15 +24,23 @@
 import ScrollButton from "@/components/ScrollButton.vue";
 import ThemeButton from "@/components/ThemeButton.vue";
 import {getLang, Lang, setLang, supportedLang} from "@/logic/config";
+import {randint, scheduledTask} from "@/logic/helper";
 import {info} from "@/logic/utils";
+import {Icon} from "@iconify/vue";
 import {Component, Vue} from 'vue-facing-decorator';
 
 
-@Component({ components: { ThemeButton, ScrollButton } })
+@Component({ components: { Icon, ThemeButton, ScrollButton } })
 export default class LangButton extends Vue {
     lang = getLang()
     supportedLang = supportedLang
     showBtn = localStorage.getItem('showBtn')
+    isShowLang: boolean;
+    funcId = 'func-lang-button-' + randint(0, 2147483647);
+
+    created() {
+        this.isShowLang = false;
+    }
 
     get targets(): Lang[] {
         const lang = getLang()
@@ -37,11 +52,22 @@ export default class LangButton extends Vue {
         setLang(id)
         location.reload()
     }
+
+    showLang() {
+        this.isShowLang = true;
+    }
+
+    unshowLang() {
+        scheduledTask(1000, () => {
+            this.isShowLang = false;
+        })
+    }
 }
 </script>
 
 <style lang="sass" scoped>
 @import "../css/colors"
+@import "../css/animations"
 
 .lang-btns
     // Fixed positioning
@@ -50,7 +76,8 @@ export default class LangButton extends Vue {
     bottom: 20px
     z-index: 50
     display: flex
-    flex-direction: row
+    flex-direction: column
+    transition: all 0.5s ease
 
     .lang-buttons
         display: flex
@@ -66,6 +93,18 @@ export default class LangButton extends Vue {
             border-radius: 56562px
             border: 1px solid $color-text-main
 
+    .switch-langs
+        padding: 10px
+        width: 25px
+        height: 25px
+        border-radius: 56562px
+        border: 1px solid $color-text-main
+
+        .icon
+            width: 20px
+            height: 20px
+
+
     .func-buttons
         display: flex
         flex-direction: column-reverse
@@ -76,6 +115,5 @@ export default class LangButton extends Vue {
             height: 25px
             border-radius: 56562px
             border: 1px solid $color-text-main
-
 
 </style>

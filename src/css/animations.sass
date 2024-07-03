@@ -58,3 +58,16 @@
 
 .fly-to-top
   animation: fly-to-top 3.5s cubic-bezier(.39, .575, .565, 1.000)
+
+@keyframes slideUp
+  0%
+    transform: translateY(66px)
+  100%
+    transform: translateY(0)
+
+@keyframes slideDown
+  from
+    transform: translateY(-66px)
+  to
+    transform: translateY(0)
+
