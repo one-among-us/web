@@ -67,6 +67,9 @@ export default class App extends Vue {
 *
     transition: all 0.25s cubic-bezier(0.35, 0, 0.72, 0.22)
 
+html
+    scroll-behavior: smooth
+
 #app
     font-family: $font
     -webkit-font-smoothing: antialiased

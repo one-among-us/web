@@ -38,6 +38,7 @@ declare module 'vue' {
     RecaptchaV2: typeof import('./components/RecaptchaV2.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    ScrollButton: typeof import('./components/ScrollButton.vue')['default']
     SubmitPrompt: typeof import('./components/SubmitPrompt.vue')['default']
     SwitchButton: typeof import('./components/SwitchButton.vue')['default']
     ThemeButton: typeof import('./components/ThemeButton.vue')['default']
