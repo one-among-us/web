@@ -5,7 +5,7 @@
                 <ScrollButton/>
                 <ThemeButton/>
             </div>
-            <div class="clickable hy-button switch-langs" v-on:click="showLang()" v-if="!isShowLang" :key="+isShowLang">
+            <div class="clickable hy-button switch-langs" v-on:click="showLang()">
                 <Icon class="icon" icon="fluent-mdl2:locale-language"/>
             </div>
             <div class="lang-buttons" v-show="isShowLang" :key="+isShowLang"
