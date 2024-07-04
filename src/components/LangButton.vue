@@ -4,11 +4,14 @@
             <ScrollButton :title="t.button.top"/>
             <ThemeButton/>
         </div>
-        <div class="clickable hy-button switch-langs" v-on:click="showLang()" :title="t.button.language">
+        <div class="clickable hy-button switch-langs" v-on:click="() => {isShowLang = !isShowLang}"
+             :title="t.button.language"
+        >
             <Icon class="icon" icon="fluent-mdl2:locale-language"/>
         </div>
         <div class="lang-buttons" v-show="isShowLang" :key="+isShowLang"
              v-on:mouseleave="unshowLang()"
+             v-on:mouseover="hovering = true"
         >
             <div class="clickable hy-button"
                  @click="() => click(l)" v-for="l in targets" :key="l">
@@ -33,12 +36,9 @@ export default class LangButton extends Vue {
     lang = getLang()
     supportedLang = supportedLang
     showBtn = localStorage.getItem('showBtn')
-    isShowLang: boolean;
+    isShowLang = false;
     t = t
-
-    created() {
-        this.isShowLang = false;
-    }
+    hovering = false;
 
     get targets(): Lang[] {
         const lang = getLang()
@@ -51,12 +51,10 @@ export default class LangButton extends Vue {
         location.reload()
     }
 
-    showLang() {
-        this.isShowLang = !this.isShowLang;
-    }
-
     unshowLang() {
+        this.hovering = false;
         scheduledTask(1000, () => {
+            if (this.hovering) return;
             this.isShowLang = false;
         })
     }

@@ -1,5 +1,5 @@
 <template>
-    <div class="clickable hy-button theme-button" :key="theme" v-on:click="changeTheme()" :title="getTheme() == 'light' ? t.button.light : t.button.dark">
+    <div class="clickable hy-button theme-button" :key="theme" v-on:click="changeTheme()" :title="t.button[getTheme()]">
         <Icon class="iconR" icon="mynaui:sun" v-if="theme != 'dark'"/>
         <Icon class="iconR" icon="mynaui:moon" v-else/>
     </div>

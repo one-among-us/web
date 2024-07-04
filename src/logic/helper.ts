@@ -139,6 +139,12 @@ export async function scheduledTask(milliseconds: number, task: () => any) {
     task()
 }
 
+export async function scheduledLoopTask(milliseconds: number, task: () => any) {
+    await delay(milliseconds)
+    task()
+    scheduledLoopTask(milliseconds, task)
+}
+
 export function toast(title: string, text: string, img: string, background: string, width: number, height: number, color: string) {
     Swal.fire({
         toast: true,
