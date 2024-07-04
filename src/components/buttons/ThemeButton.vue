@@ -31,8 +31,8 @@ export default class ThemeButton extends Vue {
 </script>
 
 <style lang="sass">
-@import "../css/colors"
-@import "../css/global"
+@import "../../css/colors"
+@import "../../css/global"
 
 .theme-button
     padding: 10px

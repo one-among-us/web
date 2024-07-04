@@ -1,5 +1,5 @@
 <script lang="tsx">
-import BackupButtons from "@/components/BackupButtons.vue";
+import BackupButtons from "@/components/buttons/BackupButtons.vue";
 import ChannelBackupButton from "@/components/ChannelBackupButton.vue";
 import DynamicIcon from "@/components/DynamicIcon.vue";
 import * as Vue from 'vue';

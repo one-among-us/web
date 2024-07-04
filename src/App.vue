@@ -21,7 +21,7 @@
 
 <script lang="ts">
 import Divider from "@/components/divider.vue";
-import LangButton from "@/components/LangButton.vue";
+import LangButton from "@/components/buttons/LangButton.vue";
 import {transColors} from "@/logic/constants";
 import {applyTheme} from "@/logic/theme";
 import {info, logPrefixCss} from "@/logic/utils";

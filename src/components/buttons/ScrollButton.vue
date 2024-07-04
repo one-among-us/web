@@ -20,8 +20,8 @@ export default class ScrollButton extends Vue {
 </template>
 
 <style lang="scss">
-@import "../css/colors";
-@import "../css/global";
+@import "../../css/colors";
+@import "../../css/global";
 
 .scrollButton {
     padding: 10px;

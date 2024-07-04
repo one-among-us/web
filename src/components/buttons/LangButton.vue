@@ -22,8 +22,8 @@
 </template>
 
 <script lang="ts">
-import ScrollButton from "@/components/ScrollButton.vue";
-import ThemeButton from "@/components/ThemeButton.vue";
+import ScrollButton from "@/components/buttons/ScrollButton.vue";
+import ThemeButton from "@/components/buttons/ThemeButton.vue";
 import {getLang, Lang, setLang, supportedLang, t} from "@/logic/config";
 import {scheduledTask} from "@/logic/helper";
 import {info} from "@/logic/utils";
@@ -62,8 +62,8 @@ export default class LangButton extends Vue {
 </script>
 
 <style lang="sass">
-@import "../css/colors"
-@import "../css/animations"
+@import "../../css/colors"
+@import "../../css/animations"
 
 .lang-btns
     // Fixed positioning

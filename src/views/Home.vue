@@ -55,7 +55,7 @@ import tdorCommentView from "@/assets/tdor-comments-head.md";
 import tdorTopEn from "@/assets/tdor-top.en.md";
 import tdorTop from "@/assets/tdor-top.md";
 import tdorTopHant from "@/assets/tdor-top.zh_hant.md";
-import BirthdayButton from '@/components/BirthdayButton.vue'
+import BirthdayButton from '@/components/buttons/BirthdayButton.vue'
 import Loading from '@/components/Loading.vue';
 import RandomPerson from '@/components/RandomPerson.vue';
 import {dataHost, getLang, peopleUrl, replaceUrlVars} from "@/logic/config";
