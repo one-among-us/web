@@ -14,6 +14,7 @@ declare module 'vue' {
     Divider: typeof import('./components/divider.vue')['default']
     DynamicIcon: typeof import('./components/DynamicIcon.vue')['default']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
+    GlobalButton: typeof import('./components/buttons/GlobalButton.vue')['default']
     HyInput: typeof import('./components/HyInput.vue')['default']
     IEpCheck: typeof import('~icons/ep/check')['default']
     IEpEdit: typeof import('~icons/ep/edit')['default']
