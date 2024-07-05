@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import ChannelBackupButton from "@/components/ChannelBackupButton.vue";
+import ChannelBackupButton from "@/components/buttons/ChannelBackupButton.vue";
 import {Component, Prop, Vue} from 'vue-facing-decorator';
 
 @Component({ components: { ChannelBackupButton } })

@@ -10,7 +10,7 @@ declare module 'vue' {
     BackupButtons: typeof import('./components/buttons/BackupButtons.vue')['default']
     Balloon: typeof import('./components/Balloon.vue')['default']
     BirthdayButton: typeof import('./components/buttons/BirthdayButton.vue')['default']
-    ChannelBackupButton: typeof import('./components/ChannelBackupButton.vue')['default']
+    ChannelBackupButton: typeof import('./components/buttons/ChannelBackupButton.vue')['default']
     Divider: typeof import('./components/divider.vue')['default']
     DynamicIcon: typeof import('./components/DynamicIcon.vue')['default']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
