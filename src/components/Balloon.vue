@@ -12,7 +12,7 @@ import {Component, Vue} from 'vue-facing-decorator';
 
 @Component({ components: {} })
 export default class Balloon extends Vue {
-    db = 'ballon-qwq';
+    db = 'balloon-qwq';
     sourceImg = 'https://one-among.us/favicon-large.png';
     styles = '';
 
