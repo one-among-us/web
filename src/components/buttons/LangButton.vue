@@ -1,6 +1,6 @@
 <script lang="ts">
 import {Vue, Component} from 'vue-facing-decorator';
-import {getLang, Lang, setLang, supportedLang, t} from "@/logic/config";
+import {getLang, Lang, setLang, supportedLang} from "@/logic/config";
 import {info} from "@/logic/utils";
 
 @Component({})

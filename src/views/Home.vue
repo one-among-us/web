@@ -19,7 +19,7 @@
             <Loading v-if="isLoading"/>
 
             <transition-group id="profiles" class="unselectable" v-if="people" name="profiles" tag="div">
-                <div class="profile" v-for="(p, i) in people" :key="p.id">
+                <div class="profile" v-for="p in people" :key="p.id">
                     <div class="back"/>
                     <a :href="`/profile/${p.id}`" @click.exact.prevent.stop="() => false">
                         <transition name="fade" @after-leave="() => switchPage(p)">
