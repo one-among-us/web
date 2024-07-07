@@ -44,6 +44,7 @@ export default class GlobalButton extends Vue {
 <style lang="sass">
 @import "../../css/colors"
 @import "../../css/animations"
+@import "../../css/motion"
 
 .lang-btns
     // Fixed positioning
@@ -80,13 +81,13 @@ export default class GlobalButton extends Vue {
             border: 1px solid $color-text-main
 
 .list-enter-active
-    transition: all .5s cubic-bezier(0.68, -0.60, 0.32, 1.60)
+    transition: all .5s $ease-in-out-back
 
 .list-leave-active
-    transition: all .5s cubic-bezier(0.68, -0.60, 0.32, 1.60)
+    transition: all .5s $ease-in-out-back
     position: absolute
 
 .list-enter-from, .list-leave-to
-    transition: all .25s cubic-bezier(0.68, -0.60, 0.32, 1.60)
+    transition: all .25s $ease-in-out-back
     transform: translateX(269px)
 </style>

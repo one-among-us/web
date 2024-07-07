@@ -158,6 +158,7 @@ export default class Home extends Vue {
 
 <style lang="sass" scoped>
 @import "../css/colors"
+@import "../css/motion"
 
 .introduction
     text-align: justify
@@ -255,7 +256,7 @@ export default class Home extends Vue {
         z-index: 2
 
 .profiles-move
-    transition: all 0.5s cubic-bezier(0.85, 0.00, 0.15, 1.00)
+    transition: all 0.5s $ease-in-out-cric
 
 @media screen and (max-width: 440px)
     .profile
