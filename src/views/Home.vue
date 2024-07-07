@@ -124,7 +124,9 @@ export default class Home extends Vue {
             .then(it => it.text())
             .then(it => {
                 this.people = (isEaster() && (gaussian() < 0.35)) ? shuffle(JSON.parse(it)) : JSON.parse(it)
-                if (isEaster() && (gaussian() < 0.05)) scheduledLoopTask(1500, () => {
+                const now = new Date();
+                const pros = ((now.getDate() == 1) && (now.getMonth() + 1 == 4)) ? 0.5 : 0.05;
+                if (isEaster() && (gaussian() < pros)) scheduledLoopTask(1500, () => {
                     this.people = gaussian_shuffle(this.people)
                 })
             })
