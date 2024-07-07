@@ -1,5 +1,5 @@
 <template>
-    <div class="clickable hy-button theme-button" :key="theme" v-on:click="changeTheme()">
+    <div class="clickable hy-button theme-button" :key="theme" v-on:click="changeTheme()" :title="t.button[getTheme()]">
         <Icon class="iconR" icon="mynaui:sun" v-if="theme != 'dark'"/>
         <Icon class="iconR" icon="mynaui:moon" v-else/>
     </div>
@@ -7,11 +7,15 @@
 
 <script lang="ts">
 import {applyTheme, getTheme, setTheme} from "@/logic/theme";
+import {t} from "@/logic/config";
 import {Icon} from '@iconify/vue';
 import {Component, Vue} from 'vue-facing-decorator';
 
 @Component({ components: { Icon } })
 export default class ThemeButton extends Vue {
+    getTheme = getTheme
+
+    t = t
     theme = getTheme()
 
     changeTheme(): void {
@@ -27,8 +31,8 @@ export default class ThemeButton extends Vue {
 </script>
 
 <style lang="sass">
-@import "../css/colors"
-@import "../css/global"
+@import "../../css/colors"
+@import "../../css/global"
 
 .theme-button
     padding: 10px

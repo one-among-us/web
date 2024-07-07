@@ -1,25 +1,12 @@
-<template>
-    <div class="lang-btns" v-if="showBtn">
-        <ThemeButton/>
-        <div class="clickable hy-button"
-             @click="() => click(l)" v-for="l in targets" :key="l">
-            {{ supportedLang[l] }}
-        </div>
-    </div>
-</template>
-
 <script lang="ts">
-import ThemeButton from "@/components/ThemeButton.vue";
+import {Vue, Component} from 'vue-facing-decorator';
 import {getLang, Lang, setLang, supportedLang} from "@/logic/config";
 import {info} from "@/logic/utils";
-import {Component, Vue} from 'vue-facing-decorator';
 
-
-@Component({ components: { ThemeButton } })
+@Component({})
 export default class LangButton extends Vue {
     lang = getLang()
     supportedLang = supportedLang
-    showBtn = localStorage.getItem('showBtn')
 
     get targets(): Lang[] {
         const lang = getLang()
@@ -34,17 +21,23 @@ export default class LangButton extends Vue {
 }
 </script>
 
-<style lang="sass" scoped>
-@import "../css/colors"
+<template>
+    <div class="lang-buttons">
+        <div class="clickable hy-button"
+             @click="() => click(l)" v-for="l in targets" :key="l">
+            {{ supportedLang[l] }}
+        </div>
+    </div>
+</template>
 
-.lang-btns
-    // Fixed positioning
-    position: fixed
-    right: 20px
-    bottom: 20px
-    z-index: 50
+<style lang="sass">
+@import "../../css/global"
+
+.lang-buttons
     display: flex
     flex-direction: column
+    justify-items: end
+    justify-content: end
 
     div
         // Make it a circle

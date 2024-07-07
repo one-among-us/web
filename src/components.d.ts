@@ -7,13 +7,14 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    BackupButtons: typeof import('./components/BackupButtons.vue')['default']
+    BackupButtons: typeof import('./components/buttons/BackupButtons.vue')['default']
     Balloon: typeof import('./components/Balloon.vue')['default']
-    BirthdayButton: typeof import('./components/BirthdayButton.vue')['default']
-    ChannelBackupButton: typeof import('./components/ChannelBackupButton.vue')['default']
+    BirthdayButton: typeof import('./components/buttons/BirthdayButton.vue')['default']
+    ChannelBackupButton: typeof import('./components/buttons/ChannelBackupButton.vue')['default']
     Divider: typeof import('./components/divider.vue')['default']
     DynamicIcon: typeof import('./components/DynamicIcon.vue')['default']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
+    GlobalButton: typeof import('./components/buttons/GlobalButton.vue')['default']
     HyInput: typeof import('./components/HyInput.vue')['default']
     IEpCheck: typeof import('~icons/ep/check')['default']
     IEpEdit: typeof import('~icons/ep/edit')['default']
@@ -28,7 +29,7 @@ declare module 'vue' {
     IFasPaperPlane: typeof import('~icons/fa6-solid/paper-plane')['default']
     IFasStrikethrough: typeof import('~icons/fa6-solid/strikethrough')['default']
     IFasXmark: typeof import('~icons/fa6-solid/xmark')['default']
-    LangButton: typeof import('./components/LangButton.vue')['default']
+    LangButton: typeof import('./components/buttons/LangButton.vue')['default']
     Loading: typeof import('./components/Loading.vue')['default']
     MarkdownTooltip: typeof import('./components/MarkdownTooltip.vue')['default']
     MDX: typeof import('./components/MDX.vue')['default']
@@ -38,8 +39,9 @@ declare module 'vue' {
     RecaptchaV2: typeof import('./components/RecaptchaV2.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    ScrollButton: typeof import('./components/buttons/ScrollButton.vue')['default']
     SubmitPrompt: typeof import('./components/SubmitPrompt.vue')['default']
-    SwitchButton: typeof import('./components/SwitchButton.vue')['default']
-    ThemeButton: typeof import('./components/ThemeButton.vue')['default']
+    SwitchButton: typeof import('./components/buttons/SwitchButton.vue')['default']
+    ThemeButton: typeof import('./components/buttons/ThemeButton.vue')['default']
   }
 }

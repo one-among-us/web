@@ -25,8 +25,8 @@ export default class BirthdayButton extends Vue {
 </script>
 
 <style lang="sass" scoped>
-@import "../css/colors"
-@import "../css/global"
+@import "../../css/colors"
+@import "../../css/global"
 
 .random
     // Outer alignment

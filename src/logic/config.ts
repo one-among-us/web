@@ -132,6 +132,12 @@ export const i18n = {
             error: "Error in load page",
             back: "back",
             view: "View backup of {0}"
+        },
+        button: {
+            light: "Light",
+            dark: "Dark",
+            top: "Go to top",
+            language: "Other Languages"
         }
     },
     "zh_hans": {
@@ -199,6 +205,12 @@ export const i18n = {
             error: "加载页面错误... 请重试",
             back: "返回",
             view: "查看{0}备份"
+        },
+        button: {
+            light: "亮色",
+            dark: "暗色",
+            top: "回到顶部",
+            language: "其他语言"
         }
     },
     "zh_hant": {
@@ -266,6 +278,12 @@ export const i18n = {
             error: "加載頁面時出錯... 請重新嘗試",
             back: "返回",
             view: "視察{0}備份"
+        },
+        button: {
+            light: "亮顏色",
+            dark: "暗顏色",
+            top: "返回頁首",
+            language: "其他言語"
         }
     }
 }

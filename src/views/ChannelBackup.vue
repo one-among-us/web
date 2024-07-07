@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import ChannelBackupButton from "@/components/ChannelBackupButton.vue";
+import ChannelBackupButton from "@/components/buttons/ChannelBackupButton.vue";
 import {backupUrl, t} from "@/logic/config";
 import {TgBlog} from "tg-blog";
 import "tg-blog/dist/style.css"

@@ -139,6 +139,12 @@ export async function scheduledTask(milliseconds: number, task: () => any) {
     task()
 }
 
+export async function scheduledLoopTask(milliseconds: number, task: () => any) {
+    await delay(milliseconds)
+    task()
+    scheduledLoopTask(milliseconds, task)
+}
+
 export function toast(title: string, text: string, img: string, background: string, width: number, height: number, color: string) {
     Swal.fire({
         toast: true,
@@ -175,6 +181,20 @@ export function shuffle(array: Array<any>): any[] {
 
     while (currentIndex > 0) {
         const randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        [arr[currentIndex], arr[randomIndex]] = [arr[randomIndex], arr[currentIndex]];
+    }
+
+    return arr;
+}
+
+export function gaussian_shuffle(array: Array<any>): any[] {
+    let currentIndex = array.length
+    const arr = array.slice()
+
+    while (currentIndex > 0) {
+        const randomIndex = Math.floor(gaussian() * currentIndex);
         currentIndex--;
 
         [arr[currentIndex], arr[randomIndex]] = [arr[randomIndex], arr[currentIndex]];

@@ -16,19 +16,19 @@
 
     <Divider height="5px"/>
 
-    <LangButton/>
+    <GlobalButton/>
 </template>
 
 <script lang="ts">
 import Divider from "@/components/divider.vue";
-import LangButton from "@/components/LangButton.vue";
+import GlobalButton from "@/components/buttons/GlobalButton.vue";
 import {transColors} from "@/logic/constants";
 import {applyTheme} from "@/logic/theme";
 import {info, logPrefixCss} from "@/logic/utils";
 import {Component, Vue} from 'vue-facing-decorator';
 import {getLang, t} from './logic/config';
 
-@Component({ components: { LangButton, Divider } })
+@Component({ components: { GlobalButton, Divider } })
 export default class App extends Vue {
     $route: any
     t = t
