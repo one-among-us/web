@@ -189,6 +189,20 @@ export function shuffle(array: Array<any>): any[] {
     return arr;
 }
 
+export function gaussian_shuffle(array: Array<any>): any[] {
+    let currentIndex = array.length
+    const arr = array.slice()
+
+    while (currentIndex > 0) {
+        const randomIndex = Math.floor(gaussian() * currentIndex);
+        currentIndex--;
+
+        [arr[currentIndex], arr[randomIndex]] = [arr[randomIndex], arr[currentIndex]];
+    }
+
+    return arr;
+}
+
 export function gaussian(): number {
     let u = 0, v = 0;
     while (u === 0) u = Math.random(); //Converting [0,1) to (0,1)
