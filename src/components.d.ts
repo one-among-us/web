@@ -9,6 +9,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     BackupButtons: typeof import('./components/buttons/BackupButtons.vue')['default']
     Balloon: typeof import('./components/Balloon.vue')['default']
+    Banner: typeof import('./components/Banner.vue')['default']
     BirthdayButton: typeof import('./components/buttons/BirthdayButton.vue')['default']
     ChannelBackupButton: typeof import('./components/buttons/ChannelBackupButton.vue')['default']
     Divider: typeof import('./components/divider.vue')['default']

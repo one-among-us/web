@@ -1,5 +1,6 @@
 <script lang="tsx">
 import BackupButtons from "@/components/buttons/BackupButtons.vue";
+import Banner from "@/components/Banner.vue";
 import ChannelBackupButton from "@/components/buttons/ChannelBackupButton.vue";
 import DynamicIcon from "@/components/DynamicIcon.vue";
 import * as Vue from 'vue';
@@ -34,7 +35,7 @@ export default defineComponent({
                 {
                     renderFunction.value?.({
                         components: {
-                            PhotoScroll, ChannelBackupButton, BackupButtons, DynamicIcon
+                            PhotoScroll, ChannelBackupButton, BackupButtons, DynamicIcon, Banner
                         }
                     })
                 }

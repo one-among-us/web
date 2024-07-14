@@ -26,6 +26,12 @@ export interface Person {
     comments: Comment[]
 }
 
+export interface BannerData {
+    icon: string;
+    title: string;
+    text: string;
+}
+
 export function parsePeopleJson(json: string): Person {
     const p = JSON.parse(json)
     if (!p.info) p.info = []
