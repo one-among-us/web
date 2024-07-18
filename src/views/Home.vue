@@ -71,6 +71,7 @@ import {
     shuffle,
 } from "@/logic/helper";
 import {info} from '@/logic/utils';
+import {isUwU, UwU} from "@/logic/uwu";
 import {viaBalloon} from "@/logic/viaFetch";
 import router from "@/router";
 import TdorComments from "@/views/TdorComments.vue";
@@ -145,6 +146,12 @@ export default class Home extends Vue {
                 console.log(this.birthdayList)
                 if (this.birthdayList.length) viaBalloon()
             });
+    }
+
+    mounted() {
+        if (isUwU()) {
+            UwU()
+        }
     }
 
     switchPage(p: PersonMeta): void {
