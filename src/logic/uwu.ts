@@ -1,5 +1,4 @@
 import {getLang} from "@/logic/config";
-import {gaussian} from "@/logic/helper";
 import Uwuifier from 'uwuifier';
 
 function getParams(key: string): string {
