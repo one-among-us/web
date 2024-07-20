@@ -1,8 +1,9 @@
 <template>
     <Divider height="5px"/>
     <div id="title" class="fbox-vcenter unselectable" v-if="['Home', 'About'].includes(String($route.name))">
-        <div id="title-txt">那些秋叶</div>
-        <div id="title-sub">One Among Us</div>
+        <div id="title-txt" v-if="!uwu">那些秋叶</div>
+        <div id="title-sub" v-if="!uwu">One Among Us</div>
+        <img src="/kawaii.oau.png" class="kawaii" v-show="uwu"/>
     </div>
 
     <div id="nav" class="fbox-vcenter unselectable">
@@ -27,11 +28,14 @@ import {applyTheme} from "@/logic/theme";
 import {info, logPrefixCss} from "@/logic/utils";
 import {Component, Vue} from 'vue-facing-decorator';
 import {getLang, t} from './logic/config';
+import {isUwU} from "@/logic/uwu";
 
 @Component({ components: { GlobalButton, Divider } })
 export default class App extends Vue {
     $route: any
     t = t
+
+    uwu = isUwU() && getLang() === 'en'
 
     created(): void {
         if (!localStorage.getItem('showBtn'))
@@ -122,6 +126,12 @@ export default class App extends Vue {
 
         &.router-link-exact-active
             color: $color-text-special
+
+.kawaii
+    width: 100%
+    height: 100%
+    margin: auto
+    object-fit: contain
 
 // Content
 #router

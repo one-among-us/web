@@ -10,8 +10,6 @@
 
             <TdorComments v-if="!isDeadlinePassed()"/>
 
-            <img src="/kawaii.oau.png" class="kawaii" v-show="uwu"/>
-
             <div class="introduction markdown-content" v-html="htmlTop"/>
 
             <div class=randomButtons>
@@ -99,8 +97,6 @@ export default class Home extends Vue {
     @Ref() bookmarkTexts: HTMLDivElement[]
     @Ref() bookmark: HTMLDivElement[]
 
-    uwu = isUwU() && getLang() === 'en'
-
     isDeadlinePassed(): boolean {
         // const deadlineDate = new Date(2024, 2, 27, 16, 0); // March 27, 2024, 16:00 (UTC); Wrong! not UTC!
         // const now = new Date();
@@ -177,11 +173,6 @@ export default class Home extends Vue {
     text-align: justify
     text-justify: inter-word
     margin: 10px min(5vw, 40px)
-
-.kawaii
-    width: 50%
-    height: fit-content
-    margin: 30px auto
 
 .bottom
     padding-bottom: 250px
