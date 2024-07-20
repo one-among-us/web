@@ -35,7 +35,7 @@ export default class App extends Vue {
     $route: any
     t = t
 
-    uwu = isUwU() && getLang() === 'en'
+    uwu = isUwU()
 
     created(): void {
         if (!localStorage.getItem('showBtn'))
@@ -105,7 +105,7 @@ export default class App extends Vue {
 // Title
 #title
     background-color: $color-bg-5
-    min-height: 250px
+    min-height: 300px
 
     #title-txt
         font-size: x-large
