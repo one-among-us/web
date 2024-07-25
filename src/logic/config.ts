@@ -95,6 +95,8 @@ export const i18n = {
         "nav_comment_placeholder": "Add a message... (Markdown supported)",
         "nav_comment_status": "chars (draft saved)",
         "nav_comment_in_reply_to": "In reply to",
+        "name": "name",
+        "email": "email (optional)",
         "random": "Click here to visit a random page",
         "tdor_btn": "Click here to leave your message",
         view_limit: {
@@ -168,6 +170,8 @@ export const i18n = {
         "nav_comment_placeholder": "添加留言... （支持 Markdown）",
         "nav_comment_status": "字（已存草稿）",
         "nav_comment_in_reply_to": "回复",
+        "name": "名字",
+        "email": "邮箱 (可选)",
         "random": "随机看望一位朋友",
         "tdor_btn": "填写现身日晚会来信请点这里",
         view_limit: {
@@ -241,6 +245,8 @@ export const i18n = {
         "nav_comment_placeholder": "添加留言... （支援 Markdown）",
         "nav_comment_status": "字（草案已儲存）",
         "nav_comment_in_reply_to": "回覆",
+        "name": "名字",
+        "email": "電子郵箱 (可選)",
         "random": "點一下這裏查看一個隨機頁面",
         "tdor_btn": "點一下這裏填寫現身日晚會來信",
         view_limit: {

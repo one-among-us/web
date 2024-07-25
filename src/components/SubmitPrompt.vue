@@ -8,8 +8,8 @@
             <div class="text">{{ t.nav_req_name }}
                 <div class="sub">{{ t.nav_req_anonymous }}</div>
             </div>
-            <HyInput class="input first" placeholder="名字" v-model="name"/>
-            <HyInput class="input" placeholder="邮箱（可选）" v-model="email"/>
+            <HyInput class="input first" :placeholder="t.name" v-model="name"/>
+            <HyInput class="input" :placeholder="t.email" v-model="email"/>
 
             <div>{{ t.nav_reCAPTCHA }}</div>
             <RecaptchaV2 @verify="submit"/>
