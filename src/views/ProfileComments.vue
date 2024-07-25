@@ -3,7 +3,7 @@
         <h1>{{ p.id == 'tdor' ? "For Being Out And Proud——2024年跨性别现身日晚会 来信集合" : t.nav_comments }}</h1>
 
         <!-- Comments -->
-        <div id="comments" v-if="p.comments.length > 0">
+        <transition-group tag="div" name="comment-list" id="comments" v-if="p.comments.length > 0">
             <div class="comment" v-for="c in comments" :key="c.id">
                 <span class="content" v-html="c.content"></span>
                 <span class="from anonymous" v-if="c.anonymous">{{ t.nav_anonymous }}</span>
@@ -18,7 +18,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </transition-group>
 
         <!-- Add comment textbox -->
         <div id="add-comment" v-if="p.id != 'tdor'">
@@ -42,7 +42,7 @@
 import MarkdownTooltip from "@/components/MarkdownTooltip.vue";
 import SubmitPrompt, {CaptchaResponse} from "@/components/SubmitPrompt.vue";
 import {backendHost, t} from "@/logic/config";
-import {Person} from "@/logic/data";
+import {Person, Comment} from "@/logic/data";
 import {fetchText, trim} from "@/logic/helper";
 import {error, info} from "@/logic/utils";
 import Swal from 'sweetalert2';
@@ -61,13 +61,14 @@ export default class ProfileComments extends Vue {
     private textInputKey: string
 
     showCaptchaPrompt = false
+    comments = []
 
     t = t
 
     trim = trim
 
-    get comments() {
-        return this.p.comments.map(c => {
+    getComments(): Comment[] {
+        const commentData =  this.p.comments.map(c => {
             return {
                 ...c,
                 anonymous: c.submitter === "Anonymous",
@@ -81,7 +82,24 @@ export default class ProfileComments extends Vue {
                     })
                     : []
             }
-        })
+        }) as Comment[]
+        const myComments = JSON.parse(localStorage.getItem("myComments"));
+        if (!myComments) return commentData;
+        if ((this.p.id in myComments) && (myComments[this.p.id] != undefined)) {
+            for (const u of myComments[this.p.id]) {
+                let flag = true;
+                for (const v of commentData) {
+                    if ((u.content == v.content)) {
+                        flag = false;
+                        break;
+                    }
+                }
+                if (flag) {
+                    commentData.push(u);
+                }
+            }
+        }
+        return commentData;
     }
 
     /**
@@ -109,7 +127,6 @@ export default class ProfileComments extends Vue {
                 Swal.showLoading(null);
                 fetchText(backendHost + '/comment/add', { method: 'POST', params })
                     .then(() => {
-                        this.textInput = "";
                         Swal.fire({
                             title: t.nav_success,
                             text: t.nav_success_text_reply,
@@ -120,6 +137,32 @@ export default class ProfileComments extends Vue {
                             confirmButtonText: t.nav_ok_1,
                             showCloseButton: true
                         })
+                        this.comments.push({
+                            content: this.textInput.replaceAll("\n", "<br />"),
+                            replies: [],
+                            submitter: 'Anonymous',
+                            id: 0
+                        })
+                        let myComments = JSON.parse(localStorage.getItem("myComments"));
+                        if (!myComments) myComments = {};
+                        if ((!(this.p.id in myComments)) || (myComments[this.p.id] == undefined)) {
+                            myComments[this.p.id] = [{
+                                content: this.textInput.replaceAll("\n", "<br />"),
+                                replies: [],
+                                submitter: 'You',
+                                id: 0
+                            }]
+                        }
+                        else {
+                            myComments[this.p.id].push({
+                                content: this.textInput.replaceAll("\n", "<br />"),
+                                replies: [],
+                                submitter: 'You',
+                                id: 0
+                            })
+                        }
+                        localStorage.setItem("myComments", JSON.stringify(myComments))
+                        this.textInput = "";
                         this.resizeInput()
                     })
                     .catch(err => {
@@ -145,6 +188,10 @@ export default class ProfileComments extends Vue {
     created() {
         this.textInputKey = `draft-${this.p.id}`
         this.textInputCache = localStorage.getItem(this.textInputKey) ?? ""
+        this.comments = this.getComments()
+        if (!localStorage.getItem('myComments')) {
+            localStorage.setItem('myComments', '{}')
+        }
     }
 
     /**
@@ -186,6 +233,7 @@ export default class ProfileComments extends Vue {
 <style lang="sass">
 @import src/css/global
 @import src/css/colors
+@import src/css/motion
 
 .divp
     margin: 0.65em 0
@@ -263,6 +311,11 @@ export default class ProfileComments extends Vue {
             font-size: 10px
             color: $color-text-light
             margin-right: 5px
+
+.comment-list-enter-from, .comment-list-leave-to
+    transition: all 1s $ease-in-out-cric
+    opacity: 0
+    transform: translateY(25px)
 
 [data-theme="dark"]
     .comment
