@@ -3,7 +3,7 @@
     <div id="title" class="fbox-vcenter unselectable" v-if="['Home', 'About'].includes(String($route.name))">
         <div id="title-txt" v-if="!uwu">那些秋叶</div>
         <div id="title-sub" v-if="!uwu">One Among Us</div>
-        <img src="/kawaii.oau.png" class="kawaii" v-show="uwu"/>
+        <img src="/kawaii.oau.png" class="kawaii" v-if="uwu"/>
     </div>
 
     <div id="nav" class="fbox-vcenter unselectable">
@@ -56,6 +56,10 @@ export default class App extends Vue {
         document.getElementById("app").dataset.lang = getLang()
         applyTheme()
     }
+
+    updated() {
+        if (this.uwu) document.getElementById("title").style.minHeight = "300px"
+    }
 }
 </script>
 
@@ -105,7 +109,8 @@ export default class App extends Vue {
 // Title
 #title
     background-color: $color-bg-5
-    min-height: 300px
+    min-height: 250px
+    height: fit-content
 
     #title-txt
         font-size: x-large
@@ -129,7 +134,7 @@ export default class App extends Vue {
 
 .kawaii
     width: 100%
-    height: 100%
+    height: 300px
     margin: auto
     object-fit: contain
 
