@@ -140,7 +140,7 @@ export default class ProfileComments extends Vue {
                         this.comments.push({
                             content: this.textInput.replaceAll("\n", "<br />"),
                             replies: [],
-                            submitter: 'Anonymous',
+                            submitter: 'You',
                             id: 0
                         })
                         let myComments = JSON.parse(localStorage.getItem("myComments"));
