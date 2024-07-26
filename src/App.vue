@@ -1,8 +1,9 @@
 <template>
     <Divider height="5px"/>
     <div id="title" class="fbox-vcenter unselectable" v-if="['Home', 'About'].includes(String($route.name))">
-        <div id="title-txt">那些秋叶</div>
-        <div id="title-sub">One Among Us</div>
+        <div id="title-txt" v-if="!uwu">那些秋叶</div>
+        <div id="title-sub" v-if="!uwu">One Among Us</div>
+        <img src="/kawaii.oau.png" class="kawaii" v-if="uwu"/>
     </div>
 
     <div id="nav" class="fbox-vcenter unselectable">
@@ -27,11 +28,14 @@ import {applyTheme} from "@/logic/theme";
 import {info, logPrefixCss} from "@/logic/utils";
 import {Component, Vue} from 'vue-facing-decorator';
 import {getLang, t} from './logic/config';
+import {isUwU} from "@/logic/uwu";
 
 @Component({ components: { GlobalButton, Divider } })
 export default class App extends Vue {
     $route: any
     t = t
+
+    uwu = isUwU()
 
     created(): void {
         if (!localStorage.getItem('showBtn'))
@@ -51,6 +55,10 @@ export default class App extends Vue {
 
         document.getElementById("app").dataset.lang = getLang()
         applyTheme()
+    }
+
+    updated() {
+        if (this.uwu) document.getElementById("title").style.minHeight = "300px"
     }
 }
 </script>
@@ -102,6 +110,7 @@ export default class App extends Vue {
 #title
     background-color: $color-bg-5
     min-height: 250px
+    height: fit-content
 
     #title-txt
         font-size: x-large
@@ -122,6 +131,12 @@ export default class App extends Vue {
 
         &.router-link-exact-active
             color: $color-text-special
+
+.kawaii
+    width: 100%
+    height: 300px
+    margin: auto
+    object-fit: contain
 
 // Content
 #router

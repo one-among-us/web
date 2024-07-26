@@ -1,8 +1,8 @@
-$ease-in: cubic-bezier(0.42, 0, 1, 1);
-$ease-out: cubic-bezier(0, 0, 0.58, 1);
-$ease-in-back: cubic-bezier(0.36, 0, 0.66, -0.56);
-$ease-out-back: cubic-bezier(0.34, 0.56, 0.64, 1);
-$ease-in-out-back: cubic-bezier(0.68, -0.60, 0.32, 1.60);
-$ease-in-cric: cubic-bezier(0.55, 0, 1, 0.45);
-$ease-out-cric: cubic-bezier(0, 0.55, 0.45, 1);
-$ease-in-out-cric: cubic-bezier(0.85, 0.00, 0.15, 1.00);
+$ease-in: cubic-bezier(0.5, 0, 0.75, 0.75);
+$ease-out: cubic-bezier(0.25, 0.75, 0.5, 1);
+$ease-in-back: cubic-bezier(0.6, -0.28, 0.735, 0.045);
+$ease-out-back: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+$ease-in-out-back: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+$ease-in-cric: cubic-bezier(0.6, 0, 0.8, 0.4);
+$ease-out-cric: cubic-bezier(0.2, 0.6, 0.4, 1);
+$ease-in-out-cric: cubic-bezier(0.85, 0, 0.15, 1);

@@ -5,7 +5,7 @@
                          :screenshot-mode="screenshotMode"/>
 
             <MDX class="content" :code="compiledMdxCode" v-if="pid != 'tdor'"/>
-            <Balloon v-for="(n, i) in isBirthday" :key="i"/>
+            <Balloon v-for="i of isBirthday" :key="i"/>
 
             <ProfileComments class="comments" :p="p" v-if="p.comments && !screenshotMode"/>
         </div>

@@ -20,6 +20,8 @@
     "sweetalert2": "11.10.8",
     "tg-blog": "1.1.7",
     "url-join": "^5.0.0",
+    "uwufier": "^1.1.0",
+    "uwuifier": "^4.0.5",
     "vue": "^3.4.23",
     "vue-router": "^4.3.2"
   },
