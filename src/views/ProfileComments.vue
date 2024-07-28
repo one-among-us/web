@@ -42,7 +42,7 @@
 import MarkdownTooltip from "@/components/MarkdownTooltip.vue";
 import SubmitPrompt, {CaptchaResponse} from "@/components/SubmitPrompt.vue";
 import {backendHost, t} from "@/logic/config";
-import {Person, Comment} from "@/logic/data";
+import {Comment, Person} from "@/logic/data";
 import {fetchText, trim} from "@/logic/helper";
 import {error, info} from "@/logic/utils";
 import Swal from 'sweetalert2';
@@ -68,7 +68,7 @@ export default class ProfileComments extends Vue {
     trim = trim
 
     getComments(): Comment[] {
-        const commentData =  this.p.comments.map(c => {
+        const commentData = this.p.comments.map(c => {
             return {
                 ...c,
                 anonymous: c.submitter === "Anonymous",
@@ -89,7 +89,7 @@ export default class ProfileComments extends Vue {
             for (const u of myComments[this.p.id]) {
                 let flag = true;
                 for (const v of commentData) {
-                    if ((u.content == v.content)) {
+                    if ((u.content.replaceAll('||', '').replaceAll('\n', '').replaceAll('<br />', '').replaceAll(' ', '') == v.content.replaceAll('<span class="spoiler"><span>', '').replaceAll('</span></span>', '').replaceAll('<br />', '').replaceAll(' ', ''))) {
                         flag = false;
                         break;
                     }
@@ -152,8 +152,7 @@ export default class ProfileComments extends Vue {
                                 submitter: 'You',
                                 id: 0
                             }]
-                        }
-                        else {
+                        } else {
                             myComments[this.p.id].push({
                                 content: this.textInput.replaceAll("\n", "<br />"),
                                 replies: [],
