@@ -11,6 +11,7 @@ declare module 'vue' {
     Balloon: typeof import('./components/Balloon.vue')['default']
     Banner: typeof import('./components/Banner.vue')['default']
     BirthdayButton: typeof import('./components/buttons/BirthdayButton.vue')['default']
+    CapDownQuote: typeof import('./components/CapDownQuote.vue')['default']
     ChannelBackupButton: typeof import('./components/buttons/ChannelBackupButton.vue')['default']
     Divider: typeof import('./components/divider.vue')['default']
     DynamicIcon: typeof import('./components/DynamicIcon.vue')['default']
