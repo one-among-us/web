@@ -38,6 +38,18 @@ export default class CapDownQuote extends Vue {
         }
     }
 
+    p:nth-child(2n) {
+        span:first-child {
+            margin-left: 2rem;
+        }
+    }
+
+    p:nth-child(3n) {
+        span:first-child {
+            margin-left: 3rem;
+        }
+    }
+
     p {
         line-height: 1.2;
 
@@ -47,6 +59,32 @@ export default class CapDownQuote extends Vue {
 
         span {
             margin-left: 2rem;
+        }
+    }
+
+    @media screen and (max-width: 720px) {
+        p:nth-child(2n) {
+            span:first-child {
+                margin-left: 0;
+            }
+        }
+
+        p:nth-child(3n) {
+            span:first-child {
+                margin-left: 0;
+            }
+        }
+
+        p {
+            line-height: 1.2;
+
+            span:first-child {
+                margin-left: 0;
+            }
+
+            span {
+                margin-left: 2rem;
+            }
         }
     }
 }
