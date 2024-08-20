@@ -7,6 +7,7 @@ import DynamicIcon from "@/components/DynamicIcon.vue";
 import * as Vue from 'vue';
 import {computed, defineComponent} from 'vue';
 import PhotoScroll from './PhotoScroll.vue';
+import BlurBlock from "./BlurBlock.vue";
 
 export default defineComponent({
     name: "MDX",
@@ -36,7 +37,7 @@ export default defineComponent({
                 {
                     renderFunction.value?.({
                         components: {
-                            PhotoScroll, ChannelBackupButton, CapDownQuote, BackupButtons, DynamicIcon, Banner
+                            PhotoScroll, ChannelBackupButton, CapDownQuote, BackupButtons, DynamicIcon, Banner, BlurBlock
                         }
                     })
                 }
