@@ -42,7 +42,7 @@
             <div id="websites" v-if="p.websites?.length">
                 <span id="websites-text">{{ t.nav_website }}</span>
                 <span id="websites-container">
-                    <a v-for="web of p.websites" :key="web[0]" :href="web[1]">
+                    <a v-for="web of p.websites" :key="web[0]" :href="web[1]" target="_blank">
                         <DynamicIcon :icon="web[0]"/>
                     </a>
                 </span>
