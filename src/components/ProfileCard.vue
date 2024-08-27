@@ -343,7 +343,7 @@ div:has(.view-limit-alert)
     height: unset
 
     img
-        border: 10px solid white
+        border: 10px solid #f5e0dc80
         outline: 2px solid $color-text-main
         $length: max(110px, min(15vw, 150px))
         height: $length
