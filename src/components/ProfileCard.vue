@@ -343,7 +343,7 @@ div:has(.view-limit-alert)
     height: unset
 
     img
-        border: 10px solid #f5e0dc80
+        border: 9px solid #ffffffdd
         outline: 2px solid $color-text-main
         $length: max(110px, min(15vw, 150px))
         height: $length
@@ -506,6 +506,9 @@ div:has(.view-limit-alert)
                     color: $color-text-dark-main
 
     #left
+        img
+            border: 9px solid #f5e0dc45
+            outline: 2px solid $color-text-dark-main
         #buttons
             .button
                 background: $color-bg-dark-5
