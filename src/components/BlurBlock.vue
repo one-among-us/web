@@ -54,6 +54,6 @@ export default class BlurBlock extends Vue {
 
 .blur {
     @extend .markdown-content;
-    transition: all 1s $ease-in-out-cric;
+    transition: all 1s $ease-out-cric;
 }
 </style>
