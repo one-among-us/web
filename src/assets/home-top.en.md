@@ -17,4 +17,4 @@ We shall meet again in a place where there is no darkness.
 >
 > The entries below of the deceased contains various types of triggering information, including sexual violence, domestic violence, self-injury and suicide. If you feel uncomfortable while browsing the page of the deceased, please exit immediately and seek help from doctors, the community, and local suicide intervention agencies if necessary. **You can find suicide prevention information at the bottom of the page.**
 >
-> Please try to help others while ensuring your mental health. Let us stand together and survive, until the dark clouds disperse.
+> Please try to help others while ensuring your mental health. Let us stand together and survive, until the dark clouds disperse. <br/>
