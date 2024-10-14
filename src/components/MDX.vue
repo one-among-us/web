@@ -1,13 +1,14 @@
 <script lang="tsx">
-import BackupButtons from "@/components/buttons/BackupButtons.vue";
 import Banner from "@/components/Banner.vue";
-import CapDownQuote from "@/components/CapDownQuote.vue";
+import BackupButtons from "@/components/buttons/BackupButtons.vue";
 import ChannelBackupButton from "@/components/buttons/ChannelBackupButton.vue";
+import CapDownQuote from "@/components/CapDownQuote.vue";
+import ColumnView from "@/components/ColumnView.vue";
 import DynamicIcon from "@/components/DynamicIcon.vue";
 import * as Vue from 'vue';
 import {computed, defineComponent} from 'vue';
-import PhotoScroll from './PhotoScroll.vue';
 import BlurBlock from "./BlurBlock.vue";
+import PhotoScroll from './PhotoScroll.vue';
 
 export default defineComponent({
     name: "MDX",
@@ -37,7 +38,14 @@ export default defineComponent({
                 {
                     renderFunction.value?.({
                         components: {
-                            PhotoScroll, ChannelBackupButton, CapDownQuote, BackupButtons, DynamicIcon, Banner, BlurBlock
+                            PhotoScroll,
+                            ChannelBackupButton,
+                            CapDownQuote,
+                            ColumnView,
+                            BackupButtons,
+                            DynamicIcon,
+                            Banner,
+                            BlurBlock
                         }
                     })
                 }

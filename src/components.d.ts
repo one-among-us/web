@@ -14,6 +14,7 @@ declare module 'vue' {
     BlurBlock: typeof import('./components/BlurBlock.vue')['default']
     CapDownQuote: typeof import('./components/CapDownQuote.vue')['default']
     ChannelBackupButton: typeof import('./components/buttons/ChannelBackupButton.vue')['default']
+    ColumnView: typeof import('./components/ColumnView.vue')['default']
     Divider: typeof import('./components/divider.vue')['default']
     DynamicIcon: typeof import('./components/DynamicIcon.vue')['default']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
