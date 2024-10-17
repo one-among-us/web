@@ -213,7 +213,7 @@ export default class Home extends Vue {
         outline: 2px solid $color-text-main
         height: 150px
         width: 150px
-        transition: all .25s ease
+        transition: all .25s $ease-out-cric
 
     .back
         z-index: 2
