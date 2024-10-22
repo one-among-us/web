@@ -1,8 +1,9 @@
 export interface PersonMeta {
     path: string,
     id: string,
-    name: string
-    profileUrl: string
+    name: string,
+    profileUrl: string,
+    sortKey?: any,
 }
 
 export interface CommentReply {

@@ -19,7 +19,8 @@
 
             <div class="search-bar">
                 <Icon class="search-icon" icon="mynaui:search-hexagon" v-on:click="updateSearch"/>
-                <input class="search-input" v-model="searchKey" v-on:input="updateSearch" placeholder="Search for..." />
+                <input class="search-input" v-model="searchKey" v-on:input="updateSearch" placeholder="Search for..."/>
+                <VueDatePicker range light model-auto class="search-date" placeholder="Select a range" v-model="dateRange" @update:model-value="updateSearch" />
             </div>
 
             <Loading v-if="isLoading"/>
@@ -70,7 +71,8 @@ import {fitText} from "@/logic/dom_utils";
 import {isEaster} from "@/logic/easterEgg";
 import {
     fetchWithLang,
-    gaussian, gaussian_shuffle,
+    gaussian,
+    gaussian_shuffle,
     getResponseSync,
     handleIconFromString,
     scheduledLoopTask,
@@ -82,10 +84,11 @@ import {viaBalloon} from "@/logic/viaFetch";
 import router from "@/router";
 import TdorComments from "@/views/TdorComments.vue";
 import {Icon} from "@iconify/vue";
+import VueDatePicker from '@vuepic/vue-datepicker'
 import urljoin from "url-join";
 import {Component, Ref, Vue} from 'vue-facing-decorator';
 
-@Component({ components: { TdorComments, Loading, RandomPerson, BirthdayButton, Icon } })
+@Component({ components: { TdorComments, Loading, RandomPerson, BirthdayButton, Icon, VueDatePicker } })
 export default class Home extends Vue {
     clicked = ''
     showAdd = false
@@ -100,6 +103,7 @@ export default class Home extends Vue {
     people: PersonMeta[] = null as never as PersonMeta[]
     fullPeople = [] as PersonMeta[]
     searchKey = ''
+    dateRange = []
 
     birthdayList = [] as [string, string][]
 
@@ -172,8 +176,17 @@ export default class Home extends Vue {
     updateSearch() {
         this.people = [];
         for (const p of this.fullPeople) {
-            if (p.id.trim().toLowerCase().includes(this.searchKey.trim().toLowerCase()) || p.name.trim().toLowerCase().includes(this.searchKey.trim().toLowerCase())) {
-                this.people.push(p);
+            if (p.id.trim().toLowerCase().includes(this.searchKey.trim().toLowerCase()) ||
+                p.name.trim().toLowerCase().includes(this.searchKey.trim().toLowerCase())) {
+                if (!this.dateRange) this.people.push(p);
+                else if ((this.dateRange.length < 2)) this.people.push(p);
+                else {
+                    const sortDate = new Date(p.sortKey)
+                    if ((this.dateRange[0].getTime() < sortDate.getTime()) &&
+                        (this.dateRange[1].getTime() > sortDate.getTime())) {
+                        this.people.push(p);
+                    }
+                }
             }
         }
     }
@@ -229,8 +242,8 @@ export default class Home extends Vue {
         cursor: pointer
 
     .search-input
-        width: calc(100% - 36px)
-        height: 24px
+        width: calc(50% - 48px)
+        height: 26px
         color: $color-text-main
         background-color: rgba(0, 0, 0, 0.05)
         border-radius: 10px
@@ -238,10 +251,15 @@ export default class Home extends Vue {
         outline: $color-text-main
         font-size: 16px
         text-indent: 5px
+        padding: 6px 30px 6px 12px
 
         &:active
             outline: $color-text-main
             border: none
+
+    .search-date
+        width: calc(50% - 48px)
+        height: 36px
 
 // Profile picture alignment
 .profile
@@ -344,6 +362,7 @@ export default class Home extends Vue {
     .search-bar
         .search-icon
             color: $color-text-dark-main
+
         .search-input
             color: $color-text-dark-main
             outline: $color-text-dark-main
