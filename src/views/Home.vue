@@ -350,6 +350,21 @@ export default class Home extends Vue {
             height: $len
             width: $len
 
+@media screen and (max-width: 700px)
+    .search-bar
+        display: flex
+        flex-direction: column
+        gap: 0.5rem
+
+        .search-icon
+            display: none
+
+        .search-input
+            width: calc(100% - 40px)
+
+        .search-date
+            width: 100%
+
 [data-theme="dark"]
     .back, .front
         border: 10px solid rgba(27, 27, 32, 0.8964) !important
