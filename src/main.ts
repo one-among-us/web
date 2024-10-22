@@ -10,5 +10,7 @@ import 'element-plus/theme-chalk/el-message.css'
 import 'element-plus/theme-chalk/el-message-box.css'
 import 'element-plus/theme-chalk/el-overlay.css'
 import 'element-plus/theme-chalk/el-button.css'
+import '@vuepic/vue-datepicker/dist/main.css'
+import '@/css/datepicker.css'
 
 createApp(App).use(router).mount('#app')
