@@ -16,6 +16,12 @@
                 <RandomPerson class="randomP"/>
                 <BirthdayButton class="randomP" v-for="i of birthdayList" :key="i[0]" :id="i[0]" :name="i[1]"/>
             </div>
+
+            <div class="search-bar">
+                <Icon class="search-icon" icon="mynaui:search-hexagon" v-on:click="updateSearch"/>
+                <input class="search-input" v-model="searchKey" v-on:input="updateSearch" placeholder="Search for..." />
+            </div>
+
             <Loading v-if="isLoading"/>
 
             <transition-group id="profiles" class="unselectable" v-if="people" name="profiles" tag="div">
@@ -75,10 +81,11 @@ import {isUwU, UwU} from "@/logic/uwu";
 import {viaBalloon} from "@/logic/viaFetch";
 import router from "@/router";
 import TdorComments from "@/views/TdorComments.vue";
+import {Icon} from "@iconify/vue";
 import urljoin from "url-join";
 import {Component, Ref, Vue} from 'vue-facing-decorator';
 
-@Component({ components: { TdorComments, Loading, RandomPerson, BirthdayButton } })
+@Component({ components: { TdorComments, Loading, RandomPerson, BirthdayButton, Icon } })
 export default class Home extends Vue {
     clicked = ''
     showAdd = false
@@ -91,6 +98,8 @@ export default class Home extends Vue {
     htmlBottom = handleIconFromString(this.lang === 'zh_hans' ? htmlBottom : (this.lang === 'zh_hant' ? htmlBottomHant : htmlBottomEn));
 
     people: PersonMeta[] = null as never as PersonMeta[]
+    fullPeople = [] as PersonMeta[]
+    searchKey = ''
 
     birthdayList = [] as [string, string][]
 
@@ -113,7 +122,7 @@ export default class Home extends Vue {
     }
 
     updated() {
-        if (this.bookmark != undefined) {
+        if ((this.bookmark != undefined) && (this.bookmark.length > 0)) {
             const width = this.bookmark[0].offsetWidth - 10
             for (const b of this.bookmarkTexts) fitText(b, { width })
         }
@@ -125,6 +134,7 @@ export default class Home extends Vue {
             .then(it => it.text())
             .then(it => {
                 this.people = (isEaster() && (gaussian() < 0.35)) ? shuffle(JSON.parse(it)) : JSON.parse(it)
+                this.fullPeople = JSON.parse(it)
                 const now = new Date();
                 const pros = ((now.getDate() == 1) && (now.getMonth() + 1 == 4)) ? 0.5 : 0.05;
                 if (isEaster() && (gaussian() < pros)) scheduledLoopTask(1500, () => {
@@ -157,6 +167,15 @@ export default class Home extends Vue {
     switchPage(p: PersonMeta): void {
         info(`switchPage(${p.id})`)
         router.push(`/profile/${p.id}`)
+    }
+
+    updateSearch() {
+        this.people = [];
+        for (const p of this.fullPeople) {
+            if (p.id.trim().toLowerCase().includes(this.searchKey.trim().toLowerCase()) || p.name.trim().toLowerCase().includes(this.searchKey.trim().toLowerCase())) {
+                this.people.push(p);
+            }
+        }
     }
 
     profileUrl(p: PersonMeta): string {
@@ -193,6 +212,36 @@ export default class Home extends Vue {
 
 #profiles
     margin-top: 20px
+
+.search-bar
+    margin: 1rem auto
+    display: flex
+    flex-direction: row
+    flex-wrap: nowrap
+    justify-content: space-around
+    align-items: center
+    padding: 0 2rem
+
+    .search-icon
+        width: 28px
+        height: 28px
+        color: $color-text-main
+        cursor: pointer
+
+    .search-input
+        width: calc(100% - 36px)
+        height: 24px
+        color: $color-text-main
+        background-color: rgba(0, 0, 0, 0.05)
+        border-radius: 10px
+        border: none
+        outline: $color-text-main
+        font-size: 16px
+        text-indent: 5px
+
+        &:active
+            outline: $color-text-main
+            border: none
 
 // Profile picture alignment
 .profile
@@ -267,6 +316,14 @@ export default class Home extends Vue {
 .profiles-move
     transition: all 0.5s $ease-in-out-cric
 
+.profiles-enter-active .profiles-leave-active
+    transition: all .5s $ease-out-cric !important
+
+.profiles-enter-from, .profiles-leave-to
+    opacity: 0
+    transform: translateY(50px)
+
+
 @media screen and (max-width: 440px)
     .profile
         .front, .back
@@ -283,4 +340,12 @@ export default class Home extends Vue {
     .bookmark
         border: 40px solid rgba(255, 189, 202, 0.25) !important
         border-bottom: 10px solid transparent !important
+
+    .search-bar
+        .search-icon
+            color: $color-text-dark-main
+        .search-input
+            color: $color-text-dark-main
+            outline: $color-text-dark-main
+            background: rgba(255, 255, 255, 0.05)
 </style>
