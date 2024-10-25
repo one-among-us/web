@@ -18,21 +18,29 @@
     <Divider height="5px"/>
 
     <GlobalButton/>
-    <Sakura :count="100" />
+    <Sakura :count="100" v-if="isEaster() && (gaussian() < 0.46)"/>
 </template>
 
 <script lang="ts">
-import Divider from "@/components/divider.vue";
 import GlobalButton from "@/components/buttons/GlobalButton.vue";
+import Divider from "@/components/divider.vue";
 import Sakura from "@/components/Sakura.vue";
 import {transColors} from "@/logic/constants";
+import {isEaster} from "@/logic/easterEgg";
+import {gaussian} from "@/logic/helper";
 import {applyTheme} from "@/logic/theme";
 import {info, logPrefixCss} from "@/logic/utils";
+import {isUwU} from "@/logic/uwu";
 import {Component, Vue} from 'vue-facing-decorator';
 import {getLang, t} from './logic/config';
-import {isUwU} from "@/logic/uwu";
 
-@Component({ components: { GlobalButton, Divider, Sakura } })
+@Component({
+    components: { GlobalButton, Divider, Sakura } ,
+    methods: {
+        isEaster,
+        gaussian,
+    }
+})
 export default class App extends Vue {
     $route: any
     t = t
