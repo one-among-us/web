@@ -151,7 +151,7 @@ export function toast(title: string, text: string, img: string, background: stri
         position: "top-end",
         title: title,
         text: text,
-        iconHtml: `<img style="width: ${width}px;height: ${height}px;border: none" src="/img/${img}"></img>`,
+        iconHtml: `<img style="width: ${width}px;height: ${height}px;border: none" src="${img}"></img>`,
         iconColor: "#00000000",
         background: background,
         timer: 5000,
@@ -229,4 +229,10 @@ export function gaussian_bm(min, max, skew) {
         num += min // offset to min
     }
     return num
+}
+
+export function checkSubset(parentArray: any[], subsetArray: any[]): boolean {
+    return subsetArray.every((e) => {
+        return parentArray.includes(e)
+    })
 }

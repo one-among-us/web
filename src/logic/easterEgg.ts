@@ -1,6 +1,8 @@
+import path from "path";
 import Swal from "sweetalert2"
-import {t} from "./config"
-import {scheduledTask, toast} from "./helper"
+import {dataHost, t} from "./config"
+import {scheduledTask, toast, getResponseSync, checkSubset, randint} from "./helper"
+import {EasterEgg} from "@/logic/data";
 
 const registedEggItem = [
     'hasFlowered', 'isSeenMeowBot233', 'BetelgeuseShown', 'ChongQingShown', 'Sea', 'detailsByYumao', 'funeralFlowers', 'preferredName', 'rhythmShown'
@@ -78,10 +80,6 @@ export function handleEasterEgg(userid: string) {
     if (!localStorage.getItem('easterEggMode')) return;
     if (parseInt(localStorage.getItem('easterEggMode')) == 0) return;
     if (userid == "MeowBot233") {
-        if (!localStorage.getItem("isSeenMeowBot233")) {
-            localStorage.setItem("isSeenMeowBot233", "找到了喵~")
-            toast("找到了喵~", "诶? 找什么喵? ", "cat-face-emoji-2048x1828.png", null, 64, 57, null)
-        }
         if ((now.getDate() == 15) && (now.getMonth() == 3)) {
             if (!localStorage.getItem("birthdayMeowBot233"))
                 localStorage.setItem("birthdayMeowBot233", (now.getFullYear() - 1).toString())
@@ -101,86 +99,70 @@ export function handleEasterEgg(userid: string) {
             }
         }
     }
-    if ((userid == "Anilovr") || (userid == "noname3031") || (userid == "dogesir_")) {
-        if (!localStorage.getItem("Betelgeuse"))
-            localStorage.setItem("Betelgeuse", `["${userid}"]`)
-        else {
-            const betelgeuse = JSON.parse(localStorage.getItem("Betelgeuse")) as string[]
-            if (!betelgeuse.includes(userid)) {
-                betelgeuse.push(userid)
-                localStorage.setItem("Betelgeuse", JSON.stringify(betelgeuse))
-            }
-            if (betelgeuse.includes("Anilovr") && betelgeuse.includes("noname3031") && betelgeuse.includes("dogesir_") && (!localStorage.getItem("BetelgeuseShown"))) {
-                localStorage.setItem("BetelgeuseShown", "R.I.P.")
-                toast("参宿四 ~Betelgeuse~", "R.I.P.  - Be resilient -", "betelgeuse.png", "url(/img/stardust.jpg)", 64, 64, '#f0f8ff')
-            }
+    const eggs = JSON.parse(getResponseSync(path.join(dataHost, 'eggs.json'))) as EasterEgg[];
+    const checkmate = (egg: EasterEgg) => {
+        if (!localStorage.getItem(egg.id)) localStorage.setItem(egg.id, `["${userid}"]`);
+        const opened = JSON.parse(localStorage.getItem(egg.id)) as string[];
+        if (!opened.includes(userid)) {
+            opened.push(userid);
+            localStorage.setItem(egg.id, JSON.stringify(opened));
+        }
+        if (checkSubset(opened, egg.userid) && checkSubset(egg.userid, opened)) {
+            localStorage.setItem(egg.id + '_SHOWN', randint(0, 2147483647).toString());
+            toast(egg.toast.title, egg.toast.text, egg.toast.img, egg.toast.background, egg.toast.width, egg.toast.height, egg.toast.color);
         }
     }
-    if ((userid == "xuewulihuameng") || (userid == "Futajuhuacha") || (userid == "Xu_Yushu") || (userid == "Dethelly")) {
-        if (!localStorage.getItem("ChongQing"))
-            localStorage.setItem("ChongQing", `["${userid}"]`)
-        else {
-            const ch = JSON.parse(localStorage.getItem("ChongQing")) as string[]
-            if (!ch.includes(userid)) {
-                ch.push(userid)
-                localStorage.setItem("ChongQing", JSON.stringify(ch))
-            }
-            if (ch.includes("xuewulihuameng") && ch.includes("Futajuhuacha") && ch.includes("Xu_Yushu") && ch.includes("Dethelly") && (!localStorage.getItem("ChongQingShown"))) {
-                localStorage.setItem("ChongQingShown", "Fog")
-                toast("嘉陵雾稠", "雾终将散去, 而我们终将看到彩虹", "bridge.png", "url(/img/fog.jpg)", 64, 47, null)
-            }
-        }
-    }
-    if ((userid == "zhangyubaka") || (userid == "Uekawakuyuurei") || (userid == "MizuharaNagisa")) {
-        if (!localStorage.getItem("Boat"))
-            localStorage.setItem("Boat", `["${userid}"]`)
-        else {
-            const boat = JSON.parse(localStorage.getItem("Boat")) as string[]
-            if (!boat.includes(userid)) {
-                boat.push(userid)
-                localStorage.setItem("Boat", JSON.stringify(boat))
-            }
-            if (boat.includes("zhangyubaka") && boat.includes("Uekawakuyuurei") && boat.includes("MizuharaNagisa") && (!localStorage.getItem("Sea"))) {
-                localStorage.setItem("Sea", "with you")
-                toast("海色", "拔锚起航, 跨越闪耀泪光的海岸", "ship.png", "#0b2058ff", 64, 64, '#f0f8feff')
-            }
-        }
-    }
-    if ((userid == "zhangyubaka")) {
-        const summaries = document.getElementsByTagName("summary")
-        for (const v of summaries) {
-            console.log(v)
-            v.addEventListener('click', (e) => {
-                console.log("summary" + e)
-                if (!localStorage.getItem('detailsByYumao')) {
-                    localStorage.setItem('detailsByYumao', 'forever.')
-                    toast("往昔苦难", "因为妳而存在, 因为妳而不在, 要在啊......", "lifeline.png", "#EEEEEE88", 64, 64, null)
+    for (const egg of eggs) {
+        switch (egg.type) {
+            case "open": {
+                if (egg.userid.includes(userid)) {
+                    if (localStorage.getItem(egg.id + '_SHOWN')) break;
+                    else checkmate(egg)
                 }
-            }, false)
-        }
-    }
-    if ((userid == "mikaela_khara")) {
-        const summaries = document.getElementsByTagName("summary")
-        for (const v of summaries) {
-            console.log(v)
-            v.addEventListener('click', (e) => {
-                console.log("summary" + e)
-                if (!localStorage.getItem('mikaela_khara_ferris')) {
-                    localStorage.setItem('mikaela_khara_ferris', '間關鶯語花底滑')
-                    toast('永乐桥上的风景', '连绵不断的河流，像生命本身一样无法回头……', 'ferris-wheel.png', undefined, 64, 64, undefined);
+                break;
+            }
+            case "tag": {
+                if (egg.userid.includes(userid)) {
+                    if (localStorage.getItem(egg.id + '_SHOWN')) break;
+                    const elements = document.getElementsByTagName(egg.tag)
+                    for (const v of elements) {
+                        console.log(v)
+                        v.addEventListener('click', (e) => {
+                            console.log('tag' + e)
+                            checkmate(egg)
+                        })
+                    }
                 }
-            })
-        }
-    }
-    if (userid == "shihai4h") {
-        scheduledTask(30000, () => {
-            if ((window.location.pathname == "/profile/shihai4h/") || (window.location.pathname == "/profile/shihai4h")) {
-                if (!localStorage.getItem("funeralFlowers")) {
-                    localStorage.setItem("funeralFlowers", "shihai4h")
-                    toast("葬花", "花谢花飞花满天, 红消香断有谁怜? ", "tumb.png", "url(/img/flowers.png)", 64, 64, null)
+                break;
+            }
+            case "wait": {
+                if (egg.userid.includes(userid)) {
+                    if (localStorage.getItem(egg.id + '_SHOWN')) break;
+                    scheduledTask(30000, () => {
+                        if ((window.location.pathname == `/profile/${userid}`) || window.location.pathname == `/profile/${userid}/`) {
+                            checkmate(egg)
+                        }
+                    })
+                }
+                break;
+            }
+            case "keyword": {
+                if (egg.userid.includes(userid)) {
+                    if (localStorage.getItem(egg.id + '_SHOWN')) break;
+                    const ps = document.getElementsByTagName('p')
+                    for (const v of ps) {
+                        console.log(v)
+                        for (const i of egg.keyword) {
+                            if (v.innerHTML.includes(i) || v.innerText.includes(i)) {
+                                v.addEventListener('click', () => {
+                                    checkmate(egg)
+                                })
+                            }
+                        }
+                    }
                 }
             }
-        })
+        }
     }
     if (userid == "Xu_Yushu") {
         scheduledTask(20000, () => {
@@ -219,7 +201,7 @@ export function handleEasterEgg(userid: string) {
                         }
                         if (rhythm.includes("SevenBird") && rhythm.includes("Considerate_cat") && rhythm.includes("ttttsuuukikoo_") && rhythm.includes("hakureico") && rhythm.includes("xixi_yuexi") && rhythm.includes("Jennife80677612") && (!localStorage.getItem("rhythmShown"))) {
                             localStorage.setItem("rhythmShown", "AP end")
-                            toast("希望有个 All Perfect 的结局", " ~ All that I'm left with is your reminiscences ~ ", "musical-score.png", null, 64, 64, null)
+                            toast("希望有个 All Perfect 的结局", " ~ All that I'm left with is your reminiscences ~ ", "/img/musical-score.png", null, 64, 64, null)
                         }
                     }, false)
                 }
