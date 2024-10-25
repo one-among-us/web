@@ -10,6 +10,7 @@ export default class ProfileBookmark extends Vue {
     @Prop({ required: true }) name: string
 
     source = [] as string[]
+    showFolder = false;
 
     mounted() {
         if (!this.list.length) return;
@@ -34,12 +35,13 @@ export default class ProfileBookmark extends Vue {
 <template>
     <div class="profile">
         <div class="back"/>
-        <div class="img-list front clickable">
+        <div class="img-list front clickable" v-on:click="showFolder = true">
             <img v-for="i of source" :key="i" :src="i" :alt="i"/>
         </div>
         <div class="name font-custom" ref="bookmarkTexts">{{ name }}</div>
         <div class="bookmark" ref="bookmark"/>
     </div>
+    <ProfileFolder :name="name" :people="list" v-if="showFolder" />
 </template>
 
 <style lang="scss">
