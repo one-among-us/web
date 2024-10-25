@@ -159,6 +159,19 @@ export function handleEasterEgg(userid: string) {
             }, false)
         }
     }
+    if ((userid == "mikaela_khara")) {
+        const summaries = document.getElementsByTagName("summary")
+        for (const v of summaries) {
+            console.log(v)
+            v.addEventListener('click', (e) => {
+                console.log("summary" + e)
+                if (!localStorage.getItem('mikaela_khara_ferris')) {
+                    localStorage.setItem('mikaela_khara_ferris', '間關鶯語花底滑')
+                    toast('永乐桥上的风景', '连绵不断的河流，像生命本身一样无法回头……', 'ferris-wheel.png', undefined, 64, 64, undefined);
+                }
+            })
+        }
+    }
     if (userid == "shihai4h") {
         scheduledTask(30000, () => {
             if ((window.location.pathname == "/profile/shihai4h/") || (window.location.pathname == "/profile/shihai4h")) {
