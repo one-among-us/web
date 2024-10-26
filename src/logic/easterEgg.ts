@@ -98,7 +98,7 @@ export function handleEasterEgg(userid: string) {
             }
         }
     }
-    const eggs = JSON.parse(getResponseSync(path.join(dataHost, 'eggs.json'))) as EasterEgg[];
+    const eggs = JSON.parse(getResponseSync(dataHost + '/eggs.json')) as EasterEgg[];
     const checkmate = (egg: EasterEgg) => {
         if (!localStorage.getItem(egg.id)) localStorage.setItem(egg.id, `["${userid}"]`);
         const opened = JSON.parse(localStorage.getItem(egg.id)) as string[];
@@ -110,6 +110,7 @@ export function handleEasterEgg(userid: string) {
             localStorage.setItem(egg.id + '_SHOWN', randint(0, 2147483647).toString());
             toast(egg.toast.title, egg.toast.text, egg.toast.img, egg.toast.background, egg.toast.width, egg.toast.height, egg.toast.color);
         }
+        console.log(egg)
     }
     for (const egg of eggs) {
         registedEggItem.push(egg.id + '_SHOWN');
