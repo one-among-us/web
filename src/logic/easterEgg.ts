@@ -50,7 +50,7 @@ export function handleFlowerToast(name: string) {
     if (parseInt(localStorage.getItem('easterEggMode')) == 0) return;
     if (!localStorage.getItem("hasFlowered")) {
         localStorage.setItem("hasFlowered", "Meow")
-        toast("花与秋叶", `${name}收到你的小花啦~`, "lollipop_1f36d.png", null, 64, 64, null)
+        toast("花与秋叶", `${name}收到你的小花啦~`, "/img/lollipop_1f36d.png", null, 64, 64, null)
     }
 }
 
