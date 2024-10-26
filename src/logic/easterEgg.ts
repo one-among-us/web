@@ -5,13 +5,12 @@ import {scheduledTask, toast, getResponseSync, checkSubset, randint} from "./hel
 import {EasterEgg} from "@/logic/data";
 
 const registedEggItem = [
-    'hasFlowered', 'isSeenMeowBot233', 'BetelgeuseShown', 'ChongQingShown', 'Sea', 'detailsByYumao', 'funeralFlowers', 'preferredName', 'rhythmShown'
+    'hasFlowered', 'preferredName'
 ]
 
 export function isEaster(): boolean {
     if (!localStorage.getItem('easterEggMode')) return false;
-    if (parseInt(localStorage.getItem('easterEggMode')) == 0) return false;
-    return true;
+    return parseInt(localStorage.getItem('easterEggMode')) != 0;
 }
 
 function allShown(): boolean {
@@ -113,6 +112,7 @@ export function handleEasterEgg(userid: string) {
         }
     }
     for (const egg of eggs) {
+        registedEggItem.push(egg.id + '_SHOWN');
         switch (egg.type) {
             case "open": {
                 if (egg.userid.includes(userid)) {
