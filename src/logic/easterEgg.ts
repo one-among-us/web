@@ -185,28 +185,5 @@ export function handleEasterEgg(userid: string) {
             }
         })
     }
-    if ((userid == "SevenBird") || (userid == "Considerate_cat") || (userid == "ttttsuuukikoo_") || (userid == "hakureico") || (userid == "xixi_yuexi") || (userid == "Jennife80677612")) {
-        const rhythmKeyword = ["音游", "音遊", "Arc", "舞萌", "maimaiDX", "OSU", "ptt", "Project Sekai"]
-        const ps = document.getElementsByTagName("p")
-        for (const v of ps) {
-            for (const i of rhythmKeyword) {
-                if (v.innerHTML.includes(i) || v.innerText.includes(i)) {
-                    v.addEventListener('click', () => {
-                        if (!localStorage.getItem("rhythm"))
-                            localStorage.setItem("rhythm", `["${userid}"]`)
-                        const rhythm = JSON.parse(localStorage.getItem("rhythm")) as string[]
-                        if (!rhythm.includes(userid)) {
-                            rhythm.push(userid)
-                            localStorage.setItem("rhythm", JSON.stringify(rhythm))
-                        }
-                        if (rhythm.includes("SevenBird") && rhythm.includes("Considerate_cat") && rhythm.includes("ttttsuuukikoo_") && rhythm.includes("hakureico") && rhythm.includes("xixi_yuexi") && rhythm.includes("Jennife80677612") && (!localStorage.getItem("rhythmShown"))) {
-                            localStorage.setItem("rhythmShown", "AP end")
-                            toast("希望有个 All Perfect 的结局", " ~ All that I'm left with is your reminiscences ~ ", "/img/musical-score.png", null, 64, 64, null)
-                        }
-                    }, false)
-                }
-            }
-        }
-    }
     achieveAll()
 }
