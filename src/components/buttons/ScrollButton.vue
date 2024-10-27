@@ -7,7 +7,10 @@ import {Icon} from '@iconify/vue';
 export default class ScrollButton extends Vue {
     scroll() {
         document.documentElement.style.scrollBehavior = 'smooth';
-        window.scrollTo(0, 0);
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
         scheduledTask(50, () => document.documentElement.style.scrollBehavior = null);
     }
 }
