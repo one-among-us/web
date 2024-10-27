@@ -43,3 +43,26 @@ export function parsePeopleJson(json: string): Person {
 export function url(base: string, params: { [id: string]: string }): string {
     return base + '?' + new URLSearchParams(params)
 }
+
+export interface Toast {
+    title: string,
+    text?: string,
+    img: string,
+    width?: number,
+    height?: number,
+    background?: string,
+    color?: string
+}
+
+export type EggType = "open" | "tag" | "wait" | "keyword"
+export type Tag = "p" | "summary" | "blockquote" | "div" | "pre"
+
+export interface EasterEgg {
+    type: EggType,
+    userid: string[],
+    id: string,
+    toast: Toast,
+    tag?: Tag,
+    wait?: number,
+    keyword?: string[]
+}
