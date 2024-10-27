@@ -35,17 +35,16 @@ import {Component, Vue} from 'vue-facing-decorator';
 import {getLang, t} from './logic/config';
 
 @Component({
-    components: { GlobalButton, Divider, Sakura } ,
-    methods: {
-        isEaster,
-        gaussian,
-    }
+    components: { GlobalButton, Divider, Sakura }
 })
 export default class App extends Vue {
     $route: any
     t = t
 
     uwu = isUwU()
+
+    isEaster = isEaster
+    gaussian = gaussian
 
     created(): void {
         if (!localStorage.getItem('showBtn'))
