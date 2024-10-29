@@ -45,6 +45,8 @@ export default class Sakura extends Vue {
             left: 0;
             width: 0.8vw;
             height: 0.4vw;
+            min-width: 10px;
+            min-height: 5px;
             border-radius: 5% 80% 10% 80%;
             background-color: #ffb6c1;
 
@@ -157,7 +159,7 @@ export default class Sakura extends Vue {
     }
 
     100% {
-        top: 100%;
+        top: 120%;
         transform: translateX(15vw) rotateX(180deg) rotateY(360deg);
     }
 }
@@ -169,55 +171,55 @@ export default class Sakura extends Vue {
     }
 
     100% {
-        top: 100%;
+        top: 120%;
         transform: translateX(-15vw) rotateX(180deg) rotateY(360deg);
     }
 }
 
 @keyframes sakura-anim-3 {
     0% {
-        top: -10%;
+        top: -15%;
         transform: translateX(0);
     }
 
     100% {
-        top: 100%;
+        top: 120%;
         transform: translateX(25vw) rotateX(180deg) rotateY(360deg);
     }
 }
 
 @keyframes sakura-anim-4 {
     0% {
-        top: -10%;
+        top: -15%;
         transform: translateX(0);
     }
 
     100% {
-        top: 100%;
+        top: 120%;
         transform: translateX(-20vw) rotateX(360deg) rotateY(180deg);
     }
 }
 
 @keyframes sakura-anim-5 {
     0% {
-        top: -10%;
+        top: -20%;
         transform: translateX(0);
     }
 
     100% {
-        top: 100%;
+        top: 120%;
         transform: translateX(-25vw) rotateX(180deg) rotateY(360deg);
     }
 }
 
 @keyframes sakura-anim-6 {
     0% {
-        top: -10%;
+        top: -20%;
         transform: translateX(0);
     }
 
     100% {
-        top: 100%;
+        top: 120%;
         transform: translateX(21vw) rotateX(360deg) rotateY(180deg);
     }
 }
