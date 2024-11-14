@@ -276,6 +276,9 @@ export default class TdorComments extends Vue {
             background: rgba(255, 255, 255, 0.05) !important
             color: $color-text-dark-main !important
 
+        textarea::placeholder
+            color: $color-text-dark-light !important
+
         #send-comment-btn
             color: $color-text-dark-special
 

@@ -337,6 +337,6 @@ export default class ProfileComments extends Vue {
             background: rgba(255, 255, 255, 0.05) !important
             color: $color-text-dark-main !important
 
-        textarea:placeholder
+        textarea::placeholder
             color: $color-text-dark-light !important
 </style>
