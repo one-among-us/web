@@ -99,6 +99,7 @@ export const i18n = {
         "email": "email (optional)",
         "random": "Click here to visit a random page",
         "tdor_btn": "Click here to leave your message",
+        "tdor_comment": "Stand United for Surviving—2024 Transgender Remembrance Day: Collection of Letters",
         view_limit: {
             title: "Take a rest!",
             warning: "You have read so many pages, please remember to take good care of yourself~",
@@ -174,6 +175,7 @@ export const i18n = {
         "email": "邮箱 (可选)",
         "random": "随机看望一位朋友",
         "tdor_btn": "填写现身日晚会来信请点这里",
+        "tdor_comment": "Stand United for Surviving—2024年跨性别纪念日晚会 来信集合",
         view_limit: {
             title: "休息一下吧！",
             warning: "读太多啦！要好好照顾自己哦~",
@@ -249,6 +251,7 @@ export const i18n = {
         "email": "電子郵箱 (可選)",
         "random": "點一下這裏查看一個隨機頁面",
         "tdor_btn": "點一下這裏填寫現身日晚會來信",
+        "tdor_comment": "Stand United for Surviving—2024年跨性別紀念日晚會 來信集合",
         view_limit: {
             title: "歇息一下吧！",
             warning: "閲讀太多啦！要好好照顧自己哦",

@@ -1,13 +1,13 @@
-**As the first month of spring passes its halfway mark, March 31 marks another Transgender Day of Visibility.**
+> November 20th is Transgender Day of Remembrance (TDoR).
+>
+> Project Trans and One Among Us will jointly host an evening memorial to honour the memory of our lost companions.
+>
+> In observance of this day, we invite you to share your letters—whether they are messages of support or remembrance for our community members, past stories, precious memories, poetry, or any other form of written expression.
+>
+> The deadline for submissions is: November 17, 2024, 11:00 PM (UTC-5)
 
-Throughout this winter, we've faced too much sorrow, losing many cherished friends. Yet many of us persist in living; new connections are formed, warmth and companionship gradually spread. New hope, vitality, life, are sprouting.
+Let us come together through words to honour those friends we have lost;  
+Let us stand united, for surviving is the greatest resistance;  
+Let us move forward together, creating a world free of darkness and filled with hope.  
 
-As advocates in the transgender/queer movement, we deeply understand: every simple act of "visibility" from each companion will help future generations navigate through the fog, to recognize their own brightness, bringing hope and strength. So, this spring, One Among Us is collecting letters with "visibility" as the theme: a poem, a story, or simply some uplifting words—all are welcome.
-
-We'll read some of the letters selected in our 'TDOV 2024 Night' livestream around March 31.
-
-**Note: The deadline for letters is March 27 23:59 (China Standard Time); March 27 16:00 (UTC).**
-
-The Night will livestream on Chinese domestic platforms; One Among Us reserves the right to lightly edit the letters received, to ensure smooth broadcasting of the Night.
-
-Write a letter:
+You can leave your message at here or go ahead to send your letters and multimedia content to our email: [info@one-among.us](mailto:info@one-among.us)

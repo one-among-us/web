@@ -1,6 +1,6 @@
 <template>
     <div id="ProfileComments" class="markdown-content">
-        <h1>{{ p.id == 'tdor' ? "For Being Out And Proud——2024年跨性别现身日晚会 来信集合" : t.nav_comments }}</h1>
+        <h1>{{ p.id == 'tdor' ? t.tdor_comment : t.nav_comments }}</h1>
 
         <!-- Comments -->
         <transition-group tag="div" name="comment-list" id="comments" v-if="p.comments.length > 0">
