@@ -212,6 +212,14 @@ export default class Home extends Vue {
 @import "../css/colors"
 @import "../css/motion"
 
+@keyframes blink
+    0%
+        opacity: 1
+    50%
+        opacity: 0.75
+    100%
+        opacity: 1
+
 .introduction
     text-align: justify
     text-justify: inter-word
@@ -299,6 +307,7 @@ export default class Home extends Vue {
         height: 150px
         top: 0
         left: 0
+        animation: blink 2s ease infinite
 
     .profile-image
         width: 100%
