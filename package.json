@@ -12,8 +12,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@andreekeberg/imagedata": "^1.0.2",
     "@fortawesome/fontawesome-free": "^6.5.2",
     "@vuepic/vue-datepicker": "^9.0.3",
+    "blurhash": "^2.0.5",
     "element-plus": "^2.7.1",
     "katex": "^0.16.10",
     "lxgw-wenkai-webfont": "^1.7.0",
