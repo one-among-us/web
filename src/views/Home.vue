@@ -299,6 +299,7 @@ export default class Home extends Vue {
         height: 150px
         width: 150px
         transition: all .25s ease
+        overflow: hidden
 
     .blur
         z-index: 5
