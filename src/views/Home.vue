@@ -384,6 +384,8 @@ export default class Home extends Vue {
             $len: 30vw
             height: $len
             width: $len
+        .blur
+            height: 30vw
 
 @media screen and (max-width: 700px)
     .search-bar
