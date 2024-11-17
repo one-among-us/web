@@ -30,11 +30,10 @@
                     <div class="back"/>
                     <a :href="`/profile/${p.id}`" @click.exact.prevent.stop="() => false">
                         <transition name="fade" @after-leave="() => switchPage(p)">
-                            <div class="front">
+                            <div class="front" v-if="clicked !== p.name">
                                 <canvas v-bind:id="p.id + '-canvas'" class="blur clickable"></canvas>
                                 <img :src="profileUrl(p)" draggable="false" alt="" class="profile-image clickable"
                                      @click.exact="() => { if (!clicked) { clicked = p.name; } return false }"
-                                     v-if="clicked !== p.name"
                                      v-on:load="isLoading = false">
                             </div>
                         </transition>
