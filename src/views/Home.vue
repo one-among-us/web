@@ -30,10 +30,13 @@
                     <div class="back"/>
                     <a :href="`/profile/${p.id}`" @click.exact.prevent.stop="() => false">
                         <transition name="fade" @after-leave="() => switchPage(p)">
-                            <img :src="profileUrl(p)" draggable="false" alt="profile" class="front clickable"
-                                 @click.exact="() => { if (!clicked) { clicked = p.name; } return false }"
-                                 v-if="clicked !== p.name"
-                                 v-on:load="isLoading = false">
+                            <div class="front">
+                                <canvas v-bind:id="p.id + '-canvas'" class="blur clickable"></canvas>
+                                <img :src="profileUrl(p)" draggable="false" alt="" class="profile-image clickable"
+                                     @click.exact="() => { if (!clicked) { clicked = p.name; } return false }"
+                                     v-if="clicked !== p.name"
+                                     v-on:load="isLoading = false">
+                            </div>
                         </transition>
                     </a>
                     <div class="name font-custom" ref="bookmarkTexts">{{ p.name }}</div>
@@ -87,6 +90,7 @@ import {Icon} from "@iconify/vue";
 import VueDatePicker from '@vuepic/vue-datepicker'
 import urljoin from "url-join";
 import {Component, Ref, Vue} from 'vue-facing-decorator';
+import {decode} from 'blurhash'
 
 @Component({ components: { TdorComments, Loading, RandomPerson, BirthdayButton, Icon, VueDatePicker } })
 export default class Home extends Vue {
@@ -137,6 +141,20 @@ export default class Home extends Vue {
                 if (isEaster() && (gaussian() < pros)) scheduledLoopTask(1500, () => {
                     this.people = gaussian_shuffle(this.people)
                 })
+
+                fetch(urljoin(dataHost, 'blur-code.json'))
+                    .then(it => it.json())
+                    .then(it => {
+                        for (const p of this.people) {
+                            if (typeof(it[p.id]) !== "string") continue;
+                            const pixels = decode(it[p.id], 150, 150)
+                            const canvas = document.getElementById(p.id + '-canvas') as HTMLCanvasElement;
+                            const ctx = canvas.getContext("2d");
+                            const imageData = ctx.createImageData(150, 150);
+                            imageData.data.set(pixels);
+                            ctx.putImageData(imageData, 0, 0);
+                        }
+                    })
             })
 
         fetch(urljoin(dataHost, 'birthday-list.json'))
@@ -193,6 +211,14 @@ export default class Home extends Vue {
 <style lang="sass" scoped>
 @import "../css/colors"
 @import "../css/motion"
+
+@keyframes blink
+    0%
+        opacity: 1
+    50%
+        opacity: 0.75
+    100%
+        opacity: 1
 
 .introduction
     text-align: justify
@@ -274,6 +300,23 @@ export default class Home extends Vue {
         height: 150px
         width: 150px
         transition: all .25s ease
+
+    .blur
+        z-index: 5
+        position: absolute
+        height: 150px
+        top: 0
+        left: 0
+        animation: blink 2s ease infinite
+
+    .profile-image
+        width: 100%
+        height: 100%
+        z-index: 6
+        position: absolute
+        top: 0
+        left: 0
+        background: #00000000
 
     .back
         z-index: 2
