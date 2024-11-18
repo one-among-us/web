@@ -18,7 +18,7 @@
     <Divider height="5px"/>
 
     <GlobalButton/>
-    <Sakura :count="100" v-if="isEaster() && (gaussian() < 0.36)"/>
+    <Sakura :count="100" v-if="/*isEaster() && (gaussian() < 0.36)*/true"/>
 </template>
 
 <script lang="ts">

@@ -114,7 +114,7 @@ export default class Home extends Vue {
     @Ref() bookmark: HTMLDivElement[]
 
     isDeadlinePassed(): boolean {
-        return false;
+        return true;
     }
 
     isShowCommentsEntry(): boolean {
