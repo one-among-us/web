@@ -236,3 +236,7 @@ export function checkSubset(parentArray: any[], subsetArray: any[]): boolean {
         return parentArray.includes(e)
     })
 }
+
+export function insert(parentArray: any[], obj: any, index: number) {
+    return [...parentArray.slice(0, index), obj, ...parentArray.slice(index)]
+}

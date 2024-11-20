@@ -20,7 +20,8 @@
             <div class="search-bar">
                 <Icon class="search-icon" icon="mynaui:search-hexagon" v-on:click="updateSearch"/>
                 <input class="search-input" v-model="searchKey" v-on:input="updateSearch" placeholder="Search for..."/>
-                <VueDatePicker range light model-auto class="search-date" placeholder="Select a range" v-model="dateRange" @update:model-value="updateSearch" />
+                <VueDatePicker range light model-auto class="search-date" placeholder="Select a range"
+                               v-model="dateRange" @update:model-value="updateSearch"/>
             </div>
 
             <Loading v-if="isLoading"/>
@@ -77,6 +78,8 @@ import {
     gaussian_shuffle,
     getResponseSync,
     handleIconFromString,
+    insert,
+    randint,
     scheduledLoopTask,
     shuffle,
 } from "@/logic/helper";
@@ -87,9 +90,9 @@ import router from "@/router";
 import TdorComments from "@/views/TdorComments.vue";
 import {Icon} from "@iconify/vue";
 import VueDatePicker from '@vuepic/vue-datepicker'
+import {decode} from 'blurhash'
 import urljoin from "url-join";
 import {Component, Ref, Vue} from 'vue-facing-decorator';
-import {decode} from 'blurhash'
 
 @Component({ components: { TdorComments, Loading, RandomPerson, BirthdayButton, Icon, VueDatePicker } })
 export default class Home extends Vue {
@@ -107,6 +110,7 @@ export default class Home extends Vue {
     fullPeople = [] as PersonMeta[]
     searchKey = ''
     dateRange = []
+    isShuffle = false
 
     birthdayList = [] as [string, string][]
 
@@ -133,7 +137,8 @@ export default class Home extends Vue {
         fetchWithLang(urljoin(dataHost, 'people-home-list.json'))
             .then(it => it.text())
             .then(it => {
-                this.people = (isEaster() && (gaussian() < 0.35)) ? shuffle(JSON.parse(it)) : JSON.parse(it)
+                this.isShuffle = isEaster() && (gaussian() < 0.35)
+                this.people = this.isShuffle ? shuffle(JSON.parse(it)) : JSON.parse(it)
                 this.fullPeople = JSON.parse(it)
                 const now = new Date();
                 const pros = ((now.getDate() == 1) && (now.getMonth() + 1 == 4)) ? 0.5 : 0.05;
@@ -141,11 +146,12 @@ export default class Home extends Vue {
                     this.people = gaussian_shuffle(this.people)
                 })
 
+                //blur canvas for loading images
                 fetch(urljoin(dataHost, 'blur-code.json'))
                     .then(it => it.json())
                     .then(it => {
                         for (const p of this.people) {
-                            if (typeof(it[p.id]) !== "string") continue;
+                            if (typeof (it[p.id]) !== "string") continue;
                             const pixels = decode(it[p.id], 150, 150)
                             const canvas = document.getElementById(p.id + '-canvas') as HTMLCanvasElement;
                             const ctx = canvas.getContext("2d");
@@ -154,6 +160,17 @@ export default class Home extends Vue {
                             ctx.putImageData(imageData, 0, 0);
                         }
                     })
+
+                // insert entry with unknown date of pass away to random position
+                if (!this.isShuffle) {
+                    const u = this.people
+                    this.people = []
+
+                    for (const v of u) {
+                        if (v.sortKey != 0) this.people.push(v);
+                        else this.people = insert(this.people, v, randint(0, this.people.length - 1));
+                    }
+                }
             })
 
         fetch(urljoin(dataHost, 'birthday-list.json'))
@@ -385,6 +402,7 @@ export default class Home extends Vue {
             $len: 30vw
             height: $len
             width: $len
+
         .blur
             height: 30vw
 
