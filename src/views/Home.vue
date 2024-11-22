@@ -122,7 +122,7 @@ export default class Home extends Vue {
     }
 
     isShowCommentsEntry(): boolean {
-        return false;
+        return true;
     }
 
     updated() {
