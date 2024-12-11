@@ -1,4 +1,4 @@
-@import "colors"
+@use "colors"
 
 // Markdown style
 .markdown-content
@@ -6,11 +6,11 @@
   text-justify: inter-word
 
   a
-    color: $color-text-special
+    color: colors.$color-text-special
     text-decoration: none
 
   h1, h2
-    border-bottom: 1px solid $color-text-special
+    border-bottom: 1px solid colors.$color-text-special
     font-size: 1.5em
     margin-top: 1em
 
@@ -45,10 +45,10 @@
 [data-theme="dark"]
   .markdown-content
     a
-      color: $color-text-dark-special
+      color: colors.$color-text-dark-special
 
     h1, h2
-      border-bottom: 1px solid $color-text-dark-special
+      border-bottom: 1px solid colors.$color-text-dark-special
 
     hr
       border-style: solid

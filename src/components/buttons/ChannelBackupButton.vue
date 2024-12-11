@@ -38,11 +38,11 @@ export default class ChannelBackupButton extends Vue {
 </script>
 
 <style lang="sass" scoped>
-@import "../../css/colors"
+@use "../../css/colors"
 
 .backup
     padding: 10px
-    background: $color-bg-6
+    background: colors.$color-bg-6
     border-radius: 10px
     width: fit-content
 
@@ -51,7 +51,7 @@ export default class ChannelBackupButton extends Vue {
     align-items: center
 
     text-decoration: none
-    color: $color-text-main
+    color: colors.$color-text-main
 
     filter: drop-shadow(0 2px 3px rgba(188 140 68 / 20%))
 
@@ -68,8 +68,8 @@ export default class ChannelBackupButton extends Vue {
 
 [data-theme="dark"]
     .backup
-        background: $color-bg-dark-6
-        color: $color-text-dark-main
+        background: colors.$color-bg-dark-6
+        color: colors.$color-text-dark-main
 
         .icon
             background-color: rgb(89 64 20)

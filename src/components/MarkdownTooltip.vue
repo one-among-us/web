@@ -138,7 +138,8 @@ export default class MarkdownTooltip extends Vue {
 </script>
 
 <style lang="sass">
-@import src/css/global
+@use '@/css/global'
+@use '@/css/colors'
 
 #MarkdownTooltip:not(.show)
     opacity: 0
@@ -148,7 +149,7 @@ export default class MarkdownTooltip extends Vue {
     position: absolute
 
     background: #fffcf9b5
-    color: $color-text-light
+    color: colors.$color-text-light
     backdrop-filter: blur(10px)
     opacity: 0.9
     filter: drop-shadow(0 2px 5px rgba(166, 134, 89, 0.42))
@@ -187,10 +188,10 @@ export default class MarkdownTooltip extends Vue {
 [data-theme="dark"]
     #MarkdownTooltip
         background: #fffcff30
-        color: $color-text-dark-light
+        color: colors.$color-text-dark-light
         filter: drop-shadow(0 2px 5px rgba(166, 134, 89, 0.42))
 
         .icon-wrapper:hover
-            background: $color-bg-dark-5
+            background: colors.$color-bg-dark-5
 
 </style>

@@ -216,7 +216,7 @@ export default class EditInfo extends Vue {
 </script>
 
 <style lang="sass" scoped>
-@import "../css/colors"
+@use "../css/colors"
 
 #container
     height: 100%
@@ -225,7 +225,7 @@ export default class EditInfo extends Vue {
         flex-grow: 1
 
 #EditInfo
-    background: $color-bg-5
+    background: colors.$color-bg-5
     margin: 0 min(5vw, 40px)
     padding: 20px 30px
     border-radius: 30px
@@ -234,7 +234,7 @@ export default class EditInfo extends Vue {
     #id
         margin-top: -5px
         margin-bottom: 5px
-        color: $color-text-light
+        color: colors.$color-text-light
 
     .head-text
         font-weight: bold
@@ -253,9 +253,9 @@ export default class EditInfo extends Vue {
             flex-grow: 1
             border-radius: 5px
             border: none
-            background-color: $color-bg-4
+            background-color: colors.$color-bg-4
             padding: 4px 8px
-            color: $color-text-main
+            color: colors.$color-text-main
             text-align: center
             outline: none
 
@@ -264,14 +264,14 @@ export default class EditInfo extends Vue {
             font-weight: bold
 
         input:focus-visible
-            outline: solid $color-text-light
+            outline: solid colors.$color-text-light
 
     .button.submit
         margin-top: 30px
-        background-color: $color-bg-6
+        background-color: colors.$color-bg-6
         border-radius: 10px
         padding: 8px 0
-        //border: 2px solid $color-text-main
+        //border: 2px solid colors.$color-text-main
         filter: drop-shadow(0 2px 5px rgba(166, 134, 89, 0.16))
 
     .button.submit:hover
@@ -295,7 +295,7 @@ export default class EditInfo extends Vue {
     #EditInfo .input-box
         input.key
             border-top: 1px solid #ff7878
-            border-bottom: 1px solid $color-bg-6
+            border-bottom: 1px solid colors.$color-bg-6
             margin: 0
             border-bottom-left-radius: 0
             border-bottom-right-radius: 0
@@ -307,19 +307,19 @@ export default class EditInfo extends Vue {
 
 [data-theme="dark"]
     #EditInfo
-        background: $color-bg-dark-5
+        background: colors.$color-bg-dark-5
 
         #id
-            color: $color-text-dark-light
+            color: colors.$color-text-dark-light
 
         .input-box
             input
-                color: $color-text-dark-main
-                background-color: $color-bg-dark-6
+                color: colors.$color-text-dark-main
+                background-color: colors.$color-bg-dark-6
 
             input:focus-visible
-                outline: solid $color-text-dark-light
+                outline: solid colors.$color-text-dark-light
 
         .button.submit
-            background-color: $color-bg-dark-6
+            background-color: colors.$color-bg-dark-6
 </style>

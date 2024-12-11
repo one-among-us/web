@@ -74,22 +74,22 @@ export default class App extends Vue {
 
 <!-- Global Style -->
 <style lang="sass">
-@import "css/animations"
-@import "css/global"
-@import "css/fonts/font-custom.scss"
-@import "css/fonts/BackIcon.css"
-@import "css/colors"
-@import "css/markdown"
+@use "css/animations"
+@use "css/global"
+@use "css/fonts/font-custom.scss"
+@use "css/fonts/BackIcon.css"
+@use "css/colors"
+@use "css/markdown"
 
 *
     transition: all 0.25s cubic-bezier(0.35, 0, 0.72, 0.22)
 
 #app
-    font-family: $font
+    font-family: font-custom.$font
     -webkit-font-smoothing: antialiased
     -moz-osx-font-smoothing: grayscale
     text-align: center
-    color: $color-text-main
+    color: colors.$color-text-main
 
     // Max width and center
     max-width: 900px
@@ -101,23 +101,23 @@ export default class App extends Vue {
     height: 100vh
 
     &[data-lang="en"]
-        font-family: $font-en
+        font-family: font-custom.$font-en
 
 [data-theme="dark"]
     body
         background: #181825
 
     #app
-        color: $color-text-dark-main
+        color: colors.$color-text-dark-main
 </style>
 
 <!-- Scoped Style -->
 <style lang="sass" scoped>
-@import "css/colors"
+@use "css/colors"
 
 // Title
 #title
-    background-color: $color-bg-5
+    background-color: colors.$color-bg-5
     min-height: 250px
     height: fit-content
 
@@ -125,21 +125,21 @@ export default class App extends Vue {
         font-size: x-large
 
     #title-sub
-        color: $color-text-light
+        color: colors.$color-text-light
 
 // Navigation bar
 #nav
-    background-color: $color-bg-6
+    background-color: colors.$color-bg-6
     min-height: 40px
 
     a
         text-decoration: none
         margin: 15px
         font-size: 15px
-        color: $color-text-main
+        color: colors.$color-text-main
 
         &.router-link-exact-active
-            color: $color-text-special
+            color: colors.$color-text-special
 
 .kawaii
     width: 100%
@@ -151,7 +151,7 @@ export default class App extends Vue {
 #router
     flex: 3
     padding: 20px 0 100px
-    background-color: $color-bg-4
+    background-color: colors.$color-bg-4
 
 .router-link
     position: relative
@@ -159,20 +159,20 @@ export default class App extends Vue {
 
 [data-theme="dark"]
     #title
-        background-color: $color-bg-dark-5
+        background-color: colors.$color-bg-dark-5
 
         #title-sub
-            color: $color-text-dark-light
+            color: colors.$color-text-dark-light
 
     #nav
-        background-color: $color-bg-dark-6
+        background-color: colors.$color-bg-dark-6
 
         a
-            color: $color-text-dark-main
+            color: colors.$color-text-dark-main
 
             &.router-link-exact-active
-                color: $color-text-dark-special
+                color: colors.$color-text-dark-special
 
     #router
-        background-color: $color-bg-dark-4
+        background-color: colors.$color-bg-dark-4
 </style>

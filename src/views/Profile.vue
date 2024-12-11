@@ -210,7 +210,7 @@ div:has(.view-limit-alert)
 
 <!-- Scoped Style -->
 <style lang="sass" scoped>
-@import "../css/colors"
+@use "../css/colors"
 
 .profile-page
     padding: 0 20px

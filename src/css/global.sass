@@ -1,6 +1,6 @@
-@import colors
-@import fonts/font-custom
-@import @/css/katex/katex.css
+@use 'colors'
+@use 'fonts/font-custom'
+@use '@/css/katex/katex.css'
 
 // Container width (This is normally 50vw,
 //   but when it's smaller than 900px, use 100vw - 50px, because 50px is the margin)
@@ -125,17 +125,17 @@ $c-highlight-dark: rgba(255, 120, 120, 0.25)
 
 .photo-frame-10
   border: 10px solid white
-  outline: 2px solid $color-text-main
+  outline: 2px solid colors.$color-text-main
 
 .photo-frame-5
   border: 5px solid white
-  outline: 2px solid $color-text-main
+  outline: 2px solid colors.$color-text-main
 
 .spoiler
   @extend .unselectable
   cursor: pointer
   transition: all .4s ease
-  background-color: $color-text-light
+  background-color: colors.$color-text-light
   margin: 0 1px
   border-radius: 3px
 
@@ -153,7 +153,7 @@ $c-highlight-dark: rgba(255, 120, 120, 0.25)
   @extend .clickable
   @extend .unselectable
 
-  background: $color-bg-6
+  background: colors.$color-bg-6
 
   // Drop shadow
   box-shadow: 0 2px 5px 0 rgb(166 134 89 / 32%)
@@ -167,7 +167,7 @@ $c-highlight-dark: rgba(255, 120, 120, 0.25)
   padding: 8px 15px
   border-radius: 5px
 
-  border: 1px solid $color-text-main
+  border: 1px solid colors.$color-text-main
 
   &:hover
     // Move up
@@ -191,11 +191,11 @@ svg.icon
     color: $c-highlight-dark
 
   .hy-button
-    background: $color-bg-dark-6
+    background: colors.$color-bg-dark-6
 
   .spoiler
     background-color: transparent
-    filter: blur(6px) drop-shadow(1px 1px 5px $color-text-dark-special)
+    filter: blur(6px) drop-shadow(1px 1px 5px colors.$color-text-dark-special)
 
     span
       opacity: 1

@@ -23,26 +23,26 @@ export default class ScrollButton extends Vue {
 </template>
 
 <style lang="scss">
-@import "../../css/colors";
-@import "../../css/global";
+@use "../../css/colors";
+@use "../../css/global";
 
 .scrollButton {
     padding: 10px;
     width: 25px;
     height: 25px;
     border-radius: 9008px;
-    border-color: $color-text-main;
+    border-color: colors.$color-text-main;
     border-width: 1px;
     border-style: solid;
 
     .icon {
         width: 20px;
         height: 20px;
-        color: $color-text-main;
+        color: colors.$color-text-main;
     }
 }
 
 [data-theme="dark"] .icon {
-    color: $color-text-dark-main;
+    color: colors.$color-text-dark-main;
 }
 </style>

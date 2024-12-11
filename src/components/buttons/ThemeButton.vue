@@ -31,24 +31,24 @@ export default class ThemeButton extends Vue {
 </script>
 
 <style lang="sass">
-@import "../../css/colors"
-@import "../../css/global"
+@use "../../css/colors"
+@use "../../css/global"
 
 .theme-button
     padding: 10px
     width: 25px
     height: 25px
     border-radius: 9008px
-    border-color: $color-text-main
+    border-color: colors.$color-text-main
     border-width: 1px
     border-style: solid
 
     .iconR
         width: 20px
         height: 20px
-        color: $color-text-main
+        color: colors.$color-text-main
 
 [data-theme="dark"]
     .iconR
-        color: $color-text-dark-main
+        color: colors.$color-text-dark-main
 </style>
