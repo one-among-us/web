@@ -230,9 +230,10 @@ export default class ProfileComments extends Vue {
 </script>
 
 <style lang="sass">
-@import src/css/global
-@import src/css/colors
-@import src/css/motion
+@use '@/css/global'
+@use '@/css/colors'
+@use '@/css/motion'
+@use '@/css/fonts/font-custom'
 
 .divp
     margin: 0.65em 0
@@ -243,22 +244,22 @@ export default class ProfileComments extends Vue {
     @extend .divp
 
     .from
-        color: $color-text-light
+        color: colors.$color-text-light
         margin-left: 10px
 
     .from.anonymous
-        color: $color-text-light
+        color: colors.$color-text-light
         opacity: 0.75
 
     .replies
         .reply-title
             font-size: 0.7em
-            color: $color-text-light
+            color: colors.$color-text-light
 
         margin-top: 0.3em
         padding: 0.5em 20px
 
-        background: $color-bg-5
+        background: colors.$color-bg-5
         border-radius: 5px 10px 10px 5px
         border-left: 3px solid #ba8746
 
@@ -272,10 +273,10 @@ export default class ProfileComments extends Vue {
     margin-bottom: 125px
 
     textarea
-        font-family: $font
+        font-family: font-custom.$font
         width: 100%
         background: rgba(0, 0, 0, 0.05)
-        color: $color-text-main
+        color: colors.$color-text-main
         border-radius: 10px
 
         overflow-y: hidden
@@ -288,11 +289,11 @@ export default class ProfileComments extends Vue {
         outline: 0 solid white
 
     textarea:focus-visible
-        outline: 1px solid $color-text-light
+        outline: 1px solid colors.$color-text-light
     //outline: none
 
     textarea::placeholder
-        color: $color-text-light
+        color: colors.$color-text-light
         opacity: 0.5
 
     position: relative
@@ -301,42 +302,42 @@ export default class ProfileComments extends Vue {
         position: absolute
         right: 10px
         bottom: 10px
-        color: $color-text-special
+        color: colors.$color-text-special
 
         display: flex
         align-items: center
 
         .char-count
             font-size: 10px
-            color: $color-text-light
+            color: colors.$color-text-light
             margin-right: 5px
 
 .comment-list-enter-from, .comment-list-leave-to
-    transition: all 1s $ease-in-out-cric
+    transition: all 1s motion.$ease-in-out-cric
     opacity: 0
     transform: translateY(25px)
 
 [data-theme="dark"]
     .comment
         .from
-            color: $color-text-dark-light !important
+            color: colors.$color-text-dark-light !important
             margin-left: 10px
 
         .from.anonymous
-            color: $color-text-dark-light !important
+            color: colors.$color-text-dark-light !important
             opacity: 0.5 !important
 
         .replies
             .reply-title
-                color: $color-text-dark-light !important
+                color: colors.$color-text-dark-light !important
 
-            background: $color-bg-dark-5 !important
+            background: colors.$color-bg-dark-5 !important
 
     #add-comment
         textarea
             background: rgba(255, 255, 255, 0.05) !important
-            color: $color-text-dark-main !important
+            color: colors.$color-text-dark-main !important
 
         textarea::placeholder
-            color: $color-text-dark-light !important
+            color: colors.$color-text-dark-light !important
 </style>

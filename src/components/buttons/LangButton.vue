@@ -31,7 +31,8 @@ export default class LangButton extends Vue {
 </template>
 
 <style lang="sass">
-@import "../../css/global"
+@use "../../css/global"
+@use "@/css/colors"
 
 .lang-buttons
     display: flex
@@ -45,5 +46,5 @@ export default class LangButton extends Vue {
         width: 25px
         height: 25px
         border-radius: 56562px
-        border: 1px solid $color-text-main
+        border: 1px solid colors.$color-text-main
 </style>

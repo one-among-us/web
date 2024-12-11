@@ -225,8 +225,8 @@ export default class Home extends Vue {
 </script>
 
 <style lang="sass" scoped>
-@import "../css/colors"
-@import "../css/motion"
+@use "../css/colors"
+@use "../css/motion"
 
 @keyframes blink
     0%
@@ -273,23 +273,23 @@ export default class Home extends Vue {
     .search-icon
         width: 28px
         height: 28px
-        color: $color-text-main
+        color: colors.$color-text-main
         cursor: pointer
 
     .search-input
         width: calc(50% - 48px)
         height: 26px
-        color: $color-text-main
+        color: colors.$color-text-main
         background-color: rgba(0, 0, 0, 0.05)
         border-radius: 10px
         border: none
-        outline: $color-text-main
+        outline: colors.$color-text-main
         font-size: 16px
         text-indent: 5px
         padding: 6px 30px 6px 12px
 
         &:active
-            outline: $color-text-main
+            outline: colors.$color-text-main
             border: none
 
     .search-date
@@ -312,7 +312,7 @@ export default class Home extends Vue {
 
     .front, .back
         border: 10px solid white
-        outline: 2px solid $color-text-main
+        outline: 2px solid colors.$color-text-main
         height: 150px
         width: 150px
         transition: all .25s ease
@@ -365,7 +365,7 @@ export default class Home extends Vue {
         font-weight: bold
 
     .back.add
-        outline: 2px dashed $color-text-main
+        outline: 2px dashed colors.$color-text-main
         font-size: 75px
         color: gray
         background-color: #f1f1f1
@@ -385,10 +385,10 @@ export default class Home extends Vue {
         z-index: 2
 
 .profiles-move
-    transition: all 0.5s $ease-in-out-cric
+    transition: all 0.5s motion.$ease-in-out-cric
 
 .profiles-enter-active .profiles-leave-active
-    transition: all .5s $ease-out-cric !important
+    transition: all .5s motion.$ease-out-cric !important
 
 .profiles-enter-from, .profiles-leave-to
     opacity: 0
@@ -424,7 +424,7 @@ export default class Home extends Vue {
 [data-theme="dark"]
     .back, .front
         border: 10px solid rgba(27, 27, 32, 0.8964) !important
-        outline: 2px solid $color-text-dark-main !important
+        outline: 2px solid colors.$color-text-dark-main !important
 
     .bookmark
         border: 40px solid rgba(255, 189, 202, 0.25) !important
@@ -432,10 +432,10 @@ export default class Home extends Vue {
 
     .search-bar
         .search-icon
-            color: $color-text-dark-main
+            color: colors.$color-text-dark-main
 
         .search-input
-            color: $color-text-dark-main
-            outline: $color-text-dark-main
+            color: colors.$color-text-dark-main
+            outline: colors.$color-text-dark-main
             background: rgba(255, 255, 255, 0.05)
 </style>

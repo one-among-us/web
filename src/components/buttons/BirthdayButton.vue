@@ -25,8 +25,9 @@ export default class BirthdayButton extends Vue {
 </script>
 
 <style lang="sass" scoped>
-@import "../../css/colors"
-@import "../../css/global"
+@use "../../css/colors"
+@use "../../css/global"
+@use "../../css/fonts/font-custom.scss"
 
 .random
     // Outer alignment
@@ -40,13 +41,13 @@ export default class BirthdayButton extends Vue {
 
     // Button style
     border-radius: 15px
-    color: $color-text-main
+    color: colors.$color-text-main
 
     font-size: 1rem
-    font-family: 'Hua', $font
+    font-family: 'Hua', font-custom.$font
 
 [data-theme="dark"]
     .random
-        color: $color-text-dark-main
-        background-color: $color-bg-dark-6
+        color: colors.$color-text-dark-main
+        background-color: colors.$color-bg-dark-6
 </style>

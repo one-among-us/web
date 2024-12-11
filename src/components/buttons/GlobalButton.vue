@@ -42,9 +42,9 @@ export default class GlobalButton extends Vue {
 </script>
 
 <style lang="sass">
-@import "../../css/colors"
-@import "../../css/animations"
-@import "../../css/motion"
+@use "@/css/colors"
+@use "@/css/animations"
+@use "@/css/motion"
 
 .lang-btns
     // Fixed positioning
@@ -62,7 +62,7 @@ export default class GlobalButton extends Vue {
         width: 25px
         height: 25px
         border-radius: 56562px
-        border: 1px solid $color-text-main
+        border: 1px solid colors.$color-text-main
 
         .icon
             width: 20px
@@ -78,16 +78,16 @@ export default class GlobalButton extends Vue {
             width: 25px
             height: 25px
             border-radius: 56562px
-            border: 1px solid $color-text-main
+            border: 1px solid colors.$color-text-main
 
 .list-enter-active
-    transition: all .5s $ease-in-out-back
+    transition: all .5s motion.$ease-in-out-back
 
 .list-leave-active
-    transition: all .5s $ease-in-out-back
+    transition: all .5s motion.$ease-in-out-back
     position: absolute
 
 .list-enter-from, .list-leave-to
-    transition: all .25s $ease-in-out-back
+    transition: all .25s motion.$ease-in-out-back
     transform: translateX(269px)
 </style>

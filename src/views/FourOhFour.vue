@@ -25,7 +25,7 @@ export default class FourOhFour extends Vue {
 </script>
 
 <style lang="sass" scoped>
-@import "src/css/colors"
+@use "src/css/colors"
 
 .four-oh-four
     display: flex
@@ -43,11 +43,11 @@ export default class FourOhFour extends Vue {
         text-shadow: rgba(255, 255, 255, 0.5) 0 5px 6px
 
     .sub, .click
-        color: $color-text-light
+        color: colors.$color-text-light
         font-size: 1.2em
 
         a
-            color: $color-text-special
+            color: colors.$color-text-special
             text-decoration: none
 
     .bottom

@@ -210,8 +210,8 @@ export default class ProfileCard extends Vue {
 </script>
 
 <style lang="sass" scoped>
-@import "../css/colors"
-@import "@/css/global"
+@use "../css/colors"
+@use "@/css/global"
 
 div:has(.view-limit-alert)
     backdrop-filter: blur(10px)
@@ -248,7 +248,7 @@ div:has(.view-limit-alert)
 
 #info
     width: 100%
-    background-color: $color-bg-6
+    background-color: colors.$color-bg-6
     filter: drop-shadow(0 2px 5px rgba(166, 134, 89, 0.42))
     border-radius: 24px
     animation: fade-in-top 1s 0s ease
@@ -298,7 +298,7 @@ div:has(.view-limit-alert)
     #hr
         width: 100%
         height: 2px
-        background-color: $color-text-main
+        background-color: colors.$color-text-main
         border-radius: 1px
 
     #fields
@@ -332,7 +332,7 @@ div:has(.view-limit-alert)
             flex-wrap: wrap
 
             a
-                color: $color-text-main
+                color: colors.$color-text-main
                 text-decoration: none
                 display: inline-flex
                 align-items: center
@@ -344,7 +344,7 @@ div:has(.view-limit-alert)
 
     img
         border: 9px solid #ffffffdd
-        outline: 2px solid $color-text-main
+        outline: 2px solid colors.$color-text-main
         $length: max(110px, min(15vw, 150px))
         height: $length
         width: $length
@@ -371,9 +371,9 @@ div:has(.view-limit-alert)
             font-size: 20px
             width: 40px
             height: 40px
-            border: 2px solid $color-text-main
+            border: 2px solid colors.$color-text-main
             border-radius: 15px
-            background: $color-bg-5
+            background: colors.$color-bg-5
 
         .button.disabled
             cursor: not-allowed
@@ -474,7 +474,7 @@ div:has(.view-limit-alert)
             height: 90px
             width: 90px
             border: 5px solid white
-            outline: 2px solid $color-text-main
+            outline: 2px solid colors.$color-text-main
 
         .button-container.edit
             display: none !important
@@ -494,23 +494,23 @@ div:has(.view-limit-alert)
 
 [data-theme="dark"]
     #info
-        background-color: $color-bg-dark-6
+        background-color: colors.$color-bg-dark-6
 
     #right
         #hr
-            color: $color-text-dark-main
+            color: colors.$color-text-dark-main
 
         #websites
             #websites-container
                 a
-                    color: $color-text-dark-main
+                    color: colors.$color-text-dark-main
 
     #left
         img
             border: 9px solid #f5e0dc45
-            outline: 2px solid $color-text-dark-main
+            outline: 2px solid colors.$color-text-dark-main
         #buttons
             .button
-                background: $color-bg-dark-5
-                border: 2px solid $color-text-dark-main
+                background: colors.$color-bg-dark-5
+                border: 2px solid colors.$color-text-dark-main
 </style>

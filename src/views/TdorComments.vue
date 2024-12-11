@@ -145,8 +145,9 @@ export default class TdorComments extends Vue {
 </script>
 
 <style lang="sass">
-@import src/css/global
-@import src/css/colors
+@use '@/css/global'
+@use '@/css/colors'
+@use '@/css/fonts/font-custom'
 
 .divp
     margin: 0.65em 0
@@ -156,21 +157,21 @@ export default class TdorComments extends Vue {
     @extend .divp
 
     .from
-        color: $color-text-light
+        color: colors.$color-text-light
         margin-left: 10px
 
     .from.anonymous
-        color: lighten($color-text-light, 20%)
+        color: lighten(colors.$color-text-light, 20%)
 
     .replies
         .reply-title
             font-size: 0.7em
-            color: $color-text-light
+            color: colors.$color-text-light
 
         margin-top: 0.3em
         padding: 0.5em 20px
 
-        background: $color-bg-5
+        background: colors.$color-bg-5
         border-radius: 5px 10px 10px 5px
         border-left: 3px solid #ba8746
 
@@ -183,11 +184,11 @@ export default class TdorComments extends Vue {
     margin: 20px auto 50px
 
     textarea
-        font-family: $font
+        font-family: font-custom.$font
         width: 100%
         // min-height: 4rem
         background: rgba(0, 0, 0, 0.05)
-        color: $color-text-main
+        color: colors.$color-text-main
         border-radius: 10px
 
         overflow-y: hidden
@@ -200,11 +201,11 @@ export default class TdorComments extends Vue {
         outline: 0 solid white
 
     textarea:focus-visible
-        outline: 1px solid $color-text-light
+        outline: 1px solid colors.$color-text-light
     //outline: none
 
     textarea::placeholder
-        color: $color-text-light
+        color: colors.$color-text-light
         opacity: 0.5
 
     position: relative
@@ -213,28 +214,28 @@ export default class TdorComments extends Vue {
         position: absolute
         right: 10px
         bottom: 10px
-        color: $color-text-special
+        color: colors.$color-text-special
 
         display: flex
         align-items: center
 
         .char-count
             font-size: 10px
-            color: $color-text-light
+            color: colors.$color-text-light
             margin-right: 5px
 
 .btn
     display: flexbox
-    background: $color-bg-6
+    background: colors.$color-bg-6
     border-radius: 20px
     border-style: solid
     border-width: 1px
-    border-color: $color-text-light
+    border-color: colors.$color-text-light
     padding: 10px
     width: fit-content
     gap: 8px
     align-items: center
-    color: $color-text-main
+    color: colors.$color-text-main
 
     filter: drop-shadow(0 2px 3px rgba(188 140 68 / 0.2))
 
@@ -255,38 +256,38 @@ export default class TdorComments extends Vue {
 
 .shadow:hover
     box-shadow: 15px 15px 15px -5px rgba(166 134 89 / 0.3)
-    border-color: $color-text-special
+    border-color: colors.$color-text-special
 
 [data-theme="dark"]
     .comment
         .from
-            color: $color-text-dark-light
+            color: colors.$color-text-dark-light
 
         .from.anonymous
-            color: darken($color-text-dark-light, 20%)
+            color: darken(colors.$color-text-dark-light, 20%)
 
         .replies
             .reply-title
-                color: $color-text-dark-light !important
+                color: colors.$color-text-dark-light !important
 
-            background: $color-bg-dark-5 !important
+            background: colors.$color-bg-dark-5 !important
 
     #add-comment
         textarea
             background: rgba(255, 255, 255, 0.05) !important
-            color: $color-text-dark-main !important
+            color: colors.$color-text-dark-main !important
 
         textarea::placeholder
-            color: $color-text-dark-light !important
+            color: colors.$color-text-dark-light !important
 
         #send-comment-btn
-            color: $color-text-dark-special
+            color: colors.$color-text-dark-special
 
             .char-count
-                color: $color-text-dark-main
+                color: colors.$color-text-dark-main
 
     .btn
-        background: $color-bg-dark-6
-        border-color: $color-text-dark-light
-        color: $color-text-dark-main
+        background: colors.$color-bg-dark-6
+        border-color: colors.$color-text-dark-light
+        color: colors.$color-text-dark-main
 </style>
