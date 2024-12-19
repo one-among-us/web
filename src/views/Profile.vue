@@ -96,14 +96,14 @@ export default class Profile extends Vue {
             const sunset = sunsetTime(now.getFullYear(), now.getMonth() + 1, now.getDate(), 45.0);
             const sunrise = sunriseTime(now.getFullYear(), now.getMonth() + 1, now.getDate(), 45.0);
 
-            if (now.getTime() > (new Date(now.getFullYear(), now.getMonth(), now.getDate(), sunset.hour, sunset.minute, sunset.second).getTime())) {
+            if (now.getTime() > (new Date(now.getFullYear(), now.getMonth(), now.getDate(), sunset.hour + 2, sunset.minute, sunset.second).getTime())) {
                 return {
                     warningLimit: Math.floor(limit.warningLimit / 2),
                     errorLimit: Math.floor(limit.errorLimit / 2),
                     cooldown: limit.cooldown
                 }
             }
-            else if (now.getTime() < (new Date(now.getFullYear(), now.getMonth(), now.getDate(), sunrise.hour, sunrise.minute, sunrise.second).getTime())) {
+            else if (now.getTime() < (new Date(now.getFullYear(), now.getMonth(), now.getDate(), Math.floor(sunrise.hour * 0.5 + 2), sunrise.minute, sunrise.second).getTime())) {
                 return {
                     warningLimit: Math.floor(limit.warningLimit / 2),
                     errorLimit: Math.floor(limit.errorLimit / 2),
