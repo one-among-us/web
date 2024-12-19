@@ -20,6 +20,7 @@ import {balloons, dataHost, Lang, limit, peopleUrl, replaceUrlVars, setLang, t} 
 import {parsePeopleJson, Person} from "@/logic/data";
 import {handleEasterEgg} from '@/logic/easterEgg'
 import {fetchWithLang, randint, scheduledTask, trim} from "@/logic/helper";
+import {sunriseTime, sunsetTime} from "@/logic/sunset";
 import ProfileComments from "@/views/ProfileComments.vue";
 import Swal from 'sweetalert2';
 import urljoin from "url-join";
@@ -90,7 +91,29 @@ export default class Profile extends Vue {
     checkViewLimit(): boolean | void {
         if (this.screenshotMode) return
 
-        const config = limit
+        const config = (() => {
+            const now = new Date();
+            const sunset = sunsetTime(now.getFullYear(), now.getMonth() + 1, now.getDate(), 45.0);
+            const sunrise = sunriseTime(now.getFullYear(), now.getMonth() + 1, now.getDate(), 45.0);
+
+            if (now.getTime() > (new Date(now.getFullYear(), now.getMonth(), now.getDate(), sunset.hour, sunset.minute, sunset.second).getTime())) {
+                return {
+                    warningLimit: Math.floor(limit.warningLimit / 2),
+                    errorLimit: Math.floor(limit.errorLimit / 2),
+                    cooldown: limit.cooldown
+                }
+            }
+            else if (now.getTime() < (new Date(now.getFullYear(), now.getMonth(), now.getDate(), sunrise.hour, sunrise.minute, sunrise.second).getTime())) {
+                return {
+                    warningLimit: Math.floor(limit.warningLimit / 2),
+                    errorLimit: Math.floor(limit.errorLimit / 2),
+                    cooldown: limit.cooldown
+                }
+            }
+            return limit
+        })()
+
+        console.log(config)
 
         const now = new Date()
         const [_time, _entries] = [localStorage.getItem("view_limit_time"), localStorage.getItem("view_limit_entries")]
