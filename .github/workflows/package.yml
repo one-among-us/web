@@ -54,6 +54,7 @@ jobs:
         with:
           branch: gh-pages
           folder: dist
+          single-commit: true
 
       - name: Deploy 🚀
         uses: cloudflare/pages-action@v1
