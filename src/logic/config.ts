@@ -32,6 +32,14 @@ export const supportedLang: Record<Lang, string> = {
  * @return 'zh_hans', 'zh_hant' or 'en'
  */
 export function getLang(): Lang {
+    if (typeof window === 'undefined') return 'en'
+    
+    // Check if page has the ?lang= query
+    // This is added to assist in archiving
+    const url = new URL(window.location.href)
+    const lang = url.searchParams.get('lang')
+    if (lang && (lang == 'zh_hans' || lang == 'zh_hant' || lang == 'en')) return lang
+
     if (typeof localStorage === 'undefined') return 'en'
 
     // Language preference set, return
