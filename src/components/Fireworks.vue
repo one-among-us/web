@@ -1,15 +1,18 @@
 <script lang="ts">
-import {Vue, Component} from 'vue-facing-decorator';
+import {Vue, Component, Prop} from 'vue-facing-decorator';
 import {randint} from "@/logic/helper";
 
 @Component({
     methods: {randint}
 })
 export default class Fireworks extends Vue {
+    @Prop({required: true}) count: number
     fireworks = [];
 
     created() {
-        this.fireworks = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+        for (let i = 0; i < this.count; ++i) {
+            this.fireworks.push(i);
+        }
     }
 }
 </script>
