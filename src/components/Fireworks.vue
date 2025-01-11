@@ -1,23 +1,37 @@
 <script lang="ts">
 import {Vue, Component} from 'vue-facing-decorator';
+import {randint} from "@/logic/helper";
 
-@Component({})
+@Component({
+    methods: {randint}
+})
 export default class Fireworks extends Vue {
     fireworks = [];
 
     created() {
-        this.fireworks = [1, 2, 3]
+        this.fireworks = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     }
 }
 </script>
 
 <template>
-    <div class="firework" v-for="firework of fireworks" :key="firework.id" v-bind:id="'firework' + firework.id"></div>
+    <div
+        class="firework"
+        v-for="firework of fireworks"
+        :key="firework"
+        v-bind:id="'firework' + firework.id"
+        v-bind:style="'top: ' + randint(40, 60).toString() + '%; left: ' + randint(15, 75).toString() + '%; --x: ' + randint(-70, 70).toString() + 'vmin; --y: ' + randint(-50, -30).toString() + 'vmin;animation-delay: ' + (firework * 0.25).toString() + 's'"
+    ></div>
 </template>
 
 <style scoped lang="scss">
 @keyframes firework {
     0% {
+        transform: translate(var(--x), var(--initialY));
+        width: var(--initialSize);
+        opacity: 0;
+    }
+    0.01% {
         transform: translate(var(--x), var(--initialY));
         width: var(--initialSize);
         opacity: 1;
@@ -108,6 +122,7 @@ export default class Fireworks extends Vue {
         radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 13% 42%;
     background-size: var(--initialSize) var(--initialSize);
     background-repeat: no-repeat;
+    pointer-events: none;
 }
 
 .firework::before {
