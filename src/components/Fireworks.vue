@@ -3,7 +3,9 @@ import {Vue, Component, Prop} from 'vue-facing-decorator';
 import {randint} from "@/logic/helper";
 
 @Component({
-    methods: {randint}
+    methods: {
+        randint,
+    }
 })
 export default class Fireworks extends Vue {
     @Prop({required: true}) count: number
@@ -11,7 +13,14 @@ export default class Fireworks extends Vue {
 
     created() {
         for (let i = 0; i < this.count; ++i) {
-            this.fireworks.push(i);
+            this.generateFireworks();
+        }
+    }
+
+    generateFireworks() {
+        this.fireworks = [];
+        for (let i = 0; i < this.count; ++i) {
+            this.fireworks.push({ id: i, delay: Math.random() * 2 }); // Add delay for variation
         }
     }
 }
@@ -23,18 +32,20 @@ export default class Fireworks extends Vue {
         v-for="firework of fireworks"
         :key="firework"
         v-bind:id="'firework' + firework.id"
-        v-bind:style="'top: ' + randint(40, 60).toString() + '%; left: ' + randint(15, 75).toString() + '%; --x: ' + randint(-70, 70).toString() + 'vmin; --y: ' + randint(-50, -30).toString() + 'vmin;animation-delay: ' + (firework * 0.25).toString() + 's'"
+        v-bind:style="{
+            top: `${randint(40, 60)}%`,
+            left: `${randint(15, 75)}%`,
+            '--x': `${randint(-70, 70)}vmin`,
+            '--y': `${randint(-50, -30)}vmin`,
+            'animation-delay': `${firework.delay}s`,
+            'animation-duration': `${randint(2, 3)}s`
+        }"
     ></div>
 </template>
 
 <style scoped lang="scss">
 @keyframes firework {
     0% {
-        transform: translate(var(--x), var(--initialY));
-        width: var(--initialSize);
-        opacity: 0;
-    }
-    0.01% {
         transform: translate(var(--x), var(--initialY));
         width: var(--initialSize);
         opacity: 1;
@@ -162,7 +173,7 @@ export default class Fireworks extends Vue {
     --finalSize: 40vmin;
     left: 30%;
     top: 60%;
-    animation-delay: -0.25s;
+    //animation-delay: -0.25s;
 }
 
 .firework:nth-child(3n) {
@@ -182,7 +193,7 @@ export default class Fireworks extends Vue {
     --finalSize: 35vmin;
     left: 70%;
     top: 60%;
-    animation-delay: -0.4s;
+    //animation-delay: -0.4s;
 }
 
 </style>
