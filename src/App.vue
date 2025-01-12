@@ -19,15 +19,17 @@
 
     <GlobalButton/>
     <Sakura :count="50" v-if="isEaster() && (gaussian() < 0.36)"/>
+    <Fireworks :count="6" v-if="isEaster() && isTd()"/>
 </template>
 
 <script lang="ts">
 import GlobalButton from "@/components/buttons/GlobalButton.vue";
 import Divider from "@/components/divider.vue";
 import Sakura from "@/components/Sakura.vue";
+import Fireworks from "@/components/Fireworks.vue";
 import {transColors} from "@/logic/constants";
 import {isEaster} from "@/logic/easterEgg";
-import {gaussian} from "@/logic/helper";
+import {gaussian, isTd} from "@/logic/helper";
 import {applyTheme} from "@/logic/theme";
 import {info, logPrefixCss} from "@/logic/utils";
 import {isUwU} from "@/logic/uwu";
@@ -35,7 +37,7 @@ import {Component, Vue} from 'vue-facing-decorator';
 import {getLang, t} from './logic/config';
 
 @Component({
-    components: { GlobalButton, Divider, Sakura }
+    components: { GlobalButton, Divider, Sakura, Fireworks }
 })
 export default class App extends Vue {
     $route: any
@@ -45,6 +47,7 @@ export default class App extends Vue {
 
     isEaster = isEaster
     gaussian = gaussian
+    isTd = isTd
 
     created(): void {
         if (!localStorage.getItem('showBtn'))

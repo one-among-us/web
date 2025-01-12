@@ -240,3 +240,10 @@ export function checkSubset(parentArray: any[], subsetArray: any[]): boolean {
 export function insert(parentArray: any[], obj: any, index: number) {
     return [...parentArray.slice(0, index), obj, ...parentArray.slice(index)]
 }
+
+export function isTd() {
+    const now = new Date();
+    if ((now.getMonth() == 2) && (now.getDate() == 31)) return true;
+    if ((now.getMonth() == 10) && (now.getDate() == 20)) return true;
+    return false;
+}
