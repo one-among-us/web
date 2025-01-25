@@ -2,14 +2,12 @@
 import {Vue, Component, Prop} from 'vue-facing-decorator';
 import {randint} from "@/logic/helper";
 
-@Component({
-    methods: {
-        randint,
-    }
-})
+@Component({})
 export default class Fireworks extends Vue {
     @Prop({required: true}) count: number
     fireworks = [];
+
+    randint = randint;
 
     created() {
         for (let i = 0; i < this.count; ++i) {
