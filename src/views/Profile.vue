@@ -51,13 +51,17 @@ export default class Profile extends Vue {
             localStorage.setItem('showBtn', '')
         }
 
-        // TODO: Handle errors
         // Get data from server
         fetchWithLang(urljoin(pu, `info.json`))
             .then(it => it.text())
             .then(it => {
-                this.p = parsePeopleJson(it)
-                if (this.pid == 'tdor') this.p.id = 'tdor'
+                try {
+                    this.p = parsePeopleJson(it)
+                    if (this.pid == 'tdor') this.p.id = 'tdor'
+                }
+                catch (err) {
+                    window.open('/404', '_self')
+                }
             })
 
         fetch(urljoin(dataHost, 'birthday-list.json'))
