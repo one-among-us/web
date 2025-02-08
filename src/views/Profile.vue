@@ -94,6 +94,7 @@ export default class Profile extends Vue {
 
     checkViewLimit(): boolean | void {
         if (this.screenshotMode) return
+        if (window.location.hostname == 'localhost') return
 
         const config = (() => {
             const now = new Date();
