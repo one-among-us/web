@@ -79,7 +79,7 @@ import {
     getResponseSync,
     handleIconFromString,
     insert,
-    randint,
+    randint, removeItem,
     scheduledLoopTask,
     shuffle,
 } from "@/logic/helper";
@@ -111,6 +111,7 @@ export default class Home extends Vue {
     searchKey = ''
     dateRange = []
     isShuffle = false
+    probilities = any
 
     birthdayList = [] as [string, string][]
 
@@ -134,6 +135,7 @@ export default class Home extends Vue {
 
     created(): void {
         info(`Language: ${this.lang}`)
+        this.probilities = JSON.parse(getResponseSync(urljoin(dataHost, 'probilities.json')))
         fetchWithLang(urljoin(dataHost, 'people-home-list.json'))
             .then(it => it.text())
             .then(it => {
@@ -145,6 +147,11 @@ export default class Home extends Vue {
                 if (isEaster() && (gaussian() < pros)) scheduledLoopTask(1500, () => {
                     this.people = gaussian_shuffle(this.people)
                 })
+                for (const [k, v] of this.probilities.entries()) {
+                    if (Math.random() > v) {
+                        this.people = removeItem(this.people, k)
+                    }
+                }
 
                 //blur canvas for loading images
                 fetch(urljoin(dataHost, 'blur-code.json'))

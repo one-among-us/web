@@ -74,7 +74,7 @@ export function reconstructUrl(input: URL | RequestInfo, callback: (URL) => URL 
     let u = new URL((input instanceof Request) ? input.url : input);
     const result = callback(u)
     if (result) u = result
-    if (input instanceof Request) return { url: u, ...input }
+    if (input instanceof Request) return {url: u, ...input}
     return u
 }
 
@@ -246,4 +246,10 @@ export function isTd() {
     if ((now.getMonth() == 2) && (now.getDate() == 31)) return true;
     if ((now.getMonth() == 10) && (now.getDate() == 20)) return true;
     return false;
+}
+
+export function removeItem(array: any[], item: any) {
+    return array.filter((it) => {
+        return it != item
+    });
 }
