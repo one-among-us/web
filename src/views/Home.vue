@@ -111,7 +111,7 @@ export default class Home extends Vue {
     searchKey = ''
     dateRange = []
     isShuffle = false
-    probilities = any
+    probilities: any
 
     birthdayList = [] as [string, string][]
 
