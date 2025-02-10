@@ -147,8 +147,10 @@ export default class Home extends Vue {
                 if (isEaster() && (gaussian() < pros)) scheduledLoopTask(1500, () => {
                     this.people = gaussian_shuffle(this.people)
                 })
-                for (const [k, v] of this.probilities.entries()) {
-                    if (Math.random() > v) {
+                for (const [k, v] of Object.entries(this.probilities)) {
+                    const p = Math.random()
+                    console.log([k, v, p])
+                    if (p > v) {
                         this.people = removeItem(this.people, k)
                     }
                 }
