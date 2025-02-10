@@ -247,9 +247,3 @@ export function isTd() {
     if ((now.getMonth() == 10) && (now.getDate() == 20)) return true;
     return false;
 }
-
-export function removeItem(array: any[], item: any) {
-    return array.filter((it) => {
-        return it != item
-    });
-}

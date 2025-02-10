@@ -79,7 +79,7 @@ import {
     getResponseSync,
     handleIconFromString,
     insert,
-    randint, removeItem,
+    randint,
     scheduledLoopTask,
     shuffle,
 } from "@/logic/helper";
@@ -106,7 +106,7 @@ export default class Home extends Vue {
     htmlTop = handleIconFromString(this.lang === 'zh_hans' ? htmlTop : (this.lang === 'zh_hant' ? htmlTopHant : htmlTopEn));
     htmlBottom = handleIconFromString(this.lang === 'zh_hans' ? htmlBottom : (this.lang === 'zh_hant' ? htmlBottomHant : htmlBottomEn));
 
-    people: PersonMeta[] = null as never as PersonMeta[]
+    people = [] as PersonMeta[]
     fullPeople = [] as PersonMeta[]
     searchKey = ''
     dateRange = []
@@ -140,20 +140,24 @@ export default class Home extends Vue {
             .then(it => it.text())
             .then(it => {
                 this.isShuffle = isEaster() && (gaussian() < 0.35)
-                this.people = this.isShuffle ? shuffle(JSON.parse(it)) : JSON.parse(it)
                 this.fullPeople = JSON.parse(it)
+                for (const v of this.fullPeople) {
+                    if (Object.keys(this.probilities).includes(v.id)) {
+                        const p = parseFloat(this.probilities[v.id].toString())
+                        if (Math.random() > p) {
+                            this.people.push(v)
+                        }
+                    }
+                    else {
+                        this.people.push(v)
+                    }
+                }
+                this.people = this.isShuffle ? shuffle(this.people) : this.people
                 const now = new Date();
                 const pros = ((now.getDate() == 1) && (now.getMonth() + 1 == 4)) ? 0.5 : 0.05;
                 if (isEaster() && (gaussian() < pros)) scheduledLoopTask(1500, () => {
                     this.people = gaussian_shuffle(this.people)
                 })
-                for (const [k, v] of Object.entries(this.probilities)) {
-                    const p = Math.random()
-                    console.log([k, v, p])
-                    if (p > v) {
-                        this.people = removeItem(this.people, k)
-                    }
-                }
 
                 //blur canvas for loading images
                 fetch(urljoin(dataHost, 'blur-code.json'))
