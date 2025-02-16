@@ -144,7 +144,7 @@ export default class Home extends Vue {
                 for (const v of this.fullPeople) {
                     if (Object.keys(this.probilities).includes(v.id)) {
                         const p = parseFloat(this.probilities[v.id].toString())
-                        if (Math.random() > p) {
+                        if (Math.random() < p) {
                             this.people.push(v)
                         }
                     }
