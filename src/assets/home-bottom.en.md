@@ -7,7 +7,7 @@ Although One Among Us does not currently have suicide prevention capabilities, i
 
 # Stopping Transphobic Violence
 
-The [Transgender Factsheet](https://www.unfe.org/wp-content/uploads/2019/03/Transgender_Factsheet_English.pdf) from the UN Human Rights Office states that “Trans people in all parts of the world are at heightened risk of violence, harassment and discrimination.
+The [Transgender Factsheet](https://www.unfe.org/en/know-the-facts/challenges-solutions/transgender) from the UN Human Rights Office states that “Trans people in all parts of the world are at heightened risk of violence, harassment and discrimination.
 Human rights violations range from bullying and verbal abuse, to denial of healthcare, education, work and housing, to criminalization, arbitrary arrest and detention, violence, assault, torture, rape and murder.
 Exposure to these and related abuses may be further exacerbated by other factors, such as age, ethnicity, occupation, socio-economic class and disability."  
 

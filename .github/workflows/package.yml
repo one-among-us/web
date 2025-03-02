@@ -44,7 +44,7 @@ jobs:
           args: yarn gen-meta
 
       - name: Publish artifact code
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: packaged
           path: dist
@@ -54,6 +54,7 @@ jobs:
         with:
           branch: gh-pages
           folder: dist
+          single-commit: true
 
       - name: Deploy 🚀
         uses: cloudflare/pages-action@v1

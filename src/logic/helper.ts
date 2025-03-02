@@ -74,7 +74,7 @@ export function reconstructUrl(input: URL | RequestInfo, callback: (URL) => URL 
     let u = new URL((input instanceof Request) ? input.url : input);
     const result = callback(u)
     if (result) u = result
-    if (input instanceof Request) return { url: u, ...input }
+    if (input instanceof Request) return {url: u, ...input}
     return u
 }
 
@@ -151,7 +151,7 @@ export function toast(title: string, text: string, img: string, background: stri
         position: "top-end",
         title: title,
         text: text,
-        iconHtml: `<img style="width: ${width}px;height: ${height}px;border: none" src="/img/${img}"></img>`,
+        iconHtml: `<img style="width: ${width}px;height: ${height}px;border: none" src="${img}"></img>`,
         iconColor: "#00000000",
         background: background,
         timer: 5000,
@@ -229,4 +229,21 @@ export function gaussian_bm(min, max, skew) {
         num += min // offset to min
     }
     return num
+}
+
+export function checkSubset(parentArray: any[], subsetArray: any[]): boolean {
+    return subsetArray.every((e) => {
+        return parentArray.includes(e)
+    })
+}
+
+export function insert(parentArray: any[], obj: any, index: number) {
+    return [...parentArray.slice(0, index), obj, ...parentArray.slice(index)]
+}
+
+export function isTd() {
+    const now = new Date();
+    if ((now.getMonth() == 2) && (now.getDate() == 31)) return true;
+    if ((now.getMonth() == 10) && (now.getDate() == 20)) return true;
+    return false;
 }

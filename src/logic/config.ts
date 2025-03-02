@@ -32,6 +32,14 @@ export const supportedLang: Record<Lang, string> = {
  * @return 'zh_hans', 'zh_hant' or 'en'
  */
 export function getLang(): Lang {
+    if (typeof window === 'undefined') return 'en'
+    
+    // Check if page has the ?lang= query
+    // This is added to assist in archiving
+    const url = new URL(window.location.href)
+    const lang = url.searchParams.get('lang')
+    if (lang && (lang == 'zh_hans' || lang == 'zh_hant' || lang == 'en')) return lang
+
     if (typeof localStorage === 'undefined') return 'en'
 
     // Language preference set, return
@@ -84,7 +92,8 @@ export const i18n = {
         "nav_success": "Success",
         "nav_failed": "Failed",
         "nav_success_text": "Thank you! We will review your changes as soon as possible.",
-        "nav_success_text_reply": "Thank you! We will email you after review.",
+        "nav_success_text_reply": "Thank you! We will add your comment to the page after review.",
+        "nav_success_text_reply_email": "Thank you! We will add your comment and send you an email after review.",
         "nav_fail_reason": "Reason: ",
         "nav_anonymous": "——Anonymous",
         "nav_will_submit": "Submit?",
@@ -99,6 +108,7 @@ export const i18n = {
         "email": "email (optional)",
         "random": "Click here to visit a random page",
         "tdor_btn": "Click here to leave your message",
+        "tdor_comment": "Stand United for Surviving—2024 Transgender Remembrance Day: Collection of Letters",
         view_limit: {
             title: "Take a rest!",
             warning: "You have read so many pages, please remember to take good care of yourself~",
@@ -159,7 +169,8 @@ export const i18n = {
         "nav_success": "提交成功",
         "nav_failed": "提交失败",
         "nav_success_text": "谢谢你. 我们将尽快审核您的更改. ",
-        "nav_success_text_reply": "谢谢你. 我们审核之后会给你发邮件.",
+        "nav_success_text_reply": "谢谢你. 我们审核之后会添加到网页上.",
+        "nav_success_text_reply_email": "谢谢你. 我们审核之后会给你发邮件.",
         "nav_fail_reason": "失败原因: ",
         "nav_anonymous": "——匿名小可爱",
         "nav_will_submit": "要提交编辑嘛?",
@@ -174,6 +185,7 @@ export const i18n = {
         "email": "邮箱 (可选)",
         "random": "随机看望一位朋友",
         "tdor_btn": "填写现身日晚会来信请点这里",
+        "tdor_comment": "Stand United for Surviving—2024年跨性别纪念日晚会 来信集合",
         view_limit: {
             title: "休息一下吧！",
             warning: "读太多啦！要好好照顾自己哦~",
@@ -234,7 +246,8 @@ export const i18n = {
         "nav_success": "提交完成",
         "nav_failed": "提交失败",
         "nav_success_text": "謝謝你. 我們將儘快審覈您的更改. ",
-        "nav_success_text_reply": "谢谢你. 我們審覈之後會答覆你郵件.",
+        "nav_success_text_reply": "謝謝你. 我們審覈之後會添加到網頁上.",
+        "nav_success_text_reply_email": "谢谢你. 我們審覈之後會答覆你郵件.",
         "nav_fail_reason": "失敗原因: ",
         "nav_anonymous": "——沒留名字的小可愛",
         "nav_will_submit": "要提交編輯嘛?",
@@ -249,6 +262,7 @@ export const i18n = {
         "email": "電子郵箱 (可選)",
         "random": "點一下這裏查看一個隨機頁面",
         "tdor_btn": "點一下這裏填寫現身日晚會來信",
+        "tdor_comment": "Stand United for Surviving—2024年跨性別紀念日晚會 來信集合",
         view_limit: {
             title: "歇息一下吧！",
             warning: "閲讀太多啦！要好好照顧自己哦",

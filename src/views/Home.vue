@@ -20,7 +20,8 @@
             <div class="search-bar">
                 <Icon class="search-icon" icon="mynaui:search-hexagon" v-on:click="updateSearch"/>
                 <input class="search-input" v-model="searchKey" v-on:input="updateSearch" placeholder="Search for..."/>
-                <VueDatePicker range light model-auto class="search-date" placeholder="Select a range" v-model="dateRange" @update:model-value="updateSearch" />
+                <VueDatePicker range light model-auto class="search-date" placeholder="Select a range"
+                               v-model="dateRange" @update:model-value="updateSearch"/>
             </div>
 
             <Loading v-if="isLoading"/>
@@ -30,10 +31,12 @@
                     <div class="back"/>
                     <a :href="`/profile/${p.id}`" @click.exact.prevent.stop="() => false">
                         <transition name="fade" @after-leave="() => switchPage(p)">
-                            <img :src="profileUrl(p)" draggable="false" alt="profile" class="front clickable"
-                                 @click.exact="() => { if (!clicked) { clicked = p.name; } return false }"
-                                 v-if="clicked !== p.name"
-                                 v-on:load="isLoading = false">
+                            <div class="front" v-if="clicked !== p.name">
+                                <canvas v-bind:id="p.id + '-canvas'" class="blur clickable"></canvas>
+                                <img :src="profileUrl(p)" draggable="false" alt="" class="profile-image clickable"
+                                     @click.exact="() => { if (!clicked) { clicked = p.name; } return false }"
+                                     v-on:load="isLoading = false">
+                            </div>
                         </transition>
                     </a>
                     <div class="name font-custom" ref="bookmarkTexts">{{ p.name }}</div>
@@ -56,8 +59,8 @@ import htmlBottomHant from "@/assets/home-bottom.zh_hant.md";
 import htmlTopEn from "@/assets/home-top.en.md";
 import htmlTop from "@/assets/home-top.md";
 import htmlTopHant from "@/assets/home-top.zh_hant.md";
-import tdorCommentViewEn from "@/assets/tdor-comments-head-en.md";
-import tdorCommentViewHant from "@/assets/tdor-comments-head-zh_hant.md";
+import tdorCommentViewEn from "@/assets/tdor-comments-head.en.md";
+import tdorCommentViewHant from "@/assets/tdor-comments-head.zh_hant.md";
 import tdorCommentView from "@/assets/tdor-comments-head.md";
 import tdorTopEn from "@/assets/tdor-top.en.md";
 import tdorTop from "@/assets/tdor-top.md";
@@ -75,6 +78,8 @@ import {
     gaussian_shuffle,
     getResponseSync,
     handleIconFromString,
+    insert,
+    randint,
     scheduledLoopTask,
     shuffle,
 } from "@/logic/helper";
@@ -85,6 +90,7 @@ import router from "@/router";
 import TdorComments from "@/views/TdorComments.vue";
 import {Icon} from "@iconify/vue";
 import VueDatePicker from '@vuepic/vue-datepicker'
+import {decode} from 'blurhash'
 import urljoin from "url-join";
 import {Component, Ref, Vue} from 'vue-facing-decorator';
 
@@ -100,10 +106,12 @@ export default class Home extends Vue {
     htmlTop = handleIconFromString(this.lang === 'zh_hans' ? htmlTop : (this.lang === 'zh_hant' ? htmlTopHant : htmlTopEn));
     htmlBottom = handleIconFromString(this.lang === 'zh_hans' ? htmlBottom : (this.lang === 'zh_hant' ? htmlBottomHant : htmlBottomEn));
 
-    people: PersonMeta[] = null as never as PersonMeta[]
+    people = [] as PersonMeta[]
     fullPeople = [] as PersonMeta[]
     searchKey = ''
     dateRange = []
+    isShuffle = false
+    probilities: any
 
     birthdayList = [] as [string, string][]
 
@@ -111,17 +119,10 @@ export default class Home extends Vue {
     @Ref() bookmark: HTMLDivElement[]
 
     isDeadlinePassed(): boolean {
-        // const deadlineDate = new Date(2024, 2, 27, 16, 0); // March 27, 2024, 16:00 (UTC); Wrong! not UTC!
-        // const now = new Date();
-        // return now > deadlineDate;
         return true;
     }
 
     isShowCommentsEntry(): boolean {
-        // const startTime = new Date(2024, 2, 31, 12, 0); // March 31, 2024, 20:00 (CST) Wrong! not UTC!
-        // const endTime = new Date(2024, 3, 6, 12, 0); // April 6, 2024, 20:00 (CST) Wrong! not UTC!
-        // const now = new Date();
-        // return (now > startTime) && (now < endTime);
         return false;
     }
 
@@ -134,16 +135,55 @@ export default class Home extends Vue {
 
     created(): void {
         info(`Language: ${this.lang}`)
+        this.probilities = JSON.parse(getResponseSync(urljoin(dataHost, 'probilities.json')))
         fetchWithLang(urljoin(dataHost, 'people-home-list.json'))
             .then(it => it.text())
             .then(it => {
-                this.people = (isEaster() && (gaussian() < 0.35)) ? shuffle(JSON.parse(it)) : JSON.parse(it)
+                this.isShuffle = isEaster() && (gaussian() < 0.35)
                 this.fullPeople = JSON.parse(it)
+                for (const v of this.fullPeople) {
+                    if (Object.keys(this.probilities).includes(v.id)) {
+                        const p = parseFloat(this.probilities[v.id].toString())
+                        if (Math.random() < p) {
+                            this.people.push(v)
+                        }
+                    }
+                    else {
+                        this.people.push(v)
+                    }
+                }
+                this.people = this.isShuffle ? shuffle(this.people) : this.people
                 const now = new Date();
                 const pros = ((now.getDate() == 1) && (now.getMonth() + 1 == 4)) ? 0.5 : 0.05;
                 if (isEaster() && (gaussian() < pros)) scheduledLoopTask(1500, () => {
                     this.people = gaussian_shuffle(this.people)
                 })
+
+                //blur canvas for loading images
+                fetch(urljoin(dataHost, 'blur-code.json'))
+                    .then(it => it.json())
+                    .then(it => {
+                        for (const p of this.people) {
+                            if (typeof (it[p.id]) !== "string") continue;
+                            const pixels = decode(it[p.id], 150, 150)
+                            const canvas = document.getElementById(p.id + '-canvas') as HTMLCanvasElement;
+                            const ctx = canvas.getContext("2d");
+                            const imageData = ctx.createImageData(150, 150);
+                            imageData.data.set(pixels);
+                            ctx.putImageData(imageData, 0, 0);
+                        }
+                    })
+
+                // insert entry with unknown date of pass away to random position
+                if (!this.isShuffle) {
+                    const u = this.people
+                    this.people = []
+
+                    for (const v of u) {
+                        if (v.sortKey != 0) this.people.push(v);
+                        else this.people = insert(this.people, v, randint(0, this.people.length - 1));
+                    }
+                }
             })
 
         fetch(urljoin(dataHost, 'birthday-list.json'))
@@ -200,6 +240,14 @@ export default class Home extends Vue {
 <style lang="sass" scoped>
 @import "../css/colors"
 @import "../css/motion"
+
+@keyframes blink
+    0%
+        opacity: 1
+    50%
+        opacity: 0.75
+    100%
+        opacity: 1
 
 .introduction
     text-align: justify
@@ -281,6 +329,24 @@ export default class Home extends Vue {
         height: 150px
         width: 150px
         transition: all .25s $ease-out-cric
+        overflow: hidden
+
+    .blur
+        z-index: 5
+        position: absolute
+        height: 150px
+        top: 0
+        left: 0
+        animation: blink 2s ease infinite
+
+    .profile-image
+        width: 100%
+        height: 100%
+        z-index: 6
+        position: absolute
+        top: 0
+        left: 0
+        background: #00000000
 
     .back
         z-index: 2
@@ -349,6 +415,9 @@ export default class Home extends Vue {
             $len: 30vw
             height: $len
             width: $len
+
+        .blur
+            height: 30vw
 
 @media screen and (max-width: 700px)
     .search-bar

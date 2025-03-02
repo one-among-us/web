@@ -53,7 +53,7 @@
             <SwitchButton/>
         </a>
 
-        <img class="watermark" draggable="false" src="/favicon-large.png" alt=""/>
+        <img class="watermark unselectable" draggable="false" src="/favicon-large.png" alt=""/>
     </div>
 </template>
 

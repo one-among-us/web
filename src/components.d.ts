@@ -18,6 +18,7 @@ declare module 'vue' {
     Divider: typeof import('./components/divider.vue')['default']
     DynamicIcon: typeof import('./components/DynamicIcon.vue')['default']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
+    Fireworks: typeof import('./components/Fireworks.vue')['default']
     GlobalButton: typeof import('./components/buttons/GlobalButton.vue')['default']
     HyInput: typeof import('./components/HyInput.vue')['default']
     IEpCheck: typeof import('~icons/ep/check')['default']
@@ -45,9 +46,11 @@ declare module 'vue' {
     RecaptchaV2: typeof import('./components/RecaptchaV2.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Sakura: typeof import('./components/Sakura.vue')['default']
     ScrollButton: typeof import('./components/buttons/ScrollButton.vue')['default']
     SubmitPrompt: typeof import('./components/SubmitPrompt.vue')['default']
     SwitchButton: typeof import('./components/buttons/SwitchButton.vue')['default']
+    TextRing: typeof import('./components/TextRing.vue')['default']
     ThemeButton: typeof import('./components/buttons/ThemeButton.vue')['default']
   }
 }

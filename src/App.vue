@@ -18,24 +18,37 @@
     <Divider height="5px"/>
 
     <GlobalButton/>
+    <Sakura :count="50" v-if="isEaster() && (gaussian() < 0.36)"/>
+    <Fireworks :count="6" v-if="isEaster() && isTd() && (getTheme() == 'dark')"/>
 </template>
 
 <script lang="ts">
-import Divider from "@/components/divider.vue";
 import GlobalButton from "@/components/buttons/GlobalButton.vue";
+import Divider from "@/components/divider.vue";
+import Sakura from "@/components/Sakura.vue";
+import Fireworks from "@/components/Fireworks.vue";
 import {transColors} from "@/logic/constants";
-import {applyTheme} from "@/logic/theme";
+import {isEaster} from "@/logic/easterEgg";
+import {gaussian, isTd} from "@/logic/helper";
+import {applyTheme, getTheme} from "@/logic/theme";
 import {info, logPrefixCss} from "@/logic/utils";
+import {isUwU} from "@/logic/uwu";
 import {Component, Vue} from 'vue-facing-decorator';
 import {getLang, t} from './logic/config';
-import {isUwU} from "@/logic/uwu";
 
-@Component({ components: { GlobalButton, Divider } })
+@Component({
+    components: { GlobalButton, Divider, Sakura, Fireworks }
+})
 export default class App extends Vue {
     $route: any
     t = t
 
     uwu = isUwU()
+
+    isEaster = isEaster
+    gaussian = gaussian
+    getTheme = getTheme
+    isTd = isTd
 
     created(): void {
         if (!localStorage.getItem('showBtn'))
