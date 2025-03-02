@@ -10,6 +10,7 @@ import * as Vue from 'vue';
 import {computed, defineComponent} from 'vue';
 import BlurBlock from "./BlurBlock.vue";
 import PhotoScroll from './PhotoScroll.vue';
+import TextRing from "./TextRing.vue";
 
 export default defineComponent({
     name: "MDX",
@@ -48,7 +49,8 @@ export default defineComponent({
                             ColumnView,
                             DynamicIcon,
                             PhotoScroll,
-                            Sakura
+                            Sakura,
+                            TextRing
                         }
                     })
                 }
