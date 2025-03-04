@@ -3,7 +3,7 @@ import {Vue, Component, Prop} from 'vue-facing-decorator';
 
 @Component({})
 export default class DottedNumber extends Vue {
-    @Prop({required: true}) n: number;
+    @Prop({required: true}) n: number | string;
 }
 </script>
 
