@@ -16,6 +16,7 @@ declare module 'vue' {
     ChannelBackupButton: typeof import('./components/buttons/ChannelBackupButton.vue')['default']
     ColumnView: typeof import('./components/ColumnView.vue')['default']
     Divider: typeof import('./components/divider.vue')['default']
+    DottedNumber: typeof import('./components/DottedNumber.vue')['default']
     DynamicIcon: typeof import('./components/DynamicIcon.vue')['default']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
     Fireworks: typeof import('./components/Fireworks.vue')['default']
