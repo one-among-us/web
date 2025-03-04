@@ -48,6 +48,7 @@ declare module 'vue' {
     ScrollButton: typeof import('./components/buttons/ScrollButton.vue')['default']
     SubmitPrompt: typeof import('./components/SubmitPrompt.vue')['default']
     SwitchButton: typeof import('./components/buttons/SwitchButton.vue')['default']
+    TextRainbow: typeof import('./components/TextRainbow.vue')['default']
     TextRing: typeof import('./components/TextRing.vue')['default']
     ThemeButton: typeof import('./components/buttons/ThemeButton.vue')['default']
   }

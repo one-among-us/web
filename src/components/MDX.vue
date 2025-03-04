@@ -10,6 +10,7 @@ import * as Vue from 'vue';
 import {computed, defineComponent} from 'vue';
 import BlurBlock from "./BlurBlock.vue";
 import PhotoScroll from './PhotoScroll.vue';
+import TextRainbow from "./TextRainbow.vue";
 import TextRing from "./TextRing.vue";
 
 export default defineComponent({
@@ -50,6 +51,7 @@ export default defineComponent({
                             DynamicIcon,
                             PhotoScroll,
                             Sakura,
+                            TextRainbow,
                             TextRing
                         }
                     })
