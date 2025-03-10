@@ -141,7 +141,7 @@ export default class ProfileComments extends Vue {
                             showCloseButton: true
                         })
                         this.comments.push({
-                            content: this.textInput.replaceAll("\n", "<br />"),
+                            content: mdParseInline(this.textInput.replaceAll("\n", "<br />")),
                             replies: [],
                             submitter: 'You',
                             id: 0
@@ -150,14 +150,14 @@ export default class ProfileComments extends Vue {
                         if (!myComments) myComments = {};
                         if ((!(this.p.id in myComments)) || (myComments[this.p.id] == undefined)) {
                             myComments[this.p.id] = [{
-                                content: this.textInput.replaceAll("\n", "<br />"),
+                                content: mdParseInline(this.textInput.replaceAll("\n", "<br />")),
                                 replies: [],
                                 submitter: 'You',
                                 id: 0
                             }]
                         } else {
                             myComments[this.p.id].push({
-                                content: this.textInput.replaceAll("\n", "<br />"),
+                                content: mdParseInline(this.textInput.replaceAll("\n", "<br />")),
                                 replies: [],
                                 submitter: 'You',
                                 id: 0
