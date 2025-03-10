@@ -95,7 +95,10 @@ export default class ProfileComments extends Vue {
                     }
                 }
                 if (flag) {
-                    commentData.push(u);
+                    commentData.push({
+                        ...u,
+                        content: mdParseInline(u.content.replaceAll("\n", "<br />")),
+                    });
                 }
             }
         }
