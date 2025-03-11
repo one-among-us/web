@@ -5,6 +5,7 @@
             <span class="icon-wrapper" @mousedown="e => apply(e, act)">
                 <IFasBold v-if="act.icon === 'bold'"/>
                 <IFasItalic v-if="act.icon === 'italic'"/>
+                <IFasUnderline v-if="act.icon === 'underline'"/>
                 <IFasStrikethrough v-if="act.icon === 'strikethrough'"/>
                 <IFasCode v-if="act.icon === 'code'"/>
                 <IFasEyeSlash v-if="act.icon === 'spoiler'"/>
@@ -15,6 +16,7 @@
 
 <script lang="ts">
 import {Component, Prop, Ref, Vue} from 'vue-facing-decorator';
+import {t} from '@/logic/config'
 
 interface TooltipAction {
     name: string
@@ -23,15 +25,15 @@ interface TooltipAction {
     // is: (text: string, start: number, end: number) => boolean
 }
 
-@Component({ components: {} })
+@Component({})
 export default class MarkdownTooltip extends Vue {
     actions: TooltipAction[] = [
-        { name: '加粗', icon: 'bold', md: '**' },
-        { name: '斜体', icon: 'italic', md: '__' },
-        // {name: '下划线', icon: 'fa-solid fa-underline',     md: '--'},
-        { name: '划掉', icon: 'strikethrough', md: '~~' },
-        { name: '代码', icon: 'code', md: '`' },
-        { name: '黑幕', icon: 'spoiler', md: '||' },
+        { name: t.markdown_tooltip.bold, icon: 'bold', md: '**' },
+        { name: t.markdown_tooltip.italic, icon: 'italic', md: '__' },
+        { name: t.markdown_tooltip.underline, icon: 'underline', md: '--'},
+        { name: t.markdown_tooltip.strikethrough, icon: 'strikethrough', md: '~~' },
+        { name: t.markdown_tooltip.code, icon: 'code', md: '`' },
+        { name: t.markdown_tooltip.spoiler, icon: 'spoiler', md: '||' },
     ]
 
     @Ref() el!: HTMLElement

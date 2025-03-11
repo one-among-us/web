@@ -34,6 +34,7 @@ declare module 'vue' {
     IFasLink: typeof import('~icons/fa6-solid/link')['default']
     IFasPaperPlane: typeof import('~icons/fa6-solid/paper-plane')['default']
     IFasStrikethrough: typeof import('~icons/fa6-solid/strikethrough')['default']
+    IFasUnderline: typeof import('~icons/fa6-solid/underline')['default']
     IFasXmark: typeof import('~icons/fa6-solid/xmark')['default']
     LangButton: typeof import('./components/buttons/LangButton.vue')['default']
     Loading: typeof import('./components/Loading.vue')['default']

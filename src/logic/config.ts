@@ -150,6 +150,14 @@ export const i18n = {
             dark: "Dark",
             top: "Go to top",
             language: "Other Languages"
+        },
+        markdown_tooltip: {
+            bold: "Bold",
+            italic: "Italic",
+            underline: "Underline",
+            strikethrough: "Strikethrough",
+            code: "Code",
+            spoiler: "Spoiler"
         }
     },
     "zh_hans": {
@@ -227,6 +235,14 @@ export const i18n = {
             dark: "暗色",
             top: "回到顶部",
             language: "其他语言"
+        },
+        markdown_tooltip: {
+            bold: "加粗",
+            italic: "斜体",
+            underline: "下划线",
+            strikethrough: "划掉",
+            code: "代码",
+            spoiler: "黑幕"
         }
     },
     "zh_hant": {
@@ -304,6 +320,14 @@ export const i18n = {
             dark: "暗顏色",
             top: "返回頁首",
             language: "其他言語"
+        },
+        markdown_tooltip: {
+            bold: "加粗",
+            italic: "斜體",
+            underline: "下劃綫",
+            strikethrough: "刪除綫",
+            code: "等寬字體",
+            spoiler: "劇透内容"
         }
     }
 }
