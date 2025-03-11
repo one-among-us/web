@@ -21,6 +21,7 @@ declare module 'vue' {
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
     Fireworks: typeof import('./components/Fireworks.vue')['default']
     GlobalButton: typeof import('./components/buttons/GlobalButton.vue')['default']
+    Hexagon: typeof import('./components/Hexagon.vue')['default']
     HyInput: typeof import('./components/HyInput.vue')['default']
     IEpCheck: typeof import('~icons/ep/check')['default']
     IEpEdit: typeof import('~icons/ep/edit')['default']
