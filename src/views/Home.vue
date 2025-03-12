@@ -47,7 +47,7 @@
                 </div>
             </transition-group>
 
-            <div class="introduction markdown-content bottom" v-html="htmlBottom"/>
+            <div class="introduction markdown-content" v-html="htmlBottom"/>
         </div>
     </div>
 </template>
@@ -253,9 +253,6 @@ export default class Home extends Vue {
     text-align: justify
     text-justify: inter-word
     margin: 10px min(5vw, 40px)
-
-.bottom
-    padding-bottom: 250px
 
 .randomButtons
     display: flex
