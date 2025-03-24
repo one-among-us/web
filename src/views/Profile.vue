@@ -1,13 +1,13 @@
 <template>
     <div>
-        <div class="profile-page" :class="{screenshot: screenshotMode}" v-if="p">
-            <ProfileCard class="profile-card" :userid="pid" :p="p" v-if="pid != 'tdor'"
-                         :screenshot-mode="screenshotMode"/>
+        <div v-if="p" :class="{screenshot: screenshotMode}" class="profile-page">
+            <ProfileCard v-if="pid != 'tdor'" :p="p" :screenshot-mode="screenshotMode" :userid="pid"
+                         class="profile-card"/>
 
-            <MDX class="content" :code="compiledMdxCode" v-if="pid != 'tdor'"/>
+            <MDX v-if="pid != 'tdor'" :code="compiledMdxCode" class="content"/>
             <Balloon v-for="i of isBirthday" :key="i"/>
 
-            <ProfileComments class="comments" :p="p" v-if="p.comments && !screenshotMode"/>
+            <ProfileComments v-if="p.comments && !screenshotMode" :p="p" class="comments"/>
         </div>
     </div>
 </template>
@@ -25,21 +25,21 @@ import ProfileComments from "@/views/ProfileComments.vue";
 import Swal from 'sweetalert2';
 import urljoin from "url-join";
 import {Component, Prop, Vue} from 'vue-facing-decorator';
+import {getParams} from '@/logic/uwu'
 
-@Component({ components: { ProfileCard, ProfileComments, MDX, Balloon } })
+@Component({components: {ProfileCard, ProfileComments, MDX, Balloon}})
 export default class Profile extends Vue {
-    @Prop({ required: true }) userid!: string
-    @Prop({ default: false }) screenshotMode!: boolean
-    @Prop({ default: '' }) lang!: Lang
+    @Prop({required: true}) userid!: string
+    @Prop({default: false}) screenshotMode!: boolean
+    @Prop({default: ''}) lang!: Lang
+    p?: Person = null
+    compiledMdxCode = ''
+    isBirthday = [] as number[]
 
     // Blame kuniklo
     get pid(): string {
         return this.userid == 'tdov' ? 'tdor' : this.userid
     }
-
-    p?: Person = null
-    compiledMdxCode = ''
-    isBirthday = [] as number[]
 
     created(): void {
         const pu = peopleUrl(this.pid)
@@ -95,6 +95,7 @@ export default class Profile extends Vue {
     checkViewLimit(): boolean | void {
         if (this.screenshotMode) return
         if (window.location.hostname == 'localhost') return
+        if (getParams('debug')) return
 
         const config = (() => {
             const now = new Date();
@@ -194,7 +195,7 @@ export default class Profile extends Vue {
                     }, 100)
                 })
             })
-            observer.observe(document.body, { childList: true, subtree: true })
+            observer.observe(document.body, {childList: true, subtree: true})
 
             return true
         }

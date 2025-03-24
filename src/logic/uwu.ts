@@ -1,7 +1,7 @@
 import {getLang} from "@/logic/config";
 import Uwuifier from 'uwuifier';
 
-function getParams(key: string): string {
+export function getParams(key: string): string {
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.has(key)) {
         return urlParams.get(key);
