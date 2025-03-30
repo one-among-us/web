@@ -1727,6 +1727,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/sanitize-html@npm:^2.15.0":
+  version: 2.15.0
+  resolution: "@types/sanitize-html@npm:2.15.0"
+  dependencies:
+    htmlparser2: "npm:^8.0.0"
+  checksum: 10c0/446479c1ed34ee21e5c7eef803056a7fbb984559c16b05a6e53a06f5ecb0e4efd8d3bcfb07f9a73bd15e0be86fd1f12a5f5a539546edab05e9667543b8780800
+  languageName: node
+  linkType: hard
+
 "@types/semver@npm:^7.3.12":
   version: 7.5.0
   resolution: "@types/semver@npm:7.5.0"
@@ -5621,6 +5630,7 @@ __metadata:
     "@types/katex": "npm:^0"
     "@types/marked": "npm:^4.3.2"
     "@types/node": "npm:^20.12.7"
+    "@types/sanitize-html": "npm:^2.15.0"
     "@types/url-join": "npm:^4.0.3"
     "@typescript-eslint/eslint-plugin": "npm:^5.62.0"
     "@typescript-eslint/parser": "npm:^5.62.0"
@@ -5644,6 +5654,7 @@ __metadata:
     moment: "npm:^2.30.1"
     puppeteer: "npm:^22.6.5"
     replace-in-files: "npm:^3.0.0"
+    sanitize-html: "npm:^2.15.0"
     sass: "npm:^1.75.0"
     serve-static: "npm:^1.15.0"
     subset-font: "npm:^2.3.0"
@@ -6422,6 +6433,20 @@ __metadata:
   version: 2.1.2
   resolution: "safer-buffer@npm:2.1.2"
   checksum: 10c0/7e3c8b2e88a1841c9671094bbaeebd94448111dd90a81a1f606f3f67708a6ec57763b3b47f06da09fc6054193e0e6709e77325415dc8422b04497a8070fa02d4
+  languageName: node
+  linkType: hard
+
+"sanitize-html@npm:^2.15.0":
+  version: 2.15.0
+  resolution: "sanitize-html@npm:2.15.0"
+  dependencies:
+    deepmerge: "npm:^4.2.2"
+    escape-string-regexp: "npm:^4.0.0"
+    htmlparser2: "npm:^8.0.0"
+    is-plain-object: "npm:^5.0.0"
+    parse-srcset: "npm:^1.0.2"
+    postcss: "npm:^8.3.11"
+  checksum: 10c0/ad0086cbaa53f06d9c0c551cfd057ea03a35834bd77f37393bc83ab042ade2f19b41a43bf78ddadd95ad33b54ffd8ecf26d38b73690d41c239ab042b4815bb46
   languageName: node
   linkType: hard
 

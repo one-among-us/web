@@ -46,7 +46,8 @@ import {Comment, Person} from "@/logic/data";
 import {fetchText, trim} from "@/logic/helper";
 import {error, info} from "@/logic/utils";
 import Swal from 'sweetalert2';
-import {initSpoilers, mdParseInline} from "tg-blog";
+import {initSpoilers} from '@/logic/spoilers';
+import {mdParseInline} from "@/logic/markdown";
 import {Component, Prop, Vue} from 'vue-facing-decorator';
 
 @Component({ components: { MarkdownTooltip, SubmitPrompt } })
