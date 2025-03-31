@@ -71,7 +71,7 @@ import RandomPerson from '@/components/RandomPerson.vue';
 import {dataHost, getLang, peopleUrl, replaceUrlVars} from "@/logic/config";
 import {Person, PersonMeta} from "@/logic/data";
 import {fitText} from "@/logic/dom_utils";
-import {isEaster} from "@/logic/easterEgg";
+import {handleEasterEgg, isEaster} from "@/logic/easterEgg";
 import {
     fetchWithLang,
     gaussian,
@@ -135,6 +135,7 @@ export default class Home extends Vue {
 
     created(): void {
         info(`Language: ${this.lang}`)
+        handleEasterEgg();
         this.probilities = JSON.parse(getResponseSync(urljoin(dataHost, 'probilities.json')))
         fetchWithLang(urljoin(dataHost, 'people-home-list.json'))
             .then(it => it.text())

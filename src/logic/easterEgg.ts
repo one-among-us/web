@@ -60,14 +60,14 @@ export function handleBirthdayToast(name: string) {
     toast(t.birthday.happy, t.birthday.birthday.replace('{0}', name), "/img/cake.png", null, 64, 64, null)
 }
 
-export function handleEasterEgg(userid: string) {
+export function handleEasterEgg(userid?: string) {
     const swal2 = document.getElementsByTagName('div')
     for (const v of swal2) {
         if (v.classList.contains('swal2-container'))
             return;
     }
     const now = new Date()
-    if ((now.getDate() == 1) && (now.getMonth() == 3) && (parseInt(localStorage.getItem('easterEggMode')) == 0) && (!localStorage.getItem('manualModify'))) {
+    if ((now.getDate() == 1) && (now.getMonth() == 3) && ((parseInt(localStorage.getItem('easterEggMode')) == 0) || (!localStorage.getItem('easterEggMode'))) && (!localStorage.getItem('manualModify'))) {
         localStorage.setItem("easterEggMode", "1")
         localStorage.setItem("enabledByApril", "1")
     } else {
@@ -78,6 +78,7 @@ export function handleEasterEgg(userid: string) {
     if (localStorage.getItem('lang') === 'en') return;
     if (!localStorage.getItem('easterEggMode')) return;
     if (parseInt(localStorage.getItem('easterEggMode')) == 0) return;
+    if (!userid) return;
     if (userid == "MeowBot233") {
         if ((now.getDate() == 15) && (now.getMonth() == 3)) {
             if (!localStorage.getItem("birthdayMeowBot233"))
