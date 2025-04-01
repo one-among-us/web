@@ -1,52 +1,24 @@
 import {marked} from "marked";
 import sanitizeHtml from 'sanitize-html';
 
-/**
- * Spoiler markdown extension
- */
-const spoilerExtension = {
-    name: 'spoiler',
-    level: 'inline',
-    start(src) {
-        return src.match(/\|\|(?!\s)/)?.index;
-    },
-    tokenizer(src) {
-        const rule = /\|\|((?:(?!\|\|)[^\n])*)\|\|/;
-        const match = rule.exec(src);
-
-        if (match) {
-            console.log(src, match)
-            return {type: 'spoiler', raw: match[0], inner: this.lexer.inlineTokens(match[1].trim())};
-        }
-    },
-    renderer(token) {
-        return `<span class="spoiler"><span>${this.parser.parseInline(token.inner)}</span></span>`;
+function markdownHandlers(s: string): string {
+    if (/\|\|(?!\s)/.test(s)) {
+        s = s.replace(/\|\|(.*?)\|\|/g, (match, inner) => {
+            return `<span class="spoiler"><span>${inner}</span></span>`;
+        })
     }
-};
-
-const underlineExtension = {
-    name: 'underline',
-    level: 'inline',
-    start(src) {
-        return src.match(/--(?!\s)/)?.index;
-    },
-    tokenizer(src) {
-        const rule = /--((?:(?!--)[^\n])*)--/;
-        const match = rule.exec(src);
-        if (match) {
-            return {
-                type: 'underline',
-                raw: match[0],
-                inner: this.lexer.inlineTokens(match[1].trim())
-            }
-        }
-    },
-    renderer(token) {
-        return `<u><span>${this.parser.parseInline(token.inner)}</span></u>`;
+    if (/--(?!\s)/.test(s)) {
+        s = s.replace(/--(.*?)--/g, (match, inner) => {
+            return `<u>${inner}</u>>`;
+        })
     }
+    if (/__(?!\s)/.test(s)) {
+        s = s.replace(/__(.*?)__/g, (match, inner) => {
+            return `<i>${inner}</i>`;
+        })
+    }
+    return s;
 }
-
-marked.use({extensions: [spoilerExtension, underlineExtension]});
 
 /**
  * SanitizeHTML options
@@ -86,9 +58,9 @@ export function sanitize(html: string) {
 }
 
 export function mdParseInline(s: string) {
-    return sanitize(marked.parseInline(s))
+    return sanitize(marked.parseInline(markdownHandlers(s)))
 }
 
 export function mdParse(s: string) {
-    return sanitize(marked.parse(s))
+    return sanitize(marked.parse(markdownHandlers(s)))
 }
