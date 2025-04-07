@@ -9,7 +9,7 @@ export default class RandomSpan extends Vue {
     m = "";
 
     created() {
-        this.roll();
+        this.m = this.messages[randint(0, this.messages.length - 1)];
     }
 
     roll() {
