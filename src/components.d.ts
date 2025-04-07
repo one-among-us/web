@@ -44,7 +44,7 @@ declare module 'vue' {
     PhotoScroll: typeof import('./components/PhotoScroll.vue')['default']
     ProfileCard: typeof import('./components/ProfileCard.vue')['default']
     RandomPerson: typeof import('./components/RandomPerson.vue')['default']
-    RandomQuote: typeof import('./components/RandomQuote.vue')['default']
+    RandomSpan: typeof import('./components/RandomSpan.vue')['default']
     RecaptchaV2: typeof import('./components/RecaptchaV2.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

@@ -12,7 +12,7 @@ import {computed, defineComponent} from 'vue';
 import BlurBlock from "./BlurBlock.vue";
 import Hexagon from "./Hexagon.vue";
 import PhotoScroll from './PhotoScroll.vue';
-import RandomQuote from "./RandomQuote.vue";
+import RandomSpan from "./RandomSpan.vue";
 import TextRainbow from "./TextRainbow.vue";
 import TextRing from "./TextRing.vue";
 
@@ -55,7 +55,7 @@ export default defineComponent({
                             DynamicIcon,
                             Hexagon,
                             PhotoScroll,
-                            RandomQuote,
+                            RandomSpan,
                             Sakura,
                             TextRainbow,
                             TextRing
