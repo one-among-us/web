@@ -1,20 +1,23 @@
 <script lang="ts">
 import {Component, Prop, Vue} from 'vue-facing-decorator';
 import {randint} from "@/logic/helper";
+
 @Component({})
 export default class RandomSpan extends Vue {
-    @Prop({ required: true }) messages: string[]
-    @Prop canRoll: boolean
+    @Prop({required: true}) messages: string[]
+    @Prop({required: false, default: false}) noClick: boolean
     m = "";
+
     created() {
         this.roll();
     }
+
     tryRoll() {
-        if (this.canRoll) 
-        {
+        if (!this.noClick) {
             this.roll()
         }
     }
+
     roll() {
         this.m = this.messages[randint(0, this.messages.length - 1)];
     }
@@ -27,6 +30,7 @@ export default class RandomSpan extends Vue {
 
 <style lang="scss">
 @import "@/css/markdown";
+
 .random-span {
     display: inline;
     cursor: pointer;
