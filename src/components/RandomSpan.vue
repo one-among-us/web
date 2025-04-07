@@ -25,7 +25,7 @@ export default class RandomSpan extends Vue {
 </script>
 
 <template>
-    <span class="markdown-content random-span" v-html="m" @click="tryRoll()"></span>
+    <span class="markdown-content random-span" v-text="m" @click="tryRoll()"></span>
 </template>
 
 <style lang="scss">
