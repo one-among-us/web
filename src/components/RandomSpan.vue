@@ -12,20 +12,15 @@ export default class RandomSpan extends Vue {
         this.roll();
     }
 
-    tryRoll() {
-        if (!this.noClick) {
-            this.roll()
-        }
-    }
-
     roll() {
+        if (this.noClick) return;
         this.m = this.messages[randint(0, this.messages.length - 1)];
     }
 }
 </script>
 
 <template>
-    <span class="markdown-content random-span" v-text="m" @click="tryRoll()"></span>
+    <span class="markdown-content random-span" v-text="m" @click="roll()"></span>
 </template>
 
 <style lang="scss">
