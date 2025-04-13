@@ -1,6 +1,6 @@
 <script lang="ts">
 import {Component, Prop, Vue} from 'vue-facing-decorator';
-import {randint} from "@/logic/helper";
+import {randint, scheduledTask} from "@/logic/helper";
 
 @Component({})
 export default class RandomSpan extends Vue {
@@ -8,19 +8,50 @@ export default class RandomSpan extends Vue {
     @Prop({required: false, default: false}) noClick: boolean
     m = "";
 
+    animating = false;
+
     created() {
         this.m = this.messages[randint(0, this.messages.length - 1)];
     }
 
     roll() {
         if (this.noClick) return;
-        this.m = this.messages[randint(0, this.messages.length - 1)];
+        if (this.animating) return;
+        this.animating = true;
+        this.mil();
+    }
+
+    mil() {
+        if (this.m.length < 1) scheduledTask(200, () => {
+            this.pls(this.messages[randint(0, this.messages.length - 1)])
+        })
+        else {
+            this.m = this.m.substring(0, this.m.length - 1);
+            scheduledTask(100, () => {
+                this.mil()
+            })
+        }
+    }
+
+    pls(s: string) {
+        if (s.length < 1) {
+            this.animating = false;
+            return;
+        }
+        this.m += s[0];
+        scheduledTask(100, () => {
+            this.pls(s.substring(1));
+        })
     }
 }
 </script>
 
 <template>
-    <span class="markdown-content random-span" v-text="m" @click="roll()"></span>
+    <span class="markdown-content random-span" @click="roll()">
+        <transition-group name="rspan" tag="span">
+            <span class="markdown-content" v-for="i of [...m.split('').keys()]" :key="m[i] + i">{{ m[i] }}</span>
+        </transition-group>
+    </span>
 </template>
 
 <style lang="scss">
@@ -30,5 +61,13 @@ export default class RandomSpan extends Vue {
     display: inline;
     cursor: pointer;
     user-select: none;
+}
+
+.rspan-enter-active, .rspan-leave-active {
+    transition: opacity 0.3s ease;
+}
+
+.rspan-enter-from, .rspan-leave-to {
+    opacity: 0;
 }
 </style>
