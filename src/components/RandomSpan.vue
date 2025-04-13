@@ -27,7 +27,7 @@ export default class RandomSpan extends Vue {
         })
         else {
             this.m = this.m.substring(0, this.m.length - 1);
-            scheduledTask(Math.min(100, 1000 / this.m.length), () => {
+            scheduledTask(this.delayTime(this.m.length), () => {
                 this.mil()
             })
         }
@@ -39,9 +39,13 @@ export default class RandomSpan extends Vue {
             return;
         }
         this.m += s[0];
-        scheduledTask(Math.min(100, 1000 / this.m.length), () => {
+        scheduledTask(this.delayTime(this.m.length), () => {
             this.pls(s.substring(1));
         })
+    }
+
+    delayTime(n: number): number {
+        return Math.floor(-100 * Math.atan(0.1 * n - 4) / Math.PI) + 60;
     }
 }
 </script>
