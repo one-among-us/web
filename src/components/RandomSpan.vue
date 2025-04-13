@@ -11,7 +11,7 @@ export default class RandomSpan extends Vue {
     animating = false;
 
     created() {
-        this.m = this.messages[randint(0, this.messages.length - 1)];
+        if (this.messages.length > 0) this.m = this.messages[randint(0, this.messages.length - 1)];
     }
 
     roll() {
@@ -23,7 +23,7 @@ export default class RandomSpan extends Vue {
 
     mil() {
         if (this.m.length < 1) scheduledTask(200, () => {
-            this.pls(this.messages[randint(0, this.messages.length - 1)])
+            this.pls((this.messages.length > 0) ? this.messages[randint(0, this.messages.length - 1)] : "")
         })
         else {
             this.m = this.m.substring(0, this.m.length - 1);
