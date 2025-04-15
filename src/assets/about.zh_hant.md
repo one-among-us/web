@@ -5,4 +5,4 @@
 - 你可以發送 E-mail 到 **info@one-among.us**，貢獻內容或者提出批評建議。
 - 你也可以直接通過 GitHub 的 issues 與 pull requests 功能與我們聯系。
 - 我們的 [推特賬戶](https://twitter.com/oneamong_us) 歡迎私訊以及各種形式的留言。
-- 如果想為我們的 repo 做出貢獻，請查看我們的 [CODE_OF_CONDUCT](https://github.com/one-among-us/data/blob/main/CODE_OF_CONDUCT.md) 和 [CONTRIBUTING](https://github.com/one-among-dus/mddata/BJ/JAUTING]。
+- 如果想為我們的 repo 做出貢獻，請查看我們的 [CODE_OF_CONDUCT](https://github.com/one-among-us/data/blob/main/CODE_OF_CONDUCT.md) 和 [CONTRIBUTING](https://github.com/one-among-us/data/blob/main/CONTRIBUTING.md)。
