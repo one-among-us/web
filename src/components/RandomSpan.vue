@@ -53,7 +53,14 @@ export default class RandomSpan extends Vue {
 <template>
     <span class="markdown-content random-span" @click="roll()">
         <transition-group name="rspan" tag="span" class="rspan-group">
-            <span class="markdown-content" v-for="i of [...m.split('').keys()]" :key="m[i] + i">{{ m[i] }}</span>
+            <span
+                class="markdown-content"
+                v-for="i of [...m.split('').keys()]"
+                :key="m[i] + i"
+                :style="m[i] == '\n' ? 'display:block;width:0;height:0;overflow:hidden;' : ''"
+            >
+                {{ m[i] }}
+            </span>
         </transition-group>
     </span>
 </template>
