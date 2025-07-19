@@ -1,6 +1,8 @@
-> [!Caution]**Content Warning**
+> [!Caution]**Warning**
 >
-> The entries below of the deceased contains various types of triggering information, including sexual violence, domestic violence, self-injury and suicide. If you feel uncomfortable while browsing the page of the deceased, please exit immediately and seek help from doctors, the community, and local suicide intervention agencies if necessary. **You can find suicide prevention information at the bottom of the page.**
+> At present, the operation of One Among Us is going through a challenging period. Some maintenance staff are temporarily unable to provide support due to exceptional circumstances.
+>
+> The entries below of the deceased contains various types of triggering information, including sexual violence, domestic violence, substance abuse , self-injury and suicide. If you feel uncomfortable while browsing the page of the deceased, please exit immediately and seek help from doctors, the community, and local suicide intervention agencies if necessary. **You can find suicide prevention information at the bottom of the page.**
 >
 > Please try to help others while ensuring your mental health. Let us stand together and survive, until the dark clouds disperse. <br/>
 
