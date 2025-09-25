@@ -22,28 +22,67 @@
                 <input class="search-input" v-model="searchKey" v-on:input="updateSearch" placeholder="Search for..."/>
                 <VueDatePicker range light model-auto class="search-date" placeholder="Select a range"
                                v-model="dateRange" @update:model-value="updateSearch"/>
+                <button class="layout-toggle" @click="toggleLayout" :title="isGridLayout ? 'Switch to List Layout' : 'Switch to Grid Layout'">
+                    <Icon :icon="isGridLayout ? 'mynaui:list' : 'mynaui:grid'" />
+                </button>
             </div>
 
             <Loading v-if="isLoading"/>
 
-            <transition-group id="profiles" class="unselectable" v-if="people" name="profiles" tag="div">
+            <transition-group id="profiles" class="unselectable" :class="{ 'grid-layout': isGridLayout, 'list-layout': !isGridLayout }" v-if="people" name="profiles" tag="div">
                 <div class="profile" v-for="p in people" :key="p.id">
-                    <div class="back"/>
-                    <a :href="`/profile/${p.id}`" @click.exact.prevent.stop="() => false">
-                        <transition name="fade" @after-leave="() => switchPage(p)">
-                            <div class="front" v-if="clicked !== p.name">
-                                <canvas v-bind:id="p.id + '-canvas'" class="blur clickable"></canvas>
-                                <img :src="profileUrl(p)" draggable="false" alt="" class="profile-image clickable"
-                                     @click.exact="() => { if (!clicked) { clicked = p.name; } return false }"
-                                     v-on:load="isLoading = false">
+                    <!-- Grid Layout -->
+                    <template v-if="isGridLayout">
+                        <div class="back"/>
+                        <a :href="`/profile/${p.id}`" @click.exact.prevent.stop="() => false">
+                            <transition name="fade" @after-leave="() => switchPage(p)">
+                                <div class="front" v-if="clicked !== p.name">
+                                    <canvas v-bind:id="p.id + '-canvas'" class="blur clickable"></canvas>
+                                    <img :src="profileUrl(p)" draggable="false" alt="" class="profile-image clickable"
+                                         @click.exact="() => { if (!clicked) { clicked = p.name; } return false }"
+                                         v-on:load="isLoading = false">
+                                </div>
+                            </transition>
+                        </a>
+                        <div class="name font-custom" ref="bookmarkTexts">{{ p.name }}</div>
+                        <div class="bookmark" ref="bookmark"/>
+                    </template>
+
+                    <!-- List Layout -->
+                    <template v-else>
+                        <a :href="`/profile/${p.id}`" @click.exact.prevent="() => switchPage(p)" class="profile-link-wrapper">
+                            <div class="avatar-container">
+                                 <div class="back"/>
+                                 <transition name="fade" @after-leave="() => switchPage(p)">
+                                     <div class="front" v-if="clicked !== p.name">
+                                         <canvas v-bind:id="p.id + '-canvas'" class="blur clickable"></canvas>
+                                         <img :src="profileUrl(p)" draggable="false" alt="" class="profile-image clickable"
+                                              @click.exact.prevent.stop="() => { if (!clicked) { clicked = p.name; } return false }"
+                                              v-on:load="isLoading = false">
+                                     </div>
+                                 </transition>
                             </div>
-                        </transition>
-                    </a>
-                    <div class="name font-custom" ref="bookmarkTexts">{{ p.name }}</div>
-                    <div class="bookmark" ref="bookmark"/>
+                            <div class="profile-info">
+                                <div class="name font-custom">{{ p.name }}</div>
+                                <div class="description" v-if="getPersonDesc(p)">{{ getPersonDesc(p) }}</div>
+                            </div>
+                        </a>
+                    </template>
                 </div>
-                <div class="profile" v-if="showAdd">
-                    <div class="back add fbox-vcenter">+</div>
+
+                <!-- TODO: "Add" button -->
+                <div class="profile add-profile" v-if="showAdd">
+                    <template v-if="isGridLayout">
+                        <div class="back add fbox-vcenter">+</div>
+                    </template>
+                    <template v-else>
+                        <div class="avatar-container">
+                            <div class="back add fbox-vcenter">+</div>
+                        </div>
+                        <div class="profile-info">
+                            <div class="name">Add profile</div>
+                        </div>
+                    </template>
                 </div>
             </transition-group>
 
@@ -113,6 +152,8 @@ export default class Home extends Vue {
     isShuffle = false
     probilities: any
 
+    isGridLayout = true
+
     birthdayList = [] as [string, string][]
 
     @Ref() bookmarkTexts: HTMLDivElement[]
@@ -127,13 +168,20 @@ export default class Home extends Vue {
     }
 
     updated() {
-        if ((this.bookmark != undefined) && (this.bookmark.length > 0)) {
-            const width = this.bookmark[0].offsetWidth - 10
-            for (const b of this.bookmarkTexts) fitText(b, { width })
+        if (this.isGridLayout && this.bookmark?.length > 0) {
+            if (this.bookmark[0]) {
+                const width = this.bookmark[0].offsetWidth - 10
+                for (const b of this.bookmarkTexts) fitText(b, { width })
+            }
         }
     }
 
     created(): void {
+        const savedLayout = localStorage.getItem('isGridLayout');
+        if (savedLayout !== null) {
+            this.isGridLayout = JSON.parse(savedLayout);
+        }
+
         info(`Language: ${this.lang}`)
         handleEasterEgg();
         this.probilities = JSON.parse(getResponseSync(urljoin(dataHost, 'probilities.json')))
@@ -209,6 +257,20 @@ export default class Home extends Vue {
         }
     }
 
+    toggleLayout() {
+        this.isGridLayout = !this.isGridLayout;
+        localStorage.setItem('isGridLayout', JSON.stringify(this.isGridLayout));
+    }
+
+    getPersonDesc(p: PersonMeta): string {
+        if (p.desc !== undefined && typeof p.desc === 'string') {
+            return p.desc;
+        }
+
+        // fallback to sortKey or empty string
+        return p.sortKey || '';
+    }
+
     switchPage(p: PersonMeta): void {
         info(`switchPage(${p.id})`)
         router.push(`/profile/${p.id}`)
@@ -242,6 +304,7 @@ export default class Home extends Vue {
 @import "../css/colors"
 @import "../css/motion"
 
+// --- Global Styles & Animations ---
 @keyframes blink
     0%
         opacity: 1
@@ -288,7 +351,7 @@ export default class Home extends Vue {
         cursor: pointer
 
     .search-input
-        width: calc(50% - 48px)
+        width: calc(50% - 68px)
         height: 26px
         color: $color-text-main
         background-color: rgba(0, 0, 0, 0.05)
@@ -304,28 +367,37 @@ export default class Home extends Vue {
             border: none
 
     .search-date
-        width: calc(50% - 48px)
+        width: calc(50% - 68px)
         height: 36px
 
-// Profile picture alignment
-.profile
-    position: relative
-    display: inline-block
-    margin: 20px 20px 30px
-    vertical-align: top
-    text-align: left
+    .layout-toggle
+        background: transparent
+        border: 1px solid rgba(128, 128, 128, 0.5)
+        border-radius: 8px
+        padding: 6px 10px
+        color: $color-text-main
+        cursor: pointer
+        transition: all 0.2s ease
+        font-size: 20px
+        flex-shrink: 0
+        display: flex
+        align-items: center
+        &:hover
+            background: rgba(128, 128, 128, 0.1)
 
+// --- Base styles shared by all profiles ---
+.profile
     .fade-enter-active, .fade-leave-active
         transition: all .5s ease !important
 
-    .fade-enter, .fade-leave-to
+    .fade-enter-from, .fade-leave-to
         opacity: 0
+    
+    .front:hover
+        transform: rotate(2deg)
 
     .front, .back
-        border: 10px solid white
         outline: 2px solid $color-text-main
-        height: 150px
-        width: 150px
         transition: all .25s ease
         overflow: hidden
 
@@ -354,16 +426,27 @@ export default class Home extends Vue {
         transform: rotate(10deg)
         position: absolute
         z-index: 4
-        height: 150px
         top: 0
         left: 0
-
-        background-blend-mode: screen
         background-color: #ffffff
 
-    // Hover animation
-    .front:hover
-        transform: rotate(2deg)
+// --- 1. Grid Layout Styles ---
+#profiles.grid-layout
+    // Profile picture alignment
+    .profile
+        position: relative
+        display: inline-block
+        margin: 20px 20px 30px
+        vertical-align: top
+        text-align: left
+
+    .front, .back
+        border: 10px solid white
+        height: 150px
+        width: 150px
+
+    .front
+        background-blend-mode: screen
 
     .name
         margin-top: 3px
@@ -395,6 +478,87 @@ export default class Home extends Vue {
         bottom: -15px
         z-index: 2
 
+// --- 2. List Layout Styles ---
+#profiles.list-layout
+    display: grid
+    grid-template-columns: repeat(3, 1fr)
+    gap: 15px
+    max-width: 1400px
+    padding: 0 40px
+    overflow: visible
+
+    // Profile picture alignment
+    .profile
+        background: rgba(0, 0, 0, 0.03)
+        border: 1px solid rgba(0, 0, 0, 0.06)
+        height: 82px
+        overflow: visible
+        // Hover animation
+        &:hover
+            background: rgba(0, 0, 0, 0.05)
+            transform: translateY(-2px)
+            .front
+                transform: rotate(2deg)
+
+    .profile-link-wrapper
+        display: flex
+        align-items: center
+        text-decoration: none
+        color: inherit
+        width: 100%
+        height: 100%
+        gap: 15px
+
+    .avatar-container
+        position: relative
+        flex-shrink: 0
+        height: 80px
+        width: 80px
+        overflow: visible
+        z-index: 10
+
+    .front, .back
+        border: 5px solid white
+        height: 100%
+        width: 100%
+        box-sizing: border-box
+        position: absolute
+        top: 0
+        left: 0
+
+    .profile-info
+        flex: 1
+        min-width: 0
+        padding-right: 15px
+        overflow-x: hidden
+
+    .name
+        font-size: 18px
+        font-weight: bold
+        white-space: nowrap
+        overflow: hidden
+        text-overflow: ellipsis
+
+    .description
+        margin-top: 4px
+        font-size: 13px
+        color: rgba($color-text-main, 0.75)
+        display: -webkit-box
+        -webkit-line-clamp: 2
+        -webkit-box-orient: vertical
+        overflow: hidden
+        text-overflow: ellipsis
+        line-height: 1.3
+        max-height: calc(1.3em * 2)
+        word-wrap: break-word
+        text-wrap: balance
+
+    @media (max-width: 1200px)
+        grid-template-columns: repeat(2, 1fr)
+    @media (max-width: 768px)
+        grid-template-columns: 1fr
+
+// --- Global Transitions & Responsive ---
 .profiles-move
     transition: all 0.5s $ease-in-out-cric
 
@@ -407,7 +571,7 @@ export default class Home extends Vue {
 
 
 @media screen and (max-width: 440px)
-    .profile
+    #profiles.grid-layout .profile
         .front, .back
             border: 5px solid white
             $len: 30vw
@@ -432,14 +596,33 @@ export default class Home extends Vue {
         .search-date
             width: 100%
 
+// --- Dark Theme ---
 [data-theme="dark"]
-    .back, .front
-        border: 10px solid rgba(27, 27, 32, 0.8964) !important
-        outline: 2px solid $color-text-dark-main !important
+    .layout-toggle
+        color: $color-text-dark-main
+        border-color: rgba(200, 200, 200, 0.3)
+        &:hover
+            background: rgba(255, 255, 255, 0.08)
 
-    .bookmark
-        border: 40px solid rgba(255, 189, 202, 0.25) !important
-        border-bottom: 10px solid transparent !important
+    .back, .front
+        border-color: rgba(27, 27, 32, 0.8964) !important
+        outline-color: $color-text-dark-main !important
+
+    #profiles.grid-layout
+        .bookmark
+            border-color: rgba(255, 189, 202, 0.25) !important
+            border-bottom-color: transparent !important
+
+    #profiles.list-layout
+        .profile
+            background: rgba(255, 255, 255, 0.03)
+            border-color: rgba(255, 255, 255, 0.08)
+            &:hover
+                background: rgba(255, 255, 255, 0.06)
+        .name
+            color: $color-text-dark-main
+        .description
+            color: rgba($color-text-dark-main, 0.7)
 
     .search-bar
         .search-icon
