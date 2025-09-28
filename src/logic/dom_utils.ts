@@ -15,15 +15,13 @@ export function fullWidth(el: HTMLElement) {
 }
 
 export function fitText(el: HTMLElement, opts: FitTextOptions = {}) {
-    if (el.hasAttribute("fit-initialized")) return
+    const isFirstCall = !el.hasAttribute("fit-original-size")
+    const cs = window.getComputedStyle(el)
+    const originalFontSize = parseFloat(el.getAttribute("fit-original-size") || cs.fontSize)
 
     function resize() {
         // Check if the text needs to be resized
         const targetWidth = opts.width ?? el.parentElement.clientWidth
-        if (el.clientWidth <= targetWidth) return
-
-        // Compute current font size
-        const cs = window.getComputedStyle(el)
 
         // Compute required font size by applying the width scale to the existing font size
         let fontSize = targetWidth / el.clientWidth * parseFloat(cs.fontSize)
@@ -31,7 +29,8 @@ export function fitText(el: HTMLElement, opts: FitTextOptions = {}) {
         // Preserve height for centering
         el.style.height = (el.clientHeight + 'px')
 
-        // Bound
+        // Bound the font size - never exceed original size
+        fontSize = Math.min(fontSize, originalFontSize)
         if (opts.maxFontSize) fontSize = Math.min(fontSize, opts.maxFontSize)
         if (opts.minFontSize) fontSize = Math.max(fontSize, opts.minFontSize)
 
@@ -41,7 +40,9 @@ export function fitText(el: HTMLElement, opts: FitTextOptions = {}) {
     // Call once to set.
     resize()
 
-    el.addEventListener('resize', resize)
-    el.addEventListener('orientationchange', resize)
-    el.setAttribute("fit-initialized", "y")
+    if (isFirstCall) {
+        el.addEventListener('resize', resize)
+        el.addEventListener('orientationchange', resize)
+        el.setAttribute("fit-original-size", originalFontSize.toString())
+    }
 }

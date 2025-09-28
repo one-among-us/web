@@ -168,6 +168,10 @@ export default class Home extends Vue {
     }
 
     updated() {
+        this.fitBookmarkTexts();
+    }
+
+    fitBookmarkTexts() {
         if (this.isGridLayout && this.bookmark?.length > 0) {
             if (this.bookmark[0]) {
                 const width = this.bookmark[0].offsetWidth - 10
@@ -255,6 +259,11 @@ export default class Home extends Vue {
         if (isUwU()) {
             UwU()
         }
+        
+        // Wait for fonts to load and then refresh text sizes
+        document.fonts.ready.then(() => {
+            this.fitBookmarkTexts();
+        });
     }
 
     toggleLayout() {
