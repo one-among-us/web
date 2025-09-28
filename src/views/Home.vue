@@ -437,6 +437,7 @@ export default class Home extends Vue {
         z-index: 4
         top: 0
         left: 0
+        background-blend-mode: screen
         background-color: #ffffff
 
 // --- 1. Grid Layout Styles ---
@@ -453,9 +454,6 @@ export default class Home extends Vue {
         border: 10px solid white
         height: 150px
         width: 150px
-
-    .front
-        background-blend-mode: screen
 
     .name
         margin-top: 3px
