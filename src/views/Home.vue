@@ -275,7 +275,10 @@ export default class Home extends Vue {
         if (p.desc !== undefined && typeof p.desc === 'string') {
             return p.desc;
         }
-
+        // fallback for unknown date of pass away
+        if (p.sortKey === '0' || p.sortKey === '-1') {
+            return '';
+        }
         // fallback to sortKey or empty string
         return p.sortKey || '';
     }
