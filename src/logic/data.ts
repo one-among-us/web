@@ -4,6 +4,7 @@ export interface PersonMeta {
     name: string,
     profileUrl: string,
     sortKey?: any,
+    desc?: string,
 }
 
 export interface CommentReply {
