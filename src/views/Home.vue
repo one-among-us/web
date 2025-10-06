@@ -327,7 +327,6 @@ export default class Home extends Vue {
 
 .introduction
     text-align: justify
-    text-justify: inter-word
     margin: 10px min(5vw, 40px)
 
 .randomButtons
