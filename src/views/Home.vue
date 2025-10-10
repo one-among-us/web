@@ -150,7 +150,7 @@ export default class Home extends Vue {
     searchKey = ''
     dateRange = []
     isShuffle = false
-    probilities: any
+    probabilities: any
     groups: string[][] = []
 
     isGridLayout = true
@@ -257,7 +257,7 @@ export default class Home extends Vue {
 
         info(`Language: ${this.lang}`)
         handleEasterEgg();
-        this.probilities = JSON.parse(getResponseSync(urljoin(dataHost, 'probilities.json')))
+        this.probabilities = JSON.parse(getResponseSync(urljoin(dataHost, 'probabilities.json')))
         this.groups = JSON.parse(getResponseSync(urljoin(dataHost, 'groups.json')))
         fetchWithLang(urljoin(dataHost, 'people-home-list.json'))
             .then(it => it.text())
@@ -265,8 +265,8 @@ export default class Home extends Vue {
                 this.isShuffle = isEaster() && (gaussian() < 0.35)
                 this.fullPeople = JSON.parse(it)
                 for (const v of this.fullPeople) {
-                    if (Object.keys(this.probilities).includes(v.id)) {
-                        const p = parseFloat(this.probilities[v.id].toString())
+                    if (Object.keys(this.probabilities).includes(v.id)) {
+                        const p = parseFloat(this.probabilities[v.id].toString())
                         if (Math.random() < p) {
                             this.people.push(v)
                         }
