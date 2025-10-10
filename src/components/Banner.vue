@@ -25,10 +25,13 @@ export default class Banner extends Vue {
 @import "@/css/colors";
 
 .banner {
-    width: 90%;
+    width: fit-content;
+    max-width: 90%;
     margin: 10px auto;
     min-height: 100px;
-    display: block;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
     background: $color-bg-5;
     border-radius: 30px;
     border-color: $color-text-light;
@@ -40,8 +43,8 @@ export default class Banner extends Vue {
         height: 80px;
         width: 80px;
         margin: 10px;
-        display: inline-grid;
-        vertical-align: top;
+        display: flex;
+        flex-shrink: 0;
 
         img {
             width: 100%;
@@ -52,10 +55,12 @@ export default class Banner extends Vue {
 
     .content {
         min-height: 80px;
-        width: calc(100% - 150px);
+        flex: 1;
+        min-width: 0;
         margin: 10px;
-        display: inline-grid;
-        vertical-align: top;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
 
         h3 {
             color: $color-text-main;
