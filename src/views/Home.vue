@@ -151,6 +151,7 @@ export default class Home extends Vue {
     dateRange = []
     isShuffle = false
     probilities: any
+    groups: string[][] = []
 
     isGridLayout = true
 
@@ -180,6 +181,74 @@ export default class Home extends Vue {
         }
     }
 
+    createGroups(peopleList: PersonMeta[]): PersonMeta[][] {
+        // No groups defined: each person becomes a single-person group
+        if (!this.groups?.length) {
+            return peopleList.map(person => [person]);
+        }
+
+        // Groups defined: create group mapping
+        const personToGroup = new Map<string, number>();
+        this.groups.forEach((group, index) => {
+            group.forEach(personId => personToGroup.set(personId, index));
+        });
+
+        // Initialize group arrays
+        const allGroups = Array.from({ length: this.groups.length }, () => [] as PersonMeta[]);
+
+        // Assign people to groups (ungrouped people become single-person groups)
+        peopleList.forEach(person => {
+            const groupIndex = personToGroup.get(person.id);
+            if (groupIndex !== undefined) {
+                allGroups[groupIndex].push(person);
+            } else {
+                allGroups.push([person]);
+            }
+        });
+
+        return allGroups;
+    }
+
+    sortPeople(peopleList: PersonMeta[]): PersonMeta[] {
+        // Convert people to groups
+        const allGroups = this.createGroups(peopleList)
+            .filter(group => group.length > 0)
+            .map(group => {
+                // Sort people within each group by sortKey (descending)
+                group.sort((a, b) => b.sortKey.localeCompare(a.sortKey));
+                return group;
+            });
+
+        // Separate groups into normal groups and zero-sortKey groups
+        const normalGroups: PersonMeta[][] = [];
+        const zeroGroups: PersonMeta[][] = [];
+
+        allGroups.forEach(group => {
+            const latestSortKey = group[0].sortKey;
+
+            if (latestSortKey === "0") {
+                zeroGroups.push(group);
+            } else {
+                normalGroups.push(group);
+            }
+        });
+
+        // Sort normal groups by their representative sortKey (descending)
+        normalGroups.sort((a, b) => b[0].sortKey.localeCompare(a[0].sortKey));
+
+        // Build result: first add all normal groups in sorted order
+        let result = normalGroups.flat();
+
+        // Randomly insert zero-sortKey groups
+        zeroGroups.forEach(zeroGroup => {
+            // Keep noname at the end
+            const insertPos = randint(0, result.length - 1);
+            result.splice(insertPos, 0, ...zeroGroup);
+        });
+
+        return result;
+    }
+
     created(): void {
         const savedLayout = localStorage.getItem('isGridLayout');
         if (savedLayout !== null) {
@@ -189,6 +258,7 @@ export default class Home extends Vue {
         info(`Language: ${this.lang}`)
         handleEasterEgg();
         this.probilities = JSON.parse(getResponseSync(urljoin(dataHost, 'probilities.json')))
+        this.groups = JSON.parse(getResponseSync(urljoin(dataHost, 'groups.json')))
         fetchWithLang(urljoin(dataHost, 'people-home-list.json'))
             .then(it => it.text())
             .then(it => {
@@ -227,15 +297,8 @@ export default class Home extends Vue {
                         }
                     })
 
-                // insert entry with unknown date of pass away to random position
                 if (!this.isShuffle) {
-                    const u = this.people
-                    this.people = []
-
-                    for (const v of u) {
-                        if (v.sortKey != 0) this.people.push(v);
-                        else this.people = insert(this.people, v, randint(0, this.people.length - 1));
-                    }
+                    this.people = this.sortPeople(this.people);
                 }
             })
 
@@ -259,7 +322,7 @@ export default class Home extends Vue {
         if (isUwU()) {
             UwU()
         }
-        
+
         // Wait for fonts to load and then refresh text sizes
         document.fonts.ready.then(() => {
             this.fitBookmarkTexts();
@@ -403,7 +466,7 @@ export default class Home extends Vue {
 
     .fade-enter-from, .fade-leave-to
         opacity: 0
-    
+
     .front:hover
         transform: rotate(2deg)
 
