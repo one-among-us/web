@@ -117,7 +117,6 @@ import {
     gaussian_shuffle,
     getResponseSync,
     handleIconFromString,
-    insert,
     randint,
     scheduledLoopTask,
     shuffle,
@@ -237,7 +236,7 @@ export default class Home extends Vue {
         normalGroups.sort((a, b) => b[0].sortKey.localeCompare(a[0].sortKey));
 
         // Build result: first add all normal groups in sorted order
-        let result = normalGroups.flat();
+        const result = normalGroups.flat();
 
         // Randomly insert zero-sortKey groups
         zeroGroups.forEach(zeroGroup => {

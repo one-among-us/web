@@ -1,15 +1,15 @@
 <template>
     <transition-group class="lang-btns" tag="div" name="list">
-        <div class="func-buttons">
+        <div key="func-buttons" class="func-buttons">
             <ScrollButton :title="t.button.top"/>
             <ThemeButton/>
         </div>
-        <div class="clickable hy-button switch-langs" v-on:click="() => {isShowLang = !isShowLang}"
+        <div key="switch-langs" class="clickable hy-button switch-langs" v-on:click="() => {isShowLang = !isShowLang}"
              :title="t.button.language"
         >
             <Icon class="icon" icon="fluent-mdl2:locale-language"/>
         </div>
-        <LangButton v-if="isShowLang" v-on:mouseover="() => {hovering = true}" v-on:mouseleave="unshowLang()" />
+        <LangButton key="lang-button" v-if="isShowLang" v-on:mouseover="() => {hovering = true}" v-on:mouseleave="unshowLang()" />
     </transition-group>
 </template>
 
