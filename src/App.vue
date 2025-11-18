@@ -18,7 +18,7 @@
     <Divider height="5px"/>
 
     <GlobalButton/>
-    <Sakura :count="50" v-if="isEaster() && (gaussian() < 0.36)"/>
+    <Sakura :count="50" v-if="(isEaster() && (gaussian() < 0.36)) || isTdorPeriod()"/>
     <Fireworks :count="6" v-if="isEaster() && isTd() && (getTheme() == 'dark')"/>
 </template>
 
@@ -29,7 +29,7 @@ import Sakura from "@/components/Sakura.vue";
 import Fireworks from "@/components/Fireworks.vue";
 import {transColors} from "@/logic/constants";
 import {isEaster} from "@/logic/easterEgg";
-import {gaussian, isTd} from "@/logic/helper";
+import {gaussian, isTd, isTdorPeriod} from "@/logic/helper";
 import {applyTheme, getTheme} from "@/logic/theme";
 import {info, logPrefixCss} from "@/logic/utils";
 import {isUwU} from "@/logic/uwu";
@@ -49,6 +49,7 @@ export default class App extends Vue {
     gaussian = gaussian
     getTheme = getTheme
     isTd = isTd
+    isTdorPeriod = isTdorPeriod
 
     created(): void {
         if (!localStorage.getItem('showBtn'))

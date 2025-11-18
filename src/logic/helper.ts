@@ -247,3 +247,11 @@ export function isTd() {
     if ((now.getMonth() == 10) && (now.getDate() == 20)) return true;
     return false;
 }
+
+export function isTdorPeriod(): boolean {
+    const nowMs = Date.now();
+    const year = new Date().getUTCFullYear();
+    const startUtcMs = Date.UTC(year, 10, 19, 10, 0, 0); // Nov 19 18:00 CST
+    const endUtcMs   = Date.UTC(year, 10, 21, 12, 0, 0); // Nov 21 20:00 CST
+    return nowMs >= startUtcMs && nowMs <= endUtcMs;
+}
