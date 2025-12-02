@@ -214,6 +214,7 @@ div:has(.view-limit-alert)
     border-radius: 0
     width: 600px
     height: 314px
+    animation: none
 
     justify-content: center
     align-items: center
