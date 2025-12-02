@@ -375,8 +375,8 @@ export default class Home extends Vue {
 </script>
 
 <style lang="sass" scoped>
-@import "../css/colors"
-@import "../css/motion"
+@use "@/css/colors" as *
+@use "@/css/motion" as *
 
 // --- Global Styles & Animations ---
 @keyframes blink

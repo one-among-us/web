@@ -44,32 +44,41 @@ export async function renderScreenshots(...people: string[])
     args: ['--no-sandbox', '--lang=zh-CN,zh'],
     executablePath: '/usr/bin/google-chrome-stable', // set by docker container
   })
-  const page = await browser.newPage()
-  await page.setViewport({width: 700, height: 700, deviceScaleFactor: 2})
-  
-  // Set language to Simplified Chinese
-  await page.setExtraHTTPHeaders({
-    'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
-  })
-  await page.evaluateOnNewDocument(() => {
-    Object.defineProperty(navigator, "language", {
-        get: () => { return "zh-CN" }
-    });
-    Object.defineProperty(navigator, "languages", {
-        get: () => { return ["zh-CN", "zh"] }
-    });
-  });
-
   for (const person of people)
   {
-    // Load page
-    await page.goto(`http://localhost:22745/__screenshot?p=${person}`)
-    await sleep(1000)
+    const page = await browser.newPage()
+    await page.setViewport({width: 700, height: 700, deviceScaleFactor: 2})
+    
+    // Set language to Simplified Chinese
+    await page.setExtraHTTPHeaders({
+      'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+    })
+    await page.evaluateOnNewDocument(() => {
+      Object.defineProperty(navigator, "language", {
+          get: () => { return "zh-CN" }
+      });
+      Object.defineProperty(navigator, "languages", {
+          get: () => { return ["zh-CN", "zh"] }
+      });
+    });
 
-    // Take screenshot of an element
-    const element = await page.$("#info")
-    await fs.ensureDir(screenshotPath(person).parent())
-    await element.screenshot({ type: "jpeg", quality: 100, omitBackground: true, path: screenshotPath(person) })
+    try {
+      // Load page
+      await page.goto(`http://localhost:22745/__screenshot?p=${person}`)
+      await sleep(1000)
+
+      // Take screenshot of an element
+      const element = await page.waitForSelector("#info", { timeout: 60000 })
+
+      if (element) {
+        await fs.ensureDir(screenshotPath(person).parent())
+        await element.screenshot({ type: "jpeg", quality: 100, omitBackground: true, path: screenshotPath(person) })
+      }
+    } catch (e) {
+      console.error(`Error processing ${person}:`, e);
+    } finally {
+      await page.close()
+    }
   }
 
   await browser.close()

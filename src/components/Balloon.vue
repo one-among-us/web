@@ -40,7 +40,7 @@ export default class Balloon extends Vue {
 </script>
 
 <style lang="sass">
-@import '@/css/animations'
+@use '@/css/animations'
 
 .balloon
     position: fixed

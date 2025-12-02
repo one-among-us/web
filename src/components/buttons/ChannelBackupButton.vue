@@ -38,7 +38,7 @@ export default class ChannelBackupButton extends Vue {
 </script>
 
 <style lang="sass" scoped>
-@import "../../css/colors"
+@use "@/css/colors" as *
 
 .backup
     padding: 10px

@@ -47,10 +47,8 @@ export default class BlurBlock extends Vue {
 </template>
 
 <style lang="scss">
-@import '../css/colors.sass';
-@import '../css/markdown.sass';
-@import '../css/global.sass';
-@import '../css/motion.scss';
+@use "@/css/global.sass" as *;
+@use "@/css/markdown.sass";
 
 .blur {
     @extend .markdown-content;

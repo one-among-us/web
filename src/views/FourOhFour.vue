@@ -25,7 +25,7 @@ export default class FourOhFour extends Vue {
 </script>
 
 <style lang="sass" scoped>
-@import "src/css/colors"
+@use "@/css/colors" as *
 
 .four-oh-four
     display: flex

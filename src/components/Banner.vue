@@ -22,7 +22,7 @@ export default class Banner extends Vue {
 </template>
 
 <style lang="scss">
-@import "@/css/colors";
+@use "@/css/colors" as *;
 
 .banner {
     width: fit-content;

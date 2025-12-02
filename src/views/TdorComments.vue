@@ -145,8 +145,8 @@ export default class TdorComments extends Vue {
 </script>
 
 <style lang="sass">
-@import src/css/global
-@import src/css/colors
+@use "sass:color"
+@use "@/css/global" as *
 
 .divp
     margin: 0.65em 0
@@ -160,7 +160,7 @@ export default class TdorComments extends Vue {
         margin-left: 10px
 
     .from.anonymous
-        color: lighten($color-text-light, 20%)
+        color: color.adjust($color-text-light, $lightness: 20%)
 
     .replies
         .reply-title
@@ -263,7 +263,7 @@ export default class TdorComments extends Vue {
             color: $color-text-dark-light
 
         .from.anonymous
-            color: darken($color-text-dark-light, 20%)
+            color: color.adjust($color-text-dark-light, $lightness: -20%)
 
         .replies
             .reply-title

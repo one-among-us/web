@@ -31,7 +31,7 @@ export default class LangButton extends Vue {
 </template>
 
 <style lang="sass">
-@import "../../css/global"
+@use "@/css/global" as *
 
 .lang-buttons
     display: flex

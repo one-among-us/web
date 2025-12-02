@@ -34,8 +34,7 @@ export default class RandomPerson extends Vue {
 </script>
 
 <style lang="sass" scoped>
-@import "../css/colors"
-@import "../css/global"
+@use "@/css/global" as *
 
 .random
     // Outer alignment

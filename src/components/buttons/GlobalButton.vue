@@ -42,9 +42,9 @@ export default class GlobalButton extends Vue {
 </script>
 
 <style lang="sass">
-@import "../../css/colors"
-@import "../../css/animations"
-@import "../../css/motion"
+@use "@/css/colors" as *
+@use "@/css/animations"
+@use "@/css/motion" as *
 
 .lang-btns
     // Fixed positioning

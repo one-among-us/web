@@ -66,7 +66,7 @@ export default class RandomSpan extends Vue {
 </template>
 
 <style lang="scss">
-@import "@/css/markdown";
+@use "@/css/markdown";
 
 .random-span {
     display: inline;

@@ -234,9 +234,7 @@ export default class ProfileComments extends Vue {
 </script>
 
 <style lang="sass">
-@import src/css/global
-@import src/css/colors
-@import src/css/motion
+@use "@/css/global" as *
 
 .divp
     margin: 0.65em 0

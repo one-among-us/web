@@ -1,7 +1,10 @@
-@import colors
-@import motion
-@import fonts/font-custom
-@import @/css/katex/katex.css
+@forward "colors"
+@use "colors" as *
+@forward "motion"
+@use "motion" as *
+@forward "fonts/font-custom"
+@use "fonts/font-custom" as *
+@use "@/css/katex/katex.css"
 
 // Container width (This is normally 50vw,
 //   but when it's smaller than 900px, use 100vw - 50px, because 50px is the margin)

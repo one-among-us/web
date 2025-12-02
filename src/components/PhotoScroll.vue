@@ -44,7 +44,7 @@ export default class PhotoScroll extends Vue {
 </script>
 
 <style lang="sass">
-@import "../css/colors"
+@use "@/css/colors" as *
 
 .ps-wrapper
     display: flex
