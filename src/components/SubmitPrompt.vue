@@ -46,8 +46,7 @@ export default class SubmitPrompt extends Vue {
 </script>
 
 <style lang="sass" scoped>
-@import src/css/global
-@import src/css/colors
+@use "@/css/global" as *
 
 #SubmitPrompt
     // Cover entire page

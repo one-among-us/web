@@ -166,19 +166,13 @@ export default class ProfileCard extends Vue {
             showCancelButton: false,
             showCloseButton: false,
             showConfirmButton: true,
-            allowOutsideClick() {
-                return false
-            },
+            allowOutsideClick: false,
             timer: 300000,
             timerProgressBar: true,
             iconColor: '#d20f39',
-            allowEscapeKey() {
-                return false;
-            },
-            allowEnterKey() {
-                return false;
-            },
-            customClass: 'view-limit-alert'
+            allowEscapeKey: false,
+            allowEnterKey: false,
+            customClass: { popup: 'view-limit-alert' }
         }).then((result) => {
             if (result.isConfirmed) {
                 this.target = this.sourceTarget;
@@ -210,8 +204,7 @@ export default class ProfileCard extends Vue {
 </script>
 
 <style lang="sass" scoped>
-@import "../css/colors"
-@import "@/css/global"
+@use "@/css/global" as *
 
 div:has(.view-limit-alert)
     backdrop-filter: blur(10px)
@@ -221,6 +214,7 @@ div:has(.view-limit-alert)
     border-radius: 0
     width: 600px
     height: 314px
+    animation: none
 
     justify-content: center
     align-items: center

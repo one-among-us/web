@@ -162,16 +162,10 @@ export default class Profile extends Vue {
                 text: t.view_limit.error,
                 icon: 'error',
                 showConfirmButton: false,
-                allowOutsideClick() {
-                    return false
-                },
-                customClass: 'view-limit-alert',
-                allowEscapeKey() {
-                    return false;
-                },
-                allowEnterKey() {
-                    return false;
-                }
+                allowOutsideClick: false,
+                customClass: { popup: 'view-limit-alert' },
+                allowEscapeKey: false,
+                allowEnterKey: false
             })
 
             // Easter egg: Watch when the user removes the DOM element in devtools
@@ -239,7 +233,7 @@ div:has(.view-limit-alert)
 
 <!-- Scoped Style -->
 <style lang="sass" scoped>
-@import "../css/colors"
+@use "@/css/colors" as *
 
 .profile-page
     padding: 0 20px

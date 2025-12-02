@@ -140,7 +140,7 @@ export default class MarkdownTooltip extends Vue {
 </script>
 
 <style lang="sass">
-@import src/css/global
+@use "@/css/global" as *
 
 #MarkdownTooltip:not(.show)
     opacity: 0

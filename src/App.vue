@@ -82,12 +82,10 @@ export default class App extends Vue {
 
 <!-- Global Style -->
 <style lang="sass">
-@import "css/animations"
-@import "css/global"
-@import "css/fonts/font-custom.scss"
-@import "css/fonts/BackIcon.css"
-@import "css/colors"
-@import "css/markdown"
+@use "@/css/animations"
+@use "@/css/global" as *
+@use "@/css/fonts/BackIcon.css"
+@use "@/css/markdown"
 
 *
     transition: all 0.25s cubic-bezier(0.35, 0, 0.72, 0.22)
@@ -121,7 +119,7 @@ export default class App extends Vue {
 
 <!-- Scoped Style -->
 <style lang="sass" scoped>
-@import "css/colors"
+@use "@/css/colors" as *
 
 // Title
 #title

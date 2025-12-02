@@ -76,4 +76,14 @@ export default defineConfig({
       "element-plus/es/components/tooltip/style/css",
     ],
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: 'modern-compiler'
+      },
+      sass: {
+        api: 'modern-compiler'
+      }
+    }
+  }
 });

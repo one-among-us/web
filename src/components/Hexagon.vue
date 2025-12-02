@@ -18,9 +18,8 @@ export default class Hexagon extends Vue {
 </template>
 
 <style lang="scss">
-@import '@/css/colors';
-@import '@/css/global';
-@import '@/css/markdown';
+@use "@/css/global" as *;
+@use "@/css/markdown";
 
 .hexagon-outer {
     width: 150px;

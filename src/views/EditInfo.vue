@@ -216,7 +216,7 @@ export default class EditInfo extends Vue {
 </script>
 
 <style lang="sass" scoped>
-@import "../css/colors"
+@use "@/css/colors" as *
 
 #container
     height: 100%

@@ -17,7 +17,7 @@ export default class CapDownQuote extends Vue {
 
 <style lang="scss">
 @use 'sass:math';
-@import "@/css/fonts/font-custom";
+@use "@/css/fonts/font-custom";
 
 .cd {
     margin: 1rem auto;
