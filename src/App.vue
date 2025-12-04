@@ -1,17 +1,17 @@
 <template>
     <Divider height="5px"/>
-    <div id="title" class="fbox-vcenter unselectable" v-if="['Home', 'About'].includes(String($route.name))">
-        <div id="title-txt" v-if="!uwu">那些秋叶</div>
+    <header id="title" class="fbox-vcenter unselectable" v-if="['Home', 'About'].includes(String($route.name))">
+        <div role="heading" aria-level="1" id="title-txt" v-if="!uwu">那些秋叶</div>
         <div id="title-sub" v-if="!uwu">One Among Us</div>
-        <img src="/kawaii.oau.png" class="kawaii" v-if="uwu"/>
-    </div>
+        <img src="/kawaii.oau.png" class="kawaii" v-if="uwu" alt="One Among Us 秋の葉ものがたり"/>
+    </header>
 
-    <div id="nav" class="fbox-vcenter unselectable">
+    <nav id="nav" class="fbox-vcenter unselectable">
         <div>
             <router-link class="router-link" to="/">{{ t.nav_home }}</router-link>
             <router-link class="router-link" to="/about">{{ t.nav_contact }}</router-link>
         </div>
-    </div>
+    </nav>
 
     <router-view id="router"/>
 

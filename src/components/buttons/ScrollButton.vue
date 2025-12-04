@@ -17,23 +17,15 @@ export default class ScrollButton extends Vue {
 </script>
 
 <template>
-    <div class="clickable hy-button scrollButton" v-on:click="scroll()">
+    <button type="button" class="clickable hy-button round-button scrollButton" v-on:click="scroll()">
         <Icon class="icon" icon="mynaui:arrow-up" />
-    </div>
+    </button>
 </template>
 
 <style lang="scss">
 @use "@/css/global" as *;
 
 .scrollButton {
-    padding: 10px;
-    width: 25px;
-    height: 25px;
-    border-radius: 9008px;
-    border-color: $color-text-main;
-    border-width: 1px;
-    border-style: solid;
-
     .icon {
         width: 20px;
         height: 20px;

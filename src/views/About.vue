@@ -1,7 +1,7 @@
 <template>
-    <div id="About">
+    <main id="About">
         <div class="markdown-content" style="margin: 10px min(4vw, 40px)" v-html="html"/>
-    </div>
+    </main>
 </template>
 
 <script lang="ts">
