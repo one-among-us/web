@@ -190,6 +190,26 @@ $c-highlight-dark: rgba(255, 120, 120, 0.25)
 button
   font-family: inherit
 
+.unstyled-button
+  font-size: 1em
+  border: none
+  padding: 0
+  margin: 0
+  color: inherit
+  background-color: transparent
+
+.round-button
+  // Make it a circle
+  padding: 10px
+  width: 25px
+  height: 25px
+  border-radius: 56562px
+  border: 1px solid $color-text-main
+  color: $color-text-main
+  display: flex
+  box-sizing: content-box
+  font-size: 1rem
+
 svg.icon
   @extend .clickable
   height: 1em
@@ -203,6 +223,10 @@ svg.icon
 
   .hy-button
     background: $color-bg-dark-6
+
+  .round-button
+    border-color: $color-text-dark-main
+    color: $color-text-dark-main
 
   .spoiler
     background-color: transparent

@@ -9,6 +9,7 @@
         viewBox="0 0 66 66"
         preserveAspectRatio="xMidYMid"
         class="rotating"
+        aria-hidden="true"
     >
         <circle
             class="path"

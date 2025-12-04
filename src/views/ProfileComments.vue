@@ -3,32 +3,36 @@
         <h1>{{ p.id == 'tdor' ? t.tdor_comment : t.nav_comments }}</h1>
 
         <!-- Comments -->
-        <transition-group tag="div" name="comment-list" id="comments" v-if="p.comments.length > 0">
-            <div class="comment" v-for="c in comments" :key="c.id">
-                <span class="content" v-html="c.content"></span>
-                <span class="from anonymous" v-if="c.anonymous">{{ t.nav_anonymous }}</span>
-                <span class="from" v-else>——{{ c.submitter }}</span>
+        <transition-group tag="div" role="list" name="comment-list" id="comments" v-if="p.comments.length > 0">
+            <div class="comment" v-for="c in comments" :key="c.id" role="listitem">
+                <article>
+                    <span class="content" v-html="c.content"></span>
+                    <span class="from anonymous" v-if="c.anonymous">{{ t.nav_anonymous }}</span>
+                    <span class="from" v-else>——{{ c.submitter }}</span>
 
-                <!-- Replies -->
-                <div class="replies" v-if="c.replies.length">
-                    <div class="reply-title">{{ t.nav_comment_in_reply_to }} @{{ c.submitter }}</div>
-                    <div class="reply" v-for="(r, idx) in c.replies" :key="idx">
-                        <span class="content" v-html="r.content"></span>
-                        <span class="from">——{{ r.submitter }}</span>
+                    <!-- Replies -->
+                    <div class="replies" v-if="c.replies.length" role="list">
+                        <div class="reply-title">{{ t.nav_comment_in_reply_to }} @{{ c.submitter }}</div>
+                        <div class="reply" v-for="(r, idx) in c.replies" :key="idx" role="listitem">
+                            <article>
+                                <span class="content" v-html="r.content"></span>
+                                <span class="from">——{{ r.submitter }}</span>
+                            </article>
+                        </div>
                     </div>
-                </div>
+                </article>
             </div>
         </transition-group>
 
         <!-- Add comment textbox -->
         <div id="add-comment" v-if="p.id != 'tdor'">
             <textarea id="comment-textarea" v-model="textInput" :placeholder="t.nav_comment_placeholder"
-                      @input="resizeInput" ref="input"/>
+                      @input="resizeInput" ref="input" :aria-label="t.nav_comment_placeholder"/>
             <div id="send-comment-btn" v-if="textInput.trim().length > 0">
                 <span class="char-count unselectable">{{ trim(textInput.trim(), '\n').length }} {{
                         t.nav_comment_status
                     }}</span>
-                <IFasPaperPlane class="icon" @click="btnSend"/>
+                <button type="button" @click="btnSend" class="unstyled-button" aria-label="Submit"><IFasPaperPlane class="icon"/></button>
             </div>
 
             <MarkdownTooltip text-area-id="comment-textarea"></MarkdownTooltip>

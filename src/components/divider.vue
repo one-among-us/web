@@ -1,5 +1,5 @@
 <template>
-    <div id="divider">
+    <div id="divider" aria-hidden="true">
         <span class="color-strip" v-for="c in colors" :key="c"
               :style="`background-color: ${c}; height: ${height}`"
               v-on:click="switchEasterEgg()"/>

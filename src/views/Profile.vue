@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <main>
         <div v-if="p" :class="{screenshot: screenshotMode}" class="profile-page">
             <ProfileCard v-if="pid != 'tdor'" :p="p" :screenshot-mode="screenshotMode" :userid="pid"
                          class="profile-card"/>
@@ -9,7 +9,7 @@
 
             <ProfileComments v-if="p.comments && !screenshotMode" :p="p" class="comments"/>
         </div>
-    </div>
+    </main>
 </template>
 
 <script lang="ts">

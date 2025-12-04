@@ -23,10 +23,10 @@ export default class LangButton extends Vue {
 
 <template>
     <div class="lang-buttons">
-        <div class="clickable hy-button"
+        <button type="button" class="clickable hy-button round-button"
              @click="() => click(l)" v-for="l in targets" :key="l">
             {{ supportedLang[l] }}
-        </div>
+        </button>
     </div>
 </template>
 
@@ -38,12 +38,5 @@ export default class LangButton extends Vue {
     flex-direction: column
     justify-items: end
     justify-content: end
-
-    div
-        // Make it a circle
-        padding: 10px
-        width: 25px
-        height: 25px
-        border-radius: 56562px
-        border: 1px solid $color-text-main
+    align-items: stretch
 </style>

@@ -1,14 +1,15 @@
 <template>
-    <transition-group class="lang-btns" tag="div" name="list">
+    <transition-group class="lang-btns" tag="aside" name="list">
         <div key="func-buttons" class="func-buttons">
             <ScrollButton :title="t.button.top"/>
             <ThemeButton/>
         </div>
-        <div key="switch-langs" class="clickable hy-button switch-langs" v-on:click="() => {isShowLang = !isShowLang}"
+        <button type="button" key="switch-langs" class="clickable hy-button round-button switch-langs" v-on:click="() => {isShowLang = !isShowLang}"
              :title="t.button.language"
+             :aria-expanded="isShowLang"
         >
             <Icon class="icon" icon="fluent-mdl2:locale-language"/>
-        </div>
+        </button>
         <LangButton key="lang-button" v-if="isShowLang" v-on:mouseover="() => {hovering = true}" v-on:mouseleave="unshowLang()" />
     </transition-group>
 </template>
@@ -54,16 +55,12 @@ export default class GlobalButton extends Vue {
     z-index: 50
     display: flex
     flex-direction: column
+    align-items: stretch
+    justify-content: stretch
     transition: all 0.5s ease
 
 
     .switch-langs
-        padding: 10px
-        width: 25px
-        height: 25px
-        border-radius: 56562px
-        border: 1px solid $color-text-main
-
         .icon
             width: 20px
             height: 20px
@@ -72,13 +69,6 @@ export default class GlobalButton extends Vue {
     .func-buttons
         display: flex
         flex-direction: column-reverse
-
-        div
-            padding: 10px
-            width: 25px
-            height: 25px
-            border-radius: 56562px
-            border: 1px solid $color-text-main
 
 .list-enter-active
     transition: all .5s $ease-in-out-back

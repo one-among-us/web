@@ -4,89 +4,91 @@
 
             <!-- If needed, delete 3 lines below. -->
 
-            <div class="introduction markdown-content" v-html="tdorCommentView" v-if="isShowCommentsEntry()"/>
+            <article class="introduction markdown-content" v-html="tdorCommentView" v-if="isShowCommentsEntry()"></article>
 
-            <div class="introduction markdown-content" v-html="tdorTop" v-if="!isDeadlinePassed()"/>
+            <article class="introduction markdown-content" v-html="tdorTop" v-if="!isDeadlinePassed()"></article>
 
             <TdorComments v-if="!isDeadlinePassed()"/>
 
-            <div class="introduction markdown-content" v-html="htmlTop"/>
+            <article class="introduction markdown-content" v-html="htmlTop"></article>
 
-            <div class=randomButtons>
-                <RandomPerson class="randomP"/>
-                <BirthdayButton class="randomP" v-for="i of birthdayList" :key="i[0]" :id="i[0]" :name="i[1]"/>
-            </div>
+            <main>
+                <div class=randomButtons>
+                    <RandomPerson class="randomP"/>
+                    <BirthdayButton class="randomP" v-for="i of birthdayList" :key="i[0]" :id="i[0]" :name="i[1]"/>
+                </div>
 
-            <div class="search-bar">
-                <Icon class="search-icon" icon="mynaui:search-hexagon" v-on:click="updateSearch"/>
-                <input class="search-input" v-model="searchKey" v-on:input="updateSearch" placeholder="Search for..."/>
-                <VueDatePicker range light model-auto class="search-date" placeholder="Select a range"
-                               v-model="dateRange" @update:model-value="updateSearch"/>
-                <button class="layout-toggle" @click="toggleLayout" :title="isGridLayout ? 'Switch to List Layout' : 'Switch to Grid Layout'">
-                    <Icon :icon="isGridLayout ? 'mynaui:list' : 'mynaui:grid'" />
-                </button>
-            </div>
+                <div class="search-bar">
+                    <Icon class="search-icon" icon="mynaui:search-hexagon" v-on:click="updateSearch"/>
+                    <input class="search-input" v-model="searchKey" v-on:input="updateSearch" placeholder="Search for..." aria-label="Search for..." />
+                    <VueDatePicker range light model-auto class="search-date" placeholder="Select a range"
+                                   v-model="dateRange" @update:model-value="updateSearch" :aria-labels="{ input: 'Select a range' }"/>
+                    <button class="layout-toggle" @click="toggleLayout" :title="isGridLayout ? 'Switch to List Layout' : 'Switch to Grid Layout'">
+                        <Icon :icon="isGridLayout ? 'mynaui:list' : 'mynaui:grid'" />
+                    </button>
+                </div>
 
-            <Loading v-if="isLoading"/>
+                <Loading v-if="isLoading"/>
 
-            <transition-group id="profiles" class="unselectable" :class="{ 'grid-layout': isGridLayout, 'list-layout': !isGridLayout }" v-if="people" name="profiles" tag="div">
-                <div class="profile" v-for="p in people" :key="p.id">
-                    <!-- Grid Layout -->
-                    <template v-if="isGridLayout">
-                        <div class="back"/>
-                        <a :href="`/profile/${p.id}`" @click.exact.prevent.stop="() => false">
-                            <transition name="fade" @after-leave="() => switchPage(p)">
-                                <div class="front" v-if="clicked !== p.name">
-                                    <canvas v-bind:id="p.id + '-canvas'" class="blur clickable"></canvas>
-                                    <img :src="profileUrl(p)" draggable="false" alt="" class="profile-image clickable"
-                                         @click.exact="() => { if (!clicked) { clicked = p.name; } return false }"
-                                         v-on:load="isLoading = false">
+                <transition-group id="profiles" class="unselectable" :class="{ 'grid-layout': isGridLayout, 'list-layout': !isGridLayout }" v-if="people" name="profiles" tag="div" role="list">
+                    <div class="profile" v-for="p in people" :key="p.id" role="listitem">
+                        <!-- Grid Layout -->
+                        <template v-if="isGridLayout">
+                            <div class="back"/>
+                            <a :href="`/profile/${p.id}`" @click.exact.prevent.stop="() => false" @keydown="(e) => handleProfileKeyDown(e, p)" class="profile-link">
+                                <transition name="fade" @after-leave="() => switchPage(p)">
+                                    <div class="front" v-if="clicked !== p.name">
+                                        <canvas v-bind:id="p.id + '-canvas'" class="blur clickable" aria-hidden="true"></canvas>
+                                        <img :src="profileUrl(p)" draggable="false" :alt="p.name" class="profile-image clickable"
+                                             @click.exact="() => { if (!clicked) { clicked = p.name; } return false }"
+                                             v-on:load="isLoading = false">
+                                    </div>
+                                </transition>
+                            </a>
+                            <div class="name font-custom" ref="bookmarkTexts">{{ p.name }}</div>
+                            <div class="bookmark" ref="bookmark"/>
+                        </template>
+
+                        <!-- List Layout -->
+                        <template v-else>
+                            <a :href="`/profile/${p.id}`" @click.exact.prevent="() => switchPage(p)" class="profile-link-wrapper">
+                                <div class="avatar-container" aria-hidden="true">
+                                     <div class="back"/>
+                                     <transition name="fade" @after-leave="() => switchPage(p)">
+                                         <div class="front" v-if="clicked !== p.name">
+                                             <canvas v-bind:id="p.id + '-canvas'" class="blur clickable"></canvas>
+                                             <img :src="profileUrl(p)" draggable="false" alt="" class="profile-image clickable"
+                                                  @click.exact.prevent.stop="() => { if (!clicked) { clicked = p.name; } return false }"
+                                                  v-on:load="isLoading = false">
+                                         </div>
+                                     </transition>
                                 </div>
-                            </transition>
-                        </a>
-                        <div class="name font-custom" ref="bookmarkTexts">{{ p.name }}</div>
-                        <div class="bookmark" ref="bookmark"/>
-                    </template>
+                                <div class="profile-info">
+                                    <div class="name font-custom">{{ p.name }}</div>
+                                    <div class="description" v-if="getPersonDesc(p)">{{ getPersonDesc(p) }}</div>
+                                </div>
+                            </a>
+                        </template>
+                    </div>
 
-                    <!-- List Layout -->
-                    <template v-else>
-                        <a :href="`/profile/${p.id}`" @click.exact.prevent="() => switchPage(p)" class="profile-link-wrapper">
+                    <!-- TODO: "Add" button -->
+                    <div class="profile add-profile" v-if="showAdd">
+                        <template v-if="isGridLayout">
+                            <div class="back add fbox-vcenter">+</div>
+                        </template>
+                        <template v-else>
                             <div class="avatar-container">
-                                 <div class="back"/>
-                                 <transition name="fade" @after-leave="() => switchPage(p)">
-                                     <div class="front" v-if="clicked !== p.name">
-                                         <canvas v-bind:id="p.id + '-canvas'" class="blur clickable"></canvas>
-                                         <img :src="profileUrl(p)" draggable="false" alt="" class="profile-image clickable"
-                                              @click.exact.prevent.stop="() => { if (!clicked) { clicked = p.name; } return false }"
-                                              v-on:load="isLoading = false">
-                                     </div>
-                                 </transition>
+                                <div class="back add fbox-vcenter">+</div>
                             </div>
                             <div class="profile-info">
-                                <div class="name font-custom">{{ p.name }}</div>
-                                <div class="description" v-if="getPersonDesc(p)">{{ getPersonDesc(p) }}</div>
+                                <div class="name">Add profile</div>
                             </div>
-                        </a>
-                    </template>
-                </div>
+                        </template>
+                    </div>
+                </transition-group>
+            </main>
 
-                <!-- TODO: "Add" button -->
-                <div class="profile add-profile" v-if="showAdd">
-                    <template v-if="isGridLayout">
-                        <div class="back add fbox-vcenter">+</div>
-                    </template>
-                    <template v-else>
-                        <div class="avatar-container">
-                            <div class="back add fbox-vcenter">+</div>
-                        </div>
-                        <div class="profile-info">
-                            <div class="name">Add profile</div>
-                        </div>
-                    </template>
-                </div>
-            </transition-group>
-
-            <div class="introduction markdown-content" v-html="htmlBottom"/>
+            <footer class="introduction markdown-content" v-html="htmlBottom"></footer>
         </div>
     </div>
 </template>
@@ -371,6 +373,15 @@ export default class Home extends Vue {
     profileUrl(p: PersonMeta): string {
         return replaceUrlVars(p.profileUrl, p.id)
     }
+
+    handleProfileKeyDown(e: KeyboardEvent, p: PersonMeta) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            if (e.key === ' ') {
+                e.preventDefault();
+            }
+            if (!this.clicked) { this.clicked = p.name; }
+        }
+    }
 }
 </script>
 
@@ -466,7 +477,7 @@ export default class Home extends Vue {
     .fade-enter-from, .fade-leave-to
         opacity: 0
 
-    .front:hover
+    .front:hover, .profile-link:focus-visible .front, .profile-link-wrapper:focus-visible .front
         transform: rotate(2deg)
 
     .front, .back

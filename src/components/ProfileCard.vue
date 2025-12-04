@@ -2,26 +2,26 @@
     <div id="info" class="font-custom fbox-h" v-if="p">
         <!-- Horizontal Alignment of profile pic and the rest -->
         <div id="left" class="fbox-v">
-            <img :src="profileUrl" draggable="false" alt="profile">
+            <img :src="profileUrl" draggable="false" :alt="p.name">
             <div class="spacer"/>
             <div id="buttons" v-if="!screenshotMode">
                 <div class="button-container">
                     <el-tooltip content="献花" :show-after="1000" :disabled="flowersGiven || loading.has('flower')">
-                        <div class="button anim fbox-vcenter" @click="flower"
-                             :class="(flowersGiven || loading.has('flower')) ? 'disabled' : ''">
+                        <button type="button" class="button anim fbox-vcenter" @click="flower"
+                             :class="(flowersGiven || loading.has('flower')) ? 'disabled' : ''" aria-label="献花">
                             <IEpCheck v-if="flowersGiven"/>
                             <Icon class="iconR" icon="line-md:cake" v-else-if="isBirthday && !loading.has('flower')"/>
                             <IEpLollipop v-else-if="!loading.has('flower')"/>
                             <IEpLoading v-else/>
-                        </div>
+                        </button>
                     </el-tooltip>
                     <div class="text-under-button">{{ flowerText }}</div>
                 </div>
                 <div class="button-container edit">
-                    <div class="button anim fbox-vcenter" @click="edit">
+                    <button class="button anim fbox-vcenter" @click="edit" aria-label="Edit">
                         <IEpEdit/>
-                    </div>
-                    <div class="text-under-button">Edit</div>
+                    </button>
+                    <div class="text-under-button" aria-hidden="true">Edit</div>
                 </div>
             </div>
             <div class="spacer-bottom f-grow1"/>
@@ -42,7 +42,8 @@
             <div id="websites" v-if="p.websites?.length">
                 <span id="websites-text">{{ t.nav_website }}</span>
                 <span id="websites-container">
-                    <a v-for="web of p.websites" :key="web[0]" :href="web[1]" target="_blank">
+                    <!-- XXX: data does not provide a user-readable string for icon name -->
+                    <a v-for="web of p.websites" :key="web[0]" :href="web[1]" target="_blank" :aria-label="web[0]">
                         <DynamicIcon :icon="web[0]"/>
                     </a>
                 </span>
@@ -360,12 +361,15 @@ div:has(.view-limit-alert)
             margin-left: 20px
 
         .button
+            box-sizing: content-box
             display: inline-flex
             align-items: center
             font-size: 20px
             width: 40px
             height: 40px
+            padding: 0
             border: 2px solid $color-text-main
+            color: $color-text-main
             border-radius: 15px
             background: $color-bg-5
 
@@ -507,4 +511,5 @@ div:has(.view-limit-alert)
             .button
                 background: $color-bg-dark-5
                 border: 2px solid $color-text-dark-main
+                color: $color-text-dark-main
 </style>

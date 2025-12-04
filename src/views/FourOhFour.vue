@@ -1,11 +1,11 @@
 <template>
-    <div class="four-oh-four unselectable">
-        <div class="top"></div>
-        <div class="title">404</div>
+    <main class="four-oh-four unselectable">
+        <div class="top" aria-hidden="true"></div>
+        <div role="heading" class="title" aria-level="2">404</div>
         <div class="sub">这个页面不见了</div>
         <div class="click"><a href="javascript:history.back()">返回</a></div>
-        <div class="bottom"></div>
-    </div>
+        <div class="bottom" aria-hidden="true"></div>
+    </main>
 </template>
 
 <script lang="ts">

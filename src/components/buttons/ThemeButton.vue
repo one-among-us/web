@@ -1,8 +1,8 @@
 <template>
-    <div class="clickable hy-button theme-button" :key="theme" v-on:click="changeTheme()" :title="t.button[getTheme()]">
+    <button type="button" class="clickable hy-button round-button theme-button" :key="theme" v-on:click="changeTheme()" :title="t.button[getTheme()]">
         <Icon class="iconR" icon="mynaui:sun" v-if="theme != 'dark'"/>
         <Icon class="iconR" icon="mynaui:moon" v-else/>
-    </div>
+    </button>
 </template>
 
 <script lang="ts">
@@ -34,14 +34,6 @@ export default class ThemeButton extends Vue {
 @use "@/css/global" as *
 
 .theme-button
-    padding: 10px
-    width: 25px
-    height: 25px
-    border-radius: 9008px
-    border-color: $color-text-main
-    border-width: 1px
-    border-style: solid
-
     .iconR
         width: 20px
         height: 20px
