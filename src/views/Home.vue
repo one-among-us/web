@@ -208,25 +208,32 @@ class Home extends Vue {
             }
         });
 
+        // Sort each defined group by the order specified in this.groups
+        for (let groupIndex = 0; groupIndex < this.groups.length; groupIndex++) {
+            if (allGroups[groupIndex].length > 1) {
+                const order = new Map(this.groups[groupIndex].map((id, idx) => [id, idx] as [string, number]));
+                allGroups[groupIndex].sort((a, b) => order.get(a.id) - order.get(b.id));
+            }
+        }
+
         return allGroups;
     }
 
     sortPeople(peopleList: PersonMeta[]): PersonMeta[] {
-        // Convert people to groups
+        // Compute the representative sortKey for a group (max among all members)
+        const groupKey = (group: PersonMeta[]) =>
+            group.reduce((max, p) => (p.sortKey > max ? p.sortKey : max), '0');
+
+        // Convert people to groups (members already ordered by createGroups)
         const allGroups = this.createGroups(peopleList)
-            .filter(group => group.length > 0)
-            .map(group => {
-                // Sort people within each group by sortKey (descending)
-                group.sort((a, b) => b.sortKey.localeCompare(a.sortKey));
-                return group;
-            });
+            .filter(group => group.length > 0);
 
         // Separate groups into normal groups and zero-sortKey groups
         const normalGroups: PersonMeta[][] = [];
         const zeroGroups: PersonMeta[][] = [];
 
         allGroups.forEach(group => {
-            const latestSortKey = group[0].sortKey;
+            const latestSortKey = groupKey(group);
 
             if (latestSortKey === "0") {
                 zeroGroups.push(group);
@@ -236,7 +243,7 @@ class Home extends Vue {
         });
 
         // Sort normal groups by their representative sortKey (descending)
-        normalGroups.sort((a, b) => b[0].sortKey.localeCompare(a[0].sortKey));
+        normalGroups.sort((a, b) => groupKey(b).localeCompare(groupKey(a)));
 
         // Build result: first add all normal groups in sorted order
         const result = normalGroups.flat();
