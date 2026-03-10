@@ -53,7 +53,7 @@ import router from "@/router";
 import Swal from 'sweetalert2';
 import {getSwalTheme} from "@/logic/theme";
 import urljoin from "url-join";
-import {Component, Prop, Vue} from 'vue-facing-decorator';
+import {Component, Prop, Vue, toNative} from 'vue-facing-decorator';
 
 let _uid = 0
 
@@ -82,7 +82,7 @@ function ensureEmpty(list: KVPair[]): void {
 }
 
 @Component({ components: { SubmitPrompt } })
-export default class EditInfo extends Vue {
+class EditInfo extends Vue {
     @Prop() userid!: string
 
     loaded = false
@@ -353,6 +353,7 @@ export default class EditInfo extends Vue {
         this.submitParams = null
     }
 }
+export default toNative(EditInfo)
 </script>
 
 <style lang="sass" scoped>

@@ -53,10 +53,10 @@ import Swal from 'sweetalert2';
 import {getSwalTheme} from "@/logic/theme";
 import {initSpoilers} from '@/logic/spoilers';
 import {mdParseInline} from "@/logic/markdown";
-import {Component, Prop, Vue} from 'vue-facing-decorator';
+import {Component, Prop, Vue, toNative} from 'vue-facing-decorator';
 
 @Component({ components: { MarkdownTooltip, SubmitPrompt } })
-export default class ProfileComments extends Vue {
+class ProfileComments extends Vue {
     declare $refs: {
         input: HTMLTextAreaElement
     }
@@ -239,6 +239,7 @@ export default class ProfileComments extends Vue {
         el.style.height = `${el.scrollHeight + 18}px`
     }
 }
+export default toNative(ProfileComments)
 </script>
 
 <style lang="sass">

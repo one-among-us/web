@@ -17,7 +17,7 @@
 <script lang="ts">
 import {rand} from "@/logic/helper";
 import {ImageViewer} from "tg-blog";
-import {Component, Prop, Vue} from 'vue-facing-decorator';
+import {Component, Prop, Vue, toNative} from 'vue-facing-decorator';
 import "tg-blog/dist/style.css"
 
 export interface ViewedImage {
@@ -28,7 +28,7 @@ export interface ViewedImage {
 }
 
 @Component({ components: { ImageViewer } })
-export default class PhotoScroll extends Vue {
+class PhotoScroll extends Vue {
     viewerIndex = null
 
     @Prop() photos!: string[] | string
@@ -41,6 +41,7 @@ export default class PhotoScroll extends Vue {
         this.rotations = this.photoList.map(() => rand(-15, 15))
     }
 }
+export default toNative(PhotoScroll)
 </script>
 
 <style lang="sass">

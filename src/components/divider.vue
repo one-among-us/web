@@ -12,10 +12,10 @@ import {transColors} from "@/logic/constants";
 import {viaFetch} from "@/logic/viaFetch";
 import Swal from 'sweetalert2';
 import {getSwalTheme} from "@/logic/theme";
-import {Component, Prop, Vue} from 'vue-facing-decorator';
+import {Component, Prop, Vue, toNative} from 'vue-facing-decorator';
 
 @Component({ components: {} })
-export default class Divider extends Vue {
+class Divider extends Vue {
     @Prop({ default: transColors }) colors!: string[]
     @Prop({ default: '2px' }) height!: string
 
@@ -45,6 +45,7 @@ export default class Divider extends Vue {
         })
     }
 }
+export default toNative(Divider)
 </script>
 
 <style lang="sass" scoped>

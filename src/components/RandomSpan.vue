@@ -1,9 +1,9 @@
 <script lang="ts">
-import {Component, Prop, Vue} from 'vue-facing-decorator';
+import {Component, Prop, Vue, toNative} from 'vue-facing-decorator';
 import {randint, scheduledTask} from "@/logic/helper";
 
 @Component({})
-export default class RandomSpan extends Vue {
+class RandomSpan extends Vue {
     @Prop({required: true}) messages: string[]
     @Prop({required: false, default: false}) noClick: boolean
     m = "";
@@ -48,6 +48,7 @@ export default class RandomSpan extends Vue {
         return Math.floor(-100 * Math.atan(0.1 * n - 4) / Math.PI) + 60;
     }
 }
+export default toNative(RandomSpan)
 </script>
 
 <template>

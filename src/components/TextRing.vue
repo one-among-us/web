@@ -1,8 +1,8 @@
 <script lang="ts">
-import {Vue, Component, Prop} from 'vue-facing-decorator';
+import {Vue, Component, Prop, toNative} from 'vue-facing-decorator';
 
 @Component({})
-export default class TextRing extends Vue {
+class TextRing extends Vue {
     @Prop({required: true}) text!: string;
     @Prop({default: '1rem'}) fontSize: string;
 
@@ -21,6 +21,7 @@ export default class TextRing extends Vue {
         this.inner = u;
     }
 }
+export default toNative(TextRing)
 </script>
 
 <template>

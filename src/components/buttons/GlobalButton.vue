@@ -21,11 +21,11 @@ import LangButton from "@/components/buttons/LangButton.vue";
 import {getLang, t} from "@/logic/config";
 import {scheduledTask} from "@/logic/helper";
 import {Icon} from "@iconify/vue";
-import {Component, Vue} from 'vue-facing-decorator';
+import {Component, Vue, toNative} from 'vue-facing-decorator';
 
 
 @Component({ components: { Icon, ThemeButton, ScrollButton, LangButton } })
-export default class GlobalButton extends Vue {
+class GlobalButton extends Vue {
     lang = getLang()
     showBtn = localStorage.getItem('showBtn')
     isShowLang = false;
@@ -40,6 +40,7 @@ export default class GlobalButton extends Vue {
         })
     }
 }
+export default toNative(GlobalButton)
 </script>
 
 <style lang="sass">

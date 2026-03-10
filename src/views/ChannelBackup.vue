@@ -15,12 +15,12 @@ import ChannelBackupButton from "@/components/buttons/ChannelBackupButton.vue";
 import {backupUrl, t} from "@/logic/config";
 import {TgBlog} from "tg-blog";
 import "tg-blog/dist/style.css"
-import {Component, Prop, Vue} from 'vue-facing-decorator';
+import {Component, Prop, Vue, toNative} from 'vue-facing-decorator';
 
 const alias = { 'tg': 'telegram', 'tw': 'twitter' }
 
 @Component({ components: { TgBlog, ChannelBackupButton } })
-export default class ChannelBackup extends Vue {
+class ChannelBackup extends Vue {
     @Prop({ required: true }) userid: string
     @Prop({ default: 'telegram' }) backup: string
 
@@ -52,6 +52,7 @@ export default class ChannelBackup extends Vue {
         }
     }
 }
+export default toNative(ChannelBackup)
 </script>
 
 <style lang="sass" scoped>

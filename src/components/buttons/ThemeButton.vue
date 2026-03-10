@@ -9,10 +9,10 @@
 import {applyTheme, getTheme, setTheme} from "@/logic/theme";
 import {t} from "@/logic/config";
 import {Icon} from '@iconify/vue';
-import {Component, Vue} from 'vue-facing-decorator';
+import {Component, Vue, toNative} from 'vue-facing-decorator';
 
 @Component({ components: { Icon } })
-export default class ThemeButton extends Vue {
+class ThemeButton extends Vue {
     getTheme = getTheme
 
     t = t
@@ -28,6 +28,7 @@ export default class ThemeButton extends Vue {
         this.theme = getTheme()
     }
 }
+export default toNative(ThemeButton)
 </script>
 
 <style lang="sass">

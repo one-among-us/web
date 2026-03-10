@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import {Component, Prop, Ref, Vue} from 'vue-facing-decorator';
+import {Component, Prop, Ref, Vue, toNative} from 'vue-facing-decorator';
 import {t} from '@/logic/config'
 
 interface TooltipAction {
@@ -26,7 +26,7 @@ interface TooltipAction {
 }
 
 @Component({})
-export default class MarkdownTooltip extends Vue {
+class MarkdownTooltip extends Vue {
     actions: TooltipAction[] = [
         { name: t.markdown_tooltip.bold, icon: 'bold', md: '**' },
         { name: t.markdown_tooltip.italic, icon: 'italic', md: '__' },
@@ -137,6 +137,7 @@ export default class MarkdownTooltip extends Vue {
         document.addEventListener('mousemove', mousemove)
     }
 }
+export default toNative(MarkdownTooltip)
 </script>
 
 <style lang="sass">

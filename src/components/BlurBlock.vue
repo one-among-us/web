@@ -1,8 +1,8 @@
 <script lang="ts">
-import {Vue, Component, Prop} from 'vue-facing-decorator';
+import {Vue, Component, Prop, toNative} from 'vue-facing-decorator';
 
 @Component({})
-export default class BlurBlock extends Vue {
+class BlurBlock extends Vue {
     @Prop({required: false}) hover: boolean;
 
     blur = ""
@@ -38,6 +38,7 @@ export default class BlurBlock extends Vue {
         this.blur = 'filter: blur(5px);';
     }
 }
+export default toNative(BlurBlock)
 </script>
 
 <template>

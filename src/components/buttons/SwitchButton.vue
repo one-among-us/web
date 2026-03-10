@@ -14,11 +14,12 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue} from 'vue-facing-decorator';
+import {Component, Vue, toNative} from 'vue-facing-decorator';
 
 @Component({ components: {} })
-export default class SwitchButton extends Vue {
+class SwitchButton extends Vue {
 }
+export default toNative(SwitchButton)
 </script>
 
 <style lang="sass">

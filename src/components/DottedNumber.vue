@@ -1,8 +1,8 @@
 <script lang="ts">
-import {Vue, Component, Prop} from 'vue-facing-decorator';
+import {Vue, Component, Prop, toNative} from 'vue-facing-decorator';
 
 @Component({})
-export default class DottedNumber extends Vue {
+class DottedNumber extends Vue {
     @Prop({required: true}) n: number | string;
     @Prop({default: false}) dash: boolean;
 
@@ -14,6 +14,7 @@ export default class DottedNumber extends Vue {
         }
     }
 }
+export default toNative(DottedNumber)
 </script>
 
 <template>

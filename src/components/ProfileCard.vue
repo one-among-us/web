@@ -80,10 +80,10 @@ import {Icon} from '@iconify/vue';
 import Swal from 'sweetalert2';
 import {getSwalTheme} from "@/logic/theme";
 import urljoin from 'url-join';
-import {Component, Prop, Vue, Watch} from 'vue-facing-decorator';
+import {Component, Prop, Vue, Watch, toNative} from 'vue-facing-decorator';
 
 @Component({ components: { Icon } })
-export default class ProfileCard extends Vue {
+class ProfileCard extends Vue {
     @Prop({ required: true }) userid!: string
     @Prop({ required: true }) p!: Person
     @Prop({ default: false }) screenshotMode!: boolean
@@ -228,6 +228,7 @@ export default class ProfileCard extends Vue {
         return replaceUrlVars(this.p.profileUrl, this.userid)
     }
 }
+export default toNative(ProfileCard)
 </script>
 
 <style lang="sass" scoped>

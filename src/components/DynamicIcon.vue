@@ -7,10 +7,10 @@
 <script lang="ts">
 import {fab} from "@/logic/constants";
 import {Icon} from "@iconify/vue";
-import {Component, Prop, Vue} from 'vue-facing-decorator';
+import {Component, Prop, Vue, toNative} from 'vue-facing-decorator';
 
 @Component({ components: { Icon } })
-export default class DynamicIcon extends Vue {
+class DynamicIcon extends Vue {
     @Prop() icon!: string
 
     getIcon(platform: string): string | undefined {
@@ -23,4 +23,5 @@ export default class DynamicIcon extends Vue {
         if (icon.startsWith('iconify:')) return icon.replace('iconify:', '')
     }
 }
+export default toNative(DynamicIcon)
 </script>

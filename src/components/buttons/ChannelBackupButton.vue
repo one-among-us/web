@@ -8,7 +8,7 @@
 <script lang="ts">
 import {getLang, t} from '@/logic/config';
 import urljoin from "url-join";
-import {Component, Prop, Vue} from 'vue-facing-decorator';
+import {Component, Prop, Vue, toNative} from 'vue-facing-decorator';
 
 const kvs = {
     zh_hans: { 'telegram': '电报', 'twitter': '推特' },
@@ -17,7 +17,7 @@ const kvs = {
 }
 
 @Component({ components: {} })
-export default class ChannelBackupButton extends Vue {
+class ChannelBackupButton extends Vue {
     @Prop({ default: "telegram" }) platform: string
     @Prop() icon: string
     @Prop() url: string
@@ -35,6 +35,7 @@ export default class ChannelBackupButton extends Vue {
         return t.backup.view.replace('{0}', this.kvs[this.platform] ?? ` ${this.platform} `)
     }
 }
+export default toNative(ChannelBackupButton)
 </script>
 
 <style lang="sass" scoped>

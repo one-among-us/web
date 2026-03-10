@@ -133,10 +133,10 @@ import {Icon} from "@iconify/vue";
 import VueDatePicker from '@vuepic/vue-datepicker'
 import {decode} from 'blurhash'
 import urljoin from "url-join";
-import {Component, Ref, Vue} from 'vue-facing-decorator';
+import {Component, Ref, Vue, toNative} from 'vue-facing-decorator';
 
 @Component({ components: { TdorComments, Loading, RandomPerson, BirthdayButton, Icon, VueDatePicker } })
-export default class Home extends Vue {
+class Home extends Vue {
     clicked = ''
     showAdd = false
     isLoading = true
@@ -383,6 +383,7 @@ export default class Home extends Vue {
         }
     }
 }
+export default toNative(Home)
 </script>
 
 <style lang="sass" scoped>

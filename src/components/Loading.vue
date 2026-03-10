@@ -28,16 +28,17 @@
 
 <script lang="ts">
 import {t} from '@/logic/config';
-import {Component, Vue} from 'vue-facing-decorator';
+import {Component, Vue, toNative} from 'vue-facing-decorator';
 
 @Component({})
-export default class Loading extends Vue {
+class Loading extends Vue {
     getText() {
         if (!localStorage.getItem('easterEggMode')) return t.loading.loading;
         if (parseInt(localStorage.getItem('easterEggMode')) == 0) return t.loading.loading;
         return t.loading.easter[(Math.random() * t.loading.easter.length) | 0]
     }
 }
+export default toNative(Loading)
 </script>
 
 <style lang="scss">

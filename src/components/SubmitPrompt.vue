@@ -21,7 +21,7 @@
 import HyInput from "@/components/HyInput.vue";
 import RecaptchaV2 from "@/components/RecaptchaV2.vue";
 import {t} from "@/logic/config";
-import {Component, Vue} from 'vue-facing-decorator';
+import {Component, Vue, toNative} from 'vue-facing-decorator';
 
 
 export interface CaptchaResponse {
@@ -32,7 +32,7 @@ export interface CaptchaResponse {
 
 
 @Component({ components: { RecaptchaV2, HyInput } })
-export default class SubmitPrompt extends Vue {
+class SubmitPrompt extends Vue {
     name = ''
     email = ''
 
@@ -43,6 +43,7 @@ export default class SubmitPrompt extends Vue {
         this.$emit('close')
     }
 }
+export default toNative(SubmitPrompt)
 </script>
 
 <style lang="sass" scoped>

@@ -9,10 +9,10 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue} from 'vue-facing-decorator';
+import {Component, Vue, toNative} from 'vue-facing-decorator';
 
 @Component({ components: {} })
-export default class FourOhFour extends Vue {
+class FourOhFour extends Vue {
     mounted() {
         if (window.gtag) {
             console.log("Reporting error...")
@@ -22,6 +22,7 @@ export default class FourOhFour extends Vue {
         }
     }
 }
+export default toNative(FourOhFour)
 </script>
 
 <style lang="sass" scoped>

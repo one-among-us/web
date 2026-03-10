@@ -1,11 +1,12 @@
 <script lang="ts">
 import {BannerData} from "@/logic/data";
-import {Component, Prop, Vue} from 'vue-facing-decorator';
+import {Component, Prop, Vue, toNative} from 'vue-facing-decorator';
 
 @Component({})
-export default class Banner extends Vue {
+class Banner extends Vue {
     @Prop({ required: true }) data!: BannerData
 }
+export default toNative(Banner)
 </script>
 
 <template>

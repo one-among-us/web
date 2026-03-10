@@ -26,11 +26,11 @@ import ProfileComments from "@/views/ProfileComments.vue";
 import Swal from 'sweetalert2';
 import {getSwalTheme} from "@/logic/theme";
 import urljoin from "url-join";
-import {Component, Prop, Vue} from 'vue-facing-decorator';
+import {Component, Prop, Vue, toNative} from 'vue-facing-decorator';
 import {getParams} from '@/logic/uwu'
 
 @Component({components: {ProfileCard, ProfileComments, MDX, Balloon}})
-export default class Profile extends Vue {
+class Profile extends Vue {
     @Prop({required: true}) userid!: string
     @Prop({default: false}) screenshotMode!: boolean
     @Prop({default: ''}) lang!: Lang
@@ -228,6 +228,7 @@ export default class Profile extends Vue {
         })
     }
 }
+export default toNative(Profile)
 </script>
 
 <style lang="sass">

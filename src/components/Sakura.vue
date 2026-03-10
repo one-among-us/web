@@ -1,8 +1,8 @@
 <script lang="ts">
-import {Vue, Component, Prop} from 'vue-facing-decorator';
+import {Vue, Component, Prop, toNative} from 'vue-facing-decorator';
 
 @Component({})
-export default class Sakura extends Vue {
+class Sakura extends Vue {
     @Prop({required: true}) count: number | string;
 
     spans = ""
@@ -13,6 +13,7 @@ export default class Sakura extends Vue {
         }
     }
 }
+export default toNative(Sakura)
 </script>
 
 <template>

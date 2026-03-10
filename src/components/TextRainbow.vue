@@ -1,8 +1,8 @@
 <script lang="ts">
-import {Vue, Component, Prop} from 'vue-facing-decorator';
+import {Vue, Component, Prop, toNative} from 'vue-facing-decorator';
 
 @Component({})
-export default class TextRainbow extends Vue {
+class TextRainbow extends Vue {
     @Prop({required: true}) text!: string;
     @Prop({default: 120}) angle: number;
     @Prop({default: '1rem'}) fontSize: string;
@@ -22,6 +22,7 @@ export default class TextRainbow extends Vue {
         this.inner = u;
     }
 }
+export default toNative(TextRainbow)
 </script>
 
 <template>

@@ -8,10 +8,10 @@
 import {balloons} from '@/logic/config';
 import {isEaster} from '@/logic/easterEgg'
 import {randint, scheduledTask} from '@/logic/helper';
-import {Component, Vue} from 'vue-facing-decorator';
+import {Component, Vue, toNative} from 'vue-facing-decorator';
 
 @Component({ components: {} })
-export default class Balloon extends Vue {
+class Balloon extends Vue {
     db = 'balloon-qwq';
     sourceImg = 'https://one-among.us/favicon-large.png';
     styles = '';
@@ -37,6 +37,7 @@ export default class Balloon extends Vue {
         document.getElementById(this.db).remove()
     }
 }
+export default toNative(Balloon)
 </script>
 
 <style lang="sass">

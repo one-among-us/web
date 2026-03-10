@@ -12,10 +12,10 @@ import {fetchWithLang} from '@/logic/helper';
 import router from "@/router";
 import {Icon} from "@iconify/vue";
 import urljoin from 'url-join';
-import {Component, Vue} from 'vue-facing-decorator';
+import {Component, Vue, toNative} from 'vue-facing-decorator';
 
 @Component({ components: { Icon } })
-export default class RandomPerson extends Vue {
+class RandomPerson extends Vue {
     i18n = t;
     people: PersonMeta[] = null as never as PersonMeta[];
 
@@ -31,6 +31,7 @@ export default class RandomPerson extends Vue {
         router.push(`/profile/${p.id}`);
     }
 }
+export default toNative(RandomPerson)
 </script>
 
 <style lang="sass" scoped>

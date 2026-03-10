@@ -33,13 +33,13 @@ import {gaussian, isTd, isTdorPeriod} from "@/logic/helper";
 import {applyTheme, getTheme} from "@/logic/theme";
 import {info, logPrefixCss} from "@/logic/utils";
 import {isUwU} from "@/logic/uwu";
-import {Component, Vue} from 'vue-facing-decorator';
+import {Component, Vue, toNative} from 'vue-facing-decorator';
 import {getLang, t} from './logic/config';
 
 @Component({
     components: { GlobalButton, Divider, Sakura, Fireworks }
 })
-export default class App extends Vue {
+class App extends Vue {
     $route: any
     t = t
 
@@ -78,6 +78,7 @@ export default class App extends Vue {
         if (this.uwu) document.getElementById("title").style.minHeight = "300px"
     }
 }
+export default toNative(App)
 </script>
 
 <!-- Global Style -->

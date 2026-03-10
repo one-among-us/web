@@ -1,9 +1,9 @@
 <script lang="ts">
-import {Vue, Component, Prop} from 'vue-facing-decorator';
+import {Vue, Component, Prop, toNative} from 'vue-facing-decorator';
 import {randint} from "@/logic/helper";
 
 @Component({})
-export default class Fireworks extends Vue {
+class Fireworks extends Vue {
     @Prop({required: true}) count: number
     fireworks = [];
 
@@ -22,6 +22,7 @@ export default class Fireworks extends Vue {
         }
     }
 }
+export default toNative(Fireworks)
 </script>
 
 <template>

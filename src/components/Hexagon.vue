@@ -1,10 +1,11 @@
 <script lang="ts">
-import {Vue, Component} from 'vue-facing-decorator';
+import {Vue, Component, toNative} from 'vue-facing-decorator';
 
 @Component({})
-export default class Hexagon extends Vue {
+class Hexagon extends Vue {
 
 }
+export default toNative(Hexagon)
 </script>
 
 <template>

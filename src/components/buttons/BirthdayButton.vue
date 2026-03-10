@@ -9,10 +9,10 @@
 import {t} from '@/logic/config';
 import router from '@/router';
 import {Icon} from '@iconify/vue';
-import {Component, Prop, Vue} from 'vue-facing-decorator';
+import {Component, Prop, Vue, toNative} from 'vue-facing-decorator';
 
 @Component({ components: { Icon } })
-export default class BirthdayButton extends Vue {
+class BirthdayButton extends Vue {
     t = t;
     birth: [string, string][] = null as never as [string, string][];
     @Prop({ required: true }) id: string;
@@ -22,6 +22,7 @@ export default class BirthdayButton extends Vue {
         router.push(`/profile/${this.id}`);
     }
 }
+export default toNative(BirthdayButton)
 </script>
 
 <style lang="sass" scoped>

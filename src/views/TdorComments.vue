@@ -27,10 +27,10 @@ import {error, info} from "@/logic/utils";
 import Swal from 'sweetalert2';
 import {getSwalTheme} from "@/logic/theme";
 import {initSpoilers} from "tg-blog";
-import {Component, Vue} from 'vue-facing-decorator';
+import {Component, Vue, toNative} from 'vue-facing-decorator';
 
 @Component({ components: { MarkdownTooltip, SubmitPrompt } })
-export default class TdorComments extends Vue {
+class TdorComments extends Vue {
     declare $refs: {
         input: HTMLTextAreaElement
     }
@@ -146,6 +146,7 @@ export default class TdorComments extends Vue {
         el.style.height = `${el.scrollHeight + 18}px`
     }
 }
+export default toNative(TdorComments)
 </script>
 
 <style lang="sass">

@@ -1,10 +1,10 @@
 <script lang="ts">
-import {Vue, Component} from 'vue-facing-decorator';
+import {Vue, Component, toNative} from 'vue-facing-decorator';
 import {getLang, Lang, setLang, supportedLang} from "@/logic/config";
 import {info} from "@/logic/utils";
 
 @Component({})
-export default class LangButton extends Vue {
+class LangButton extends Vue {
     lang = getLang()
     supportedLang = supportedLang
 
@@ -19,6 +19,7 @@ export default class LangButton extends Vue {
         location.reload()
     }
 }
+export default toNative(LangButton)
 </script>
 
 <template>
