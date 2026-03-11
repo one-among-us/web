@@ -222,7 +222,7 @@ class Home extends Vue {
     sortPeople(peopleList: PersonMeta[]): PersonMeta[] {
         // Compute the representative sortKey for a group (max among all members)
         const groupKey = (group: PersonMeta[]) =>
-            group.reduce((max, p) => (p.sortKey > max ? p.sortKey : max), '0');
+            group.reduce((max, p) => (p.sortKey > max ? p.sortKey : max), '');
 
         // Convert people to groups (members already ordered by createGroups)
         const allGroups = this.createGroups(peopleList)
@@ -374,6 +374,9 @@ class Home extends Vue {
                     }
                 }
             }
+        }
+        if (!this.isShuffle) {
+            this.people = this.sortPeople(this.people);
         }
     }
 
