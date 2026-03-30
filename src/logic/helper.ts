@@ -243,6 +243,9 @@ export function insert(parentArray: any[], obj: any, index: number) {
     return [...parentArray.slice(0, index), obj, ...parentArray.slice(index)]
 }
 
+/**
+ * @deprecated Replaced by isTdorPeriod() / isTdovPeriod().
+ */
 export function isTd() {
     const now = new Date();
     if ((now.getMonth() == 2) && (now.getDate() == 31)) return true;
@@ -255,5 +258,13 @@ export function isTdorPeriod(): boolean {
     const year = new Date().getUTCFullYear();
     const startUtcMs = Date.UTC(year, 10, 19, 10, 0, 0); // Nov 19 18:00 CST
     const endUtcMs   = Date.UTC(year, 10, 21, 12, 0, 0); // Nov 21 20:00 CST
+    return nowMs >= startUtcMs && nowMs <= endUtcMs;
+}
+
+export function isTdovPeriod(): boolean {
+    const nowMs = Date.now();
+    const year = new Date().getUTCFullYear();
+    const startUtcMs = Date.UTC(year, 2, 30, 10, 0, 0); // Mar 30 18:00 CST
+    const endUtcMs   = Date.UTC(year, 3, 1, 12, 0, 0);  // Apr 1 20:00 CST
     return nowMs >= startUtcMs && nowMs <= endUtcMs;
 }
