@@ -89,13 +89,14 @@ const props = withDefaults(defineProps<{
 }>(), {
     screenshotMode: false
 })
+const INITIAL_TARGET = '.'
 
 const flowers = ref(0)
 const flowersGiven = ref(false)
 const isBirthday = ref(false)
 const canSwitch = ref(false)
-const target = ref('.')
-const sourceTarget = ref('.')
+const target = ref<string | null>(INITIAL_TARGET)
+const sourceTarget = ref(INITIAL_TARGET)
 const inWarning = ref(false)
 const showSolarBorn = ref(false)
 const loading = ref(new Set<string>())
@@ -137,7 +138,7 @@ fetch(urljoin(dataHost, 'switch-pair.json'))
                 const r = getResponseSync(urljoin(dataHost, 'trigger-list.json'));
                 const l = JSON.parse(r) as string[];
                 if (l.includes(v[1])) {
-                    target.value = '';
+                    target.value = null;
                     inWarning.value = true;
                 }
             }

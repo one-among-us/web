@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed} from 'vue'
+import {computed, toRefs} from 'vue'
 
 const props = withDefaults(defineProps<{
     n: number | string
@@ -7,12 +7,13 @@ const props = withDefaults(defineProps<{
 }>(), {
     dash: false
 })
+const { n, dash } = toRefs(props)
 
-const style = computed(() => props.dash ? '--dot: "·\t·\t·";' : '--dot: "·";')
+const style = computed(() => dash.value ? '--dot: "·\t·\t·";' : '--dot: "·";')
 </script>
 
 <template>
-    <p class="num-v" v-bind:style="style">· {{ props.n }} ·</p>
+    <p class="num-v" v-bind:style="style">· {{ n }} ·</p>
 </template>
 
 <style lang="scss">

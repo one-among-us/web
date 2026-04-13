@@ -44,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import {reactive, ref} from 'vue'
+import {reactive, ref, toRef} from 'vue'
 import SubmitPrompt, {CaptchaResponse} from "@/components/SubmitPrompt.vue";
 import {backendHost, getLang, i18n, Lang, langDefs, peopleUrl, t} from "@/logic/config";
 import {parsePeopleJson, Person} from "@/logic/data";
@@ -88,7 +88,7 @@ defineOptions({
 const props = defineProps<{
     userid: string
 }>()
-const userid = props.userid
+const userid = toRef(props, 'userid')
 
 const loaded = ref(false)
 const langs = langDefs
@@ -290,7 +290,7 @@ function submitRequest(p: CaptchaResponse): void {
     submitParams.value = null
 }
 
-{
+function initEditInfoData() {
     const promises = langDefs.map(lang => {
         const filename = lang.suffix ? `info${lang.suffix}.json` : 'info.json'
         return fetch(urljoin(peopleUrl(props.userid), filename))
@@ -338,6 +338,7 @@ function submitRequest(p: CaptchaResponse): void {
         ensureEmpty(editWebsites.value)
     })
 }
+initEditInfoData()
 </script>
 
 <style lang="sass" scoped>

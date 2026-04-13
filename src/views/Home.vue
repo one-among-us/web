@@ -243,7 +243,7 @@ function sortPeople(peopleList: PersonMeta[]): PersonMeta[] {
     return result;
 }
 
-{
+function initHomeData() {
     const savedLayout = localStorage.getItem('isGridLayout');
     if (savedLayout !== null) {
         isGridLayout.value = JSON.parse(savedLayout);
@@ -309,6 +309,7 @@ function sortPeople(peopleList: PersonMeta[]): PersonMeta[] {
             if (birthdayList.value.length) viaBalloon()
         });
 }
+initHomeData()
 
 onUpdated(() => {
     fitBookmarkTexts();

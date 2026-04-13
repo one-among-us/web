@@ -95,7 +95,9 @@ function getComments(): any[] {
                 : []
         }
     }) as Comment[]
-    const myComments = JSON.parse(localStorage.getItem("myComments") as string);
+    const storedComments = localStorage.getItem("myComments")
+    if (!storedComments) return commentData;
+    const myComments = JSON.parse(storedComments);
     if (!myComments) return commentData;
     if ((props.p.id in myComments) && (myComments[props.p.id] != undefined)) {
         for (const u of myComments[props.p.id]) {
@@ -153,7 +155,8 @@ function submitRequest(captchaResponse: CaptchaResponse) {
                         submitter: 'You',
                         id: 0
                     } as Comment)
-                    let myComments = JSON.parse(localStorage.getItem("myComments") as string);
+                    const storedComments = localStorage.getItem("myComments")
+                    let myComments = storedComments ? JSON.parse(storedComments) : null;
                     if (!myComments) myComments = {};
                     if ((!(props.p.id in myComments)) || (myComments[props.p.id] == undefined)) {
                         myComments[props.p.id] = [{

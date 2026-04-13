@@ -1,12 +1,12 @@
 <template>
     <a class="backup button anim" :href="computedUrl">
-        <i class="icon" :class="props.icon ? props.icon : `fab fa-${props.platform}`"></i>
+        <i class="icon" :class="icon ? icon : `fab fa-${platform}`"></i>
         <span class="text">{{ computedText }}</span>
     </a>
 </template>
 
 <script setup lang="ts">
-import {computed} from 'vue'
+import {computed, toRefs} from 'vue'
 import {getLang, Lang, t} from '@/logic/config';
 import urljoin from "url-join";
 
@@ -24,17 +24,18 @@ const props = withDefaults(defineProps<{
 }>(), {
     platform: 'telegram'
 })
+const { platform, icon } = toRefs(props)
 
 const curKvs = kvs[getLang() as Lang]
 
 const computedUrl = computed(() => {
     if (props.url) return props.url
-    return urljoin(window.location.href, `backup/${props.platform}`)
+    return urljoin(window.location.href, `backup/${platform.value}`)
 })
 
 const computedText = computed(() => {
     if (props.text) return props.text
-    return t.backup.view.replace('{0}', curKvs[props.platform] ?? ` ${props.platform} `)
+    return t.backup.view.replace('{0}', curKvs[platform.value] ?? ` ${platform.value} `)
 })
 </script>
 

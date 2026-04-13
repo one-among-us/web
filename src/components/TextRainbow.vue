@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed} from 'vue'
+import {computed, toRefs} from 'vue'
 
 const props = withDefaults(defineProps<{
     text: string
@@ -9,13 +9,14 @@ const props = withDefaults(defineProps<{
     angle: 120,
     fontSize: '1rem'
 })
+const { text, angle, fontSize } = toRefs(props)
 
-const perAngle = computed(() => props.angle / props.text.length)
+const perAngle = computed(() => angle.value / text.value.length)
 const inner = computed(() => {
     let u = `<span aria-hidden="true">`;
     let c = 0;
-    for (const v of props.text) {
-        u += `<span style="--index: ${c}; font-size: ${props.fontSize};">${v}</span>`;
+    for (const v of text.value) {
+        u += `<span style="--index: ${c}; font-size: ${fontSize.value};">${v}</span>`;
         ++c;
     }
     u += `</span>`;
@@ -24,7 +25,7 @@ const inner = computed(() => {
 </script>
 
 <template>
-    <div class="text-ring" :style="'font-size: ' + props.fontSize + '; --total: ' + props.text.length + '; --radius: ' + 1 / Math.sin(perAngle / 180 * Math.PI) + '; padding: ' + 0.35 / Math.sin(perAngle / 180 * Math.PI) + 'rem; --tas: ' + props.angle + 'deg;'" v-html="inner"></div>
+    <div class="text-ring" :style="'font-size: ' + fontSize + '; --total: ' + text.length + '; --radius: ' + 1 / Math.sin(perAngle / 180 * Math.PI) + '; padding: ' + 0.35 / Math.sin(perAngle / 180 * Math.PI) + 'rem; --tas: ' + angle + 'deg;'" v-html="inner"></div>
 </template>
 
 <style lang="scss">

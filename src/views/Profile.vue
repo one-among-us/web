@@ -79,10 +79,14 @@ function checkViewLimit(): boolean | void {
 
     const now = new Date()
     const [_time, _entries] = [localStorage.getItem("view_limit_time"), localStorage.getItem("view_limit_entries")]
-    const [time, entries] = [new Date(_time as string), JSON.parse(_entries ?? "[]")]
+    if (!_time || !_entries) {
+        localStorage.setItem("view_limit_time", new Date().toUTCString())
+        localStorage.setItem("view_limit_entries", JSON.stringify([props.userid]))
+        return
+    }
+    const [time, entries] = [new Date(_time), JSON.parse(_entries)]
     const elapsedMin = (now.getTime() - time.getTime()) / 60000
-
-    if (!_time || !_entries || elapsedMin > config.cooldown) {
+    if (elapsedMin > config.cooldown) {
         localStorage.setItem("view_limit_time", new Date().toUTCString())
         localStorage.setItem("view_limit_entries", JSON.stringify([props.userid]))
         return
@@ -205,7 +209,8 @@ onUpdated((): void => {
                 if (it.includes(trim(window.location.pathname.replace('/profile', ''), '/'))) {
                     if (!localStorage.getItem('view_limit_entries'))
                         localStorage.setItem('view_limit_entries', '[]');
-                    const view_limit_entries = JSON.parse(localStorage.getItem('view_limit_entries') as string) as string[]
+                    const storedEntries = localStorage.getItem('view_limit_entries')
+                    const view_limit_entries = JSON.parse(storedEntries ?? '[]') as string[]
                     if (view_limit_entries.length < 20) {
                         Swal.fire({
                             title: t.view_limit.title,

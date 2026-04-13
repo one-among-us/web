@@ -40,7 +40,7 @@ const props = defineProps<{
     textAreaId: string
 }>()
 
-let textAreaEl: HTMLTextAreaElement
+let textAreaEl: HTMLTextAreaElement | null = null
 const selectedArea = ref<{ start: number, end: number } | null>(null)
 
 onMounted(() => {
@@ -64,6 +64,7 @@ function documentSelectionChange(ev: UIEvent) {
     console.log("Document selection change", ev)
     const active = document.activeElement
     const tel = textAreaEl
+    if (!tel) return
 
     if (active != tel) return close()
     if (tel.selectionStart == tel.selectionEnd) return close()
@@ -74,6 +75,7 @@ function documentSelectionChange(ev: UIEvent) {
 
 function apply(e: UIEvent, act: TooltipAction) {
     e.preventDefault()
+    if (!textAreaEl) return
     if (!selectedArea.value) return
     let { start, end } = selectedArea.value
     const txt = textAreaEl.value

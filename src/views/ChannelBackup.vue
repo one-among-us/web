@@ -2,7 +2,7 @@
     <div>
         <TgBlog id="profile-page" :posts-url="postsUrl" :posts-data="postsData" v-if="postsUrl">
             <ChannelBackupButton class="heading" :text="t.backup.back" icon="icon-back"
-                                 :url="`/profile/${props.userid}`"/>
+                                 :url="`/profile/${userid}`"/>
         </TgBlog>
         <div v-if="error">
             {{ t.backup.error }}
@@ -25,6 +25,7 @@ const props = withDefaults(defineProps<{
 }>(), {
     backup: 'telegram'
 })
+const userid = props.userid
 
 const postsUrl = ref<string | null>(null)
 const postsData = ref<string | null>(null)

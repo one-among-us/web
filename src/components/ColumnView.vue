@@ -1,3 +1,9 @@
+<script setup lang="ts">
+defineOptions({
+    name: 'ColumnView'
+})
+</script>
+
 <template>
     <div class="column-view">
         <slot></slot>

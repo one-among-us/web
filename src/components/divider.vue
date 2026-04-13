@@ -1,12 +1,13 @@
 <template>
     <div id="divider" aria-hidden="true">
-        <span class="color-strip" v-for="c in props.colors" :key="c"
-              :style="`background-color: ${c}; height: ${props.height}`"
+        <span class="color-strip" v-for="c in colors" :key="c"
+              :style="`background-color: ${c}; height: ${height}`"
               v-on:click="switchEasterEgg()"/>
     </div>
 </template>
 
 <script setup lang="ts">
+import {toRefs} from 'vue'
 import {getLang, i18n} from '@/logic/config';
 import {transColors} from "@/logic/constants";
 import {viaFetch} from "@/logic/viaFetch";
@@ -24,6 +25,7 @@ const props = withDefaults(defineProps<{
     colors: () => transColors,
     height: '2px'
 })
+const { colors, height } = toRefs(props)
 
 const curI18n = i18n[getLang()]
 
