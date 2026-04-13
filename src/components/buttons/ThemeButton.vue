@@ -5,30 +5,24 @@
     </button>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import {ref} from 'vue'
 import {applyTheme, getTheme, setTheme} from "@/logic/theme";
 import {t} from "@/logic/config";
 import {Icon} from '@iconify/vue';
-import {Component, Vue, toNative} from 'vue-facing-decorator';
 
-@Component({ components: { Icon } })
-class ThemeButton extends Vue {
-    getTheme = getTheme
+const theme = ref(getTheme())
 
-    t = t
-    theme = getTheme()
-
-    changeTheme(): void {
-        if (this.theme == 'dark') {
-            setTheme('light')
-        } else {
-            setTheme('dark')
-        }
-        applyTheme()
-        this.theme = getTheme()
+function changeTheme(): void {
+    if (theme.value == 'dark') {
+        setTheme('light')
+    } else {
+        setTheme('dark')
     }
+    applyTheme()
+    theme.value = getTheme()
 }
-export default toNative(ThemeButton)
+
 </script>
 
 <style lang="sass">

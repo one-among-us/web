@@ -1,31 +1,28 @@
-<script lang="ts">
-import {Vue, Component, Prop, toNative} from 'vue-facing-decorator';
+<script setup lang="ts">
+import {computed} from 'vue'
 
-@Component({})
-class TextRing extends Vue {
-    @Prop({required: true}) text!: string;
-    @Prop({default: '1rem'}) fontSize: string;
+const props = withDefaults(defineProps<{
+    text: string
+    fontSize?: string
+}>(), {
+    fontSize: '1rem'
+})
 
-    inner = ''
-    angle = 0;
-
-    created() {
-        this.angle = 360 / this.text.length;
-        let u = `<span aria-hidden="true">`;
-        let c = 0;
-        for (const v of this.text) {
-            u += `<span style="--index: ${c}; font-size: ${this.fontSize};">${v}</span>`;
-            ++c;
-        }
-        u += `</span>`;
-        this.inner = u;
+const angle = computed(() => 360 / props.text.length)
+const inner = computed(() => {
+    let u = `<span aria-hidden="true">`;
+    let c = 0;
+    for (const v of props.text) {
+        u += `<span style="--index: ${c}; font-size: ${props.fontSize};">${v}</span>`;
+        ++c;
     }
-}
-export default toNative(TextRing)
+    u += `</span>`;
+    return u;
+})
 </script>
 
 <template>
-    <div class="text-ring" :style="'font-size: ' + fontSize + '; --total: ' + text.length + '; --radius: ' + 1 / Math.sin(angle / 180 * Math.PI) + '; padding: ' + 0.71 / Math.sin(angle / 180 * Math.PI) + 'rem;'" v-html="inner"></div>
+    <div class="text-ring" :style="'font-size: ' + props.fontSize + '; --total: ' + props.text.length + '; --radius: ' + 1 / Math.sin(angle / 180 * Math.PI) + '; padding: ' + 0.71 / Math.sin(angle / 180 * Math.PI) + 'rem;'" v-html="inner"></div>
 </template>
 
 <style lang="scss">

@@ -4,40 +4,35 @@
     </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import {onMounted, ref} from 'vue'
 import {balloons} from '@/logic/config';
 import {isEaster} from '@/logic/easterEgg'
 import {randint, scheduledTask} from '@/logic/helper';
-import {Component, Vue, toNative} from 'vue-facing-decorator';
 
-@Component({ components: {} })
-class Balloon extends Vue {
-    db = 'balloon-qwq';
-    sourceImg = 'https://one-among.us/favicon-large.png';
-    styles = '';
+defineOptions({
+    name: 'ProfileBalloon'
+})
 
-    created() {
-        this.db = 'balloon-' + randint(0, 2147483648).toString();
-        this.sourceImg = (isEaster() && (Math.random() < 0.65)) ? '/img/balloons/balloon-p.png' : `/img/balloons/balloon-${randint(0, 6)}.png`;
-    }
+const db = ref('balloon-' + randint(0, 2147483648).toString())
+const sourceImg = ref((isEaster() && (Math.random() < 0.65)) ? '/img/balloons/balloon-p.png' : `/img/balloons/balloon-${randint(0, 6)}.png`)
+const styles = ref('')
 
-    mounted() {
-        let left = Math.random() * (window.innerWidth - 100);
-        if (window.innerWidth > balloons.width)
-            left = Math.random() * (balloons.width - 100) + (window.innerWidth - balloons.width) / 2;
-        document.getElementById(this.db).style.left = left.toString() + 'px';
-        document.getElementById(this.db).style.bottom = randint(balloons.min, balloons.max).toString() + 'px';
+onMounted(() => {
+    let left = Math.random() * (window.innerWidth - 100);
+    if (window.innerWidth > balloons.width)
+        left = Math.random() * (balloons.width - 100) + (window.innerWidth - balloons.width) / 2;
+    document.getElementById(db.value)?.style.setProperty('left', left.toString() + 'px');
+    document.getElementById(db.value)?.style.setProperty('bottom', randint(balloons.min, balloons.max).toString() + 'px');
 
-        scheduledTask(10000, () => {
-            document.getElementById(this.db)?.remove()
-        })
-    }
+    scheduledTask(10000, () => {
+        document.getElementById(db.value)?.remove()
+    })
+})
 
-    mouseover() {
-        document.getElementById(this.db).remove()
-    }
+function mouseover() {
+    document.getElementById(db.value)?.remove()
 }
-export default toNative(Balloon)
 </script>
 
 <style lang="sass">

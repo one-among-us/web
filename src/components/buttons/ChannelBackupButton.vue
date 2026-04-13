@@ -1,14 +1,14 @@
 <template>
     <a class="backup button anim" :href="computedUrl">
-        <i class="icon" :class="icon ? icon : `fab fa-${platform}`"></i>
+        <i class="icon" :class="props.icon ? props.icon : `fab fa-${props.platform}`"></i>
         <span class="text">{{ computedText }}</span>
     </a>
 </template>
 
-<script lang="ts">
-import {getLang, t} from '@/logic/config';
+<script setup lang="ts">
+import {computed} from 'vue'
+import {getLang, Lang, t} from '@/logic/config';
 import urljoin from "url-join";
-import {Component, Prop, Vue, toNative} from 'vue-facing-decorator';
 
 const kvs = {
     zh_hans: { 'telegram': '电报', 'twitter': '推特' },
@@ -16,26 +16,26 @@ const kvs = {
     en: { 'telegram': 'telegram', 'twitter': 'twitter' }
 }
 
-@Component({ components: {} })
-class ChannelBackupButton extends Vue {
-    @Prop({ default: "telegram" }) platform: string
-    @Prop() icon: string
-    @Prop() url: string
-    @Prop() text: string
+const props = withDefaults(defineProps<{
+    platform?: string
+    icon?: string
+    url?: string
+    text?: string
+}>(), {
+    platform: 'telegram'
+})
 
-    kvs = kvs[getLang()]
+const curKvs = kvs[getLang() as Lang]
 
-    get computedUrl() {
-        if (this.url) return this.url
-        return urljoin(window.location.href, `backup/${this.platform}`)
-    }
+const computedUrl = computed(() => {
+    if (props.url) return props.url
+    return urljoin(window.location.href, `backup/${props.platform}`)
+})
 
-    get computedText() {
-        if (this.text) return this.text
-        return t.backup.view.replace('{0}', this.kvs[this.platform] ?? ` ${this.platform} `)
-    }
-}
-export default toNative(ChannelBackupButton)
+const computedText = computed(() => {
+    if (props.text) return props.text
+    return t.backup.view.replace('{0}', curKvs[props.platform] ?? ` ${props.platform} `)
+})
 </script>
 
 <style lang="sass" scoped>

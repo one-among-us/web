@@ -1,25 +1,18 @@
-<script lang="ts">
-import {Vue, Component, toNative} from 'vue-facing-decorator';
+<script setup lang="ts">
+import {computed} from 'vue'
 import {getLang, Lang, setLang, supportedLang} from "@/logic/config";
 import {info} from "@/logic/utils";
 
-@Component({})
-class LangButton extends Vue {
-    lang = getLang()
-    supportedLang = supportedLang
+const targets = computed(() => {
+    const lang = getLang()
+    return Object.keys(supportedLang).filter(l => l !== lang) as Lang[]
+})
 
-    get targets(): Lang[] {
-        const lang = getLang()
-        return Object.keys(supportedLang).filter(l => l !== lang) as Lang[]
-    }
-
-    click(id: Lang) {
-        info(`Switching to ${id}`)
-        setLang(id)
-        location.reload()
-    }
+function click(id: Lang) {
+    info(`Switching to ${id}`)
+    setLang(id)
+    location.reload()
 }
-export default toNative(LangButton)
 </script>
 
 <template>

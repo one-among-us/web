@@ -8,21 +8,17 @@
     </main>
 </template>
 
-<script lang="ts">
-import {Component, Vue, toNative} from 'vue-facing-decorator';
+<script setup lang="ts">
+import {onMounted} from 'vue'
 
-@Component({ components: {} })
-class FourOhFour extends Vue {
-    mounted() {
-        if (window.gtag) {
-            console.log("Reporting error...")
-            window.gtag('event', 'exception', {
-                'description': `404 Not Found: ${window.location.href}`
-            });
-        }
+onMounted(() => {
+    if (window.gtag) {
+        console.log("Reporting error...")
+        window.gtag('event', 'exception', {
+            'description': `404 Not Found: ${window.location.href}`
+        });
     }
-}
-export default toNative(FourOhFour)
+})
 </script>
 
 <style lang="sass" scoped>
