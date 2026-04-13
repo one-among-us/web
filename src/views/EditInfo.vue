@@ -43,7 +43,8 @@
     </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import {reactive, ref} from 'vue'
 import SubmitPrompt, {CaptchaResponse} from "@/components/SubmitPrompt.vue";
 import {backendHost, getLang, i18n, Lang, langDefs, peopleUrl, t} from "@/logic/config";
 import {parsePeopleJson, Person} from "@/logic/data";
@@ -53,7 +54,6 @@ import router from "@/router";
 import Swal from 'sweetalert2';
 import {getSwalTheme} from "@/logic/theme";
 import urljoin from "url-join";
-import {Component, Prop, Vue, toNative} from 'vue-facing-decorator';
 
 let _uid = 0
 
@@ -67,7 +67,7 @@ function kv(k: string, v: string): KVPair {
     return { k, v, _id: ++_uid }
 }
 
-export function removeEmpty(arr: KVPair[]): void {
+function removeEmpty(arr: KVPair[]): void {
     let i = 0;
     while (i < arr.length) {
         if (!arr[i].k && !arr[i].v) arr.splice(i, 1)
@@ -81,279 +81,263 @@ function ensureEmpty(list: KVPair[]): void {
     }
 }
 
-@Component({ components: { SubmitPrompt } })
-class EditInfo extends Vue {
-    @Prop() userid!: string
+defineOptions({
+    name: 'EditInfoView'
+})
 
-    loaded = false
-    langs = langDefs
-    activeLang: string = getLang()
+const props = defineProps<{
+    userid: string
+}>()
+const userid = props.userid
 
-    // Per-language editable fields (initialized from langDefs to stay in sync)
-    editInfoMap: Record<Lang, KVPair[]> = Object.fromEntries(
-        langDefs.map(l => [l.key, []])
-    ) as Record<Lang, KVPair[]>
+const loaded = ref(false)
+const langs = langDefs
+const activeLang = ref<string>(getLang())
+const editInfoMap = reactive(Object.fromEntries(
+    langDefs.map(l => [l.key, []])
+) as Record<Lang, KVPair[]>)
+const editWebsites = ref<KVPair[]>([])
+const personMap = reactive<Record<string, Person>>({} as Record<string, Person>)
+const initialJson = ref('')
+const submitParams = ref<{ [id: string]: string } | null>(null)
 
-    // Shared across languages
-    editWebsites: KVPair[] = []
+function json(): string {
+    const data: Record<string, any> = {}
 
-    personMap: Record<string, Person> = {} as Record<string, Person>
-    initialJson!: string
+    for (const lang of langDefs) {
+        const li = i18n[lang.key as Lang]
+        const descKey = li.info.desc
+        const infoEntries: [string, string][] = []
+        let desc = ''
 
-    submitParams: { [id: string]: string } = null as never
-
-    t = t
-
-    json(): string {
-        const data: Record<string, any> = {}
-
-        for (const lang of langDefs) {
-            const li = i18n[lang.key as Lang]
-            const descKey = li.info.desc
-            const infoEntries: [string, string][] = []
-            let desc = ''
-
-            for (const it of this.editInfoMap[lang.key]) {
-                if (it.k === descKey) {
-                    desc = it.v
-                } else if (it.k || it.v) {
-                    infoEntries.push([it.k, it.v])
-                }
-            }
-
-            data[lang.key] = {
-                info: Object.fromEntries(infoEntries),
-                ...(desc ? { desc } : {}),
+        for (const it of editInfoMap[lang.key]) {
+            if (it.k === descKey) {
+                desc = it.v
+            } else if (it.k || it.v) {
+                infoEntries.push([it.k, it.v])
             }
         }
 
-        const webEntries = this.editWebsites
-            .filter(it => it.k || it.v)
-            .map(it => [it.k, it.v])
-        data.websites = Object.fromEntries(webEntries)
-
-        return JSON.stringify(data, null, 2)
+        data[lang.key] = {
+            info: Object.fromEntries(infoEntries),
+            ...(desc ? { desc } : {}),
+        }
     }
 
-    created(): void {
-        const promises = langDefs.map(lang => {
-            const filename = lang.suffix ? `info${lang.suffix}.json` : 'info.json'
-            return fetch(urljoin(peopleUrl(this.userid), filename))
-                .then(res => {
-                    if (!res.ok) throw new Error(`${filename}: ${res.status}`)
-                    return res.text()
-                })
-                .then(text => {
-                    const p = parsePeopleJson(text)
-                    this.personMap[lang.key] = p
+    const webEntries = editWebsites.value
+        .filter(it => it.k || it.v)
+        .map(it => [it.k, it.v])
+    data.websites = Object.fromEntries(webEntries)
 
-                    // Populate info for this language
-                    p.info.forEach(a => {
-                        this.editInfoMap[lang.key].push(kv(a[0], String(a[1])))
-                    })
+    return JSON.stringify(data, null, 2)
+}
 
-                    // Insert solarBorn after the born field (for lunar birthday people)
-                    if (p.solarBorn && p.bornKey) {
-                        const bornIdx = this.editInfoMap[lang.key].findIndex(it => it.k === p.bornKey)
-                        const solarKv = kv(i18n[lang.key as Lang].info.solar_born, p.solarBorn)
-                        if (bornIdx >= 0) {
-                            this.editInfoMap[lang.key].splice(bornIdx + 1, 0, solarKv)
-                        } else {
-                            this.editInfoMap[lang.key].push(solarKv)
-                        }
-                    }
+function changeInfo(langKey: string): void {
+    const list = editInfoMap[langKey as Lang]
+    if (list.filter(it => !it.k && !it.v).length > 1) removeEmpty(list)
+    ensureEmpty(list)
+}
 
-                    // Append desc as a KV pair in info
-                    this.editInfoMap[lang.key].push(kv(i18n[lang.key as Lang].info.desc, p.desc || ''))
+function changeWebsites(): void {
+    if (editWebsites.value.filter(it => !it.k && !it.v).length > 1) removeEmpty(editWebsites.value)
+    ensureEmpty(editWebsites.value)
+}
 
-                    // Websites are shared – load only from primary language
-                    if (lang.key === 'zh_hans') {
-                        p.websites.forEach(a => this.editWebsites.push(kv(a[0], a[1])))
-                    }
-                })
-                .catch(err => {
-                    // Missing or malformed localized file – populate with desc placeholder only
-                    error(`Failed to load ${filename} for ${lang.key}: ${err.message}`)
-                    this.editInfoMap[lang.key].push(kv(i18n[lang.key as Lang].info.desc, ''))
-                    ensureEmpty(this.editInfoMap[lang.key])
-                })
-        })
-
-        Promise.all(promises).then(() => {
-            this.loaded = true
-            this.initialJson = this.json()
-            for (const lang of langDefs) {
-                ensureEmpty(this.editInfoMap[lang.key])
-            }
-            ensureEmpty(this.editWebsites)
-        })
+function submitBtn(): void {
+    for (const lang of langDefs) {
+        removeEmpty(editInfoMap[lang.key])
     }
+    removeEmpty(editWebsites.value)
 
-    changeInfo(langKey: string): void {
-        const list = this.editInfoMap[langKey]
-        if (list.filter(it => !it.k && !it.v).length > 1) removeEmpty(list)
-        ensureEmpty(list)
-    }
-
-    changeWebsites(): void {
-        if (this.editWebsites.filter(it => !it.k && !it.v).length > 1) removeEmpty(this.editWebsites)
-        ensureEmpty(this.editWebsites)
-    }
-
-    submitBtn(): void {
-        // Clean up empty entries
-        for (const lang of langDefs) {
-            removeEmpty(this.editInfoMap[lang.key])
-        }
-        removeEmpty(this.editWebsites)
-
-        // Check for empty keys with non-empty values
-        for (const lang of langDefs) {
-            const orphan = this.editInfoMap[lang.key].find(it => !it.k && it.v)
-            if (orphan) {
-                for (const l of langDefs) ensureEmpty(this.editInfoMap[l.key])
-                ensureEmpty(this.editWebsites)
-                Swal.fire({
-                    title: t.nav_empty_key,
-                    text: t.nav_empty_key_text.replace('{lang}', lang.label),
-                    icon: 'warning',
-                    confirmButtonText: t.nav_ok_0,
-                    theme: getSwalTheme()
-                })
-                return
-            }
-        }
-        {
-            const orphan = this.editWebsites.find(it => !it.k && it.v)
-            if (orphan) {
-                for (const l of langDefs) ensureEmpty(this.editInfoMap[l.key])
-                ensureEmpty(this.editWebsites)
-                Swal.fire({
-                    title: t.nav_empty_key,
-                    text: t.nav_empty_key_text.replace('{lang}', t.nav_website),
-                    icon: 'warning',
-                    confirmButtonText: t.nav_ok_0,
-                    theme: getSwalTheme()
-                })
-                return
-            }
-        }
-
-        // Check for duplicate keys
-        for (const lang of langDefs) {
-            const keys = this.editInfoMap[lang.key].map(it => it.k).filter(k => k)
-            const seen = new Set<string>()
-            for (const k of keys) {
-                if (seen.has(k)) {
-                    // Restore empty entries for UI
-                    for (const l of langDefs) ensureEmpty(this.editInfoMap[l.key])
-                    ensureEmpty(this.editWebsites)
-                    Swal.fire({
-                        title: t.nav_duplicate_key,
-                        text: t.nav_duplicate_key_text.replace('{key}', k).replace('{lang}', lang.label),
-                        icon: 'warning',
-                        confirmButtonText: t.nav_ok_0,
-                        theme: getSwalTheme()
-                    })
-                    return
-                }
-                seen.add(k)
-            }
-        }
-        {
-            const keys = this.editWebsites.map(it => it.k).filter(k => k)
-            const seen = new Set<string>()
-            for (const k of keys) {
-                if (seen.has(k)) {
-                    for (const l of langDefs) ensureEmpty(this.editInfoMap[l.key])
-                    ensureEmpty(this.editWebsites)
-                    Swal.fire({
-                        title: t.nav_duplicate_key,
-                        text: t.nav_duplicate_key_text.replace('{key}', k).replace('{lang}', t.nav_website),
-                        icon: 'warning',
-                        confirmButtonText: t.nav_ok_0,
-                        theme: getSwalTheme()
-                    })
-                    return
-                }
-                seen.add(k)
-            }
-        }
-
-        const json = this.json()
-        console.log(json)
-
-        // Restore empty entries for UI
-        for (const lang of langDefs) {
-            ensureEmpty(this.editInfoMap[lang.key])
-        }
-        ensureEmpty(this.editWebsites)
-
-        // Didn't change anything
-        if (json === this.initialJson) {
+    for (const lang of langDefs) {
+        const orphan = editInfoMap[lang.key].find(it => !it.k && it.v)
+        if (orphan) {
+            for (const l of langDefs) ensureEmpty(editInfoMap[l.key])
+            ensureEmpty(editWebsites.value)
             Swal.fire({
-                title: t.nav_unable_submit,
-                text: "(╯‵□′)╯︵┻━┻",
-                icon: "error",
+                title: t.nav_empty_key,
+                text: t.nav_empty_key_text.replace('{lang}', lang.label),
+                icon: 'warning',
                 confirmButtonText: t.nav_ok_0,
-                showCloseButton: false,
                 theme: getSwalTheme()
             })
             return
         }
-
-        // Show submit prompt
-        const pid = this.personMap['zh_hans']?.id || this.userid
-        this.submitParams = { id: pid, content: json }
     }
-
-    submitRequest(p: CaptchaResponse): void {
-        const params = { ...this.submitParams, ...p }
-        const pid = this.personMap['zh_hans']?.id || this.userid
-
-        Swal.fire({
-            title: t.nav_creating_pull_request,
-            text: t.nav_description_pull_request,
-            icon: null,
-            showConfirmButton: false,
-            theme: getSwalTheme(),
-            didOpen: (() => {
-                Swal.showLoading(null);
-                fetchText(backendHost + '/edit/info', { method: 'POST', params })
-                    .then(text => {
-                        info(text);
-                        Swal.fire({
-                            title: t.nav_success,
-                            text: t.nav_success_text,
-                            icon: "success",
-                            timer: 5000,
-                            timerProgressBar: true,
-                            showConfirmButton: true,
-                            confirmButtonText: t.nav_ok_1,
-                            theme: getSwalTheme()
-                        }).then(() => {
-                            router.push(`/profile/${pid}`);
-                        })
-                    })
-                    .catch(err => {
-                        error(err);
-                        Swal.fire({
-                            title: t.nav_failed,
-                            text: t.nav_fail_reason + err.message,
-                            icon: "error",
-                            timer: 5000,
-                            timerProgressBar: true,
-                            showConfirmButton: false,
-                            theme: getSwalTheme()
-                        })
-                    })
+    {
+        const orphan = editWebsites.value.find(it => !it.k && it.v)
+        if (orphan) {
+            for (const l of langDefs) ensureEmpty(editInfoMap[l.key])
+            ensureEmpty(editWebsites.value)
+            Swal.fire({
+                title: t.nav_empty_key,
+                text: t.nav_empty_key_text.replace('{lang}', t.nav_website),
+                icon: 'warning',
+                confirmButtonText: t.nav_ok_0,
+                theme: getSwalTheme()
             })
-        })
-
-        this.submitParams = null
+            return
+        }
     }
+
+    for (const lang of langDefs) {
+        const keys = editInfoMap[lang.key].map(it => it.k).filter(k => k)
+        const seen = new Set<string>()
+        for (const k of keys) {
+            if (seen.has(k)) {
+                for (const l of langDefs) ensureEmpty(editInfoMap[l.key])
+                ensureEmpty(editWebsites.value)
+                Swal.fire({
+                    title: t.nav_duplicate_key,
+                    text: t.nav_duplicate_key_text.replace('{key}', k).replace('{lang}', lang.label),
+                    icon: 'warning',
+                    confirmButtonText: t.nav_ok_0,
+                    theme: getSwalTheme()
+                })
+                return
+            }
+            seen.add(k)
+        }
+    }
+    {
+        const keys = editWebsites.value.map(it => it.k).filter(k => k)
+        const seen = new Set<string>()
+        for (const k of keys) {
+            if (seen.has(k)) {
+                for (const l of langDefs) ensureEmpty(editInfoMap[l.key])
+                ensureEmpty(editWebsites.value)
+                Swal.fire({
+                    title: t.nav_duplicate_key,
+                    text: t.nav_duplicate_key_text.replace('{key}', k).replace('{lang}', t.nav_website),
+                    icon: 'warning',
+                    confirmButtonText: t.nav_ok_0,
+                    theme: getSwalTheme()
+                })
+                return
+            }
+            seen.add(k)
+        }
+    }
+
+    const jsonText = json()
+    console.log(jsonText)
+
+    for (const lang of langDefs) {
+        ensureEmpty(editInfoMap[lang.key])
+    }
+    ensureEmpty(editWebsites.value)
+
+    if (jsonText === initialJson.value) {
+        Swal.fire({
+            title: t.nav_unable_submit,
+            text: "(╯‵□′)╯︵┻━┻",
+            icon: "error",
+            confirmButtonText: t.nav_ok_0,
+            showCloseButton: false,
+            theme: getSwalTheme()
+        })
+        return
+    }
+
+    const pid = personMap['zh_hans']?.id || props.userid
+    submitParams.value = { id: pid, content: jsonText }
 }
-export default toNative(EditInfo)
+
+function submitRequest(p: CaptchaResponse): void {
+    if (!submitParams.value) return
+    const params = { ...submitParams.value, ...p }
+    const pid = personMap['zh_hans']?.id || props.userid
+
+    Swal.fire({
+        title: t.nav_creating_pull_request,
+        text: t.nav_description_pull_request,
+        icon: null,
+        showConfirmButton: false,
+        theme: getSwalTheme(),
+        didOpen: (() => {
+            Swal.showLoading(null);
+            fetchText(backendHost + '/edit/info', { method: 'POST', params })
+                .then(text => {
+                    info(text);
+                    Swal.fire({
+                        title: t.nav_success,
+                        text: t.nav_success_text,
+                        icon: "success",
+                        timer: 5000,
+                        timerProgressBar: true,
+                        showConfirmButton: true,
+                        confirmButtonText: t.nav_ok_1,
+                        theme: getSwalTheme()
+                    }).then(() => {
+                        router.push(`/profile/${pid}`);
+                    })
+                })
+                .catch(err => {
+                    error(err);
+                    Swal.fire({
+                        title: t.nav_failed,
+                        text: t.nav_fail_reason + err.message,
+                        icon: "error",
+                        timer: 5000,
+                        timerProgressBar: true,
+                        showConfirmButton: false,
+                        theme: getSwalTheme()
+                    })
+                })
+        })
+    })
+
+    submitParams.value = null
+}
+
+{
+    const promises = langDefs.map(lang => {
+        const filename = lang.suffix ? `info${lang.suffix}.json` : 'info.json'
+        return fetch(urljoin(peopleUrl(props.userid), filename))
+            .then(res => {
+                if (!res.ok) throw new Error(`${filename}: ${res.status}`)
+                return res.text()
+            })
+            .then(text => {
+                const p = parsePeopleJson(text)
+                personMap[lang.key] = p
+
+                p.info.forEach(a => {
+                    editInfoMap[lang.key].push(kv(a[0], String(a[1])))
+                })
+
+                if (p.solarBorn && p.bornKey) {
+                    const bornIdx = editInfoMap[lang.key].findIndex(it => it.k === p.bornKey)
+                    const solarKv = kv(i18n[lang.key as Lang].info.solar_born, p.solarBorn)
+                    if (bornIdx >= 0) {
+                        editInfoMap[lang.key].splice(bornIdx + 1, 0, solarKv)
+                    } else {
+                        editInfoMap[lang.key].push(solarKv)
+                    }
+                }
+
+                editInfoMap[lang.key].push(kv(i18n[lang.key as Lang].info.desc, p.desc || ''))
+
+                if (lang.key === 'zh_hans') {
+                    p.websites.forEach(a => editWebsites.value.push(kv(a[0], a[1])))
+                }
+            })
+            .catch(err => {
+                error(`Failed to load ${filename} for ${lang.key}: ${err.message}`)
+                editInfoMap[lang.key].push(kv(i18n[lang.key as Lang].info.desc, ''))
+                ensureEmpty(editInfoMap[lang.key])
+            })
+    })
+
+    Promise.all(promises).then(() => {
+        loaded.value = true
+        initialJson.value = json()
+        for (const lang of langDefs) {
+            ensureEmpty(editInfoMap[lang.key])
+        }
+        ensureEmpty(editWebsites.value)
+    })
+}
 </script>
 
 <style lang="sass" scoped>
