@@ -2,7 +2,7 @@
     <div>
         <TgBlog id="profile-page" :posts-url="postsUrl" :posts-data="postsData" v-if="postsUrl">
             <ChannelBackupButton class="heading" :text="t.backup.back" icon="icon-back"
-                                 :url="`/profile/${userid}`"/>
+                                 :url="`/profile/${props.userid}`"/>
         </TgBlog>
         <div v-if="error">
             {{ t.backup.error }}
@@ -10,49 +10,48 @@
     </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import {computed, ref} from 'vue'
 import ChannelBackupButton from "@/components/buttons/ChannelBackupButton.vue";
 import {backupUrl, t} from "@/logic/config";
 import {TgBlog} from "tg-blog";
 import "tg-blog/dist/style.css"
-import {Component, Prop, Vue, toNative} from 'vue-facing-decorator';
 
 const alias = { 'tg': 'telegram', 'tw': 'twitter' }
 
-@Component({ components: { TgBlog, ChannelBackupButton } })
-class ChannelBackup extends Vue {
-    @Prop({ required: true }) userid: string
-    @Prop({ default: 'telegram' }) backup: string
+const props = withDefaults(defineProps<{
+    userid: string
+    backup?: string
+}>(), {
+    backup: 'telegram'
+})
 
-    postsUrl: string = null
-    postsData: string = null
-    error: string = null
+const postsUrl = ref<string | null>(null)
+const postsData = ref<string | null>(null)
+const error = ref<string | null>(null)
 
-    t = t
+const computedBackup = computed(() =>
+    props.backup in alias ? alias[props.backup as keyof typeof alias] : props.backup
+)
 
-    get computedBackup() {
-        return this.backup in alias ? alias[this.backup] : this.backup
-    }
-
-    async created() {
-        try {
-            // Support redirecting to another url
-            let url = backupUrl(this.userid, this.computedBackup)
-            let json = await (await fetch(url)).json()
-            if (json.redirect) {
-                url = json.redirect
-                json = await (await fetch(url)).json()
-            }
-
-            this.postsData = json
-            this.postsUrl = url
-        } catch (e) {
-            console.log(e)
-            this.error = e
+async function loadData() {
+    try {
+        let url = backupUrl(props.userid, computedBackup.value)
+        let json = await (await fetch(url)).json()
+        if (json.redirect) {
+            url = json.redirect
+            json = await (await fetch(url)).json()
         }
+
+        postsData.value = json
+        postsUrl.value = url
+    } catch (e) {
+        console.log(e)
+        error.value = String(e)
     }
 }
-export default toNative(ChannelBackup)
+
+loadData()
 </script>
 
 <style lang="sass" scoped>

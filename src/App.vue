@@ -1,6 +1,6 @@
 <template>
     <Divider height="5px"/>
-    <header id="title" class="fbox-vcenter unselectable" v-if="['Home', 'About'].includes(String($route.name))">
+    <header id="title" class="fbox-vcenter unselectable" v-if="['Home', 'About'].includes(String(route.name))">
         <div role="heading" aria-level="1" id="title-txt" v-if="!uwu">那些秋叶</div>
         <div id="title-sub" v-if="!uwu">One Among Us</div>
         <img src="/kawaii.oau.png" class="kawaii" v-if="uwu" alt="One Among Us 秋の葉ものがたり"/>
@@ -22,7 +22,9 @@
     <Fireworks :count="6" v-if="shouldShowFireworks()"/>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import {onMounted, onUpdated} from 'vue'
+import {useRoute} from 'vue-router'
 import GlobalButton from "@/components/buttons/GlobalButton.vue";
 import Divider from "@/components/divider.vue";
 import Sakura from "@/components/Sakura.vue";
@@ -33,56 +35,41 @@ import {gaussian, isTdovPeriod, isTdorPeriod} from "@/logic/helper";
 import {applyTheme, getTheme} from "@/logic/theme";
 import {info, logPrefixCss} from "@/logic/utils";
 import {isUwU} from "@/logic/uwu";
-import {Component, Vue, toNative} from 'vue-facing-decorator';
 import {getLang, t} from './logic/config';
 
-@Component({
-    components: { GlobalButton, Divider, Sakura, Fireworks }
-})
-class App extends Vue {
-    $route: any
-    t = t
+const route = useRoute()
+const uwu = isUwU()
 
-    uwu = isUwU()
+if (!localStorage.getItem('showBtn'))
+    localStorage.setItem('showBtn', '1')
 
-    isEaster = isEaster
-    gaussian = gaussian
-    getTheme = getTheme
-    isTdorPeriod = isTdorPeriod
-    isTdovPeriod = isTdovPeriod
-
-    shouldShowFireworks(): boolean {
-        return this.isTdovPeriod() && (this.getTheme() == 'dark')
-    }
-
-    created(): void {
-        if (!localStorage.getItem('showBtn'))
-            localStorage.setItem('showBtn', '1')
-    }
-
-    mounted() {
-        info(`One Among Us - Web Frontend loaded`)
-        console.log(`%c %c %c %c %c `,
-            ...transColors.map(c => `background: ${c}; padding: 40px 20px;`)
-        )
-        console.log(`%c🐱%c 请不要用调试器做奇怪的事情 qwq\n%c(^ 这里有猫猫看着你哦)`,
-            'font-size: 1.5em; background: #fdf6ec; color: #E6A23C;' + logPrefixCss,
-            'font-size: 1.5em; color: #ff8373',
-            'color: pink; line-height: 1.5em'
-        )
-
-        document.getElementById("app").dataset.lang = getLang()
-        applyTheme()
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-            applyTheme();
-        })
-    }
-
-    updated() {
-        if (this.uwu) document.getElementById("title").style.minHeight = "300px"
-    }
+function shouldShowFireworks(): boolean {
+    return isTdovPeriod() && (getTheme() == 'dark')
 }
-export default toNative(App)
+
+onMounted(() => {
+    info(`One Among Us - Web Frontend loaded`)
+    console.log(`%c %c %c %c %c `,
+        ...transColors.map(c => `background: ${c}; padding: 40px 20px;`)
+    )
+    console.log(`%c🐱%c 请不要用调试器做奇怪的事情 qwq\n%c(^ 这里有猫猫看着你哦)`,
+        'font-size: 1.5em; background: #fdf6ec; color: #E6A23C;' + logPrefixCss,
+        'font-size: 1.5em; color: #ff8373',
+        'color: pink; line-height: 1.5em'
+    )
+
+    const appEl = document.getElementById("app")
+    if (appEl) appEl.dataset.lang = getLang()
+    applyTheme()
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+        applyTheme();
+    })
+})
+
+onUpdated(() => {
+    const title = document.getElementById("title")
+    if (uwu && title) title.style.minHeight = "300px"
+})
 </script>
 
 <!-- Global Style -->
