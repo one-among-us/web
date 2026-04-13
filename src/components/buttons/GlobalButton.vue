@@ -14,33 +14,25 @@
     </transition-group>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import {ref} from 'vue'
 import ScrollButton from "@/components/buttons/ScrollButton.vue";
 import ThemeButton from "@/components/buttons/ThemeButton.vue";
 import LangButton from "@/components/buttons/LangButton.vue";
-import {getLang, t} from "@/logic/config";
+import {t} from "@/logic/config";
 import {scheduledTask} from "@/logic/helper";
 import {Icon} from "@iconify/vue";
-import {Component, Vue, toNative} from 'vue-facing-decorator';
 
+const isShowLang = ref(false)
+const hovering = ref(false)
 
-@Component({ components: { Icon, ThemeButton, ScrollButton, LangButton } })
-class GlobalButton extends Vue {
-    lang = getLang()
-    showBtn = localStorage.getItem('showBtn')
-    isShowLang = false;
-    t = t
-    hovering = false;
-
-    unshowLang() {
-        this.hovering = false;
-        scheduledTask(1000, () => {
-            if (this.hovering) return;
-            this.isShowLang = false;
-        })
-    }
+function unshowLang() {
+    hovering.value = false;
+    scheduledTask(1000, () => {
+        if (hovering.value) return;
+        isShowLang.value = false;
+    })
 }
-export default toNative(GlobalButton)
 </script>
 
 <style lang="sass">

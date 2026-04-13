@@ -14,10 +14,10 @@
     </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import {computed, ref} from 'vue'
 import {rand} from "@/logic/helper";
 import {ImageViewer} from "tg-blog";
-import {Component, Prop, Vue, toNative} from 'vue-facing-decorator';
 import "tg-blog/dist/style.css"
 
 export interface ViewedImage {
@@ -27,21 +27,19 @@ export interface ViewedImage {
     fileName?: string;
 }
 
-@Component({ components: { ImageViewer } })
-class PhotoScroll extends Vue {
-    viewerIndex = null
+const props = defineProps<{
+    photos: string[] | string
+}>()
 
-    @Prop() photos!: string[] | string
-    photoList!: ViewedImage[]
+const viewerIndex = ref<number | null>(null)
 
-    rotations: number[] = []
+const photoList = computed<ViewedImage[]>(() =>
+    ((typeof props.photos === 'string') ? JSON.parse(props.photos) : props.photos).map(it => ({ url: it }))
+)
 
-    created(): void {
-        this.photoList = ((typeof this.photos === 'string') ? JSON.parse(this.photos) : this.photos).map(it => ({ url: it }))
-        this.rotations = this.photoList.map(() => rand(-15, 15))
-    }
-}
-export default toNative(PhotoScroll)
+const rotations = computed<number[]>(() =>
+    photoList.value.map(() => rand(-15, 15))
+)
 </script>
 
 <style lang="sass">

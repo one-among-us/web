@@ -1,19 +1,22 @@
-<script lang="ts">
-import {Vue, Component, Prop, toNative} from 'vue-facing-decorator';
+<script setup lang="ts">
+import {computed} from 'vue'
 
-@Component({})
-class Sakura extends Vue {
-    @Prop({required: true}) count: number | string;
+defineOptions({
+    name: 'SakuraFall'
+})
 
-    spans = ""
+const props = defineProps<{
+    count: number | string
+}>()
 
-    mounted() {
-        for (let i = 0; i < parseInt(this.count.toString()); i++) {
-            this.spans += `<span style="left: ${(i / parseFloat(this.count.toString())) * 100}%"></span>`;
-        }
+const spans = computed(() => {
+    const count = parseInt(props.count.toString());
+    let html = ""
+    for (let i = 0; i < count; i++) {
+        html += `<span style="left: ${(i / parseFloat(props.count.toString())) * 100}%"></span>`;
     }
-}
-export default toNative(Sakura)
+    return html
+})
 </script>
 
 <template>
