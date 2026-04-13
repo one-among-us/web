@@ -4,18 +4,17 @@
     </main>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import aboutHtmlEn from "@/assets/about.en.md";
 import aboutHtml from "@/assets/about.md";
 import aboutHtmlHant from "@/assets/about.zh_hant.md";
 import {getLang} from "@/logic/config";
 import {handleIconFromString} from '@/logic/helper';
-import {Component, Vue, toNative} from 'vue-facing-decorator';
 
-@Component({})
-class About extends Vue {
-    lang = getLang();
-    html = handleIconFromString(this.lang === 'zh_hans' ? aboutHtml : (this.lang === 'zh_hant' ? aboutHtmlHant : aboutHtmlEn));
-}
-export default toNative(About)
+defineOptions({
+    name: 'AboutView'
+})
+
+const lang = getLang();
+const html = handleIconFromString(lang === 'zh_hans' ? aboutHtml : (lang === 'zh_hant' ? aboutHtmlHant : aboutHtmlEn));
 </script>

@@ -1,20 +1,15 @@
-<script lang="ts">
+<script setup lang="ts">
 import {scheduledTask} from "@/logic/helper";
-import {Vue, Component, toNative} from 'vue-facing-decorator';
 import {Icon} from '@iconify/vue';
 
-@Component({components: {Icon}})
-class ScrollButton extends Vue {
-    scroll() {
-        document.documentElement.style.scrollBehavior = 'smooth';
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-        scheduledTask(50, () => document.documentElement.style.scrollBehavior = null);
-    }
+function scroll() {
+    document.documentElement.style.scrollBehavior = 'smooth';
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+    scheduledTask(50, () => document.documentElement.style.scrollBehavior = null);
 }
-export default toNative(ScrollButton)
 </script>
 
 <template>
