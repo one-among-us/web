@@ -6293,7 +6293,6 @@ __metadata:
     uwuifier: "npm:^4.2.2"
     vite: "npm:^5.4.21"
     vue: "npm:^3.5.25"
-    vue-facing-decorator: "npm:^3.0.4"
     vue-router: "npm:^4.6.3"
     vue-tsc: "npm:^2.2.12"
   languageName: unknown
@@ -8238,15 +8237,6 @@ __metadata:
   peerDependencies:
     eslint: ">=6.0.0"
   checksum: 10c0/128be5988de025b5abd676a91c3e92af68288a5da1c20b2ff848fe90e040c04b2222a03b5d8048cf4a5e0b667a8addfb6f6e6565860d4afb5190c4cc42d05578
-  languageName: node
-  linkType: hard
-
-"vue-facing-decorator@npm:^3.0.4":
-  version: 3.0.4
-  resolution: "vue-facing-decorator@npm:3.0.4"
-  peerDependencies:
-    vue: ^3.0.0
-  checksum: 10c0/3bd9dc86ec0a97e6d835f2690a5307e428b6e407c7b30bbc4719f5e8f1e14c1738b24180b5a7355ea88e4275a1cb7b1e78584d16b36317bfc2287be6fc3bab67
   languageName: node
   linkType: hard
 

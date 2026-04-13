@@ -68,7 +68,8 @@
     </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import {computed, ref, watch} from 'vue'
 import {backendHost, dataHost, replaceUrlVars, t} from "@/logic/config";
 import {Person} from "@/logic/data";
 import {handleBirthdayToast, handleFlowerToast} from '@/logic/easterEgg';
@@ -80,155 +81,138 @@ import {Icon} from '@iconify/vue';
 import Swal from 'sweetalert2';
 import {getSwalTheme} from "@/logic/theme";
 import urljoin from 'url-join';
-import {Component, Prop, Vue, Watch, toNative} from 'vue-facing-decorator';
 
-@Component({ components: { Icon } })
-class ProfileCard extends Vue {
-    @Prop({ required: true }) userid!: string
-    @Prop({ required: true }) p!: Person
-    @Prop({ default: false }) screenshotMode!: boolean
+const props = withDefaults(defineProps<{
+    userid: string
+    p: Person
+    screenshotMode?: boolean
+}>(), {
+    screenshotMode: false
+})
 
-    flowers = 0
-    flowersGiven = false
-    isBirthday = false
-    canSwitch = false
-    target = '.'
-    sourceTarget = '.'
-    inWarning = false
-    showSolarBorn = false
+const flowers = ref(0)
+const flowersGiven = ref(false)
+const isBirthday = ref(false)
+const canSwitch = ref(false)
+const target = ref('.')
+const sourceTarget = ref('.')
+const inWarning = ref(false)
+const showSolarBorn = ref(false)
+const loading = ref(new Set<string>())
 
-    loading = new Set<string>()
+const flowerText = computed((): string => abbreviateNumber(flowers.value))
+const profileUrl = computed((): string => replaceUrlVars(props.p.profileUrl, props.userid))
 
-    t = t;
+flowersGiven.value = localStorage.getItem(`last_flower_given@${props.userid}`) === getTodayDate()
 
-    created() {
-        this.flowersGiven = localStorage.getItem(`last_flower_given@${this.userid}`) === getTodayDate()
-
-        fetch(urljoin(dataHost, 'birthday-list.json'))
-            .then(it => it.json())
-            .then(it => {
-                const today = getTodayContext()
-                for (const v of (it as BirthdayEntry[])) {
-                    if (v[0] == this.userid) {
-                        if (isTodayBirthday(v, today)) {
-                            this.isBirthday = true
-                        }
-                    }
+fetch(urljoin(dataHost, 'birthday-list.json'))
+    .then(it => it.json())
+    .then(it => {
+        const today = getTodayContext()
+        for (const v of (it as BirthdayEntry[])) {
+            if (v[0] == props.userid) {
+                if (isTodayBirthday(v, today)) {
+                    isBirthday.value = true
                 }
-            })
-
-        // TODO: Handle errors
-        fetch(backendHost + `/flowers/get?id=${this.userid}`)
-            .then(it => it.text())
-            .then(it => {
-                info(`Flowers: ${it}`)
-                this.flowers = parseInt(it)
-            })
-
-        fetch(urljoin(dataHost, 'switch-pair.json'))
-            .then(it => it.json())
-            .then(it => {
-                const pairs = it as [string, string][]
-                for (const v of pairs) {
-                    if (v[0] == this.userid) {
-                        this.canSwitch = true
-                        this.target = `/profile/${v[1]}`
-                        this.sourceTarget = this.target
-                        const r = getResponseSync(urljoin(dataHost, 'trigger-list.json'));
-                        const l = JSON.parse(r) as string[];
-                        if (l.includes(v[1])) {
-                            this.target = null;
-                            this.inWarning = true;
-                        }
-                    }
-                }
-            })
-    }
-
-    flower(): void {
-        if (this.flowersGiven || this.loading.has('flower')) return
-
-        // TODO: Handle errors
-        // TODO: Better user interaction (probably like +1 animation or something)
-        this.loading.add('flower')
-        fetch(backendHost + `/flowers/give?id=${this.userid}`)
-            .then(() => {
-                this.flowers += 1
-
-                // Set flowers given
-                this.flowersGiven = true
-                localStorage.setItem(`last_flower_given@${this.userid}`, getTodayDate())
-            })
-            .finally(() => this.loading.delete('flower'))
-
-        handleFlowerToast(this.p.name)
-        if (this.isBirthday) handleBirthdayToast(this.p.name)
-    }
-
-    get flowerText(): string {
-        return abbreviateNumber(this.flowers)
-    }
-
-    switchWarn() {
-        if (!this.inWarning) return;
-        Swal.fire({
-            title: this.t.switch_warning.title,
-            text: this.t.switch_warning.text,
-            icon: 'warning',
-            showCancelButton: false,
-            showCloseButton: false,
-            showConfirmButton: true,
-            allowOutsideClick: false,
-            timer: 300000,
-            timerProgressBar: true,
-            iconColor: '#d20f39',
-            allowEscapeKey: false,
-            allowEnterKey: false,
-            customClass: { popup: 'view-limit-alert' },
-            theme: getSwalTheme()
-        }).then((result) => {
-            if (result.isConfirmed) {
-                this.target = this.sourceTarget;
-                this.inWarning = false;
             }
+        }
+    })
+
+fetch(backendHost + `/flowers/get?id=${props.userid}`)
+    .then(it => it.text())
+    .then(it => {
+        info(`Flowers: ${it}`)
+        flowers.value = parseInt(it)
+    })
+
+fetch(urljoin(dataHost, 'switch-pair.json'))
+    .then(it => it.json())
+    .then(it => {
+        const pairs = it as [string, string][]
+        for (const v of pairs) {
+            if (v[0] == props.userid) {
+                canSwitch.value = true
+                target.value = `/profile/${v[1]}`
+                sourceTarget.value = target.value
+                const r = getResponseSync(urljoin(dataHost, 'trigger-list.json'));
+                const l = JSON.parse(r) as string[];
+                if (l.includes(v[1])) {
+                    target.value = '';
+                    inWarning.value = true;
+                }
+            }
+        }
+    })
+
+function flower(): void {
+    if (flowersGiven.value || loading.value.has('flower')) return
+
+    loading.value.add('flower')
+    fetch(backendHost + `/flowers/give?id=${props.userid}`)
+        .then(() => {
+            flowers.value += 1
+            flowersGiven.value = true
+            localStorage.setItem(`last_flower_given@${props.userid}`, getTodayDate())
         })
-    }
+        .finally(() => loading.value.delete('flower'))
 
-    edit(): void {
-        Swal.fire({
-            title: t.nav_what_to_edit,
-            icon: "question",
-            showConfirmButton: true,
-            showCancelButton: true,
-            confirmButtonText: t.nav_profile_card,
-            cancelButtonText: t.nav_introduction,
-            theme: getSwalTheme()
-        }).then((result) => {
-            if (result.isConfirmed)
-                router.push(`/edit-info/${this.p.id}`);
-            else if (result.dismiss === Swal.DismissReason.cancel)
-                open(`https://github.com/one-among-us/data/tree/main/people/${this.userid}/page.md`)
-        })
-    }
-
-    @Watch('userid')
-    onUserChange(): void {
-        this.showSolarBorn = false
-    }
-
-    isBornField(key: string): boolean {
-        return !!this.p.bornKey && key === this.p.bornKey
-    }
-
-    toggleBornDisplay(): void {
-        this.showSolarBorn = !this.showSolarBorn
-    }
-
-    get profileUrl(): string {
-        return replaceUrlVars(this.p.profileUrl, this.userid)
-    }
+    handleFlowerToast(props.p.name)
+    if (isBirthday.value) handleBirthdayToast(props.p.name)
 }
-export default toNative(ProfileCard)
+
+function switchWarn() {
+    if (!inWarning.value) return;
+    Swal.fire({
+        title: t.switch_warning.title,
+        text: t.switch_warning.text,
+        icon: 'warning',
+        showCancelButton: false,
+        showCloseButton: false,
+        showConfirmButton: true,
+        allowOutsideClick: false,
+        timer: 300000,
+        timerProgressBar: true,
+        iconColor: '#d20f39',
+        allowEscapeKey: false,
+        allowEnterKey: false,
+        customClass: { popup: 'view-limit-alert' },
+        theme: getSwalTheme()
+    }).then((result) => {
+        if (result.isConfirmed) {
+            target.value = sourceTarget.value;
+            inWarning.value = false;
+        }
+    })
+}
+
+function edit(): void {
+    Swal.fire({
+        title: t.nav_what_to_edit,
+        icon: "question",
+        showConfirmButton: true,
+        showCancelButton: true,
+        confirmButtonText: t.nav_profile_card,
+        cancelButtonText: t.nav_introduction,
+        theme: getSwalTheme()
+    }).then((result) => {
+        if (result.isConfirmed)
+            router.push(`/edit-info/${props.p.id}`);
+        else if (result.dismiss === Swal.DismissReason.cancel)
+            open(`https://github.com/one-among-us/data/tree/main/people/${props.userid}/page.md`)
+    })
+}
+
+watch(() => props.userid, () => {
+    showSolarBorn.value = false
+})
+
+function isBornField(key: string): boolean {
+    return !!props.p.bornKey && key === props.p.bornKey
+}
+
+function toggleBornDisplay(): void {
+    showSolarBorn.value = !showSolarBorn.value
+}
 </script>
 
 <style lang="sass" scoped>
