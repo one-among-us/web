@@ -1,11 +1,7 @@
-<script lang="ts">
-import {Component, Vue, toNative} from 'vue-facing-decorator';
-
-@Component({})
-class ColumnView extends Vue {
-
-}
-export default toNative(ColumnView)
+<script setup lang="ts">
+defineOptions({
+    name: 'ColumnView'
+})
 </script>
 
 <template>

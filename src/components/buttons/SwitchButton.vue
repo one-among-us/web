@@ -13,15 +13,6 @@
     </svg>
 </template>
 
-<script lang="ts">
-import {Component, Vue, toNative} from 'vue-facing-decorator';
-
-@Component({ components: {} })
-class SwitchButton extends Vue {
-}
-export default toNative(SwitchButton)
-</script>
-
 <style lang="sass">
 .switching
     width: 24px

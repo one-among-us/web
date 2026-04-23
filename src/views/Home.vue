@@ -93,18 +93,19 @@
     </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import {onMounted, onUpdated, ref} from 'vue'
 import htmlBottomEn from "@/assets/home-bottom.en.md";
-import htmlBottom from "@/assets/home-bottom.md";
+import htmlBottomRaw from "@/assets/home-bottom.md";
 import htmlBottomHant from "@/assets/home-bottom.zh_hant.md";
 import htmlTopEn from "@/assets/home-top.en.md";
-import htmlTop from "@/assets/home-top.md";
+import htmlTopRaw from "@/assets/home-top.md";
 import htmlTopHant from "@/assets/home-top.zh_hant.md";
 import tdorCommentViewEn from "@/assets/tdor-comments-head.en.md";
 import tdorCommentViewHant from "@/assets/tdor-comments-head.zh_hant.md";
-import tdorCommentView from "@/assets/tdor-comments-head.md";
+import tdorCommentViewRaw from "@/assets/tdor-comments-head.md";
 import tdorTopEn from "@/assets/tdor-top.en.md";
-import tdorTop from "@/assets/tdor-top.md";
+import tdorTopRaw from "@/assets/tdor-top.md";
 import tdorTopHant from "@/assets/tdor-top.zh_hant.md";
 import BirthdayButton from '@/components/buttons/BirthdayButton.vue'
 import Loading from '@/components/Loading.vue';
@@ -133,267 +134,250 @@ import {Icon} from "@iconify/vue";
 import VueDatePicker from '@vuepic/vue-datepicker'
 import {decode} from 'blurhash'
 import urljoin from "url-join";
-import {Component, Ref, Vue, toNative} from 'vue-facing-decorator';
 
-@Component({ components: { TdorComments, Loading, RandomPerson, BirthdayButton, Icon, VueDatePicker } })
-class Home extends Vue {
-    clicked = ''
-    showAdd = false
-    isLoading = true
+defineOptions({
+    name: 'HomeView'
+})
 
-    lang = getLang()
-    tdorTop = handleIconFromString(this.lang === 'zh_hans' ? tdorTop : (this.lang === 'zh_hant' ? tdorTopHant : tdorTopEn));
-    tdorCommentView = handleIconFromString(this.lang === 'zh_hans' ? tdorCommentView : (this.lang === 'zh_hant' ? tdorCommentViewHant : tdorCommentViewEn));
-    htmlTop = handleIconFromString(this.lang === 'zh_hans' ? htmlTop : (this.lang === 'zh_hant' ? htmlTopHant : htmlTopEn));
-    htmlBottom = handleIconFromString(this.lang === 'zh_hans' ? htmlBottom : (this.lang === 'zh_hant' ? htmlBottomHant : htmlBottomEn));
+const clicked = ref('')
+const showAdd = ref(false)
+const isLoading = ref(true)
 
-    people = [] as PersonMeta[]
-    fullPeople = [] as PersonMeta[]
-    searchKey = ''
-    dateRange = []
-    isShuffle = false
-    probabilities: any
-    groups: string[][] = []
+const lang = getLang()
+const tdorTop = handleIconFromString(lang === 'zh_hans' ? tdorTopRaw : (lang === 'zh_hant' ? tdorTopHant : tdorTopEn));
+const tdorCommentView = handleIconFromString(lang === 'zh_hans' ? tdorCommentViewRaw : (lang === 'zh_hant' ? tdorCommentViewHant : tdorCommentViewEn));
+const htmlTop = handleIconFromString(lang === 'zh_hans' ? htmlTopRaw : (lang === 'zh_hant' ? htmlTopHant : htmlTopEn));
+const htmlBottom = handleIconFromString(lang === 'zh_hans' ? htmlBottomRaw : (lang === 'zh_hant' ? htmlBottomHant : htmlBottomEn));
 
-    isGridLayout = true
+const people = ref<PersonMeta[]>([])
+const fullPeople = ref<PersonMeta[]>([])
+const searchKey = ref('')
+const dateRange = ref<any[]>([])
+const isShuffle = ref(false)
+const probabilities = ref<any>(null)
+const groups = ref<string[][]>([])
 
-    birthdayList = [] as [string, string][]
+const isGridLayout = ref(true)
+const birthdayList = ref<[string, string][]>([])
 
-    @Ref() bookmarkTexts: HTMLDivElement[]
-    @Ref() bookmark: HTMLDivElement[]
+const bookmarkTexts = ref<HTMLDivElement[]>([])
+const bookmark = ref<HTMLDivElement[]>([])
 
-    isDeadlinePassed(): boolean {
-        return true;
-    }
+function isDeadlinePassed(): boolean {
+    return true;
+}
 
-    isShowCommentsEntry(): boolean {
-        return false;
-    }
+function isShowCommentsEntry(): boolean {
+    return false;
+}
 
-    updated() {
-        this.fitBookmarkTexts();
-    }
-
-    fitBookmarkTexts() {
-        if (this.isGridLayout && this.bookmark?.length > 0) {
-            if (this.bookmark[0]) {
-                const width = this.bookmark[0].offsetWidth - 10
-                for (const b of this.bookmarkTexts) fitText(b, { width })
-            }
-        }
-    }
-
-    createGroups(peopleList: PersonMeta[]): PersonMeta[][] {
-        // No groups defined: each person becomes a single-person group
-        if (!this.groups?.length) {
-            return peopleList.map(person => [person]);
-        }
-
-        // Groups defined: create group mapping
-        const personToGroup = new Map<string, number>();
-        this.groups.forEach((group, index) => {
-            group.forEach(personId => personToGroup.set(personId, index));
-        });
-
-        // Initialize group arrays
-        const allGroups = Array.from({ length: this.groups.length }, () => [] as PersonMeta[]);
-
-        // Assign people to groups (ungrouped people become single-person groups)
-        peopleList.forEach(person => {
-            const groupIndex = personToGroup.get(person.id);
-            if (groupIndex !== undefined) {
-                allGroups[groupIndex].push(person);
-            } else {
-                allGroups.push([person]);
-            }
-        });
-
-        // Sort each defined group by the order specified in this.groups
-        for (let groupIndex = 0; groupIndex < this.groups.length; groupIndex++) {
-            if (allGroups[groupIndex].length > 1) {
-                const order = new Map(this.groups[groupIndex].map((id, idx) => [id, idx] as [string, number]));
-                allGroups[groupIndex].sort((a, b) => order.get(a.id) - order.get(b.id));
-            }
-        }
-
-        return allGroups;
-    }
-
-    sortPeople(peopleList: PersonMeta[]): PersonMeta[] {
-        // Compute the representative sortKey for a group (max among all members)
-        const groupKey = (group: PersonMeta[]) =>
-            group.reduce((max, p) => (p.sortKey > max ? p.sortKey : max), '');
-
-        // Convert people to groups (members already ordered by createGroups)
-        const allGroups = this.createGroups(peopleList)
-            .filter(group => group.length > 0);
-
-        // Separate groups into normal groups and zero-sortKey groups
-        const normalGroups: PersonMeta[][] = [];
-        const zeroGroups: PersonMeta[][] = [];
-
-        allGroups.forEach(group => {
-            const latestSortKey = groupKey(group);
-
-            if (latestSortKey === "0") {
-                zeroGroups.push(group);
-            } else {
-                normalGroups.push(group);
-            }
-        });
-
-        // Sort normal groups by their representative sortKey (descending)
-        normalGroups.sort((a, b) => groupKey(b).localeCompare(groupKey(a)));
-
-        // Build result: first add all normal groups in sorted order
-        const result = normalGroups.flat();
-
-        // Randomly insert zero-sortKey groups
-        zeroGroups.forEach(zeroGroup => {
-            // Keep noname at the end
-            const insertPos = randint(0, result.length - 1);
-            result.splice(insertPos, 0, ...zeroGroup);
-        });
-
-        return result;
-    }
-
-    created(): void {
-        const savedLayout = localStorage.getItem('isGridLayout');
-        if (savedLayout !== null) {
-            this.isGridLayout = JSON.parse(savedLayout);
-        }
-
-        info(`Language: ${this.lang}`)
-        handleEasterEgg();
-        this.probabilities = JSON.parse(getResponseSync(urljoin(dataHost, 'probabilities.json')))
-        this.groups = JSON.parse(getResponseSync(urljoin(dataHost, 'groups.json')))
-        fetchWithLang(urljoin(dataHost, 'people-home-list.json'))
-            .then(it => it.text())
-            .then(it => {
-                this.isShuffle = isEaster() && (gaussian() < 0.35)
-                this.fullPeople = JSON.parse(it)
-                for (const v of this.fullPeople) {
-                    if (Object.keys(this.probabilities).includes(v.id)) {
-                        const p = parseFloat(this.probabilities[v.id].toString())
-                        if (Math.random() < p) {
-                            this.people.push(v)
-                        }
-                    }
-                    else {
-                        this.people.push(v)
-                    }
-                }
-                this.people = this.isShuffle ? shuffle(this.people) : this.people
-                const now = new Date();
-                const pros = ((now.getDate() == 1) && (now.getMonth() + 1 == 4)) ? 0.5 : 0.05;
-                if (isEaster() && (gaussian() < pros)) scheduledLoopTask(1500, () => {
-                    this.people = gaussian_shuffle(this.people)
-                })
-
-                //blur canvas for loading images
-                fetch(urljoin(dataHost, 'blur-code.json'))
-                    .then(it => it.json())
-                    .then(it => {
-                        for (const p of this.people) {
-                            if (typeof (it[p.id]) !== "string") continue;
-                            const pixels = decode(it[p.id], 150, 150)
-                            const canvas = document.getElementById(p.id + '-canvas') as HTMLCanvasElement;
-                            const ctx = canvas.getContext("2d");
-                            const imageData = ctx.createImageData(150, 150);
-                            imageData.data.set(pixels);
-                            ctx.putImageData(imageData, 0, 0);
-                        }
-                    })
-
-                if (!this.isShuffle) {
-                    this.people = this.sortPeople(this.people);
-                }
-            })
-
-        fetch(urljoin(dataHost, 'birthday-list.json'))
-            .then(it => it.json())
-            .then(it => {
-                const today = getTodayContext()
-                for (const v of (it as BirthdayEntry[])) {
-                    if (isTodayBirthday(v, today)) {
-                        const p = JSON.parse(getResponseSync(urljoin(peopleUrl(v[0]), getLang() == 'zh_hans' ? 'info.json' : `info.${getLang()}.json`))) as Person;
-                        this.birthdayList.push([v[0], p.name])
-                    }
-                }
-                console.log(this.birthdayList)
-                if (this.birthdayList.length) viaBalloon()
-            });
-    }
-
-    mounted() {
-        if (isUwU()) {
-            UwU()
-        }
-
-        // Wait for fonts to load and then refresh text sizes
-        document.fonts.ready.then(() => {
-            this.fitBookmarkTexts();
-        });
-    }
-
-    toggleLayout() {
-        this.isGridLayout = !this.isGridLayout;
-        localStorage.setItem('isGridLayout', JSON.stringify(this.isGridLayout));
-    }
-
-    getPersonDesc(p: PersonMeta): string {
-        if (p.desc !== undefined && typeof p.desc === 'string') {
-            return p.desc;
-        }
-        // fallback for unknown date of pass away
-        if (p.sortKey === '0' || p.sortKey === '-1') {
-            return '';
-        }
-        // fallback to sortKey or empty string
-        return p.sortKey || '';
-    }
-
-    switchPage(p: PersonMeta): void {
-        info(`switchPage(${p.id})`)
-        router.push(`/profile/${p.id}`)
-    }
-
-    updateSearch() {
-        this.people = [];
-        for (const p of this.fullPeople) {
-            if (p.id.trim().toLowerCase().includes(this.searchKey.trim().toLowerCase()) ||
-                p.name.trim().toLowerCase().includes(this.searchKey.trim().toLowerCase())) {
-                if (!this.dateRange) this.people.push(p);
-                else if ((this.dateRange.length < 2)) this.people.push(p);
-                else {
-                    const sortDate = new Date(p.sortKey)
-                    if ((this.dateRange[0].getTime() < sortDate.getTime()) &&
-                        (this.dateRange[1].getTime() > sortDate.getTime())) {
-                        this.people.push(p);
-                    }
-                }
-            }
-        }
-        if (!this.isShuffle) {
-            this.people = this.sortPeople(this.people);
-        }
-    }
-
-    profileUrl(p: PersonMeta): string {
-        return replaceUrlVars(p.profileUrl, p.id)
-    }
-
-    handleProfileKeyDown(e: KeyboardEvent, p: PersonMeta) {
-        if (e.key === 'Enter' || e.key === ' ') {
-            if (e.key === ' ') {
-                e.preventDefault();
-            }
-            if (!this.clicked) { this.clicked = p.name; }
+function fitBookmarkTexts() {
+    if (isGridLayout.value && bookmark.value?.length > 0) {
+        if (bookmark.value[0]) {
+            const width = bookmark.value[0].offsetWidth - 10
+            for (const b of bookmarkTexts.value) fitText(b, { width })
         }
     }
 }
-export default toNative(Home)
+
+function createGroups(peopleList: PersonMeta[]): PersonMeta[][] {
+    if (!groups.value?.length) {
+        return peopleList.map(person => [person]);
+    }
+
+    const personToGroup = new Map<string, number>();
+    groups.value.forEach((group, index) => {
+        group.forEach(personId => personToGroup.set(personId, index));
+    });
+
+    const allGroups = Array.from({ length: groups.value.length }, () => [] as PersonMeta[]);
+
+    peopleList.forEach(person => {
+        const groupIndex = personToGroup.get(person.id);
+        if (groupIndex !== undefined) {
+            allGroups[groupIndex].push(person);
+        } else {
+            allGroups.push([person]);
+        }
+    });
+
+    for (let groupIndex = 0; groupIndex < groups.value.length; groupIndex++) {
+        if (allGroups[groupIndex].length > 1) {
+            const order = new Map(groups.value[groupIndex].map((id, idx) => [id, idx] as [string, number]));
+            allGroups[groupIndex].sort((a, b) => (order.get(a.id) as number) - (order.get(b.id) as number));
+        }
+    }
+
+    return allGroups;
+}
+
+function sortPeople(peopleList: PersonMeta[]): PersonMeta[] {
+    const groupKey = (group: PersonMeta[]) =>
+        group.reduce((max, p) => (p.sortKey > max ? p.sortKey : max), '');
+
+    const allGroups = createGroups(peopleList)
+        .filter(group => group.length > 0);
+
+    const normalGroups: PersonMeta[][] = [];
+    const zeroGroups: PersonMeta[][] = [];
+
+    allGroups.forEach(group => {
+        const latestSortKey = groupKey(group);
+
+        if (latestSortKey === "0") {
+            zeroGroups.push(group);
+        } else {
+            normalGroups.push(group);
+        }
+    });
+
+    normalGroups.sort((a, b) => groupKey(b).localeCompare(groupKey(a)));
+
+    const result = normalGroups.flat();
+
+    zeroGroups.forEach(zeroGroup => {
+        const insertPos = randint(0, result.length - 1);
+        result.splice(insertPos, 0, ...zeroGroup);
+    });
+
+    return result;
+}
+
+function initHomeData() {
+    const savedLayout = localStorage.getItem('isGridLayout');
+    if (savedLayout !== null) {
+        isGridLayout.value = JSON.parse(savedLayout);
+    }
+
+    info(`Language: ${lang}`)
+    handleEasterEgg();
+    probabilities.value = JSON.parse(getResponseSync(urljoin(dataHost, 'probabilities.json')))
+    groups.value = JSON.parse(getResponseSync(urljoin(dataHost, 'groups.json')))
+    fetchWithLang(urljoin(dataHost, 'people-home-list.json'))
+        .then(it => it.text())
+        .then(it => {
+            isShuffle.value = isEaster() && (gaussian() < 0.35)
+            fullPeople.value = JSON.parse(it)
+            for (const v of fullPeople.value) {
+                if (Object.keys(probabilities.value).includes(v.id)) {
+                    const p = parseFloat(probabilities.value[v.id].toString())
+                    if (Math.random() < p) {
+                        people.value.push(v)
+                    }
+                }
+                else {
+                    people.value.push(v)
+                }
+            }
+            people.value = isShuffle.value ? shuffle(people.value) : people.value
+            const now = new Date();
+            const pros = ((now.getDate() == 1) && (now.getMonth() + 1 == 4)) ? 0.5 : 0.05;
+            if (isEaster() && (gaussian() < pros)) scheduledLoopTask(1500, () => {
+                people.value = gaussian_shuffle(people.value)
+            })
+
+            fetch(urljoin(dataHost, 'blur-code.json'))
+                .then(it => it.json())
+                .then(it => {
+                    for (const p of people.value) {
+                        if (typeof (it[p.id]) !== "string") continue;
+                        const pixels = decode(it[p.id], 150, 150)
+                        const canvas = document.getElementById(p.id + '-canvas') as HTMLCanvasElement;
+                        const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
+                        const imageData = ctx.createImageData(150, 150);
+                        imageData.data.set(pixels);
+                        ctx.putImageData(imageData, 0, 0);
+                    }
+                })
+
+            if (!isShuffle.value) {
+                people.value = sortPeople(people.value);
+            }
+        })
+
+    fetch(urljoin(dataHost, 'birthday-list.json'))
+        .then(it => it.json())
+        .then(it => {
+            const today = getTodayContext()
+            for (const v of (it as BirthdayEntry[])) {
+                if (isTodayBirthday(v, today)) {
+                    const p = JSON.parse(getResponseSync(urljoin(peopleUrl(v[0]), getLang() == 'zh_hans' ? 'info.json' : `info.${getLang()}.json`))) as Person;
+                    birthdayList.value.push([v[0], p.name])
+                }
+            }
+            console.log(birthdayList.value)
+            if (birthdayList.value.length) viaBalloon()
+        });
+}
+initHomeData()
+
+onUpdated(() => {
+    fitBookmarkTexts();
+})
+
+onMounted(() => {
+    if (isUwU()) {
+        UwU()
+    }
+
+    document.fonts.ready.then(() => {
+        fitBookmarkTexts();
+    });
+})
+
+function toggleLayout() {
+    isGridLayout.value = !isGridLayout.value;
+    localStorage.setItem('isGridLayout', JSON.stringify(isGridLayout.value));
+}
+
+function getPersonDesc(p: PersonMeta): string {
+    if (p.desc !== undefined && typeof p.desc === 'string') {
+        return p.desc;
+    }
+    if (p.sortKey === '0' || p.sortKey === '-1') {
+        return '';
+    }
+    return p.sortKey || '';
+}
+
+function switchPage(p: PersonMeta): void {
+    info(`switchPage(${p.id})`)
+    router.push(`/profile/${p.id}`)
+}
+
+function updateSearch() {
+    people.value = [];
+    for (const p of fullPeople.value) {
+        if (p.id.trim().toLowerCase().includes(searchKey.value.trim().toLowerCase()) ||
+            p.name.trim().toLowerCase().includes(searchKey.value.trim().toLowerCase())) {
+            if (!dateRange.value) people.value.push(p);
+            else if ((dateRange.value.length < 2)) people.value.push(p);
+            else {
+                const sortDate = new Date(p.sortKey)
+                if ((dateRange.value[0].getTime() < sortDate.getTime()) &&
+                    (dateRange.value[1].getTime() > sortDate.getTime())) {
+                    people.value.push(p);
+                }
+            }
+        }
+    }
+    if (!isShuffle.value) {
+        people.value = sortPeople(people.value);
+    }
+}
+
+function profileUrl(p: PersonMeta): string {
+    return replaceUrlVars(p.profileUrl, p.id)
+}
+
+function handleProfileKeyDown(e: KeyboardEvent, p: PersonMeta) {
+    if (e.key === 'Enter' || e.key === ' ') {
+        if (e.key === ' ') {
+            e.preventDefault();
+        }
+        if (!clicked.value) { clicked.value = p.name; }
+    }
+}
 </script>
 
 <style lang="sass" scoped>

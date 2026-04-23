@@ -1,35 +1,37 @@
-<script lang="ts">
-import {Vue, Component, Prop, toNative} from 'vue-facing-decorator';
+<script setup lang="ts">
+import {ref} from 'vue'
 import {randint} from "@/logic/helper";
 
-@Component({})
-class Fireworks extends Vue {
-    @Prop({required: true}) count: number
-    fireworks = [];
+interface FireworkItem {
+    id: number
+    delay: number
+}
 
-    randint = randint;
+defineOptions({
+    name: 'AnimatedFireworks'
+})
 
-    created() {
-        for (let i = 0; i < this.count; ++i) {
-            this.generateFireworks();
-        }
-    }
+const props = defineProps<{
+    count: number
+}>()
 
-    generateFireworks() {
-        this.fireworks = [];
-        for (let i = 0; i < this.count; ++i) {
-            this.fireworks.push({ id: i, delay: Math.random() * 2 }); // Add delay for variation
-        }
+const fireworks = ref<FireworkItem[]>([])
+
+function generateFireworks() {
+    fireworks.value = [];
+    for (let i = 0; i < props.count; ++i) {
+        fireworks.value.push({ id: i, delay: Math.random() * 2 });
     }
 }
-export default toNative(Fireworks)
+
+generateFireworks()
 </script>
 
 <template>
     <div
         class="firework"
         v-for="firework of fireworks"
-        :key="firework"
+        :key="firework.id"
         v-bind:id="'firework' + firework.id"
         v-bind:style="{
             top: `${randint(40, 60)}%`,

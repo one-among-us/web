@@ -1,20 +1,15 @@
-<script lang="ts">
-import {Vue, Component, Prop, toNative} from 'vue-facing-decorator';
+<script setup lang="ts">
+import {computed, toRefs} from 'vue'
 
-@Component({})
-class DottedNumber extends Vue {
-    @Prop({required: true}) n: number | string;
-    @Prop({default: false}) dash: boolean;
+const props = withDefaults(defineProps<{
+    n: number | string
+    dash?: boolean
+}>(), {
+    dash: false
+})
+const { n, dash } = toRefs(props)
 
-    style = '--dot: "·";';
-
-    created() {
-        if (this.dash) {
-            this.style = '--dot: "·\t·\t·";'
-        }
-    }
-}
-export default toNative(DottedNumber)
+const style = computed(() => dash.value ? '--dot: "·\t·\t·";' : '--dot: "·";')
 </script>
 
 <template>

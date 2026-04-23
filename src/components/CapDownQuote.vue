@@ -1,11 +1,7 @@
-<script lang="ts">
-import {Component, Prop, Vue, toNative} from 'vue-facing-decorator';
-
-@Component({})
-class CapDownQuote extends Vue {
-    @Prop({ required: true }) messages: string[][]
-}
-export default toNative(CapDownQuote)
+<script setup lang="ts">
+defineProps<{
+    messages: string[][]
+}>()
 </script>
 
 <template>

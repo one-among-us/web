@@ -5,33 +5,29 @@
     </button>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import {onMounted, ref} from 'vue'
 import {dataHost, t} from '@/logic/config';
 import {PersonMeta} from '@/logic/data';
 import {fetchWithLang} from '@/logic/helper';
 import router from "@/router";
 import {Icon} from "@iconify/vue";
 import urljoin from 'url-join';
-import {Component, Vue, toNative} from 'vue-facing-decorator';
 
-@Component({ components: { Icon } })
-class RandomPerson extends Vue {
-    i18n = t;
-    people: PersonMeta[] = null as never as PersonMeta[];
+const i18n = t
+const people = ref<PersonMeta[] | null>(null)
 
-    created(): void {
-        fetchWithLang(urljoin(dataHost, 'people-list.json'))
-            .then(it => it.json())
-            .then(it => this.people = it);
-    }
+onMounted(() => {
+    fetchWithLang(urljoin(dataHost, 'people-list.json'))
+        .then(it => it.json())
+        .then(it => people.value = it);
+})
 
-    rand() {
-        if (!this.people) return;
-        const p = this.people[Math.floor(this.people.length * Math.random())];
-        router.push(`/profile/${p.id}`);
-    }
+function rand() {
+    if (!people.value) return;
+    const p = people.value[Math.floor(people.value.length * Math.random())];
+    router.push(`/profile/${p.id}`);
 }
-export default toNative(RandomPerson)
 </script>
 
 <style lang="sass" scoped>

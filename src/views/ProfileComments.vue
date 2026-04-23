@@ -42,7 +42,8 @@
     </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import {computed, onMounted, ref} from 'vue'
 import MarkdownTooltip from "@/components/MarkdownTooltip.vue";
 import SubmitPrompt, {CaptchaResponse} from "@/components/SubmitPrompt.vue";
 import {backendHost, t} from "@/logic/config";
@@ -53,193 +54,163 @@ import Swal from 'sweetalert2';
 import {getSwalTheme} from "@/logic/theme";
 import {initSpoilers} from '@/logic/spoilers';
 import {mdParseInline} from "@/logic/markdown";
-import {Component, Prop, Vue, toNative} from 'vue-facing-decorator';
 
-@Component({ components: { MarkdownTooltip, SubmitPrompt } })
-class ProfileComments extends Vue {
-    declare $refs: {
-        input: HTMLTextAreaElement
+defineOptions({
+    name: 'ProfileCommentsView'
+})
+
+const props = defineProps<{
+    p: Person
+}>()
+
+const input = ref<HTMLTextAreaElement | null>(null)
+const showCaptchaPrompt = ref(false)
+const comments = ref<any[]>([])
+const textInputCache = ref("")
+const textInputKey = `draft-${props.p.id}`
+
+textInputCache.value = localStorage.getItem(textInputKey) ?? ""
+
+const textInput = computed({
+    get: () => trim(textInputCache.value.trim(), '\n'),
+    set: (s: string) => {
+        textInputCache.value = s
+        localStorage.setItem(textInputKey, s)
     }
+})
 
-    @Prop() p: Person
-
-    private textInputCache = ""
-    private textInputKey: string
-
-    showCaptchaPrompt = false
-    comments = []
-
-    t = t
-
-    trim = trim
-
-    getComments(): Comment[] {
-        const commentData = this.p.comments.map(c => {
-            return {
-                ...c,
-                anonymous: c.submitter === "Anonymous",
-                content: mdParseInline(c.content.replaceAll("\n", "<br />")),
-                replies: c.replies
-                    ? c.replies.map(r => {
-                        return {
-                            ...r,
-                            content: mdParseInline(r.content.replaceAll("\n", "<br />")),
-                        }
-                    })
-                    : []
-            }
-        }) as Comment[]
-        const myComments = JSON.parse(localStorage.getItem("myComments"));
-        if (!myComments) return commentData;
-        if ((this.p.id in myComments) && (myComments[this.p.id] != undefined)) {
-            for (const u of myComments[this.p.id]) {
-                let flag = true;
-                for (const v of commentData) {
-                    if ((u.content.replaceAll('||', '').replaceAll('\n', '').replaceAll('<br />', '').replaceAll(' ', '') == v.content.replaceAll('<span class="spoiler"><span>', '').replaceAll('</span></span>', '').replaceAll('<br />', '').replaceAll(' ', ''))) {
-                        flag = false;
-                        break;
+function getComments(): any[] {
+    const commentData = props.p.comments.map(c => {
+        return {
+            ...c,
+            anonymous: c.submitter === "Anonymous",
+            content: mdParseInline(c.content.replaceAll("\n", "<br />")),
+            replies: c.replies
+                ? c.replies.map(r => {
+                    return {
+                        ...r,
+                        content: mdParseInline(r.content.replaceAll("\n", "<br />")),
                     }
+                })
+                : []
+        }
+    }) as Comment[]
+    const storedComments = localStorage.getItem("myComments")
+    if (!storedComments) return commentData;
+    const myComments = JSON.parse(storedComments);
+    if (!myComments) return commentData;
+    if ((props.p.id in myComments) && (myComments[props.p.id] != undefined)) {
+        for (const u of myComments[props.p.id]) {
+            let flag = true;
+            for (const v of commentData) {
+                if ((u.content.replaceAll('||', '').replaceAll('\n', '').replaceAll('<br />', '').replaceAll(' ', '') == v.content.replaceAll('<span class="spoiler"><span>', '').replaceAll('</span></span>', '').replaceAll('<br />', '').replaceAll(' ', ''))) {
+                    flag = false;
+                    break;
                 }
-                if (flag) {
-                    commentData.push({
-                        ...u,
-                        content: mdParseInline(u.content.replaceAll("\n", "<br />")),
-                    });
-                }
+            }
+            if (flag) {
+                commentData.push({
+                    ...u,
+                    content: mdParseInline(u.content.replaceAll("\n", "<br />")),
+                });
             }
         }
-        return commentData;
     }
+    return commentData;
+}
 
-    /**
-     * Send button
-     */
-    btnSend() {
-        // Show submit prompt
-        this.showCaptchaPrompt = true
-    }
+function btnSend() {
+    showCaptchaPrompt.value = true
+}
 
-    /**
-     * Submit comment request
-     */
-    submitRequest(p: CaptchaResponse) {
-        this.showCaptchaPrompt = false
+function submitRequest(captchaResponse: CaptchaResponse) {
+    showCaptchaPrompt.value = false
 
-        const params = { id: this.p.id, content: this.textInput, ...p }
-        info(params)
+    const params = { id: props.p.id, content: textInput.value, ...captchaResponse }
+    info(params)
 
-        Swal.fire({
-            title: t.nav_comment_submit,
-            showConfirmButton: false,
-            icon: null,
-            theme: getSwalTheme(),
-            didOpen: (() => {
-                Swal.showLoading(null);
-                fetchText(backendHost + '/comment/add', { method: 'POST', params })
-                    .then(() => {
-                        Swal.fire({
-                            title: t.nav_success,
-                            text: t.nav_success_text_reply,
-                            icon: 'success',
-                            timer: 5000,
-                            timerProgressBar: true,
-                            showConfirmButton: true,
-                            confirmButtonText: t.nav_ok_1,
-                            showCloseButton: true,
-                            theme: getSwalTheme()
-                        })
-                        this.comments.push({
-                            content: mdParseInline(this.textInput.replaceAll("\n", "<br />")),
+    Swal.fire({
+        title: t.nav_comment_submit,
+        showConfirmButton: false,
+        icon: null,
+        theme: getSwalTheme(),
+        didOpen: (() => {
+            Swal.showLoading(null);
+            fetchText(backendHost + '/comment/add', { method: 'POST', params })
+                .then(() => {
+                    Swal.fire({
+                        title: t.nav_success,
+                        text: t.nav_success_text_reply,
+                        icon: 'success',
+                        timer: 5000,
+                        timerProgressBar: true,
+                        showConfirmButton: true,
+                        confirmButtonText: t.nav_ok_1,
+                        showCloseButton: true,
+                        theme: getSwalTheme()
+                    })
+                    comments.value.push({
+                        content: mdParseInline(textInput.value.replaceAll("\n", "<br />")),
+                        replies: [],
+                        submitter: 'You',
+                        id: 0
+                    } as Comment)
+                    const storedComments = localStorage.getItem("myComments")
+                    let myComments = storedComments ? JSON.parse(storedComments) : null;
+                    if (!myComments) myComments = {};
+                    if ((!(props.p.id in myComments)) || (myComments[props.p.id] == undefined)) {
+                        myComments[props.p.id] = [{
+                            content: mdParseInline(textInput.value.replaceAll("\n", "<br />")),
+                            replies: [],
+                            submitter: 'You',
+                            id: 0
+                        }]
+                    } else {
+                        myComments[props.p.id].push({
+                            content: mdParseInline(textInput.value.replaceAll("\n", "<br />")),
                             replies: [],
                             submitter: 'You',
                             id: 0
                         })
-                        let myComments = JSON.parse(localStorage.getItem("myComments"));
-                        if (!myComments) myComments = {};
-                        if ((!(this.p.id in myComments)) || (myComments[this.p.id] == undefined)) {
-                            myComments[this.p.id] = [{
-                                content: mdParseInline(this.textInput.replaceAll("\n", "<br />")),
-                                replies: [],
-                                submitter: 'You',
-                                id: 0
-                            }]
-                        } else {
-                            myComments[this.p.id].push({
-                                content: mdParseInline(this.textInput.replaceAll("\n", "<br />")),
-                                replies: [],
-                                submitter: 'You',
-                                id: 0
-                            })
-                        }
-                        localStorage.setItem("myComments", JSON.stringify(myComments))
-                        this.textInput = "";
-                        this.resizeInput()
+                    }
+                    localStorage.setItem("myComments", JSON.stringify(myComments))
+                    textInput.value = "";
+                    resizeInput()
+                })
+                .catch(err => {
+                    error(err);
+                    Swal.fire({
+                        title: t.nav_failed,
+                        text: t.nav_fail_reason + err.message,
+                        icon: 'error',
+                        timer: 5000,
+                        timerProgressBar: true,
+                        showConfirmButton: false,
+                        showCloseButton: false,
+                        theme: getSwalTheme()
                     })
-                    .catch(err => {
-                        error(err);
-                        Swal.fire({
-                            title: t.nav_failed,
-                            text: t.nav_fail_reason + err.message,
-                            icon: 'error',
-                            timer: 5000,
-                            timerProgressBar: true,
-                            showConfirmButton: false,
-                            showCloseButton: false,
-                            theme: getSwalTheme()
-                        })
-                        this.resizeInput()
-                    })
-            })
+                    resizeInput()
+                })
         })
-    }
-
-    /**
-     * Load saved textinput from localStorage
-     */
-    created() {
-        this.textInputKey = `draft-${this.p.id}`
-        this.textInputCache = localStorage.getItem(this.textInputKey) ?? ""
-        this.comments = this.getComments()
-        if (!localStorage.getItem('myComments')) {
-            localStorage.setItem('myComments', '{}')
-        }
-    }
-
-    /**
-     * Get cached textinput
-     */
-    get textInput() {
-        return trim(this.textInputCache.trim(), '\n')
-    }
-
-    /**
-     * Set text and save localstorage
-     * @param s
-     */
-    set textInput(s: string) {
-        this.textInputCache = s
-        localStorage.setItem(this.textInputKey, s)
-    }
-
-    mounted() {
-        // Set initial size
-        this.resizeInput()
-
-        // Init spoilers
-        initSpoilers()
-    }
-
-    /**
-     * Auto resize
-     */
-    resizeInput() {
-        const el = this.$refs.input
-        if (!el) return
-        el.style.height = "auto"
-        el.style.height = `${el.scrollHeight + 18}px`
-    }
+    })
 }
-export default toNative(ProfileComments)
+
+function resizeInput() {
+    const el = input.value
+    if (!el) return
+    el.style.height = "auto"
+    el.style.height = `${el.scrollHeight + 18}px`
+}
+
+comments.value = getComments()
+if (!localStorage.getItem('myComments')) {
+    localStorage.setItem('myComments', '{}')
+}
+
+onMounted(() => {
+    resizeInput()
+    initSpoilers()
+})
 </script>
 
 <style lang="sass">

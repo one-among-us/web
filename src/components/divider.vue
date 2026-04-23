@@ -6,46 +6,52 @@
     </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import {toRefs} from 'vue'
 import {getLang, i18n} from '@/logic/config';
 import {transColors} from "@/logic/constants";
 import {viaFetch} from "@/logic/viaFetch";
 import Swal from 'sweetalert2';
 import {getSwalTheme} from "@/logic/theme";
-import {Component, Prop, Vue, toNative} from 'vue-facing-decorator';
 
-@Component({ components: {} })
-class Divider extends Vue {
-    @Prop({ default: transColors }) colors!: string[]
-    @Prop({ default: '2px' }) height!: string
+defineOptions({
+    name: 'ColorDivider'
+})
 
-    i18n = i18n[getLang()]
+const props = withDefaults(defineProps<{
+    colors?: string[]
+    height?: string
+}>(), {
+    colors: () => transColors,
+    height: '2px'
+})
+const { colors, height } = toRefs(props)
 
-    switchEasterEgg() {
-        if (!localStorage.getItem("easterEggMode")) {
-            localStorage.setItem("easterEggMode", "1")
-            viaFetch()
-        } else
-            localStorage.setItem("easterEggMode", (parseInt(localStorage.getItem("easterEggMode")) == 0) ? "1" : "0")
+const curI18n = i18n[getLang()]
 
-        localStorage.setItem("manualModify", "qwq")
+function switchEasterEgg() {
+    if (!localStorage.getItem("easterEggMode")) {
+        localStorage.setItem("easterEggMode", "1")
+        viaFetch()
+    } else
+        localStorage.setItem("easterEggMode", (parseInt(localStorage.getItem("easterEggMode")) == 0) ? "1" : "0")
 
-        Swal.fire({
-            position: "top-end",
-            toast: true,
-            title: this.i18n.easter_egg.title + ((parseInt(localStorage.getItem("easterEggMode")) == 0) ? this.i18n.easter_egg.disabled : this.i18n.easter_egg.enabled),
-            text: ((parseInt(localStorage.getItem("easterEggMode")) == 0) ? null : this.i18n.easter_egg.text),
-            timer: 5000,
-            showConfirmButton: false,
-            showCancelButton: false,
-            timerProgressBar: true,
-            iconHtml: `<img style="width: 64px;height: 64px;border: none" src="/img/easterEgg.png"></img>`,
-            iconColor: "#00000000",
-            theme: getSwalTheme()
-        })
-    }
+    localStorage.setItem("manualModify", "qwq")
+
+    Swal.fire({
+        position: "top-end",
+        toast: true,
+        title: curI18n.easter_egg.title + ((parseInt(localStorage.getItem("easterEggMode")) == 0) ? curI18n.easter_egg.disabled : curI18n.easter_egg.enabled),
+        text: ((parseInt(localStorage.getItem("easterEggMode")) == 0) ? null : curI18n.easter_egg.text),
+        timer: 5000,
+        showConfirmButton: false,
+        showCancelButton: false,
+        timerProgressBar: true,
+        iconHtml: `<img style="width: 64px;height: 64px;border: none" src="/img/easterEgg.png"></img>`,
+        iconColor: "#00000000",
+        theme: getSwalTheme()
+    })
 }
-export default toNative(Divider)
 </script>
 
 <style lang="sass" scoped>

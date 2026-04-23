@@ -4,15 +4,11 @@
     </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import ChannelBackupButton from "@/components/buttons/ChannelBackupButton.vue";
-import {Component, Prop, Vue, toNative} from 'vue-facing-decorator';
-
-@Component({ components: { ChannelBackupButton } })
-class BackupButtons extends Vue {
-    @Prop({ required: true }) platforms: string[]
-}
-export default toNative(BackupButtons)
+defineProps<{
+    platforms: string[]
+}>()
 </script>
 
 <style lang="sass" scoped>

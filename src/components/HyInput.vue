@@ -14,7 +14,7 @@
             :value="modelValue"
             v-bind="$attrs"
             autocomplete="off"
-            @input="passInput($event.target.value)"
+            @input="passInput(($event.target as HTMLInputElement).value)"
         >
         <div class="hy-input-placeholder">
             <label for="hy-input-inner">{{ placeholder }}</label>
@@ -22,23 +22,24 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: "HyInput",
-    props: {
-        modelValue: String,
-        placeholder: String
-    },
-    emits: [
-        'update:modelValue',
-        'input'
-    ],
-    methods: {
-        passInput(value) {
-            this.$emit('update:modelValue', value)
-            this.$emit('input', value)
-        }
-    },
+<script setup lang="ts">
+defineOptions({
+    name: "HyInputField"
+})
+
+defineProps<{
+    modelValue?: string
+    placeholder?: string
+}>()
+
+const emit = defineEmits<{
+    'update:modelValue': [value: string]
+    input: [value: string]
+}>()
+
+function passInput(value: string) {
+    emit('update:modelValue', value)
+    emit('input', value)
 }
 </script>
 

@@ -14,8 +14,8 @@
     </div>
 </template>
 
-<script lang="ts">
-import {Component, Prop, Ref, Vue, toNative} from 'vue-facing-decorator';
+<script setup lang="ts">
+import {onMounted, onUnmounted, ref} from 'vue'
 import {t} from '@/logic/config'
 
 interface TooltipAction {
@@ -25,33 +25,32 @@ interface TooltipAction {
     // is: (text: string, start: number, end: number) => boolean
 }
 
-@Component({})
-class MarkdownTooltip extends Vue {
-    actions: TooltipAction[] = [
-        { name: t.markdown_tooltip.bold, icon: 'bold', md: '**' },
-        { name: t.markdown_tooltip.italic, icon: 'italic', md: '__' },
-        { name: t.markdown_tooltip.underline, icon: 'underline', md: '--'},
-        { name: t.markdown_tooltip.strikethrough, icon: 'strikethrough', md: '~~' },
-        { name: t.markdown_tooltip.code, icon: 'code', md: '`' },
-        { name: t.markdown_tooltip.spoiler, icon: 'spoiler', md: '||' },
-    ]
+const actions: TooltipAction[] = [
+    { name: t.markdown_tooltip.bold, icon: 'bold', md: '**' },
+    { name: t.markdown_tooltip.italic, icon: 'italic', md: '__' },
+    { name: t.markdown_tooltip.underline, icon: 'underline', md: '--'},
+    { name: t.markdown_tooltip.strikethrough, icon: 'strikethrough', md: '~~' },
+    { name: t.markdown_tooltip.code, icon: 'code', md: '`' },
+    { name: t.markdown_tooltip.spoiler, icon: 'spoiler', md: '||' },
+]
 
-    @Ref() el!: HTMLElement
-    @Prop({ default: null }) initialPos?: { x: number, y: number }
+const el = ref<HTMLElement | null>(null)
+const props = defineProps<{
+    initialPos?: { x: number, y: number } | null
+    textAreaId: string
+}>()
 
-    @Prop() textAreaId!: string
-    textAreaEl: HTMLTextAreaElement
-    selectedArea?: { start: number, end: number } = null
+let textAreaEl: HTMLTextAreaElement | null = null
+const selectedArea = ref<{ start: number, end: number } | null>(null)
 
-    mounted() {
-        // Get text area element
-        this.textAreaEl = document.getElementById(this.textAreaId) as HTMLTextAreaElement
-        document.addEventListener('selectionchange', this.documentSelectionChange)
-    }
+onMounted(() => {
+    textAreaEl = document.getElementById(props.textAreaId) as HTMLTextAreaElement
+    document.addEventListener('selectionchange', documentSelectionChange)
+})
 
-    unmounted() {
-        document.removeEventListener('selectionchange', this.documentSelectionChange)
-    }
+onUnmounted(() => {
+    document.removeEventListener('selectionchange', documentSelectionChange)
+})
 
     /**
      * On document selection change
@@ -61,56 +60,54 @@ class MarkdownTooltip extends Vue {
      * text, the mousedown event is called even though the text isn't deselected. So, we have to
      * listen to selection change event for the entire document instead.
      */
-    documentSelectionChange(ev: UIEvent) {
-        console.log("Document selection change", ev)
-        const active = document.activeElement
-        const tel = this.textAreaEl
+function documentSelectionChange(ev: UIEvent) {
+    console.log("Document selection change", ev)
+    const active = document.activeElement
+    const tel = textAreaEl
+    if (!tel) return
 
-        // Textarea is not focused, then it's deselected
-        if (active != tel) return this.close()
+    if (active != tel) return close()
+    if (tel.selectionStart == tel.selectionEnd) return close()
 
-        // Selection is empty
-        if (tel.selectionStart == tel.selectionEnd) return this.close()
+    selectedArea.value = { start: tel.selectionStart, end: tel.selectionEnd }
+    el.value?.classList.add('show')
+}
 
-        this.selectedArea = { start: tel.selectionStart, end: tel.selectionEnd }
-        this.el.classList.add('show')
-    }
+function apply(e: UIEvent, act: TooltipAction) {
+    e.preventDefault()
+    if (!textAreaEl) return
+    if (!selectedArea.value) return
+    let { start, end } = selectedArea.value
+    const txt = textAreaEl.value
+    const sel = txt.substring(start, end)
 
-    apply(e: UIEvent, act: TooltipAction) {
-        e.preventDefault()
-        let { start, end } = this.selectedArea
-        const txt = this.textAreaEl.value
-        const sel = txt.substring(start, end)
+    const newTxt = txt.substring(0, start) + act.md + sel + act.md + txt.substring(end)
+    document.execCommand('selectAll', false);
+    const htmlEl = document.createElement('p');
+    htmlEl.innerText = newTxt;
+    document.execCommand('insertHTML', false, htmlEl.innerHTML);
 
-        // Change text while preserving history (TODO: Manually implement undo/redo
-        const newTxt = txt.substring(0, start) + act.md + sel + act.md + txt.substring(end)
-        document.execCommand('selectAll', false);
-        const el = document.createElement('p');
-        el.innerText = newTxt;
-        document.execCommand('insertHTML', false, el.innerHTML);
-        // this.textAreaEl.value = newTxt
+    start += act.md.length
+    end += act.md.length
+    selectedArea.value = { start, end }
+    textAreaEl.setSelectionRange(start, end)
+}
 
-        // Update selection range
-        start += act.md.length
-        end += act.md.length
-        this.selectedArea = { start, end }
-        this.textAreaEl.setSelectionRange(start, end)
-    }
+function close() {
+    selectedArea.value = null
+    el.value?.classList.remove('show')
+}
 
-    close() {
-        this.selectedArea = null
-        this.el.classList.remove('show')
-    }
-
-    setPos(x: number, y: number): void {
-        this.el.style.left = x + 'px'
-        this.el.style.top = y + 'px'
-    }
+function setPos(x: number, y: number): void {
+    if (!el.value) return
+    el.value.style.left = x + 'px'
+    el.value.style.top = y + 'px'
+}
 
     /**
      * Window dragging
      */
-    windowDrag(e: MouseEvent): void {
+function windowDrag(e: MouseEvent): void {
         // Only drag if it's dragging the root element, or the dragged element has 'drag' class
         function hasDrag(el: HTMLElement) {
             if (el.classList.contains('drag')) return true
@@ -118,7 +115,7 @@ class MarkdownTooltip extends Vue {
             return hasDrag(el.parentElement)
         }
 
-        if (!(e.target == this.el || hasDrag(e.target as HTMLElement))) return
+        if (!(e.target == el.value || hasDrag(e.target as HTMLElement))) return
 
         e.preventDefault()
         let lastX = e.clientX, lastY = e.clientY
@@ -126,7 +123,8 @@ class MarkdownTooltip extends Vue {
             const dx = lastX - e.clientX, dy = lastY - e.clientY
             lastX = e.clientX;
             lastY = e.clientY
-            this.setPos(this.el.offsetLeft - dx, this.el.offsetTop - dy)
+            if (!el.value) return
+            setPos(el.value.offsetLeft - dx, el.value.offsetTop - dy)
         }
         console.log(lastX, lastY)
         const mouseup = () => {
@@ -136,8 +134,6 @@ class MarkdownTooltip extends Vue {
         document.addEventListener('mouseup', mouseup)
         document.addEventListener('mousemove', mousemove)
     }
-}
-export default toNative(MarkdownTooltip)
 </script>
 
 <style lang="sass">

@@ -1,28 +1,27 @@
-<script lang="ts">
-import {Vue, Component, Prop, toNative} from 'vue-facing-decorator';
+<script setup lang="ts">
+import {computed, toRefs} from 'vue'
 
-@Component({})
-class TextRainbow extends Vue {
-    @Prop({required: true}) text!: string;
-    @Prop({default: 120}) angle: number;
-    @Prop({default: '1rem'}) fontSize: string;
+const props = withDefaults(defineProps<{
+    text: string
+    angle?: number
+    fontSize?: string
+}>(), {
+    angle: 120,
+    fontSize: '1rem'
+})
+const { text, angle, fontSize } = toRefs(props)
 
-    inner = ''
-    perAngle = 0;
-
-    created() {
-        this.perAngle = this.angle / this.text.length;
-        let u = `<span aria-hidden="true">`;
-        let c = 0;
-        for (const v of this.text) {
-            u += `<span style="--index: ${c}; font-size: ${this.fontSize};">${v}</span>`;
-            ++c;
-        }
-        u += `</span>`;
-        this.inner = u;
+const perAngle = computed(() => angle.value / text.value.length)
+const inner = computed(() => {
+    let u = `<span aria-hidden="true">`;
+    let c = 0;
+    for (const v of text.value) {
+        u += `<span style="--index: ${c}; font-size: ${fontSize.value};">${v}</span>`;
+        ++c;
     }
-}
-export default toNative(TextRainbow)
+    u += `</span>`;
+    return u;
+})
 </script>
 
 <template>

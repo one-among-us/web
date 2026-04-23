@@ -17,12 +17,11 @@
     </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import {ref} from 'vue'
 import HyInput from "@/components/HyInput.vue";
 import RecaptchaV2 from "@/components/RecaptchaV2.vue";
 import {t} from "@/logic/config";
-import {Component, Vue, toNative} from 'vue-facing-decorator';
-
 
 export interface CaptchaResponse {
     captcha: string
@@ -31,19 +30,18 @@ export interface CaptchaResponse {
 }
 
 
-@Component({ components: { RecaptchaV2, HyInput } })
-class SubmitPrompt extends Vue {
-    name = ''
-    email = ''
+const emit = defineEmits<{
+    submit: [value: CaptchaResponse]
+    close: []
+}>()
 
-    t = t;
+const name = ref('')
+const email = ref('')
 
-    submit(captcha: string): void {
-        this.$emit('submit', { captcha, name: this.name, email: this.email })
-        this.$emit('close')
-    }
+function submit(captcha: string): void {
+    emit('submit', { captcha, name: name.value, email: email.value })
+    emit('close')
 }
-export default toNative(SubmitPrompt)
 </script>
 
 <style lang="sass" scoped>

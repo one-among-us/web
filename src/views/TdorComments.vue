@@ -17,7 +17,8 @@
     </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import {computed, onMounted, ref} from 'vue'
 import MarkdownTooltip from "@/components/MarkdownTooltip.vue";
 import SubmitPrompt, {CaptchaResponse} from "@/components/SubmitPrompt.vue";
 import {backendHost, t} from "@/logic/config";
@@ -27,126 +28,89 @@ import {error, info} from "@/logic/utils";
 import Swal from 'sweetalert2';
 import {getSwalTheme} from "@/logic/theme";
 import {initSpoilers} from "tg-blog";
-import {Component, Vue, toNative} from 'vue-facing-decorator';
 
-@Component({ components: { MarkdownTooltip, SubmitPrompt } })
-class TdorComments extends Vue {
-    declare $refs: {
-        input: HTMLTextAreaElement
+defineOptions({
+    name: 'TdorCommentsView'
+})
+
+const input = ref<HTMLTextAreaElement | null>(null)
+const textInputCache = ref("")
+const textInputKey = `draft-tdor`
+
+const showCaptchaPrompt = ref(false)
+const p = { id: "tdor" } as Person
+const showInputArea = ref(true)
+
+textInputCache.value = localStorage.getItem(textInputKey) ?? ""
+
+const textInput = computed({
+    get: () => textInputCache.value,
+    set: (s: string) => {
+        textInputCache.value = s
+        localStorage.setItem(textInputKey, s)
     }
+})
 
-    private textInputCache = ""
-    private textInputKey: string
-
-    showCaptchaPrompt = false
-
-    t = t
-    p = { id: "tdor" } as Person
-    showInputArea = true
-
-    /**
-     * Send button
-     */
-    btnSend() {
-        // Show submit prompt
-        this.showCaptchaPrompt = true
-    }
-
-    alterTextArea() {
-        // Show Input area
-        this.showInputArea = !this.showInputArea
-    }
-
-    /**
-     * Submit comment request
-     */
-    submitRequest(p: CaptchaResponse) {
-        this.showCaptchaPrompt = false
-
-        const params = { id: this.p.id, content: this.textInput, ...p }
-        info(params)
-
-        Swal.fire({
-            title: t.nav_comment_submit,
-            showConfirmButton: false,
-            icon: null,
-            theme: getSwalTheme(),
-            didOpen: (() => {
-                Swal.showLoading(null);
-                fetchText(backendHost + '/comment/add', { method: 'POST', params })
-                    .then(() => {
-                        this.textInput = "";
-                        Swal.fire({
-                            title: t.nav_success,
-                            text: t.nav_success_text_reply,
-                            icon: 'success',
-                            timer: 5000,
-                            timerProgressBar: true,
-                            showConfirmButton: true,
-                            confirmButtonText: t.nav_ok_1,
-                            showCloseButton: true,
-                            theme: getSwalTheme()
-                        })
-                    })
-                    .catch(err => {
-                        error(err);
-                        Swal.fire({
-                            title: t.nav_failed,
-                            text: t.nav_fail_reason + err.message,
-                            icon: 'error',
-                            timer: 5000,
-                            timerProgressBar: true,
-                            showConfirmButton: false,
-                            showCloseButton: false,
-                            theme: getSwalTheme()
-                        })
-                    })
-            })
-        })
-    }
-
-    /**
-     * Load saved textinput from localStorage
-     */
-    created() {
-        this.textInputKey = `draft-${this.p.id}`
-        this.textInputCache = localStorage.getItem(this.textInputKey) ?? ""
-    }
-
-    /**
-     * Get cached textinput
-     */
-    get textInput() {
-        return this.textInputCache
-    }
-
-    /**
-     * Set text and save localstorage
-     * @param s
-     */
-    set textInput(s: string) {
-        this.textInputCache = s
-        localStorage.setItem(this.textInputKey, s)
-    }
-
-    mounted() {
-        // Set initial size
-        this.resizeInput()
-
-        // Init spoilers
-        initSpoilers()
-    }
-
-    /**
-     * Auto resize
-     */
-    resizeInput() {
-        const el = this.$refs.input
-        el.style.height = "auto"
-        el.style.height = `${el.scrollHeight + 18}px`
-    }
+function btnSend() {
+    showCaptchaPrompt.value = true
 }
-export default toNative(TdorComments)
+
+function submitRequest(captchaResponse: CaptchaResponse) {
+    showCaptchaPrompt.value = false
+
+    const params = { id: p.id, content: textInput.value, ...captchaResponse }
+    info(params)
+
+    Swal.fire({
+        title: t.nav_comment_submit,
+        showConfirmButton: false,
+        icon: null,
+        theme: getSwalTheme(),
+        didOpen: (() => {
+            Swal.showLoading(null);
+            fetchText(backendHost + '/comment/add', { method: 'POST', params })
+                .then(() => {
+                    textInput.value = "";
+                    Swal.fire({
+                        title: t.nav_success,
+                        text: t.nav_success_text_reply,
+                        icon: 'success',
+                        timer: 5000,
+                        timerProgressBar: true,
+                        showConfirmButton: true,
+                        confirmButtonText: t.nav_ok_1,
+                        showCloseButton: true,
+                        theme: getSwalTheme()
+                    })
+                })
+                .catch(err => {
+                    error(err);
+                    Swal.fire({
+                        title: t.nav_failed,
+                        text: t.nav_fail_reason + err.message,
+                        icon: 'error',
+                        timer: 5000,
+                        timerProgressBar: true,
+                        showConfirmButton: false,
+                        showCloseButton: false,
+                        theme: getSwalTheme()
+                    })
+                })
+        })
+    })
+}
+
+function resizeInput() {
+    const el = input.value
+    if (!el) return
+    el.style.height = "auto"
+    el.style.height = `${el.scrollHeight + 18}px`
+}
+
+onMounted(() => {
+    resizeInput()
+    initSpoilers()
+})
 </script>
 
 <style lang="sass">

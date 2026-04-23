@@ -12,7 +12,8 @@
     </main>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import {computed, onUpdated, ref} from 'vue'
 import Balloon from '@/components/Balloon.vue';
 import MDX from "@/components/MDX.vue";
 import ProfileCard from '@/components/ProfileCard.vue';
@@ -26,209 +27,207 @@ import ProfileComments from "@/views/ProfileComments.vue";
 import Swal from 'sweetalert2';
 import {getSwalTheme} from "@/logic/theme";
 import urljoin from "url-join";
-import {Component, Prop, Vue, toNative} from 'vue-facing-decorator';
 import {getParams} from '@/logic/uwu'
 
-@Component({components: {ProfileCard, ProfileComments, MDX, Balloon}})
-class Profile extends Vue {
-    @Prop({required: true}) userid!: string
-    @Prop({default: false}) screenshotMode!: boolean
-    @Prop({default: ''}) lang!: Lang
-    p?: Person = null
-    compiledMdxCode = ''
-    isBirthday = [] as number[]
+defineOptions({
+    name: 'ProfileView'
+})
 
-    // Blame kuniklo
-    get pid(): string {
-        return this.userid == 'tdov' ? 'tdor' : this.userid
-    }
+const props = withDefaults(defineProps<{
+    userid: string
+    screenshotMode?: boolean
+    lang?: Lang | ''
+}>(), {
+    screenshotMode: false,
+    lang: ''
+})
 
-    created(): void {
-        const pu = peopleUrl(this.pid)
+const p = ref<Person | null>(null)
+const compiledMdxCode = ref('')
+const isBirthday = ref<number[]>([])
 
-        localStorage.setItem('showBtn', '1')
+const pid = computed(() => props.userid == 'tdov' ? 'tdor' : props.userid)
 
-        if (this.lang) {
-            setLang(this.lang)
-            localStorage.setItem('showBtn', '')
-        }
+function checkViewLimit(): boolean | void {
+    if (props.screenshotMode) return
+    if (window.location.hostname == 'localhost') return
+    if (!['no', 'false', null].includes(getParams('debug'))) return
 
-        // Get data from server
-        fetchWithLang(urljoin(pu, `info.json`))
-            .then(it => it.text())
-            .then(it => {
-                try {
-                    this.p = parsePeopleJson(it)
-                    if (this.pid == 'tdor') this.p.id = 'tdor'
-                }
-                catch (err) {
-                    window.open('/404', '_self')
-                }
-            })
+    const config = (() => {
+        const now = new Date();
+        const sunset = sunsetTime(now.getFullYear(), now.getMonth() + 1, now.getDate(), 45.0);
+        const sunrise = sunriseTime(now.getFullYear(), now.getMonth() + 1, now.getDate(), 45.0);
 
-        fetch(urljoin(dataHost, 'birthday-list.json'))
-            .then(it => it.json())
-            .then(it => {
-                const today = getTodayContext()
-                for (const v of (it as BirthdayEntry[])) {
-                    if (v[0] == this.userid) {
-                        if (isTodayBirthday(v, today)) {
-                            for (let i = 0; i < balloons.count; ++i) {
-                                this.isBirthday.push(randint(0, 2147483648))
-                            }
-                        }
-                    }
-                }
-            })
-
-        if (this.pid == 'tdor') return
-
-        // TODO: Handle errors
-        // Load compile MDX code from server
-        if (!this.screenshotMode) fetchWithLang(urljoin(pu, `page.json`))
-            .then(it => it.json())
-            .then(it => this.compiledMdxCode = replaceUrlVars(it, this.pid))
-
-        this.checkViewLimit()
-    }
-
-    checkViewLimit(): boolean | void {
-        if (this.screenshotMode) return
-        if (window.location.hostname == 'localhost') return
-        if (!['no', 'false', null].includes(getParams('debug'))) return
-
-        const config = (() => {
-            const now = new Date();
-            const sunset = sunsetTime(now.getFullYear(), now.getMonth() + 1, now.getDate(), 45.0);
-            const sunrise = sunriseTime(now.getFullYear(), now.getMonth() + 1, now.getDate(), 45.0);
-
-            if (now.getTime() > (new Date(now.getFullYear(), now.getMonth(), now.getDate(), sunset.hour + 2, sunset.minute, sunset.second).getTime())) {
-                return {
-                    warningLimit: Math.floor(limit.warningLimit / 2),
-                    errorLimit: Math.floor(limit.errorLimit / 2),
-                    cooldown: limit.cooldown
-                }
+        if (now.getTime() > (new Date(now.getFullYear(), now.getMonth(), now.getDate(), sunset.hour + 2, sunset.minute, sunset.second).getTime())) {
+            return {
+                warningLimit: Math.floor(limit.warningLimit / 2),
+                errorLimit: Math.floor(limit.errorLimit / 2),
+                cooldown: limit.cooldown
             }
-            else if (now.getTime() < (new Date(now.getFullYear(), now.getMonth(), now.getDate(), Math.floor(sunrise.hour * 0.5 + 2), sunrise.minute, sunrise.second).getTime())) {
-                return {
-                    warningLimit: Math.floor(limit.warningLimit / 2),
-                    errorLimit: Math.floor(limit.errorLimit / 2),
-                    cooldown: limit.cooldown
-                }
+        }
+        else if (now.getTime() < (new Date(now.getFullYear(), now.getMonth(), now.getDate(), Math.floor(sunrise.hour * 0.5 + 2), sunrise.minute, sunrise.second).getTime())) {
+            return {
+                warningLimit: Math.floor(limit.warningLimit / 2),
+                errorLimit: Math.floor(limit.errorLimit / 2),
+                cooldown: limit.cooldown
             }
-            return limit
-        })()
-
-        console.log(config)
-
-        const now = new Date()
-        const [_time, _entries] = [localStorage.getItem("view_limit_time"), localStorage.getItem("view_limit_entries")]
-        const [time, entries] = [new Date(_time), JSON.parse(_entries ?? "[]")]
-        const elapsedMin = (now.getTime() - time.getTime()) / 60000
-
-        // Initialize
-        if (!_time || !_entries || elapsedMin > config.cooldown) {
-            localStorage.setItem("view_limit_time", new Date().toUTCString())
-            localStorage.setItem("view_limit_entries", JSON.stringify([this.userid]))
-            return
         }
+        return limit
+    })()
 
-        // Check if user has viewed this page before
-        if (!entries.includes(this.userid)) {
-            entries.push(this.userid)
-            localStorage.setItem("view_limit_entries", JSON.stringify(entries))
+    console.log(config)
 
-            // When it reaches 20 for the first time, reset timer
-            if (entries.length == config.errorLimit) localStorage.setItem("view_limit_time", new Date().toUTCString())
-        }
-
-        // Warn when the view count reaches 10
-        if (entries.length >= config.warningLimit) {
-            console.log(`View limit reached ${config.warningLimit}`)
-            Swal.fire({
-                title: t.view_limit.title,
-                text: t.view_limit.warning,
-                icon: 'warning',
-                timer: 30_000,
-                timerProgressBar: true,
-                theme: getSwalTheme()
-            })
-        }
-
-        // Hard limit at 20
-        if (entries.length >= config.errorLimit) {
-            console.log(`View limit reached ${config.errorLimit}`)
-            Swal.fire({
-                title: t.view_limit.title,
-                text: t.view_limit.error,
-                icon: 'error',
-                showConfirmButton: false,
-                allowOutsideClick: false,
-                customClass: { popup: 'view-limit-alert' },
-                allowEscapeKey: false,
-                allowEnterKey: false,
-                theme: getSwalTheme()
-            })
-
-            // Easter egg: Watch when the user removes the DOM element in devtools
-            const observer = new MutationObserver((changes) => {
-                changes.forEach((change) => {
-                    // Check if the removed node is the swal2 element
-                    if (change.removedNodes.length == 0) return
-                    if (!(change.removedNodes[0] as HTMLElement).classList) return
-                    if (!(change.removedNodes[0] as HTMLElement).classList.contains("swal2-container")) return
-
-                    observer.disconnect()
-                    setTimeout(() => {
-                        Swal.fire({
-                            title: t.view_limit.dom_removed_title,
-                            text: t.view_limit.dom_removed,
-                            icon: 'info',
-                            theme: getSwalTheme()
-                        })
-
-                        // Reset the view limit
-                        localStorage.removeItem("view_limit_time")
-                    }, 100)
-                })
-            })
-            observer.observe(document.body, {childList: true, subtree: true})
-
-            return true
-        }
+    const now = new Date()
+    const [_time, _entries] = [localStorage.getItem("view_limit_time"), localStorage.getItem("view_limit_entries")]
+    if (!_time || !_entries) {
+        localStorage.setItem("view_limit_time", new Date().toUTCString())
+        localStorage.setItem("view_limit_entries", JSON.stringify([props.userid]))
+        return
+    }
+    const [time, entries] = [new Date(_time), JSON.parse(_entries)]
+    const elapsedMin = (now.getTime() - time.getTime()) / 60000
+    if (elapsedMin > config.cooldown) {
+        localStorage.setItem("view_limit_time", new Date().toUTCString())
+        localStorage.setItem("view_limit_entries", JSON.stringify([props.userid]))
+        return
     }
 
-    updated(): void {
-        scheduledTask(250, () => {
-            handleEasterEgg(this.userid)
+    if (!entries.includes(props.userid)) {
+        entries.push(props.userid)
+        localStorage.setItem("view_limit_entries", JSON.stringify(entries))
+
+        if (entries.length == config.errorLimit) localStorage.setItem("view_limit_time", new Date().toUTCString())
+    }
+
+    if (entries.length >= config.warningLimit) {
+        console.log(`View limit reached ${config.warningLimit}`)
+        Swal.fire({
+            title: t.view_limit.title,
+            text: t.view_limit.warning,
+            icon: 'warning',
+            timer: 30_000,
+            timerProgressBar: true,
+            theme: getSwalTheme()
         })
-        scheduledTask(1000, () => {
-            fetch(urljoin(dataHost, 'trigger-list.json'))
-                .then(it => it.json())
-                .then(it => {
-                    if (it.includes(trim(window.location.pathname.replace('/profile', ''), '/'))) {
-                        if (!localStorage.getItem('view_limit_entries'))
-                            localStorage.setItem('view_limit_entries', '[]');
-                        const view_limit_entries = JSON.parse(localStorage.getItem('view_limit_entries')) as string[]
-                        if (view_limit_entries.length < 20) {
-                            Swal.fire({
-                                title: t.view_limit.title,
-                                text: t.view_limit.warning,
-                                icon: 'warning',
-                                timer: 30_000,
-                                timerProgressBar: true,
-                                theme: getSwalTheme()
-                            })
-                        }
-                        while (view_limit_entries.length < limit.errorLimit)
-                            view_limit_entries.push(trim(window.location.pathname.replace('/profile', ''), '/'))
-                        localStorage.setItem('view_limit_entries', JSON.stringify(view_limit_entries));
-                    }
-                })
+    }
+
+    if (entries.length >= config.errorLimit) {
+        console.log(`View limit reached ${config.errorLimit}`)
+        Swal.fire({
+            title: t.view_limit.title,
+            text: t.view_limit.error,
+            icon: 'error',
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            customClass: { popup: 'view-limit-alert' },
+            allowEscapeKey: false,
+            allowEnterKey: false,
+            theme: getSwalTheme()
         })
+
+        const observer = new MutationObserver((changes) => {
+            changes.forEach((change) => {
+                if (change.removedNodes.length == 0) return
+                if (!(change.removedNodes[0] as HTMLElement).classList) return
+                if (!(change.removedNodes[0] as HTMLElement).classList.contains("swal2-container")) return
+
+                observer.disconnect()
+                setTimeout(() => {
+                    Swal.fire({
+                        title: t.view_limit.dom_removed_title,
+                        text: t.view_limit.dom_removed,
+                        icon: 'info',
+                        theme: getSwalTheme()
+                    })
+
+                    localStorage.removeItem("view_limit_time")
+                }, 100)
+            })
+        })
+        observer.observe(document.body, {childList: true, subtree: true})
+
+        return true
     }
 }
-export default toNative(Profile)
+
+function createdLogic(): void {
+    const pu = peopleUrl(pid.value)
+
+    localStorage.setItem('showBtn', '1')
+
+    if (props.lang) {
+        setLang(props.lang)
+        localStorage.setItem('showBtn', '')
+    }
+
+    fetchWithLang(urljoin(pu, `info.json`))
+        .then(it => it.text())
+        .then(it => {
+            try {
+                p.value = parsePeopleJson(it)
+                if (pid.value == 'tdor' && p.value) p.value.id = 'tdor'
+            }
+            catch (err) {
+                window.open('/404', '_self')
+            }
+        })
+
+    fetch(urljoin(dataHost, 'birthday-list.json'))
+        .then(it => it.json())
+        .then(it => {
+            const today = getTodayContext()
+            for (const v of (it as BirthdayEntry[])) {
+                if (v[0] == props.userid) {
+                    if (isTodayBirthday(v, today)) {
+                        for (let i = 0; i < balloons.count; ++i) {
+                            isBirthday.value.push(randint(0, 2147483648))
+                        }
+                    }
+                }
+            }
+        })
+
+    if (pid.value == 'tdor') return
+
+    if (!props.screenshotMode) fetchWithLang(urljoin(pu, `page.json`))
+        .then(it => it.json())
+        .then(it => compiledMdxCode.value = replaceUrlVars(it, pid.value))
+
+    checkViewLimit()
+}
+
+createdLogic()
+
+onUpdated((): void => {
+    scheduledTask(250, () => {
+        handleEasterEgg(props.userid)
+    })
+    scheduledTask(1000, () => {
+        fetch(urljoin(dataHost, 'trigger-list.json'))
+            .then(it => it.json())
+            .then(it => {
+                if (it.includes(trim(window.location.pathname.replace('/profile', ''), '/'))) {
+                    if (!localStorage.getItem('view_limit_entries'))
+                        localStorage.setItem('view_limit_entries', '[]');
+                    const storedEntries = localStorage.getItem('view_limit_entries')
+                    const view_limit_entries = JSON.parse(storedEntries ?? '[]') as string[]
+                    if (view_limit_entries.length < 20) {
+                        Swal.fire({
+                            title: t.view_limit.title,
+                            text: t.view_limit.warning,
+                            icon: 'warning',
+                            timer: 30_000,
+                            timerProgressBar: true,
+                            theme: getSwalTheme()
+                        })
+                    }
+                    while (view_limit_entries.length < limit.errorLimit)
+                        view_limit_entries.push(trim(window.location.pathname.replace('/profile', ''), '/'))
+                    localStorage.setItem('view_limit_entries', JSON.stringify(view_limit_entries));
+                }
+            })
+    })
+})
 </script>
 
 <style lang="sass">

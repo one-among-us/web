@@ -1,54 +1,52 @@
-<script lang="ts">
-import {Component, Prop, Vue, toNative} from 'vue-facing-decorator';
+<script setup lang="ts">
+import {ref} from 'vue'
 import {randint, scheduledTask} from "@/logic/helper";
 
-@Component({})
-class RandomSpan extends Vue {
-    @Prop({required: true}) messages: string[]
-    @Prop({required: false, default: false}) noClick: boolean
-    m = "";
+const props = withDefaults(defineProps<{
+    messages: string[]
+    noClick?: boolean
+}>(), {
+    noClick: false
+})
 
-    animating = false;
+const m = ref("")
+const animating = ref(false)
 
-    created() {
-        if (this.messages.length > 0) this.m = this.messages[randint(0, this.messages.length - 1)];
-    }
+if (props.messages.length > 0) m.value = props.messages[randint(0, props.messages.length - 1)];
 
-    roll() {
-        if (this.noClick) return;
-        if (this.animating) return;
-        this.animating = true;
-        this.mil();
-    }
+function roll() {
+    if (props.noClick) return;
+    if (animating.value) return;
+    animating.value = true;
+    mil();
+}
 
-    mil() {
-        if (this.m.length < 1) scheduledTask(200, () => {
-            this.pls((this.messages.length > 0) ? this.messages[randint(0, this.messages.length - 1)] : "")
+function mil() {
+    if (m.value.length < 1) scheduledTask(200, () => {
+        pls((props.messages.length > 0) ? props.messages[randint(0, props.messages.length - 1)] : "")
+    })
+    else {
+        m.value = m.value.substring(0, m.value.length - 1);
+        scheduledTask(delayTime(m.value.length), () => {
+            mil()
         })
-        else {
-            this.m = this.m.substring(0, this.m.length - 1);
-            scheduledTask(this.delayTime(this.m.length), () => {
-                this.mil()
-            })
-        }
-    }
-
-    pls(s: string) {
-        if (s.length < 1) {
-            this.animating = false;
-            return;
-        }
-        this.m += s[0];
-        scheduledTask(this.delayTime(this.m.length), () => {
-            this.pls(s.substring(1));
-        })
-    }
-
-    delayTime(n: number): number {
-        return Math.floor(-100 * Math.atan(0.1 * n - 4) / Math.PI) + 60;
     }
 }
-export default toNative(RandomSpan)
+
+function pls(s: string) {
+    if (s.length < 1) {
+        animating.value = false;
+        return;
+    }
+    m.value += s[0];
+    scheduledTask(delayTime(m.value.length), () => {
+        pls(s.substring(1));
+    })
+}
+
+function delayTime(n: number): number {
+    return Math.floor(-100 * Math.atan(0.1 * n - 4) / Math.PI) + 60;
+}
 </script>
 
 <template>

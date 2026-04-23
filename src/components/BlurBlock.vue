@@ -1,44 +1,41 @@
-<script lang="ts">
-import {Vue, Component, Prop, toNative} from 'vue-facing-decorator';
+<script setup lang="ts">
+import {onMounted, ref} from 'vue'
 
-@Component({})
-class BlurBlock extends Vue {
-    @Prop({required: false}) hover: boolean;
+const props = defineProps<{
+    hover?: boolean
+}>()
 
-    blur = ""
-    isblur = false
+const blur = ref("")
+const isblur = ref(false)
 
-    mounted() {
-        this.blur = 'filter: blur(5px);';
-        this.isblur = true;
+onMounted(() => {
+    blur.value = 'filter: blur(5px);';
+    isblur.value = true;
+})
+
+function click() {
+    if (props.hover) return;
+    if (isblur.value) {
+        blur.value = 'filter: none;';
+    } else {
+        blur.value = 'filter: blur(5px);';
     }
-
-    click() {
-        if (this.hover) return;
-        if (this.isblur) {
-            this.blur = 'filter: none;';
-        }
-        else {
-            this.blur = 'filter: blur(5px);';
-        }
-        this.isblur = !this.isblur;
-    }
-
-    hovering() {
-        if (!this.hover) return;
-        if (!this.isblur) return;
-        this.isblur = !this.isblur;
-        this.blur = 'filter: none;';
-    }
-
-    leave() {
-        if (!this.hover) return;
-        if (this.isblur) return;
-        this.isblur = !this.isblur;
-        this.blur = 'filter: blur(5px);';
-    }
+    isblur.value = !isblur.value;
 }
-export default toNative(BlurBlock)
+
+function hovering() {
+    if (!props.hover) return;
+    if (!isblur.value) return;
+    isblur.value = !isblur.value;
+    blur.value = 'filter: none;';
+}
+
+function leave() {
+    if (!props.hover) return;
+    if (isblur.value) return;
+    isblur.value = !isblur.value;
+    blur.value = 'filter: blur(5px);';
+}
 </script>
 
 <template>

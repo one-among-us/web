@@ -5,24 +5,19 @@
     </button>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {t} from '@/logic/config';
 import router from '@/router';
 import {Icon} from '@iconify/vue';
-import {Component, Prop, Vue, toNative} from 'vue-facing-decorator';
 
-@Component({ components: { Icon } })
-class BirthdayButton extends Vue {
-    t = t;
-    birth: [string, string][] = null as never as [string, string][];
-    @Prop({ required: true }) id: string;
-    @Prop({ required: true }) name: string;
+const props = defineProps<{
+    id: string
+    name: string
+}>()
 
-    goBirth() {
-        router.push(`/profile/${this.id}`);
-    }
+function goBirth() {
+    router.push(`/profile/${props.id}`);
 }
-export default toNative(BirthdayButton)
 </script>
 
 <style lang="sass" scoped>
