@@ -1,0 +1,42 @@
+name: PR Build
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: 'yarn'
+
+      - name: Install and build
+        run: |
+          export NODE_OPTIONS="--max-old-space-size=4096"
+          yarn install --immutable
+          yarn build
+
+      - name: Save PR number
+        run: echo ${{ github.event.pull_request.number }} > dist/pr_number.txt
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: preview-dist
+          path: dist/
+          retention-days: 1
