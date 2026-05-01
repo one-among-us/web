@@ -143,7 +143,7 @@ export function handleEasterEgg(userid?: string) {
             case "wait": {
                 if (egg.userid.includes(userid)) {
                     if (localStorage.getItem(egg.id + '_SHOWN')) break;
-                    scheduledTask(30000, () => {
+                    scheduledTask(egg.wait || 30000, () => {
                         if ((window.location.pathname == `/profile/${userid}`) || window.location.pathname == `/profile/${userid}/`) {
                             checkmate(egg)
                         }
