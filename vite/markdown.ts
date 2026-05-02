@@ -1,6 +1,8 @@
 import { Plugin } from "vite";
 
-import * as marked from "marked";
+import { marked } from "marked";
+
+const markedOptions = { async: false } as const;
 
 export default function vitePluginMarkdown(): Plugin {
   return {
@@ -8,7 +10,7 @@ export default function vitePluginMarkdown(): Plugin {
     transform(code, id) {
       if (!id.endsWith(".md")) return;
 
-      const html = marked.marked(code);
+      const html = marked(code, markedOptions);
       return `export default ${JSON.stringify(html)}`;
     }
   }

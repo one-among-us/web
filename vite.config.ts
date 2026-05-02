@@ -61,6 +61,7 @@ export default defineConfig({
     }),
 
     Icons({
+      scale: 1,
       autoInstall: true,
     }),
   ],

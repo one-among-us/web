@@ -167,7 +167,7 @@ function createdLogic(): void {
                 p.value = parsePeopleJson(it)
                 if (pid.value == 'tdor' && p.value) p.value.id = 'tdor'
             }
-            catch (err) {
+            catch {
                 window.open('/404', '_self')
             }
         })

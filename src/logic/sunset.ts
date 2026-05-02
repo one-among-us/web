@@ -8,10 +8,6 @@ function degToRad(deg: number): number {
     return deg * Math.PI / 180;
 }
 
-function radToDeg(rad: number): number {
-    return rad * 180.0 / Math.PI;
-}
-
 function isLeap(year: number): boolean {
     return (year % 400 == 0) || ((year % 4 == 0) && (year % 100 != 0));
 }

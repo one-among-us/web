@@ -1,4 +1,5 @@
 /// <reference types="vite/client" />
+/// <reference types="gtag.js" />
 
 /* eslint-disable */
 
@@ -11,4 +12,10 @@ declare module '*.vue' {
 declare module '*.md' {
     const html: string;
     export default html;
+}
+
+declare global {
+    interface Window {
+        gtag?: Gtag.Gtag;
+    }
 }

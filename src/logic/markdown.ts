@@ -1,6 +1,8 @@
 import {marked} from "marked";
 import sanitizeHtml from 'sanitize-html';
 
+const markedOptions = { async: false } as const;
+
 function markdownHandlers(s: string): string {
     if (/\|\|(?!\s)/.test(s)) {
         s = s.replace(/\|\|(.*?)\|\|/g, (match, inner) => {
@@ -58,9 +60,9 @@ export function sanitize(html: string) {
 }
 
 export function mdParseInline(s: string) {
-    return sanitize(marked.parseInline(markdownHandlers(s)))
+    return sanitize(marked.parseInline(markdownHandlers(s), markedOptions))
 }
 
 export function mdParse(s: string) {
-    return sanitize(marked.parse(markdownHandlers(s)))
+    return sanitize(marked.parse(markdownHandlers(s), markedOptions))
 }
