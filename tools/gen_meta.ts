@@ -19,6 +19,8 @@ import {convert} from 'html-to-text';
 import {renderScreenshots, screenshotUrl} from "./render_image.js";
 import {optimize_font} from "./optimize_font.js";
 
+const markedOptions = { async: false } as const;
+
 const dist = "dist"
 const data = "data-repo"
 
@@ -97,9 +99,9 @@ async function createHtmlWithMarkdown(url: string | UrlSet, md: string, image?: 
 {
   const mdMeta = metadataParser(md)
   md = autocorrect.formatFor(mdMeta.content, 'markdown')
-  const genDesc = convert(marked(md), htmlStrip).replaceAll("\n", " ")
+  const genDesc = convert(marked(md, markedOptions), htmlStrip).replaceAll("\n", " ")
   const desc = mdMeta.metadata.metaDescription ?? genDesc.substring(0, 100) + (genDesc.length > 100 ? "..." : "")
-  await createHtml(url, { title, desc, image }, h => h.replace("<!-- PLACEHOLDER_INJECT_SSO_CONTENT_HERE -->", marked(md)))
+  await createHtml(url, { title, desc, image }, h => h.replace("<!-- PLACEHOLDER_INJECT_SSO_CONTENT_HERE -->", marked(md, markedOptions)))
 }
 
 async function genMeta()

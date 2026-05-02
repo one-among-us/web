@@ -1,4 +1,3 @@
-import path from "path";
 import Swal from "sweetalert2"
 import {dataHost, t} from "./config"
 import {scheduledTask, toast, getResponseSync, checkSubset, randint} from "./helper"
