@@ -53,14 +53,14 @@ export async function renderScreenshots(...people: string[])
     await page.setExtraHTTPHeaders({
       'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
     })
-    await page.evaluateOnNewDocument(() => {
+    await page.evaluateOnNewDocument(`
       Object.defineProperty(navigator, "language", {
-          get: () => { return "zh-CN" }
+          get: () => "zh-CN"
       });
       Object.defineProperty(navigator, "languages", {
-          get: () => { return ["zh-CN", "zh"] }
+          get: () => ["zh-CN", "zh"]
       });
-    });
+    `);
 
     try {
       // Load page

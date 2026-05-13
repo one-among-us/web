@@ -5,7 +5,7 @@
                          class="profile-card"/>
 
             <MDX v-if="pid != 'tdor'" :code="compiledMdxCode" class="content"/>
-            <Balloon v-for="i of isBirthday" :key="i"/>
+            <template v-if="!screenshotMode"><Balloon v-for="i of isBirthday" :key="i"/></template>
 
             <ProfileComments v-if="p.comments && !screenshotMode" :p="p" class="comments"/>
         </div>

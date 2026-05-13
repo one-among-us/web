@@ -18,8 +18,8 @@
     <Divider height="5px"/>
 
     <GlobalButton/>
-    <Sakura :count="50" v-if="isTdorPeriod() || (isEaster() && !shouldShowFireworks() && (gaussian() < 0.36))"/>
-    <Fireworks :count="6" v-if="shouldShowFireworks()"/>
+    <Sakura :count="50" v-if="!route.path.startsWith('/__screenshot') && (isTdorPeriod() || (isEaster() && !shouldShowFireworks() && (gaussian() < 0.36)))"/>
+    <Fireworks :count="6" v-if="!route.path.startsWith('/__screenshot') && shouldShowFireworks()"/>
 </template>
 
 <script setup lang="ts">
