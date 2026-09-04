@@ -505,13 +505,27 @@ div:has(.view-limit-alert)
         margin-left: 0
         border-radius: 0
 
+    #right
+        margin-left: 24px
+        margin-right: 24px
+
         // Leave space for the profile pic
-        #name-box, #fields > li:first-child
-            max-width: calc(90% - 50px)
+        #name-box
+            max-width: calc(100% - 75px)
             overflow: hidden
             text-justify: inter-word
 
-    #right
+            #name-text
+                font-size: clamp(1.4em, 6.8vw, 1.7em)
+                min-width: 0
+                overflow: hidden
+                text-overflow: ellipsis
+
+        #fields > li:first-child, #fields > li:nth-child(2)
+            max-width: calc(100% - 125px)
+            overflow: hidden
+            text-justify: inter-word
+
         #websites
             max-width: calc(100% - 135px)
 
