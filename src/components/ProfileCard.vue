@@ -677,7 +677,7 @@ div:has(.view-limit-alert)
     #left
         #buttons
             flex-direction: column
-            align-items: flex-end
+            align-items: flex-start
             gap: 4px
             bottom: 8px
             right: 10px
