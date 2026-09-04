@@ -429,11 +429,45 @@ div:has(.view-limit-alert)
     #info
         flex-direction: column
 
+    #left
+        flex-direction: row
+
+        #buttons
+            display: flex
+            position: absolute
+            bottom: 0
+            right: 20px
+
+        img
+            transform: rotate(15deg)
+            position: absolute
+            top: 6px
+            right: 10px
+
+        .spacer-bottom
+            flex-grow: 0
+
+        .spacer
+            display: none
+
+
+    #right
+        margin-left: 24px
+        margin-right: 24px
+
         // Leave space for the profile pic
-        #name-box, #fields > li:first-child
-            max-width: calc(100% - 100px)
+        #name-box
+            max-width: calc(100% - 105px)
             overflow: hidden
             text-justify: inter-word
+
+            #name-text
+                font-size: clamp(1.2em, 5vw, 1.7em)
+
+            #name-text, #id
+                min-width: 0
+                overflow: hidden
+                text-overflow: ellipsis
 
         // Hide li dots
         #fields li
@@ -451,31 +485,10 @@ div:has(.view-limit-alert)
             max-width: calc(100% - 15px)
             text-indent: 3.25em hanging
 
-    #left
-        flex-direction: row
-
-        #buttons
-            display: flex
-            position: absolute
-            bottom: 0
-            right: 20px
-
-        img
-            transform: rotate(15deg)
-            position: absolute
-            top: 0
-            right: -5px
-
-        .spacer-bottom
-            flex-grow: 0
-
-        .spacer
-            display: none
-
-
-    #right
-        margin-left: 32px
-        margin-right: 32px
+        #fields > li:first-child, #fields > li:nth-child(2)
+            max-width: calc(100% - 125px)
+            overflow: hidden
+            text-justify: inter-word
 
         #websites
             max-width: calc(100% - 100px)
@@ -506,25 +519,8 @@ div:has(.view-limit-alert)
         border-radius: 0
 
     #right
-        margin-left: 24px
-        margin-right: 24px
-
-        // Leave space for the profile pic
-        #name-box
-            max-width: calc(100% - 75px)
-            overflow: hidden
-            text-justify: inter-word
-
-            #name-text
-                font-size: clamp(1.4em, 6.8vw, 1.7em)
-                min-width: 0
-                overflow: hidden
-                text-overflow: ellipsis
-
-        #fields > li:first-child, #fields > li:nth-child(2)
-            max-width: calc(100% - 125px)
-            overflow: hidden
-            text-justify: inter-word
+        margin-left: 20px
+        margin-right: 20px
 
         #websites
             max-width: calc(100% - 135px)
