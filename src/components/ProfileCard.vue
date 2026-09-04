@@ -1,5 +1,5 @@
 <template>
-    <div id="info" class="font-custom fbox-h" v-if="p">
+    <div id="info" class="font-custom fbox-h" :class="{ 'has-switch': canSwitch }" v-if="p">
         <!-- Horizontal Alignment of profile pic and the rest -->
         <div id="left" class="fbox-v">
             <img :src="profileUrl" draggable="false" :alt="p.name">
@@ -517,6 +517,9 @@ div:has(.view-limit-alert)
     #info
         flex-direction: column
 
+        &.has-switch #right
+            margin-left: 36px
+
     #left
         flex-direction: row
 
@@ -529,8 +532,8 @@ div:has(.view-limit-alert)
         img
             transform: rotate(15deg)
             position: absolute
-            top: 6px
-            right: 10px
+            top: 0
+            right: -5px
 
         .spacer-bottom
             flex-grow: 0
@@ -540,17 +543,14 @@ div:has(.view-limit-alert)
 
 
     #right
-        margin-left: 24px
-        margin-right: 24px
+        margin-left: 20px
+        margin-right: 20px
 
         // Leave space for the profile pic
         #name-box
-            max-width: calc(100% - 105px)
+            max-width: calc(100% - 100px)
             overflow: hidden
             text-justify: inter-word
-
-            #name-text
-                font-size: clamp(1.2em, 5vw, 1.7em)
 
             #name-text, #id
                 min-width: 0
@@ -574,7 +574,7 @@ div:has(.view-limit-alert)
             text-indent: 3.25em hanging
 
         #fields > li:first-child, #fields > li:nth-child(2)
-            max-width: calc(100% - 125px)
+            max-width: calc(100% - 105px)
             overflow: hidden
             text-justify: inter-word
 
@@ -606,9 +606,20 @@ div:has(.view-limit-alert)
         margin-left: 0
         border-radius: 0
 
+        &.has-switch #right
+            margin-left: 36px
+
     #right
-        margin-left: 20px
-        margin-right: 20px
+        margin-left: 18px
+        margin-right: 14px
+
+        #name-box
+            // Avatar is 80-110px + right:14px + rotation 15deg adds ~10-15px more.
+            // Total visual intrusion from right: ~110px, so subtract 120px for safety.
+            max-width: calc(100% - 120px)
+
+        #fields > li:first-child
+            max-width: calc(100% - 130px)
 
         #websites
             max-width: calc(100% - 135px)
@@ -623,7 +634,7 @@ div:has(.view-limit-alert)
             right: 14px
 
         #buttons
-            right: 14px
+            right: 12px
             bottom: 0.5em
 
             .button-container + .button-container
@@ -638,6 +649,41 @@ div:has(.view-limit-alert)
                 font-size: 15px
                 width: 30px
                 height: 30px
+
+// Very small screen (<= 320px)
+@media screen and (max-width: 320px)
+    #info
+        &.has-switch #right
+            margin-left: 32px
+
+    #right
+        margin-left: 14px
+        margin-right: 10px
+
+        #name-box
+            // Avatar ~88px + right:14px + 15° rotation extends ~23px further left = ~125px from right.
+            // Subtract 130px so name box never reaches avatar territory.
+            max-width: calc(100% - 130px)
+
+        #fields
+            text-indent: 0
+
+        #fields > li:first-child
+            max-width: calc(100% - 130px)
+
+        #websites
+            max-width: calc(100% - 75px)
+
+    #left
+        #buttons
+            flex-direction: column
+            align-items: flex-end
+            gap: 4px
+            bottom: 8px
+            right: 10px
+
+            .button-container + .button-container
+                margin-left: 0
 
 [data-theme="dark"]
     #info
