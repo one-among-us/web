@@ -29,7 +29,7 @@
         <!-- Vertical Alignment of info section -->
         <div id="right">
             <div id="name-box">
-                <span id="name-text">{{ p.name }}</span>
+                <span id="name-text" :ref="setNameTextEl">{{ p.name }}</span>
                 <span id="id">@{{ p.id }}</span>
             </div>
             <div id="hr"/>
@@ -69,7 +69,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref, watch} from 'vue'
+import {computed, ref, watch, onBeforeUnmount, nextTick} from 'vue'
 import {backendHost, dataHost, replaceUrlVars, t} from "@/logic/config";
 import {Person} from "@/logic/data";
 import {handleBirthdayToast, handleFlowerToast} from '@/logic/easterEgg';
@@ -214,6 +214,94 @@ function isBornField(key: string): boolean {
 function toggleBornDisplay(): void {
     showSolarBorn.value = !showSolarBorn.value
 }
+
+const nameTextEl = ref<HTMLElement | null>(null)
+let nameResizeObserver: ResizeObserver | null = null
+let measureSpan: HTMLSpanElement | null = null
+
+function getUnconstrainedWidth(text: string, referenceEl: HTMLElement, fontSizePx: number): number {
+    if (!measureSpan) {
+        measureSpan = document.createElement('span')
+        measureSpan.style.position = 'absolute'
+        measureSpan.style.visibility = 'hidden'
+        measureSpan.style.whiteSpace = 'nowrap'
+        measureSpan.style.pointerEvents = 'none'
+        measureSpan.style.top = '-9999px'
+        measureSpan.style.left = '-9999px'
+        document.body.appendChild(measureSpan)
+    }
+    const computed = window.getComputedStyle(referenceEl)
+    measureSpan.style.fontFamily = computed.fontFamily
+    measureSpan.style.fontWeight = computed.fontWeight
+    measureSpan.style.letterSpacing = computed.letterSpacing
+    measureSpan.style.fontSize = `${fontSizePx}px`
+    measureSpan.textContent = text
+    return measureSpan.getBoundingClientRect().width
+}
+
+function fitName(): void {
+    const el = nameTextEl.value
+    if (!el) return
+    const parent = el.parentElement
+    if (!parent) return
+
+    if (parent.clientWidth <= 0) return
+
+    const name = props.p?.name
+    if (!name) return
+
+    // Base font size is 1.7em relative to parent (#right)
+    const parentFontSize = parseFloat(window.getComputedStyle(parent).fontSize) || 16
+    const baseFontSizePx = parentFontSize * 1.7
+
+    // Account for el's own margin-right inside the flex row
+    const elMarginRight = parseFloat(window.getComputedStyle(el).marginRight) || 0
+    const availableWidth = parent.clientWidth - elMarginRight
+
+    // Measure full unconstrained width at 1.7em
+    const fullWidth = getUnconstrainedWidth(name, el, baseFontSizePx)
+
+    if (fullWidth <= availableWidth) {
+        // Name fits at original 1.7em - keep it large!
+        el.style.fontSize = ''
+    } else {
+        // Only scale down when it overflows available space
+        // Use a larger safety margin (-12px) so the name doesn't get clipped by the avatar frame
+        const scale = (availableWidth - 12) / fullWidth
+        const targetPx = Math.max(parentFontSize * 0.85, baseFontSizePx * scale)
+        el.style.fontSize = `${targetPx}px`
+    }
+}
+
+function setNameTextEl(el: any): void {
+    nameTextEl.value = el
+    if (el) {
+        nextTick(() => {
+            // Run once fonts may already be loaded
+            fitName()
+            // Also run after fonts are definitely loaded (custom font may not be ready yet)
+            document.fonts.ready.then(() => fitName())
+            if (typeof ResizeObserver !== 'undefined' && el.parentElement) {
+                nameResizeObserver?.disconnect()
+                nameResizeObserver = new ResizeObserver(() => fitName())
+                nameResizeObserver.observe(el.parentElement)
+            }
+        })
+    } else {
+        nameResizeObserver?.disconnect()
+    }
+}
+
+onBeforeUnmount(() => {
+    nameResizeObserver?.disconnect()
+    if (measureSpan && measureSpan.parentNode) {
+        measureSpan.parentNode.removeChild(measureSpan)
+        measureSpan = null
+    }
+})
+
+watch(() => props.p?.name, () => nextTick(fitName))
+watch(() => props.userid, () => nextTick(fitName))
 </script>
 
 <style lang="sass" scoped>
