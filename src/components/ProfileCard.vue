@@ -517,10 +517,12 @@ div:has(.view-limit-alert)
 
     #left
         img
-            height: 90px
-            width: 90px
-            border: 5px solid white
-            outline: 2px solid $color-text-main
+            $length: clamp(80px, 27.5vw, 110px)
+            height: $length
+            width: $length
+            border-width: clamp(5px, 2vw, 8px)
+            top: 8px
+            right: 14px
 
         #buttons
             right: 14px
@@ -554,8 +556,8 @@ div:has(.view-limit-alert)
 
     #left
         img
-            border: 9px solid #f5e0dc45
-            outline: 2px solid $color-text-dark-main
+            border-color: #f5e0dc45
+            outline-color: $color-text-dark-main
         #buttons
             .button
                 background: $color-bg-dark-5
