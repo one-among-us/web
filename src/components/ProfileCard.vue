@@ -511,6 +511,10 @@ div:has(.view-limit-alert)
             overflow: hidden
             text-justify: inter-word
 
+    #right
+        #websites
+            max-width: calc(100% - 135px)
+
     #left
         img
             height: 90px
@@ -518,11 +522,12 @@ div:has(.view-limit-alert)
             border: 5px solid white
             outline: 2px solid $color-text-main
 
-        .button-container.edit
-            display: none !important
-
         #buttons
+            right: 14px
             bottom: 0.5em
+
+            .button-container + .button-container
+                margin-left: 10px
 
             .button-container
                 flex-direction: row
