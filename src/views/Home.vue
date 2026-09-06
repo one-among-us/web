@@ -35,23 +35,26 @@
                         <!-- Grid Layout -->
                         <template v-if="isGridLayout">
                             <div class="back"/>
-                            <a :href="`/profile/${p.id}`" @click.exact.prevent.stop="() => false" @keydown="(e) => handleProfileKeyDown(e, p)" class="profile-link">
-                                <transition name="fade" @after-leave="() => switchPage(p)">
-                                    <div class="front" v-if="clicked !== p.name">
-                                        <canvas v-bind:id="p.id + '-canvas'" class="blur clickable" aria-hidden="true"></canvas>
-                                        <img :src="profileUrl(p)" draggable="false" :alt="p.name" class="profile-image clickable"
-                                             @click.exact="() => { if (!clicked) { clicked = p.name; } return false }"
-                                             v-on:load="isLoading = false">
-                                    </div>
-                                </transition>
-                            </a>
+                            <transition name="fade" @after-leave="() => switchPage(p)">
+                                <div class="front" v-if="clicked !== p.name">
+                                    <canvas v-bind:id="p.id + '-canvas'" class="blur clickable" aria-hidden="true"></canvas>
+                                    <img :src="profileUrl(p)" draggable="false" :alt="p.name" class="profile-image clickable"
+                                         @click.exact="() => { if (!clicked) { clicked = p.name; } return false }"
+                                         v-on:load="isLoading = false">
+                                </div>
+                            </transition>
+                            <a :href="`/profile/${p.id}`"
+                               @click.exact.prevent.stop="() => { if (!clicked) { clicked = p.name; } return false }"
+                               @keydown="(e) => handleProfileKeyDown(e, p)"
+                               :aria-label="p.name"
+                               class="profile-link"></a>
                             <div class="name font-custom" ref="bookmarkTexts">{{ p.name }}</div>
                             <div class="bookmark" ref="bookmark"/>
                         </template>
 
                         <!-- List Layout -->
                         <template v-else>
-                            <a :href="`/profile/${p.id}`" @click.exact.prevent="() => switchPage(p)" class="profile-link-wrapper">
+                            <div class="profile-card-content">
                                 <div class="avatar-container" aria-hidden="true">
                                      <div class="back"/>
                                      <transition name="fade" @after-leave="() => switchPage(p)">
@@ -67,7 +70,12 @@
                                     <div class="name font-custom">{{ p.name }}</div>
                                     <div class="description" v-if="getPersonDesc(p)">{{ getPersonDesc(p) }}</div>
                                 </div>
-                            </a>
+                            </div>
+                            <a :href="`/profile/${p.id}`"
+                               @click.exact.prevent.stop="() => { if (!clicked) { clicked = p.name; } return false }"
+                               @keydown="(e) => handleProfileKeyDown(e, p)"
+                               :aria-label="p.name"
+                               class="profile-link-overlay"></a>
                         </template>
                     </div>
 
@@ -472,7 +480,7 @@ function handleProfileKeyDown(e: KeyboardEvent, p: PersonMeta) {
     .fade-enter-from, .fade-leave-to
         opacity: 0
 
-    .front:hover, .profile-link:focus-visible .front, .profile-link-wrapper:focus-visible .front
+    &:hover .front, &:focus-within .front
         transform: rotate(2deg)
 
     .front, .back
@@ -520,6 +528,12 @@ function handleProfileKeyDown(e: KeyboardEvent, p: PersonMeta) {
         vertical-align: top
         text-align: left
 
+    .profile-link
+        position: absolute
+        inset: 0
+        z-index: 10
+        cursor: pointer
+
     .front, .back
         border: 10px solid white
         height: 150px
@@ -566,6 +580,7 @@ function handleProfileKeyDown(e: KeyboardEvent, p: PersonMeta) {
 
     // Profile picture alignment
     .profile
+        position: relative
         background: rgba(0, 0, 0, 0.03)
         border: 1px solid rgba(0, 0, 0, 0.06)
         height: 82px
@@ -577,14 +592,19 @@ function handleProfileKeyDown(e: KeyboardEvent, p: PersonMeta) {
             .front
                 transform: rotate(2deg)
 
-    .profile-link-wrapper
+    .profile-card-content
         display: flex
         align-items: center
-        text-decoration: none
-        color: inherit
         width: 100%
         height: 100%
         gap: 15px
+        pointer-events: none
+
+    .profile-link-overlay
+        position: absolute
+        inset: 0
+        z-index: 20
+        cursor: pointer
 
     .avatar-container
         position: relative
