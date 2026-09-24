@@ -59,6 +59,7 @@
     "replace-in-files": "^3.0.0",
     "sass": "^1.99.0",
     "serve-static": "^2.2.1",
+    "sitemap": "^9.0.1",
     "subset-font": "^2.5.0",
     "ts-node": "^10.9.2",
     "tsx": "^4.21.0",

@@ -19,6 +19,7 @@ import {convert} from 'html-to-text';
 import {renderScreenshots, screenshotUrl} from "./render_image.js";
 import {optimize_font} from "./optimize_font.js";
 import {generateRssFeeds} from "./gen_rss.js";
+import {generateSitemap} from "./gen_sitemap.js";
 
 const markedOptions = { async: false } as const;
 
@@ -161,6 +162,11 @@ async function genMeta()
   console.log("Generating RSS feeds...")
   await generateRssFeeds({ distDir: dist, dataDir: data, host })
   console.log("> RSS feeds generated.")
+
+  // Generate sitemap
+  console.log("Generating sitemap...")
+  await generateSitemap({ distDir: dist, dataDir: data, host })
+  console.log("> Sitemap generated.")
 
   // Optimize font
   // console.log("Optimizing font...")

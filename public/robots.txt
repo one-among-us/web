@@ -15,3 +15,5 @@ Allow: /
 
 User-agent: *
 Disallow: /
+
+Sitemap: https://one-among.us/sitemap.xml
