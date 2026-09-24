@@ -29,6 +29,10 @@ const data = "data-repo"
 // Read host
 const host = 'https://' + dist.join("CNAME").read_file().trim()
 
+// Read actualHide list from data-repo (built by the data repo's build step)
+const actualHideListRaw = data.join("actual-hide-list.json").read_file()
+const actualHideSet = new Set<string>(actualHideListRaw ? JSON.parse(actualHideListRaw) : [])
+
 // Read html
 const html = dist.join("index.original.html").read_file() ?? dist.join("index.html").read_file()
 const title = "那些秋叶 - One Among Us"
@@ -42,6 +46,7 @@ interface Meta {
   desc: string
   image?: string
   url?: string
+  noindex?: boolean
 }
 
 function createMeta(meta: Meta): string
@@ -52,7 +57,9 @@ function createMeta(meta: Meta): string
     <title>${title}</title>
     <meta name="title" content="${title}">
     <meta name="description" content="${desc}">
-  
+  ` + (meta.noindex ? `
+    <meta name="robots" content="noindex, nofollow">
+  ` : '') + `
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="${title}">
@@ -97,13 +104,13 @@ const htmlStrip = {
   ]
 }
 
-async function createHtmlWithMarkdown(url: string | UrlSet, md: string, image?: string)
+async function createHtmlWithMarkdown(url: string | UrlSet, md: string, image?: string, noindex?: boolean)
 {
   const mdMeta = metadataParser(md)
   md = autocorrect.formatFor(mdMeta.content, 'markdown')
   const genDesc = convert(marked(md, markedOptions), htmlStrip).replaceAll("\n", " ")
   const desc = mdMeta.metadata.metaDescription ?? genDesc.substring(0, 100) + (genDesc.length > 100 ? "..." : "")
-  await createHtml(url, { title, desc, image }, h => h.replace("<!-- PLACEHOLDER_INJECT_SSO_CONTENT_HERE -->", marked(md, markedOptions)))
+  await createHtml(url, { title, desc, image, noindex }, h => h.replace("<!-- PLACEHOLDER_INJECT_SSO_CONTENT_HERE -->", marked(md, markedOptions)))
 }
 
 async function genMeta()
@@ -128,6 +135,7 @@ async function genMeta()
     const p = data.join(`people/${person.path}`)
     const md = p.join(`page.md`).read_file()
     const image = screenshotUrl(person.path, host)
+    const noindex = actualHideSet.has(person.id)
 
     // Track characters
     addCharsFile(p.join(`info.json`))
@@ -135,8 +143,8 @@ async function genMeta()
 
     // Profile
     const pUrl = `/profile/${person.path}`
-    await createHtmlWithMarkdown(pUrl, md, image)
-    await createHtmlWithMarkdown({ path: `/p/${person.path}`, canonical: pUrl }, md, image)
+    await createHtmlWithMarkdown(pUrl, md, image, noindex)
+    await createHtmlWithMarkdown({ path: `/p/${person.path}`, canonical: pUrl }, md, image, noindex)
 
     // Edit info
     await createHtml(`/edit-info/${person.path}`, { title, desc: `编辑信息: ${person.name}`, image })
@@ -152,6 +160,18 @@ async function genMeta()
         await createHtml({ path: urljoin(pUrl, `b/${file}`), canonical: bUrl }, meta)
       }
     }
+  }
+
+  // Create noindex pages for actualHide entries (Google-blocked, no personal preview cards)
+  for (const hideId of actualHideSet) {
+    const pUrl = `/profile/${hideId}`
+    const meta: Meta = {
+      title,
+      desc: title,
+      noindex: true,
+    }
+    await createHtml(pUrl, meta)
+    await createHtml({ path: `/p/${hideId}`, canonical: pUrl }, meta)
   }
 
   // Create 404 fallback page
