@@ -4153,6 +4153,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"feed@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "feed@npm:6.0.0"
+  dependencies:
+    xml-js: "npm:^1.6.11"
+  checksum: 10c0/0cfabb62037cc97bb935b778a5d98fae808e27d5842173774c0cd07a276e7e881b5f0dccb0575214938218af9a0cad3039a20b48db966799b72d9fde49048cb5
+  languageName: node
+  linkType: hard
+
 "file-entry-cache@npm:^8.0.0":
   version: 8.0.0
   resolution: "file-entry-cache@npm:8.0.0"
@@ -5790,6 +5799,7 @@ __metadata:
     element-plus: "npm:^2.13.7"
     eslint: "npm:^10.3.0"
     eslint-plugin-vue: "npm:^10.9.0"
+    feed: "npm:^6.0.0"
     finalhandler: "npm:^2.1.1"
     fs-extra: "npm:^11.3.4"
     html-to-text: "npm:^10.0.0"
@@ -6589,6 +6599,13 @@ __metadata:
   version: 1.4.1
   resolution: "sax@npm:1.4.1"
   checksum: 10c0/6bf86318a254c5d898ede6bd3ded15daf68ae08a5495a2739564eb265cd13bcc64a07ab466fb204f67ce472bb534eb8612dac587435515169593f4fffa11de7c
+  languageName: node
+  linkType: hard
+
+"sax@npm:^1.2.4":
+  version: 1.6.1
+  resolution: "sax@npm:1.6.1"
+  checksum: 10c0/c91a71043d60da50fdf1e2cee936fc7ad4c9376afb8d1022aef5655f279433640859ec06b3b49abfcbe578fc7da2828cc1661e45aaedf835f5393496193437fa
   languageName: node
   linkType: hard
 
@@ -7740,6 +7757,17 @@ __metadata:
     parse-headers: "npm:^2.0.0"
     xtend: "npm:^4.0.0"
   checksum: 10c0/b73b6413b678846c422559cbc0afb2acb34c3a75b4c3bbee1f258e984255a8b8d65c1749b51691278bbdc28781782950d77a759ef5a9adf7774bed2f5dabc954
+  languageName: node
+  linkType: hard
+
+"xml-js@npm:^1.6.11":
+  version: 1.6.11
+  resolution: "xml-js@npm:1.6.11"
+  dependencies:
+    sax: "npm:^1.2.4"
+  bin:
+    xml-js: ./bin/cli.js
+  checksum: 10c0/c83631057f10bf90ea785cee434a8a1a0030c7314fe737ad9bf568a281083b565b28b14c9e9ba82f11fc9dc582a3a907904956af60beb725be1c9ad4b030bc5a
   languageName: node
   linkType: hard
 
