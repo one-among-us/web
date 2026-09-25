@@ -2,7 +2,13 @@
 
 （中国）[跨儿心理小组自杀干预热线列表](https://kuaerxinli.org/%E6%96%87%E7%AB%A0%E4%B8%8E%E9%87%87%E8%AE%BF/1520)。另可参考其 [跨儿自杀危机自救和干预微信专栏](https://mp.weixin.qq.com/mp/appmsgalbum?action=getalbum&__biz=MzUyNjc4Nzk2OA==&scene=1&album_id=1589990820231856129&count=3#wechat_redirect) 寻找你所需要的信息。
 
-（加拿大、美国）[Trans Lifeline](https://translifeline.org/) - Canada (877) 330-6366, US (877) 565-8860
+（加拿大、美国）
+[Trans Lifeline](https://translifeline.org/) - Canada: (877) 330-6366, U.S. (877) 565-8860
+[Suicide Crisis Helpline](https://988.ca/) - Canada & U.S.: 988
+[Crisis Text Line](https://www.crisistextline.org/about-us/where-we-are/) - U.S.: 短信发送 “HOME” 至 741741, Canada: 短信发送 “CONNECT” 至 686868
+[Kids Help Phone](https://kidshelpphone.ca/urgent-help) - Canada: 1-800-668-6868
+[LGBT YouthLine](https://www.youthline.ca/) - Canada: 发送短信至 (647) 694-4275 （周日至周五每天下午4点整至晚上9点30分在线）
+
 
 虽然 One Among Us 目前尚不具备自杀干预能力，但是如果您实在需要帮助，可以发邮件给 [info@one-among.us](mailto:info@one-among.us)。我们会提供简单的帮助，或者转介给其他有能力处理的医院或社会机构。请注意这两种方式均非 7 × 24 小时有人值守。
 
