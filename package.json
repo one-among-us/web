@@ -22,7 +22,7 @@
     "katex": "^0.16.45",
     "lunar-typescript": "^1.8.6",
     "moment": "^2.31.0",
-    "sanitize-html": "^2.18.0",
+    "sanitize-html": "^2.18.1",
     "sweetalert2": "^11.26.24",
     "tg-blog": "^1.1.10",
     "url-join": "^5.0.0",
