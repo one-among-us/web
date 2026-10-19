@@ -19,7 +19,7 @@
     "@vuepic/vue-datepicker": "^11.0.3",
     "blurhash": "^2.0.5",
     "element-plus": "^2.13.7",
-    "katex": "^0.16.45",
+    "katex": "^0.18.2",
     "lunar-typescript": "^1.8.6",
     "moment": "^2.31.0",
     "sanitize-html": "^2.18.1",
