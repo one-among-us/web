@@ -22,7 +22,7 @@
     "katex": "^0.18.2",
     "lunar-typescript": "^1.8.6",
     "moment": "^2.31.0",
-    "sanitize-html": "^2.18.1",
+    "sanitize-html": "^2.18.2",
     "sweetalert2": "^11.26.24",
     "tg-blog": "^1.1.10",
     "url-join": "^5.0.0",
@@ -67,7 +67,7 @@
     "unplugin-auto-import": "^21.0.0",
     "unplugin-icons": "^23.0.1",
     "unplugin-vue-components": "^32.0.0",
-    "vite": "^8.0.16",
+    "vite": "^8.1.6",
     "vue-eslint-parser": "^10.4.0",
     "vue-tsc": "^3.2.7"
   }
