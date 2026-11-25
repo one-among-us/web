@@ -1,6 +1,10 @@
 # Suicide Prevention
 
-(Canada/US) [Trans Lifeline](https://translifeline.org/) - Canada (877) 330-6366, US (877) 565-8860  
+(Canada/US) [Trans Lifeline](https://translifeline.org/) - Canada (877) 330-6366, US (877) 565-8860
+
+(Aotearoa New Zealand) [OutLine](https://outline.org.nz/) - 0800 688 5463, [1737 Need to talk?](https://www.1737.org.nz/) 1737
+
+(Australia) [QLife](https://www.qlife.org.au/) - 1800 184 527, [Lifeline](http://www.lifeline.org.au/) - 13 11 14
 
 Although One Among Us does not currently have suicide prevention capabilities, if you really need help, you can send an email to [info@one-among.us](mailto:info@one-among.us). We will provide simple assistance or refer you to other hospitals or social agencies that can handle it. Please note that neither of these options is monitored 24/7.  
 
