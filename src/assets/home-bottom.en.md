@@ -2,7 +2,7 @@
 
 (Canada/US) [Trans Lifeline](https://translifeline.org/) - Canada (877) 330-6366, US (877) 565-8860
 
-(Aotearoa New Zealand) [OutLine](https://outline.org.nz/) - 0800 688 5463, [1737 Need to talk?](https://www.1737.org.nz/) 1737
+(Aotearoa New Zealand) [OutLine](https://outline.org.nz/) - 0800 688 5463, [1737 Need to talk?](https://www.1737.org.nz/) - 1737
 
 (Australia) [QLife](https://www.qlife.org.au/) - 1800 184 527, [Lifeline](http://www.lifeline.org.au/) - 13 11 14
 
