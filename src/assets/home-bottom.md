@@ -4,9 +4,7 @@
 
 （加拿大、美国）[Trans Lifeline](https://translifeline.org/) - Canada (877) 330-6366, US (877) 565-8860
 
-（新西兰）[OutLine](https://outline.org.nz/) - 0800 688 5463, [1737 Need to talk?](https://www.1737.org.nz/) - 1737
-
-（澳大利亚）[QLife](https://www.qlife.org.au/) - 1800 184 527, [Lifeline](http://www.lifeline.org.au/) - 13 11 14
+（其他地区）[Find A Helpline](https://findahelpline.com/topics/gender-sexual-identity)（全球 LGBT+ 友善危机支持目录）
 
 
 虽然 One Among Us 目前尚不具备自杀干预能力，但是如果您实在需要帮助，可以发邮件给 [info@one-among.us](mailto:info@one-among.us)。我们会提供简单的帮助，或者转介给其他有能力处理的医院或社会机构。请注意这两种方式均非 7 × 24 小时有人值守。
