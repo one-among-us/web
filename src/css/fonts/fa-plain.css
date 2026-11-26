@@ -2,25 +2,59 @@
  * Font awesome requires importing @fortawesome/fontawesome-free/css/fontawesome.min.css
  * But that file is huge... with features like animations that I never need, so I extracted this:
  */
+.fa-solid,
+.fa-regular,
+.fa-brands,
+.fa-classic,
+.fas,
+.far,
+.fab,
 .fa {
-    font-family: "Font Awesome 6 Free";
-    font-weight: 900
-}
-
-.fa, .fa-brands, .fa-classic, .fa-regular, .fa-sharp, .fa-solid, .fab, .far, .fas {
+    --_fa-family: var(--fa-family, var(--fa-style-family, 'Font Awesome 7 Free'));
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
-    display: inline-block;
+    display: var(--fa-display, inline-block);
+    font-family: var(--_fa-family);
+    font-feature-settings: normal;
     font-style: normal;
+    font-synthesis: none;
     font-variant: normal;
+    font-weight: var(--fa-style, 900);
     line-height: 1;
-    text-rendering: auto
+    text-align: center;
+    text-rendering: auto;
+    width: var(--fa-width, 1.25em);
+}
+
+:is(.fas,
+.far,
+.fab,
+.fa-solid,
+.fa-regular,
+.fa-brands,
+.fa-classic,
+.fa)::before {
+    content: var(--fa)/"";
+}
+
+@supports not (content: ""/"") {
+    :is(.fas,
+    .far,
+    .fab,
+    .fa-solid,
+    .fa-regular,
+    .fa-brands,
+    .fa-classic,
+    .fa)::before {
+        content: var(--fa);
+    }
 }
 
 .fa-classic, .fa-regular, .fa-solid, .far, .fas {
-    font-family: "Font Awesome 6 Free"
+    --fa-family: "Font Awesome 7 Free";
 }
 
 .fa-brands, .fab {
-    font-family: "Font Awesome 6 Brands"
+    --fa-family: "Font Awesome 7 Brands";
+    --fa-style: 400;
 }

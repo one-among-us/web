@@ -3,7 +3,7 @@ import path from "path";
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
-import markdown from "./vite/markdown";
+import markdown from "./vite/markdown.ts";
 
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
@@ -11,7 +11,7 @@ import Icons from "unplugin-icons/vite";
 import IconsResolver from "unplugin-icons/resolver";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 
-const src = path.resolve(__dirname, "src");
+const src = path.resolve(import.meta.dirname, "src");
 
 export default defineConfig({
   plugins: [

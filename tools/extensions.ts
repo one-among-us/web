@@ -19,19 +19,20 @@ declare global {
 }
 
 String.prototype.read_file = function () {
-  if (fs.existsSync(this)) return fs.readFileSync(this).toString();
+  const self = this.toString();
+  if (fs.existsSync(self)) return fs.readFileSync(self).toString();
 }
 
 String.prototype.json = function () {
-  return JSON.parse(this)
+  return JSON.parse(this.toString())
 }
 
 String.prototype.join = function (...s: string[]) {
-  return path.join(this, ...s)
+  return path.join(this.toString(), ...s)
 }
 
 String.prototype.parent = function () {
-  return path.dirname(this)
+  return path.dirname(this.toString())
 }
 
 String.prototype.file_name = function () {

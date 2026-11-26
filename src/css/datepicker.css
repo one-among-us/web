@@ -21,7 +21,7 @@
     --dp-action-buttons-padding: 2px 5px; /*Adjust padding for the action buttons in action row*/
     --dp-row-margin: 5px 0; /*Adjust the spacing between rows in the calendar*/
     --dp-calendar-header-cell-padding: 0.5rem; /*Adjust padding in calendar header cells*/
-    --dp-two-calendars-spacing: 10px; /*Space between multiple calendars*/
+    --dp-multi-calendars-spacing: 10px; /*Space between multiple calendars*/
     --dp-overlay-col-padding: 3px; /*Padding in the overlay column*/
     --dp-time-inc-dec-button-size: 32px; /*Sizing for arrow buttons in the time picker*/
     --dp-menu-padding: 6px 8px; /*Menu padding*/
@@ -37,7 +37,7 @@
     --dp-transition-timing: ease-out; /*Timing on slide animations*/
 }
 
-.dp__theme_light {
+.dp--theme-light {
     --dp-background-color: #f0ece9;
     --dp-text-color: #70512a;
     --dp-hover-color: #e5deda;
@@ -68,7 +68,7 @@
 }
 
 [data-theme="dark"] {
-    .dp__theme_light {
+    .dp--theme-light {
         --dp-background-color: hsl(32, 21%, 12%);
         --dp-text-color: #f3b8a6;
         --dp-hover-color: hsl(32, 21%, 7%);

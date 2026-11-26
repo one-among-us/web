@@ -21,8 +21,8 @@
                 <div class="search-bar">
                     <Icon class="search-icon" icon="mynaui:search-hexagon" v-on:click="updateSearch"/>
                     <input class="search-input" v-model="searchKey" v-on:input="updateSearch" placeholder="Search for..." aria-label="Search for..." />
-                    <VueDatePicker range light model-auto class="search-date" placeholder="Select a range"
-                                   v-model="dateRange" @update:model-value="updateSearch" :aria-labels="{ input: 'Select a range' }" :enable-time-picker="false"/>
+                    <VueDatePicker range model-auto class="search-date" placeholder="Select a range"
+                                   v-model="dateRange" @update:model-value="updateSearch" :aria-labels="{ input: 'Select a range' }" :time-config="{ enableTimePicker: false }"/>
                     <button class="layout-toggle" @click="toggleLayout" :title="isGridLayout ? 'Switch to List Layout' : 'Switch to Grid Layout'">
                         <Icon :icon="isGridLayout ? 'mynaui:list' : 'mynaui:grid'" />
                     </button>
@@ -139,7 +139,7 @@ import {viaBalloon} from "@/logic/viaFetch";
 import router from "@/router";
 import TdorComments from "@/views/TdorComments.vue";
 import {Icon} from "@iconify/vue";
-import VueDatePicker from '@vuepic/vue-datepicker'
+import { VueDatePicker } from '@vuepic/vue-datepicker'
 import {decode} from 'blurhash'
 import urljoin from "url-join";
 
