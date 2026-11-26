@@ -1,0 +1,1 @@
+function e(e){let t=JSON.parse(e);return t.info||=[],t.websites||=[],t}export{e as t};
